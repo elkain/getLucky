@@ -1,10 +1,12 @@
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar no-border-top>
     <ion-title>
-      <button ion-buttion (click)="moveToHome()">{{shopTitle}}</button>
-      <ion-icon name="cart"></ion-icon>
+      <button ion-buttion (click)="moveToHome()"><p>{{shopTitle}}</p></button>
     </ion-title>
-  </ion-navbar>
+    <button ion-button menuToggle right>
+      <ion-icon name="cart"></ion-icon>
+    </button>
+  </ion-toolbar>
 </ion-header>
 <ion-tabs>
   <ion-tab [root]="tab1Root" tabTitle="홈" tabIcon="home"></ion-tab>
