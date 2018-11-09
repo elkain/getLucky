@@ -8,6 +8,8 @@ import { NavController } from 'ionic-angular';
 export class HomePage {
 
   menu;
+
+  images=[1,2,3];
   
   constructor(public navCtrl: NavController) {
 
