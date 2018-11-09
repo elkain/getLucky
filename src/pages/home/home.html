@@ -1,9 +1,24 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
- 
+    <div>
+        <ion-segment [(ngModel)]="menu">
+            <ion-segment-button value="recommand">
+                럭키추천
+            </ion-segment-button>
+            <ion-segment-button value="best">
+                베스트
+            </ion-segment-button>
+            <ion-segment-button value="sale">
+                알뜰할인
+            </ion-segment-button>
+            <ion-segment-button value="event">
+                이벤트
+            </ion-segment-button>
+        </ion-segment>
+    </div>
 </ion-content>
