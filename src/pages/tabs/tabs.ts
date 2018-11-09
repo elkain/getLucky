@@ -13,7 +13,12 @@ export class TabsPage {
   tab2Root = AboutPage;
   tab3Root = ContactPage;
 
+  shopTitle:string = "MARKET LUCKY"
   constructor() {
+
+  }
+
+  moveToHome(){
 
   }
 }
