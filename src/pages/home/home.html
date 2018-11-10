@@ -23,18 +23,15 @@
     </div>
     <div style="background-color:dimgrey; height: 100%; width: 100%; padding :8px;">
         <ion-slides pager style="height:168px;">
-            <ion-slide *ngFor="let image of images" style="background-color: green">
-            <h2>Slide {{image}}</h2>
-                <button ion-button>
+            <ion-slide *ngFor="let image of images" [style.backgroundImage]="'url('+image+')'">
+                <button type="submit" float-left ion-button color="white" class="btnPrev" (click)="prev()">  
                     <ion-icon name="ios-arrow-back"></ion-icon>
                 </button>
-                <button ion-button>
+                <button type="submit" float-right ion-button color="white" class="btnNext" (click)="next()">
                     <ion-icon name="ios-arrow-forward"></ion-icon>
                 </button>
             </ion-slide>
         </ion-slides>
-
-        
     </div>
     
 </ion-content>
