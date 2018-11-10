@@ -21,9 +21,9 @@
             </ion-segment-button>
         </ion-segment>
     </div>
-    <div style="background-color:dimgrey; height: 100%; width: 100%; padding :8px;">
-        <ion-slides pager style="height:168px;">
-            <ion-slide *ngFor="let image of images" [style.backgroundImage]="'url('+image+')'">
+    <div class="recommand-product">
+        <ion-slides pager class="home-slide" >
+            <ion-slide *ngFor="let image of images" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
                 <button type="submit" float-left ion-button color="white" class="btnPrev" (click)="prev()">  
                     <ion-icon name="ios-arrow-back"></ion-icon>
                 </button>
@@ -33,17 +33,17 @@
             </ion-slide>
         </ion-slides>
 
-        <ion-scroll scrollY="true" style="background-color: green; height: 100%;">
-            <ion-grid>
+        <ion-scroll scrollY="true" class="home-scroll">
+            <ion-grid class="home-grid">
                 <ion-row *ngFor="let item of items">
-                    <button ion-button>
+                    <button ion-button (click)="itemSelected(item)" class="">
                         <ion-col col-2>
-                            <ion-card>
+                            <ion-card class="home-image-card">
                                 <img src="{{item}}" />
                             </ion-card>
                         </ion-col>
                         <ion-col>
-                            <ion-card>
+                            <ion-card class="home-content-card">
                                 <ion-card-content>
                                     <ion-card-title>
                                        상품명

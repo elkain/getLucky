@@ -1,11 +1,11 @@
-<ion-header>
-  <ion-toolbar no-border-top>
-    <ion-title>
-      <button ion-buttion (click)="moveToHome()"><p>{{shopTitle}}</p></button>
+<ion-header no-border>
+  <ion-toolbar no-border>
+    <ion-title class="market-title">
+      <button ion-buttion class="title-home-button" (click)="moveToHome()">{{shopTitle}}</button>
+      <button ion-button  class="home-cart">
+        <ion-icon name="cart"></ion-icon>
+      </button>
     </ion-title>
-    <button ion-button menuToggle right>
-      <ion-icon name="cart"></ion-icon>
-    </button>
   </ion-toolbar>
 </ion-header>
 <ion-tabs>

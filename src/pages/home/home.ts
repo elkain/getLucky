@@ -31,4 +31,8 @@ export class HomePage {
   itemSelected(item){
 
   }
+
+  slideItemSelect(){
+    
+  }
 }
