@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-    <div>
+    <div class="home-nav-menu">
         <ion-segment [(ngModel)]="menu">
             <ion-segment-button value="recommand">
                 럭키추천
@@ -32,6 +32,30 @@
                 </button>
             </ion-slide>
         </ion-slides>
+
+        <ion-scroll scrollY="true" style="background-color: green; height: 100%;">
+            <ion-grid>
+                <ion-row *ngFor="let item of items">
+                    <button ion-button>
+                        <ion-col col-2>
+                            <ion-card>
+                                <img src="{{item}}" />
+                            </ion-card>
+                        </ion-col>
+                        <ion-col>
+                            <ion-card>
+                                <ion-card-content>
+                                    <ion-card-title>
+                                       상품명
+                                    </ion-card-title>
+                                    <p><del>판매가</del></p>
+                                    <p>행사가</p>
+                                </ion-card-content>
+                            </ion-card>
+                        </ion-col>
+                    </button>
+                </ion-row>
+            </ion-grid>
+        </ion-scroll>
     </div>
-    
 </ion-content>

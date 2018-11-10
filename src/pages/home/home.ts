@@ -10,6 +10,8 @@ export class HomePage {
   menu;
   imageURL:string = "./assets/slides/";
 
+  items: string[] = [this.imageURL + "slide1.png", this.imageURL + "slide2.png", this.imageURL + "slide3.png"];
+
   images: string[] = [this.imageURL + "slide1.png", this.imageURL+"slide2.png", this.imageURL+"slide3.png"];
 
   @ViewChild(Slides) slides: Slides;
@@ -24,5 +26,9 @@ export class HomePage {
 
   prev() {
     this.slides.slidePrev();
+  }
+
+  itemSelected(item){
+
   }
 }
