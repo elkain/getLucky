@@ -4,9 +4,9 @@
 
 <ion-content>
     <ion-scroll scrollY="true" class="home-scroll"> 
-        <ion-grid no-margin no-padding>
+        <ion-grid no-margin no-padding class="home-nav-menu">
             <ion-row>
-                <ion-col class="home-nav-menu" *ngFor="let category of categories">
+                <ion-col *ngFor="let category of categories">
                     <ion-segment #categorySegment [(ngModel)]="categorySelected">
                         <ion-segment-button [value]="category" (click)="categoryChange(category)">
                             {{category}}
@@ -26,32 +26,19 @@
                     </button>
                 </ion-slide>
             </ion-slides>
-
         
-            <ion-grid class="home-grid">
-                <ion-row *ngFor="let item of items">
-                    <button ion-button no-border (click)="itemSelected(item)">
-                        <ion-col>
-                            <ion-card class="home-image-card">
-                                <img src="{{item}}" />
-                            </ion-card>
-                        </ion-col>
-                        <ion-col class="space">
-                        </ion-col>
-                        <ion-col>
-                            <ion-card class="home-content-card">
-                                <ion-card-content>
-                                    <ion-card-title>
-                                       상품명
-                                    </ion-card-title>
-                                    <p><del>판매가</del></p>
-                                    <p>행사가</p>
-                                </ion-card-content>
-                            </ion-card>
-                        </ion-col>
-                    </button>
-                </ion-row>
-            </ion-grid>
+            <ion-list class="home-product-list">
+                <button ion-button no-border *ngFor="let item of items" (click)="itemSelected(item)">
+                    <ion-item>
+                        <ion-thumbnail item-start>
+                            <img src="{{item}}">
+                        </ion-thumbnail>
+                        <h2>상품명</h2>
+                        <p><del>판매가</del></p>
+                        <p>행사가</p>
+                    </ion-item>
+                </button>
+            </ion-list>
         </div>
     </ion-scroll>
 </ion-content>
