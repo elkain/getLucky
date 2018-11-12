@@ -1,7 +1,7 @@
-<ion-header no-border>
-  <ion-toolbar no-border>
+<ion-header no-border no-shadow>
+  <ion-toolbar no-border no-padding no-shadow>
     <ion-title class="market-title">
-      <button ion-buttion class="title-home-button" (click)="moveToHome()">{{shopTitle}}</button>
+      <button ion-buttion class="title-home-button" (click)="moveToHome()"><b>{{shopTitle}}</b></button>
     </ion-title>
     <ion-buttons end>
       <button class="home-cart">
@@ -10,7 +10,7 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-tabs>
+<ion-tabs color="white">
   <ion-tab [root]="tab1Root" tabTitle="홈" tabIcon="home"></ion-tab>
   <ion-tab [root]="tab2Root" tabTitle="카테고리" tabIcon="list"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="검색" tabIcon="search"></ion-tab>
