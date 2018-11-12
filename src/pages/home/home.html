@@ -3,18 +3,18 @@
 </ion-header>
 
 <ion-content>
+    <ion-grid no-margin no-padding class="home-nav-menu">
+        <ion-row>
+            <ion-col *ngFor="let category of categories">
+                <ion-segment #categorySegment [(ngModel)]="categorySelected">
+                    <ion-segment-button [value]="category" (click)="categoryChange(category)">
+                        {{category}}
+                    </ion-segment-button>
+                </ion-segment>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
     <ion-scroll scrollY="true" class="home-scroll"> 
-        <ion-grid no-margin no-padding class="home-nav-menu">
-            <ion-row>
-                <ion-col *ngFor="let category of categories">
-                    <ion-segment #categorySegment [(ngModel)]="categorySelected">
-                        <ion-segment-button [value]="category" (click)="categoryChange(category)">
-                            {{category}}
-                        </ion-segment-button>
-                    </ion-segment>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
         <div class="recommand-product" *ngIf="categorySelected==categories[0]">
             <ion-slides pager class="home-slide" >
                 <ion-slide class="home-slide-child" *ngFor="let image of images" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
