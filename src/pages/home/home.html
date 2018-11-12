@@ -15,7 +15,7 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-        <div class="recommand-product">
+        <div class="recommand-product" *ngIf="categorySelected==categories[0]">
             <ion-slides pager class="home-slide" >
                 <ion-slide class="home-slide-child" *ngFor="let image of images" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
                     <button type="submit" float-left ion-button outline clear color="black" class="btnPrev" (click)="prev()">  
