@@ -41,7 +41,6 @@ export class HomePage {
   }
 
   categoryChange(Category) {
-    console.log(this.categorySelected);
     let idx = this.categories.indexOf(Category);
     this.categorySelected = this.categories[idx];
   }
