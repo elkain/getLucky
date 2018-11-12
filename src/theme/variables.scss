@@ -40,8 +40,13 @@ $colors: (
   light:      #f4f4f4,
   dark:       #222,
   title:      dodgerblue,
-  white:      white
+  white:      white,
+  black:      black
 );
+
+$segment-button-md-padding-end:0px;
+$segment-button-md-font-size:14px;
+$segment-button-md-text-color-activated:black;
 
 
 // App iOS Variables
