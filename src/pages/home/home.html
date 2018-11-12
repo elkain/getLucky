@@ -3,42 +3,40 @@
 </ion-header>
 
 <ion-content>
-    <div class="home-nav-menu">
-        <ion-segment [(ngModel)]="menu">
-            <ion-segment-button value="recommand">
-                <b>럭키추천</b>
-            </ion-segment-button>
-            <ion-segment-button value="best">
-                <b>베스트</b>
-            </ion-segment-button>
-            <ion-segment-button value="sale">
-                <b>알뜰할인</b>
-            </ion-segment-button>
-            <ion-segment-button value="event">
-                <b>이벤트</b>
-            </ion-segment-button>
-        </ion-segment>
-    </div>
-    <div class="recommand-product">
-        <ion-slides pager class="home-slide" >
-            <ion-slide class="home-slide-child" *ngFor="let image of images" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
-                <button type="submit" float-left ion-button outline clear color="black" class="btnPrev" (click)="prev()">  
-                    <ion-icon name="ios-arrow-back"></ion-icon>
-                </button>
-                <button type="submit" float-right ion-button outline clear color="black" class="btnNext" (click)="next()">
-                    <ion-icon name="ios-arrow-forward"></ion-icon>
-                </button>
-            </ion-slide>
-        </ion-slides>
+    <ion-scroll scrollY="true" class="home-scroll"> 
+        <ion-grid no-margin no-padding>
+            <ion-row>
+                <ion-col class="home-nav-menu" *ngFor="let category of categories">
+                    <ion-segment #categorySegment [(ngModel)]="categorySelected">
+                        <ion-segment-button [value]="category" (click)="categoryChange(category)">
+                            {{category}}
+                        </ion-segment-button>
+                    </ion-segment>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <div class="recommand-product">
+            <ion-slides pager class="home-slide" >
+                <ion-slide class="home-slide-child" *ngFor="let image of images" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
+                    <button type="submit" float-left ion-button outline clear color="black" class="btnPrev" (click)="prev()">  
+                        <ion-icon name="ios-arrow-back"></ion-icon>
+                    </button>
+                    <button type="submit" float-right ion-button outline clear color="black" class="btnNext" (click)="next()">
+                        <ion-icon name="ios-arrow-forward"></ion-icon>
+                    </button>
+                </ion-slide>
+            </ion-slides>
 
-        <ion-scroll scrollY="true" class="home-scroll">
+        
             <ion-grid class="home-grid">
                 <ion-row *ngFor="let item of items">
-                    <button ion-button (click)="itemSelected(item)" class="">
+                    <button ion-button no-border (click)="itemSelected(item)">
                         <ion-col>
                             <ion-card class="home-image-card">
                                 <img src="{{item}}" />
                             </ion-card>
+                        </ion-col>
+                        <ion-col class="space">
                         </ion-col>
                         <ion-col>
                             <ion-card class="home-content-card">
@@ -54,6 +52,6 @@
                     </button>
                 </ion-row>
             </ion-grid>
-        </ion-scroll>
-    </div>
+        </div>
+    </ion-scroll>
 </ion-content>

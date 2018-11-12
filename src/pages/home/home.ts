@@ -7,17 +7,21 @@ import { NavController, Slides} from 'ionic-angular';
 })
 export class HomePage {
 
-  menu = 'recommand';
+  @ViewChild(Slides) slides: Slides;
   imageURL:string = "./assets/slides/";
 
-  items: string[] = [this.imageURL + "slide1.png", this.imageURL + "slide2.png", this.imageURL + "slide3.png"];
+  categories = ["럭키추천", "베스트", "알뜰할인",  "이벤트"];
+  categorySelected;
 
+  items: string[] = [this.imageURL + "slide1.png", this.imageURL + "slide2.png", this.imageURL + "slide3.png"];
   images: string[] = [this.imageURL + "slide1.jpg", this.imageURL+"slide2.jpg", this.imageURL+"slide3.jpg"];
 
-  @ViewChild(Slides) slides: Slides;
-  
   constructor(public navCtrl: NavController) {
 
+  }
+
+  ionViewDidLoad() {
+    this.categorySelected = this.categories[0];
   }
 
   next() {
@@ -34,5 +38,11 @@ export class HomePage {
 
   slideItemSelect(){
     
+  }
+
+  categoryChange(Category) {
+    console.log(this.categorySelected);
+    let idx = this.categories.indexOf(Category);
+    this.categorySelected = this.categories[idx];
   }
 }
