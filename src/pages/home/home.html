@@ -46,18 +46,11 @@
     <!-- recommand page end -->
 
     <!-- best page start -->
-    <div>
-    
+    <div class="best-nav-menu" *ngIf="homeCategorySelected==homeCategories[1]">
+        <ion-segment #categorySegment [(ngModel)]="bestCategorySelected">
+            <ion-segment-button [value]="category" (click)="bestCategoryChange(category)" *ngFor="let category of bestCategories">
+                {{category}}
+            </ion-segment-button>
+        </ion-segment>
     </div>
-    <ion-grid no-margin no-padding class="best-nav-menu" *ngIf="homeCategorySelected==homeCategories[1]">
-        <ion-row>
-            <ion-col *ngFor="let category of bestCategories">
-                <ion-segment #categorySegment [(ngModel)]="bestCategorySelected">
-                    <ion-segment-button [value]="category" (click)="bestCategoryChange(category)">
-                        {{category}}
-                    </ion-segment-button>
-                </ion-segment>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
 </ion-content>
