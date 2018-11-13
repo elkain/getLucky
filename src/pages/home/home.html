@@ -5,17 +5,19 @@
 <ion-content>
     <ion-grid no-margin no-padding class="home-nav-menu">
         <ion-row>
-            <ion-col *ngFor="let category of categories">
-                <ion-segment #categorySegment [(ngModel)]="categorySelected">
-                    <ion-segment-button [value]="category" (click)="categoryChange(category)">
+            <ion-col *ngFor="let category of homeCategories">
+                <ion-segment #categorySegment [(ngModel)]="homeCategorySelected">
+                    <ion-segment-button [value]="category" (click)="homeCategoryChange(category)">
                         {{category}}
                     </ion-segment-button>
                 </ion-segment>
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-scroll scrollY="true" class="home-scroll"> 
-        <div class="recommand-product" *ngIf="categorySelected==categories[0]">
+
+    <!-- recommand page start -->
+    <ion-scroll scrollY="true" class="home-scroll" *ngIf="homeCategorySelected==homeCategories[0]"> 
+        <div class="recommand-product">
             <ion-slides pager class="home-slide" >
                 <ion-slide class="home-slide-child" *ngFor="let image of images" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
                     <button type="submit" float-left ion-button outline clear color="black" class="btnPrev" (click)="prev()">  
@@ -41,4 +43,18 @@
             </ion-list>
         </div>
     </ion-scroll>
+    <!-- recommand page end -->
+
+    <!-- best page start -->
+    <ion-grid no-margin no-padding class="best-nav-menu" *ngIf="homeCategorySelected==homeCategories[1]">
+        <ion-row>
+            <ion-col *ngFor="let category of bestCategories">
+                <ion-segment #categorySegment [(ngModel)]="bestCategorySelected">
+                    <ion-segment-button [value]="category" (click)="bestCategoryChange(category)">
+                        {{category}}
+                    </ion-segment-button>
+                </ion-segment>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>

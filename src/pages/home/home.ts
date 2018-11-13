@@ -10,8 +10,11 @@ export class HomePage {
   @ViewChild(Slides) slides: Slides;
   imageURL:string = "./assets/slides/";
 
-  categories = ["럭키추천", "베스트", "알뜰할인",  "이벤트"];
-  categorySelected;
+  homeCategories = ["럭키추천", "베스트", "알뜰할인",  "이벤트"];
+  homeCategorySelected;
+
+  bestCategories = ["전체", "정육", "청과", "쌀잡곡", "계란", "유제품", "조미료", "과자류", "커피/음료"];
+  bestCategorySelected;
 
   items: string[] = [this.imageURL + "slide1.png", this.imageURL + "slide2.png", this.imageURL + "slide3.png"];
   images: string[] = [this.imageURL + "slide1.jpg", this.imageURL+"slide2.jpg", this.imageURL+"slide3.jpg"];
@@ -21,7 +24,8 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.categorySelected = this.categories[0];
+    this.homeCategorySelected = this.homeCategories[0];
+    this.bestCategorySelected = this.bestCategories[0];
   }
 
   next() {
@@ -40,8 +44,13 @@ export class HomePage {
     
   }
 
-  categoryChange(Category) {
-    let idx = this.categories.indexOf(Category);
-    this.categorySelected = this.categories[idx];
+  homeCategoryChange(Category) {
+    let idx = this.homeCategories.indexOf(Category);
+    this.homeCategorySelected = this.homeCategories[idx];
+  }
+
+  bestCategoryChange(Category) {
+    let idx = this.bestCategories.indexOf(Category);
+    this.bestCategorySelected = this.bestCategories[idx];
   }
 }
