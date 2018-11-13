@@ -30,14 +30,14 @@
             </ion-slides>
         
             <ion-list class="home-product-list">
-                <button ion-button no-border *ngFor="let item of items" (click)="itemSelected(item)">
+                <button ion-button no-border *ngFor="let product of products" (click)="itemSelected(product)">
                     <ion-item>
                         <ion-thumbnail item-start>
-                            <img src="{{item}}">
+                            <img src="{{product.imagePath}}">
                         </ion-thumbnail>
-                        <h2>상품명</h2>
-                        <p><del>판매가</del></p>
-                        <p>행사가</p>
+                        <h2>{{product.name}}</h2>
+                        <p><del>{{product.price}}</del></p>
+                        <p>{{product.salePrice}}</p>
                     </ion-item>
                 </button>
             </ion-list>
@@ -68,9 +68,9 @@
                         <img src="{{product.imagePath}}" />
                         <ion-card-content>
                             <ion-card-title>
-                                상품명
+                                {{product.name}}
                             </ion-card-title>
-                            <p> 혜택가 <del> 판매가 </del> </p>
+                            <p> {{product.salePrice}} <del> {{product.price}} </del> </p>
                             <button ion-button class="best-cart">
                                 <ion-icon name="ios-cart-outline"></ion-icon>
                             </button>

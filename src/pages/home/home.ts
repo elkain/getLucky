@@ -19,30 +19,32 @@ export class HomePage {
   productSortOptions = ["판매인기순","높은가격순", "낮은가격순"];
   productSortOptionSelected;
 
-  products = [   // sale method : fixed, percent
-    { name: "사과", price: 3000, discount: 2000, saleMethod: "fixed", salePrice: 0, saleCount: 2, imagePath: this.imageURL + "slide1.png" },
-    { name: "배", price: 10000, discount: 10, saleMethod: "percent", salePrice: 0, saleCount: 4, imagePath: this.imageURL + "slide2.png" },
-    { name: "감", price: 5000, discount: 1500, saleMethod: "fixed", salePrice: 0, saleCount: 6, imagePath: this.imageURL + "slide3.png" },
-    { name: "야채", price: 2500, discount: 5, saleMethod: "percent", salePrice: 0, saleCount: 8, imagePath: this.imageURL + "slide1.png" },
-    { name: "빼빼로", price: 4000, discount: 1000, saleMethod: "fixed", salePrice: 0, saleCount: 1, imagePath: this.imageURL + "slide2.png" },
-    { name: "초콜릿", price: 7000, discount: 8, saleMethod: "fixed", salePrice: 0, saleCount: 0, imagePath: this.imageURL + "slide3.png" },
-    { name: "요구르트", price: 500, discount: 0, saleMethod: "none", salePrice: 0, saleCount: 12, imagePath: this.imageURL + "slide1.png" },
-  ];       
+  products;
 
-  items: string[] = [this.imageURL + "slide1.png", this.imageURL + "slide2.png", this.imageURL + "slide3.png"];
-  images: string[] = [this.imageURL + "slide1.jpg", this.imageURL+"slide2.jpg", this.imageURL+"slide3.jpg"];
+  images: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
   constructor(public navCtrl: NavController) {
 
+    this.products = [   // sale method : fixed, percent
+      { name: "사과", price: 3000, discount: 2000, saleMethod: "fixed", saleCount: 2, imagePath: this.imageURL + "slide1.png" },
+      { name: "배", price: 10000, discount: 10, saleMethod: "percent", saleCount: 4, imagePath: this.imageURL + "slide2.png" },
+      { name: "감", price: 5000, discount: 1500, saleMethod: "fixed", saleCount: 6, imagePath: this.imageURL + "slide3.png" },
+      { name: "야채", price: 2500, discount: 5, saleMethod: "percent", saleCount: 8, imagePath: this.imageURL + "slide1.png" },
+      { name: "빼빼로", price: 4000, discount: 1000, saleMethod: "fixed", saleCount: 1, imagePath: this.imageURL + "slide2.png" },
+      { name: "초콜릿", price: 7000, discount: 8, saleMethod: "fixed", saleCount: 0, imagePath: this.imageURL + "slide3.png" },
+      { name: "요구르트", price: 500, discount: 0, saleMethod: "none", saleCount: 12, imagePath: this.imageURL + "slide1.png" },
+    ]; 
+
     /* 할인율을 적용하여 가격 측정 */
-    for(var i; i<this.products.length; i++){
-      if(this.products[i].saleMethod == "fixed"){
+    for (var i=0; i < this.products.length; i++) {
+      if (this.products[i].saleMethod == "fixed") {
         this.products[i].salePrice = this.products[i].price - this.products[i].discount;
-      } else if (this.products[i].saleMethod == "percent"){
+      } else if (this.products[i].saleMethod == "percent") {
         this.products[i].salePrice = this.products[i].price * (100 - this.products[i].discount);
       } else {
         this.products[i].salePrice = this.products[i].price;
       }
+      console.log(this.products[i].salePrice);
     }
   }
 
