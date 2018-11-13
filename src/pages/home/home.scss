@@ -87,14 +87,27 @@ page-home {
 
     // best 화면
     .best-nav-menu{
-        
-        div{
-            span{
-                
-                
+        width:  100%;
+        height: 40px;
+
+        ion-segment{
+            display: block;
+            white-space: nowrap;
+            font-size: 0;
+            overflow: auto;
+
+            &::-webkit-scrollbar {
+                width: 0;
+                height: 0;
+                display: none;
+            }
+
+            ion-segment-button.segment-button {
+                display: inline-block;
+                width: 60px;
+                height: 40px;
             }
         }
-
     }
 
     $segment-button-md-text-color-activated:black;
