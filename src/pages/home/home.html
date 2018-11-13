@@ -53,4 +53,14 @@
             </ion-segment-button>
         </ion-segment>
     </div>
+
+    <ion-scroll scrollY="true" class="best-scroll">
+        <div left class="best-sort-option">
+            <select [(ngModel)]="productSortOptionSelected" >
+                <option [value]="productSortOption" *ngFor="let productSortOption of productSortOptions">{{productSortOption}}</option>
+            </select>
+        </div>
+
+        
+    </ion-scroll>
 </ion-content>

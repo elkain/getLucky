@@ -16,6 +16,9 @@ export class HomePage {
   bestCategories = ["전체", "정육", "청과", "쌀잡곡", "계란", "유제품", "조미료", "과자류", "커피/음료"];
   bestCategorySelected;
 
+  productSortOptions = ["판매인기순","높은가격순", "낮은가격순"];
+  productSortOptionSelected;
+
   items: string[] = [this.imageURL + "slide1.png", this.imageURL + "slide2.png", this.imageURL + "slide3.png"];
   images: string[] = [this.imageURL + "slide1.jpg", this.imageURL+"slide2.jpg", this.imageURL+"slide3.jpg"];
 
@@ -26,6 +29,7 @@ export class HomePage {
   ionViewDidLoad() {
     this.homeCategorySelected = this.homeCategories[0];
     this.bestCategorySelected = this.bestCategories[0];
+    this.productSortOptionSelected = this.productSortOptions[0];
   }
 
   next() {
