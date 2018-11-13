@@ -1,5 +1,5 @@
 page-home {
-    
+
     .home-nav-menu{
         width: 100%;
         height: 42px;
@@ -46,6 +46,14 @@ page-home {
     .home-scroll{
         height: 100%;
         width:  360px;
+        ::-webkit-scrollbar {
+            width: 0px;  /* remove scrollbar space */
+            background: transparent;  /* optional: just make scrollbar invisible */
+        }
+        /* optional: show position indicator in red */
+        ::-webkit-scrollbar-thumb {
+            background: #FF0000;
+        }
     }
 
     .home-product-list{
@@ -91,6 +99,15 @@ page-home {
         width: 360px;
         margin: 0;
         background-color: color($colors,default);
+        
+        ::-webkit-scrollbar {
+            width: 0px;  /* remove scrollbar space */
+            background: transparent;  /* optional: just make scrollbar invisible */
+        }
+        /* optional: show position indicator in red */
+        ::-webkit-scrollbar-thumb {
+            background: #FF0000;
+        }
 
         .best-sort-option{
             width: 344px;
@@ -110,6 +127,62 @@ page-home {
                     width: 100px;
                     background-color: color($colors,default);
                     border : none;
+                }
+            }
+        }
+
+        .best-product-list{
+            padding:0;
+            margin-bottom: 80px;
+            width: 100%;
+            height: 100%;
+
+            ion-row{
+                margin:0px 4px;
+                width: 352px;
+                height: 100%;
+            }
+
+            ion-col{
+                width: 172px;
+                height: 268px;
+                padding:0;
+                margin-bottom: 16px;
+            }
+
+            .best-product{
+                margin:0px 4px;
+                width: 168px;
+                height: 268px;
+
+                img{
+                    width:168px;
+                    height:168px;
+                    background-size: 100%;
+                }
+
+                ion-card-content{
+                    width: 168px;
+                    height: 100px;
+                    padding: 16px 8px;
+
+                    ion-card-title{
+                        font-size: 18px;
+                        padding: 0;
+                        margin:0;
+                    }
+
+                    .best-cart{
+                        float: right;
+                        background-color: white;
+                        box-shadow:none;
+                        color: color($colors,title);
+                        font-size:24px;
+                        padding: 0;
+                        position: absolute;
+                        right:30px;
+                        bottom:15px; 
+                    }
                 }
             }
         }
