@@ -30,7 +30,6 @@ export class TabsPage {
 
   public onTabsChange() {
     this.selectedTab = this.tabRef.getSelected().index;
-    console.log(this.selectedTab);
   }
 
   moveToHome(){
