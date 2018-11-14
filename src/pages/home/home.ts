@@ -19,6 +19,8 @@ export class HomePage {
   productSortOptions = ["판매인기순","높은가격순", "낮은가격순"];
   productSortOptionSelected;
 
+  events = [this.imageURL + "slide1.png", this.imageURL + "slide2.png", this.imageURL + "slide3.png"];
+
   products;
 
   images: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];

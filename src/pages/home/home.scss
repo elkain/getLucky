@@ -1,20 +1,21 @@
 page-home {
 
+    /* home navigation 화면 시작*/
     .home-nav-menu{
         width: 100%;
         height: 42px;
         position: block;
         color:white;
+
+        .segment-button .segment-md{
+            width: 90px;
+            height: 49px;
+            color: black;
+        }
     }
+    /* home navigation 화면 종료*/
 
-    .segment-button .segment-md{
-        width: 90px;
-        height: 49px;
-        color: black;
-    }
-
-    // recommand 화면
-
+    /* recommand 화면 시작 */
     .recommand-product{
         height: 100%;
         width: 360px;
@@ -92,8 +93,33 @@ page-home {
             }
         }
     }
+    /* recommand 화면 종료 */
 
-    // best 화면
+    /* best & sale 화면 시작 */
+    .best-nav-menu{
+        width:  100%;
+        height: 40px;
+
+        ion-segment{
+            display: block;
+            white-space: nowrap;
+            font-size: 0;
+            overflow: auto;
+
+            &::-webkit-scrollbar {
+                width: 0;
+                height: 0;
+                display: none;
+            }
+
+            ion-segment-button.segment-button {
+                display: inline-block;
+                width: 60px;
+                height: 40px;
+            }
+        }
+    }
+
     .best-scroll{
         height: 100%;
         width: 360px;
@@ -187,33 +213,39 @@ page-home {
             }
         }
     }
+    /* best & sale 화면 종료 */
 
-    .best-nav-menu{
-        width:  100%;
-        height: 40px;
+    /* event 화면 시작 */
+    .event-scroll{
+        height: 92%;
+        width: 100%;
+        ion-grid{
+            width: 344px;
+            height: 100%;
+            margin: 0px 8px;
+            padding: 0;
 
-        ion-segment{
-            display: block;
-            white-space: nowrap;
-            font-size: 0;
-            overflow: auto;
-
-            &::-webkit-scrollbar {
-                width: 0;
-                height: 0;
-                display: none;
+            ion-row{
+                margin-bottom: 8px;
+                width: 344px;
+                height: 168px;
             }
 
-            ion-segment-button.segment-button {
-                display: inline-block;
-                width: 60px;
-                height: 40px;
+            // 마지막 row
+            ion-row:last-child{
+
             }
         }
+
+        ::-webkit-scrollbar {
+            width: 0px;  /* remove scrollbar space */
+            background: transparent;  /* optional: just make scrollbar invisible */
+        }
+        /* optional: show position indicator in red */
+        ::-webkit-scrollbar-thumb {
+            background: #FF0000;
+        }
     }
-
-   
-
-
+    /* event 화면 종료 */
     $segment-button-md-text-color-activated:black;
 }

@@ -3,6 +3,7 @@
 </ion-header>
 
 <ion-content>
+    <!-- home navigation segment start-->
     <ion-grid no-margin no-padding class="home-nav-menu">
         <ion-row>
             <ion-col *ngFor="let category of homeCategories">
@@ -14,6 +15,7 @@
             </ion-col>
         </ion-row>
     </ion-grid>
+    <!-- home navigation segment end -->
 
     <!-- recommand page start -->
     <ion-scroll scrollY="true" class="home-scroll" *ngIf="homeCategorySelected==homeCategories[0]"> 
@@ -45,16 +47,16 @@
     </ion-scroll>
     <!-- recommand page end -->
 
-    <!-- best page start -->
-    <div class="best-nav-menu" *ngIf="homeCategorySelected==homeCategories[1]">
-        <ion-segment #categorySegment [(ngModel)]="bestCategorySelected">
+    <!-- best page & sale page start -->
+    <div class="best-nav-menu" *ngIf="homeCategorySelected==homeCategories[1] || homeCategorySelected==homeCategories[2]">
+        <ion-segment [(ngModel)]="bestCategorySelected">
             <ion-segment-button [value]="category" (click)="bestCategoryChange(category)" *ngFor="let category of bestCategories">
                 {{category}}
             </ion-segment-button>
         </ion-segment>
     </div>
 
-    <ion-scroll scrollY="true" class="best-scroll" *ngIf="homeCategorySelected==homeCategories[1]">
+    <ion-scroll scrollY="true" class="best-scroll" *ngIf="homeCategorySelected==homeCategories[1] || homeCategorySelected==homeCategories[2]">
         <div left class="best-sort-option">
             <select [(ngModel)]="productSortOptionSelected" >
                 <option [value]="productSortOption" *ngFor="let productSortOption of productSortOptions">{{productSortOption}}</option>
@@ -80,4 +82,16 @@
             </ion-row>
         </ion-grid>
     </ion-scroll>
+    <!-- best page & sale page end -->
+    
+    <!-- event page start -->
+    <ion-scroll scrollY="true" class="event-scroll" *ngIf="homeCategorySelected==homeCategories[3]">
+        <ion-grid>
+            <ion-row *ngFor="let event of events">
+                <img src="{{event}}"/>
+            </ion-row>
+        </ion-grid>
+    </ion-scroll>
+    <!-- event page end -->
+
 </ion-content>
