@@ -1,6 +1,8 @@
 {
   "name": "getLucky",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular",
   "pro_id": "7bce2940"
 }
