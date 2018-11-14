@@ -46,7 +46,6 @@ export class HomePage {
       } else {
         this.products[i].salePrice = this.products[i].price;
       }
-      console.log(this.products[i].salePrice);
     }
   }
 
