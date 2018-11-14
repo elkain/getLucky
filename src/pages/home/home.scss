@@ -1,52 +1,25 @@
 page-home {
+    // margin padding 모두 dp 로 추후 수정 필요
+    overflow-y: hidden;
 
     /* home navigation 화면 시작*/
     .home-nav-menu{
         width: 100%;
         height: 42px;
-        position: block;
-        color:white;
 
         .segment-button .segment-md{
             width: 90px;
             height: 49px;
-            color: black;
         }
     }
     /* home navigation 화면 종료*/
 
     /* recommand 화면 시작 */
-    .recommand-product{
-        height: 100%;
-        width: 360px;
-        margin: 0;
-        background-color: color($colors,default);
-    }
-
-    .home-slide{
-        height: 168px;
-        width: 344px;
-        margin: 0px 8px 8px 8px;
-        cursor:pointer;
-
-        .home-slide-child{
-            width: 100%;
-            background-size:100%;
-        }
-
-        .btnPrev .brnNext{
-            height: 64px;
-            width: 64px;
-        }
-
-        .button-md{
-            font-size:28px;
-        }
-    }
-
     .home-scroll{
-        height: 100%;
-        width:  360px;
+        height: 92%;
+        width:  100%;
+        background-color: color($colors,default);
+
         ::-webkit-scrollbar {
             width: 0px;  /* remove scrollbar space */
             background: transparent;  /* optional: just make scrollbar invisible */
@@ -55,39 +28,59 @@ page-home {
         ::-webkit-scrollbar-thumb {
             background: #FF0000;
         }
-    }
+        
+        .home-slide{
+            height: 168px;                          // 추후 dp로 수정 필요
+            width: 344px;                           // 추후 dp로 수정 필요
+            margin: 0px 8px 8px 8px;            
+            cursor:pointer;
 
-    .home-product-list{
-        padding: 0;
-        margin: 16px 8px 0px 8px;
+            .home-slide-child{
+                background-size:100%;
+            }
 
-        width : 344px;
-        height: 100%;
+            .btnPrev .brnNext{
+                height: 64px;
+                width: 64px;
+            }
 
-        .button-md{
+            .button-md{
+                font-size:28px;
+            }
+        }
+
+        .home-product-list{
             padding: 0;
-            margin: 0;
-            width:100%;
-            height: 168px;
-            box-shadow: none;
-            background-color: white;
-            margin-bottom: 8px;
+            margin: 16px 8px 0px 8px;
 
-            ion-item{
-                width: 100%;
-                height: 168px;
+            width : 344px;
+            height: 100%;
+
+            .button-md{
                 padding: 0;
-                
-                ion-thumbnail{
-                    width: 168px;
-                    height: 168px;
-                    padding:0;
-                    margin:0px 8px 0px 0px;
+                margin: 0;
+                width:100%;
+                height: 168px;
+                box-shadow: none;
+                background-color: white;
+                margin-bottom: 8px;
 
-                    img{
-                        width: 100%;
-                        height: 100%;
-                        background-size: 100%;
+                ion-item{
+                    width: 100%;
+                    height: 168px;
+                    padding: 0;
+                    
+                    ion-thumbnail{
+                        width: 168px;
+                        height: 168px;
+                        padding:0;
+                        margin:0px 8px 0px 0px;
+
+                        img{
+                            width: 100%;
+                            height: 100%;
+                            background-size: 100%;
+                        }
                     }
                 }
             }
@@ -116,15 +109,17 @@ page-home {
                 display: inline-block;
                 width: 60px;
                 height: 40px;
+                font-size:12px;
             }
         }
     }
 
     .best-scroll{
-        height: 100%;
-        width: 360px;
+        height: 90%;
+        width: 100%;
         margin: 0;
         background-color: color($colors,default);
+        
         
         ::-webkit-scrollbar {
             width: 0px;  /* remove scrollbar space */
@@ -136,7 +131,7 @@ page-home {
         }
 
         .best-sort-option{
-            width: 344px;
+            width: 344px;               // 나중에 dp 단위로 수정 필요
             height: 40px;
             margin: 0px 8px;
             background-color: color($colors,default);
@@ -159,37 +154,35 @@ page-home {
 
         .best-product-list{
             padding:0;
-            margin-bottom: 80px;
             width: 100%;
             height: 100%;
 
             ion-row{
                 margin:0px 4px;
-                width: 352px;
+                width: 352px;           // 추후 dp로 수정 필요
                 height: 100%;
             }
 
             ion-col{
-                width: 172px;
-                height: 268px;
+                height: 268px;          // 추후 dp로 수정 필요
                 padding:0;
                 margin-bottom: 16px;
             }
 
             .best-product{
                 margin:0px 4px;
-                width: 168px;
-                height: 268px;
+                width: 168px;           // 추후 dp로 수정 필요
+                height: 268px;          // 추후 dp로 수정 필요
 
                 img{
-                    width:168px;
-                    height:168px;
+                    width:168px;        // 추후 dp로 수정 필요
+                    height:168px;       // 추후 dp로 수정 필요
                     background-size: 100%;
                 }
 
                 ion-card-content{
-                    width: 168px;
-                    height: 100px;
+                    width: 168px;       // 추후 dp로 수정 필요
+                    height: 100px;      // 추후 dp로 수정 필요
                     padding: 16px 8px;
 
                     ion-card-title{

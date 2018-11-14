@@ -19,31 +19,29 @@
 
     <!-- recommand page start -->
     <ion-scroll scrollY="true" class="home-scroll" *ngIf="homeCategorySelected==homeCategories[0]"> 
-        <div class="recommand-product">
-            <ion-slides pager class="home-slide" >
-                <ion-slide class="home-slide-child" *ngFor="let image of images" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
-                    <button type="submit" float-left ion-button outline clear color="black" class="btnPrev" (click)="prev()">  
-                        <ion-icon name="ios-arrow-back"></ion-icon>
-                    </button>
-                    <button type="submit" float-right ion-button outline clear color="black" class="btnNext" (click)="next()">
-                        <ion-icon name="ios-arrow-forward"></ion-icon>
-                    </button>
-                </ion-slide>
-            </ion-slides>
-        
-            <ion-list class="home-product-list">
-                <button ion-button no-border *ngFor="let product of products" (click)="itemSelected(product)">
-                    <ion-item>
-                        <ion-thumbnail item-start>
-                            <img src="{{product.imagePath}}">
-                        </ion-thumbnail>
-                        <h2>{{product.name}}</h2>
-                        <p><del>{{product.price}}</del></p>
-                        <p>{{product.salePrice}}</p>
-                    </ion-item>
+        <ion-slides pager class="home-slide" >
+            <ion-slide class="home-slide-child" *ngFor="let image of images" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
+                <button type="submit" float-left ion-button outline clear color="black" class="btnPrev" (click)="prev()">  
+                    <ion-icon name="ios-arrow-back"></ion-icon>
                 </button>
-            </ion-list>
-        </div>
+                <button type="submit" float-right ion-button outline clear color="black" class="btnNext" (click)="next()">
+                    <ion-icon name="ios-arrow-forward"></ion-icon>
+                </button>
+            </ion-slide>
+        </ion-slides>
+    
+        <ion-list class="home-product-list">
+            <button ion-button no-border *ngFor="let product of products" (click)="itemSelected(product)">
+                <ion-item>
+                    <ion-thumbnail item-start>
+                        <img src="{{product.imagePath}}">
+                    </ion-thumbnail>
+                    <h2>{{product.name}}</h2>
+                    <p><del>{{product.price}}</del></p>
+                    <p>{{product.salePrice}}</p>
+                </ion-item>
+            </button>
+        </ion-list>
     </ion-scroll>
     <!-- recommand page end -->
 
