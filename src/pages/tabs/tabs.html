@@ -1,4 +1,4 @@
-<ion-header no-border no-shadow>
+<ion-header no-border no-shadow *ngIf="selectedTab!=2">
   <ion-toolbar no-border no-padding no-shadow>
     <ion-title class="market-title">
       <button ion-buttion class="title-home-button" (click)="moveToHome()"><b>{{shopTitle}}</b></button>
@@ -10,7 +10,7 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-tabs color="white">
+<ion-tabs #myTabs selectedIndex="0" (ionChange)="onTabsChange()" color="white">
   <ion-tab [root]="tab1Root" tabTitle="홈" tabIcon="home"></ion-tab>
   <ion-tab [root]="tab2Root" tabTitle="카테고리" tabIcon="list"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="검색" tabIcon="search"></ion-tab>

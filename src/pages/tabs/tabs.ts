@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-
+import { Component, ViewChild } from '@angular/core';
+import { Tabs } from 'ionic-angular';
 import { CategoryPage } from '../category/category';
 import { SearchPage } from '../search/search';
 import { MypagePage } from '../mypage/mypage';
@@ -14,10 +14,23 @@ export class TabsPage {
   tab2Root = CategoryPage;
   tab3Root = SearchPage;
   tab4Root = MypagePage;
+  
+  shopTitle:string = "MARKET LUCKY";
 
-  shopTitle:string = "MARKET LUCKY"
+  @ViewChild('myTabs') tabRef: Tabs;
+
+  selectedTab;
+
   constructor() {
+    
+  }
 
+  ionViewDidEnter() {
+  }
+
+  public onTabsChange() {
+    this.selectedTab = this.tabRef.getSelected().index;
+    console.log(this.selectedTab);
   }
 
   moveToHome(){
