@@ -15,11 +15,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SearchPage {
 
+  searchInput: string = '';
+  recentSearchItems :string[];
+  seacrhTabSelected;
+  popularSearchItems: string[];
+  searchTabs = ['최근검색어', '인기검색어'];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.seacrhTabSelected = this.searchTabs[0];
+    this.recentSearchItems = ["A", "B", "C"];
+    this.popularSearchItems = ["가", "나", "다"];
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchPage');
+    
   }
 
+  searchTabChange(Category) {
+    let idx = this.searchTabs.indexOf(Category);
+    this.seacrhTabSelected = this.searchTabs[idx];
+  }
 }

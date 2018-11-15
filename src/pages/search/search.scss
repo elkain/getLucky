@@ -1,3 +1,113 @@
 page-search {
+    ion-header{
+        width: 100%;
+        height: 64px;
+        margin:0;
+        padding:0;
+        
+        .toolbar-title{
+            padding: 0;
+        }
+        .search-tab-bar{
+            width: 328px;
+            height: 48px;
+            margin:8px 16px;
+            padding:0;
+            .searchbar-search-icon { display:none; width:0; height:0; }
+            .searchbar-input{ box-shadow: none }
+        }
+    }
 
+    .search-nav-menu{
+        width: 100%;
+        height: 45px;
+        ion-segment{
+            height: 45px;
+        }
+    }
+
+    .recent-search-list{
+        height: 92%;
+        width : 100%;
+        margin:0;
+
+        ion-item-divider{
+            width: 100%;
+            height: 45px;
+            padding:0;
+            border-bottom: 1px solid color($colors, default);
+
+            .recent-list-name{
+                height: 45px;
+                width: 316px;
+                margin:0;
+                padding:0;
+                font-size:16px;
+                color:gray;
+                font-weight: 300;
+            }
+
+            .recent-list-icon{
+                height: 45px;
+                width: 44px;
+                margin:0;
+                padding:0;
+
+                ion-icon{
+                    height: 36px;
+                    width: 36px;
+                    margin-right:8px;
+                    padding:6px 0;
+                    font-size:24px;
+                    text-align: center;
+                    color:gray;
+                }
+            }
+        }
+    }
+
+    .popular-search-list{
+        height: 92%;
+        width : 100%;
+        margin:0;
+
+        ion-item-divider{
+            width: 100%;
+            height: 45px;
+            padding:0;
+            border-bottom: 1px solid color($colors, default);
+            
+            .popular-list-number{
+                width: 44px;
+                height: 45px;
+                margin: 0;
+                padding:0;
+
+                p{
+                    margin: 5px 0 5px 8px;
+                    width:36px;
+                    height: 36px;
+                    font-size: 18px;
+                    text-align: center;
+                    padding: 7px 0px;
+                }
+            }
+
+            .popular-list-name{
+                width: 316px;
+                height: 45px;
+                margin: 0;
+                padding:0;
+
+                p{
+                    margin: 0;
+                    width:100%;
+                    height: 100%;
+                    font-size: 14px;
+                    text-align: center;
+                    padding: 7px 0px;
+                }
+            }
+        }
+    }
 }
