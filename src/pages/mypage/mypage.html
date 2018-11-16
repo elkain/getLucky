@@ -4,15 +4,71 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header no-shadow no-border>
 
-  <ion-navbar>
-    <ion-title>mypage</ion-title>
-  </ion-navbar>
-
+  
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <!-- 상단 회원 비회원 선택 탭 -->
+  <ion-grid no-margin no-padding class="login-nav-menu">
+    <ion-row>
+      <ion-col *ngFor="let loginTab of loginTabs">
+        <ion-segment [(ngModel)]="loginTabsSelected">
+          <ion-segment-button [value]="loginTab" (click)="loginTabChange(loginTab)">
+            {{loginTab}}
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
+  <!-- 회원 탭 시작 -->
+  <!-- 아이디 비번 입력창 -->
+  <ion-list class="login–input-area" *ngIf="loginTabsSelected=='회원'">
+    <ion-item class="id-input">
+      <ion-input type="text" [placeholder]="usernamePlaceHolder" [(ngModel)]="username"></ion-input>
+    </ion-item>
+    <ion-item class="pwd-input">
+      <ion-input type="text" [placeholder]="passwordPlaceHolder" [(ngModel)]="password"></ion-input>
+    </ion-item>
+    <ion-item class="auto-login-check">
+      <ion-label><b>자동로그인</b></ion-label>
+      <ion-checkbox color="white" mode="md" checked="false"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+  <!-- 로그인 회원가입 버튼 -->
+  <ion-grid class="login-button-area" *ngIf="loginTabsSelected=='회원'">
+    <ion-row  class="login-button">
+      <button full ion-button>로그인</button>
+    </ion-row>
+    <ion-row  class="register-button">
+      <button full ion-button>회원가입</button>
+    </ion-row>
+    <ion-row class="find-login-inform">
+      <button clear ion-button>아이디 찾기</button><p>|</p><button clear ion-button>비밀번호 찾기</button>
+    </ion-row>
+  </ion-grid>
+  <!-- 회원 탭 끝 -->
+
+  <!-- 비회원 탭 시작 -->
+  <!-- 주문자 명 주문 번호 입력 -->
+  <ion-list class="nonlogin-input-area" *ngIf="loginTabsSelected=='비회원'">
+    <ion-item class="order-name-input">
+      <ion-input type="text" [placeholder]="orderNamePlaceHolder" [(ngModel)]="orderName"></ion-input>
+    </ion-item>
+    <ion-item class="order-number-input">
+      <ion-input type="text" [placeholder]="orderNumberPlaceHolder" [(ngModel)]="orderNumber"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <!-- 주문자 확인 버튼 -->
+  <ion-grid class="login-button-area" *ngIf="loginTabsSelected=='비회원'">
+    <ion-row class="login-button">
+      <button full ion-button>주문확인</button>
+    </ion-row>
+  </ion-grid>
+  <!-- 비회원 탭 종료 -->
 </ion-content>
