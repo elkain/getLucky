@@ -8,6 +8,7 @@ import { CategoryPageModule } from '../pages/category/category.module';
 import { SearchPageModule } from '../pages/search/search.module';
 import { MypagePageModule } from '../pages/mypage/mypage.module';
 import { TabsPage } from '../pages/tabs/tabs';
+import { ShoppingbasketPageModule } from '../pages/shoppingbasket/shoppingbasket.module';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -23,6 +24,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CategoryPageModule,
     SearchPageModule,
     MypagePageModule,
+    ShoppingbasketPageModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
