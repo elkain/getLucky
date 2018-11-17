@@ -25,14 +25,14 @@ export class TabsPage {
     
   }
 
-  ionViewDidEnter() {
-  }
-
   public onTabsChange() {
     this.selectedTab = this.tabRef.getSelected().index;
   }
 
   moveToHome(){
-
+    if(this.selectedTab==0){
+      window.location.reload();
+    }
+    this.tabRef.select(0);
   }
 }

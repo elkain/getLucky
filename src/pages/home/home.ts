@@ -49,12 +49,13 @@ export class HomePage {
     }
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.homeCategorySelected = this.homeCategories[0];
     this.bestCategorySelected = this.bestCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
+    console.log("[HomePage] ionViewDidEnter");
   }
-
+  
   next() {
     this.slides.slideNext();
   }
