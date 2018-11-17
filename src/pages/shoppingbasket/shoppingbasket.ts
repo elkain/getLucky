@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
@@ -22,4 +22,7 @@ export class ShoppingbasketPage {
     console.log('ionViewDidLoad ShoppingbasketPage');
   }
 
+  goToHome(){
+    this.navCtrl.parent.select(0);
+  }
 }
