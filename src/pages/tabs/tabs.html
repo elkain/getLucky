@@ -1,10 +1,10 @@
-<ion-header no-border no-shadow *ngIf="selectedTab!=2">
+<ion-header no-border no-shadow *ngIf="showHeader==true">
   <ion-toolbar no-border no-padding no-shadow>
     <ion-title class="market-title">
       <button ion-buttion class="title-home-button" (click)="moveToHome()"><b>{{shopTitle}}</b></button>
     </ion-title>
     <ion-buttons end>
-      <button class="home-cart">
+      <button class="home-cart" (click)="goToShoppingBasket()">
         <ion-icon name="ios-cart-outline"></ion-icon>
       </button>
     </ion-buttons>
@@ -15,4 +15,5 @@
   <ion-tab [root]="tab2Root" tabTitle="카테고리" tabIcon="list"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="검색" tabIcon="search"></ion-tab>
   <ion-tab [root]="tab4Root" tabTitle="마이럭키" tabIcon="person"></ion-tab>
+  <ion-tab [root]="tab5Root" show="false"></ion-tab>
 </ion-tabs>

@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { Tabs } from 'ionic-angular';
+import { Tabs, NavController } from 'ionic-angular';
 import { CategoryPage } from '../category/category';
 import { SearchPage } from '../search/search';
 import { MypagePage } from '../mypage/mypage';
 import { HomePage } from '../home/home';
+import { ShoppingbasketPage } from '../shoppingbasket/shoppingbasket';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -14,19 +15,27 @@ export class TabsPage {
   tab2Root = CategoryPage;
   tab3Root = SearchPage;
   tab4Root = MypagePage;
+  tab5Root = ShoppingbasketPage;
   
   shopTitle:string = "MARKET LUCKY";
 
   @ViewChild('myTabs') tabRef: Tabs;
 
   selectedTab;
+  showHeader;
 
-  constructor() {
+  constructor(public navCtrl: NavController) {
     
   }
 
   public onTabsChange() {
     this.selectedTab = this.tabRef.getSelected().index;
+    
+    if (this.selectedTab == 2 || this.selectedTab == 4){
+      this.showHeader = false;
+    }else{
+      this.showHeader = true;
+    }
   }
 
   moveToHome(){
@@ -34,5 +43,9 @@ export class TabsPage {
       window.location.reload();
     }
     this.tabRef.select(0);
+  }
+
+  goToShoppingBasket(){
+    this.tabRef.select(4);
   }
 }
