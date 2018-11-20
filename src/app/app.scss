@@ -34,6 +34,27 @@ page-tabs{
             height: 100%;
             text-align: center;
         }
+
+        .back-arrow{
+            margin:0;
+            padding:0;
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+
+            button{
+                margin:0;
+                width: 40px;
+                height: 40px;
+                font-size:18px;
+
+                .button-inner{
+                    color:white;
+                }
+            }
+        }
     }
 
     .scroll-content{overflow-y: hidden;}

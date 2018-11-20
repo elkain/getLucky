@@ -1,5 +1,10 @@
 <ion-header no-border no-shadow *ngIf="showHeader==true">
   <ion-toolbar no-border no-padding no-shadow>
+    <ion-buttons class="back-arrow" start *ngIf="selectedTab==5">
+      <button full ion-button icon-only color='white' (click)="moveToHome()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title class="market-title">
       <button ion-buttion class="title-home-button" (click)="moveToHome()"><b>{{shopTitle}}</b></button>
     </ion-title>

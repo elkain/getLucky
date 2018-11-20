@@ -65,7 +65,7 @@ export class HomePage {
   }
 
   itemSelected(item){
-
+    this.navCtrl.parent.select(5);
   }
 
   slideItemSelect(){
