@@ -39,7 +39,7 @@ page-productdetail {
             }
         }
     }
-    
+
     .title-home-button{
         text-align: center;
         color: color($colors, light);
@@ -75,5 +75,132 @@ page-productdetail {
     .tabbar{
         width:100%;
         height: 50px;
+    }
+
+    .product-detail-scroll{
+        width: 100%;
+        height: 844px;
+        background-color : color($colors,default);
+        //margin-bottom: 66px;
+
+        .product-detail-list{
+            width: 100%;
+            
+            margin: 0;
+            border:1px solid color($colors,default);
+            border-top:none;
+
+            ion-item{
+                padding:0;
+            }
+
+            ion-label{
+                margin : 0;
+                padding: 0;
+            }
+
+            .product-detail-img{
+                width: 100%;
+                height: 360px;
+                margin-bottom: 16px;
+
+                .item-inner{
+                    padding : 0;
+                    border:0;
+                    height: 360px;
+                }
+
+                .label{
+                    height: 360px;
+                }
+
+                img{
+                    width: 100%;
+                    height: 360px;
+                    background-size: 100%;
+                }
+            }
+
+            .product-detail-name, .product-detail-price, .product-detail-delivery{
+                width: 100%;
+                height: 48px;
+
+                .item-inner{
+                    border: 0;
+                    padding-left: 8px;
+                    padding-right: 0px;
+                }
+
+                del{
+                    font-size:12px;
+                }
+            }
+
+            .product-detail-delivery{
+                border-top:1px solid color($colors,default);
+                height: 36px;
+                min-height: 36px;
+                margin-bottom:8px;
+            }
+
+            .product-detail{
+                width: 100%;
+                height: 327px;
+
+                .item-inner{
+                    padding:0;
+                }
+
+                .label{
+                    text-align: center;
+                    font-size:24px;
+                }
+            }
+        }
+    }
+
+    ion-footer{
+        height: 66px;
+
+        .product-detail-tabs{
+            position: absolute;
+            z-index: 10;
+            width: 100%;
+            bottom:0;
+            left: 0;
+            padding:0;
+            background-color: color($colors,default);
+
+            ion-row{
+                height: 66px;
+                padding: 0 8px;
+
+                ion-col{
+                    padding:0;
+                    margin:0;
+                }
+
+                button{
+                    height: 50px;
+                    width: 100%;
+                    padding:0;
+                    margin:8px 0;
+                }
+
+                .basket-button{
+                    background-color: white;
+                    color:black;
+                    font-weight: 600;
+                    font-size:16px;
+                }
+
+                .order-button{
+                    background-color: color($colors,title);
+                    color:white;
+                    font-weight: 600;
+                    font-size:16px;
+                }
+            }
+        }
     }
 }

@@ -23,6 +23,36 @@
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <ion-scroll scollY="true" class="product-detail-scroll">
+    <ion-list class="product-detail-list">
+      <ion-item class="product-detail-img">
+        <img src="./assets/slides/slide1.png">
+      </ion-item>
+      <ion-item class="product-detail-name">
+        상품명
+      </ion-item>
+      <ion-item class="product-detail-price">
+        혜택가 <del>판매가</del>
+      </ion-item>
+      <ion-item class="product-detail-delivery">
+        배송비 3,000원 (3만원 이상 무료)
+      </ion-item>
+      <ion-item class="product-detail">
+        상세/정보 고시
+      </ion-item>
+    </ion-list>
+  </ion-scroll>
 </ion-content>
+<ion-footer>
+  <ion-grid class="product-detail-tabs">
+    <ion-row>
+      <ion-col col-6>
+        <button class="basket-button" ion-button clear>장바구니</button>
+      </ion-col>
+      <ion-col col-6>
+        <button class="order-button" ion-button clear>주문하기</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
