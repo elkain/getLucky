@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { SignupPage } from '../signup/signup';
 
 /**
  * Generated class for the MypagePage page.
@@ -30,7 +31,7 @@ export class MypagePage {
   orderNamePlaceHolder: string = "주문자명";
   orderNumberPlaceHolder: string = "주문번호";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
     this.loginTabsSelected = this.loginTabs[0];
   }
 
@@ -41,5 +42,9 @@ export class MypagePage {
   loginTabChange(Category){
     let idx = this.loginTabs.indexOf(Category);
     this.loginTabsSelected = this.loginTabs[idx];
+  }
+
+  moveToSignup(){
+    this.app.getRootNavs()[0].push("SignupPage");
   }
 }
