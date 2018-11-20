@@ -1,5 +1,5 @@
 import { Component, ViewChild} from '@angular/core';
-import { NavController, Slides} from 'ionic-angular';
+import { NavController, Slides, App} from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -25,7 +25,7 @@ export class HomePage {
 
   images: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private app:App) {
 
     this.products = [   // sale method : fixed, percent
       { name: "사과", price: 3000, discount: 2000, saleMethod: "fixed", saleCount: 2, imagePath: this.imageURL + "slide1.png" },
@@ -53,7 +53,6 @@ export class HomePage {
     this.homeCategorySelected = this.homeCategories[0];
     this.bestCategorySelected = this.bestCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
-    console.log("[HomePage] ionViewDidEnter");
   }
   
   next() {
@@ -65,7 +64,7 @@ export class HomePage {
   }
 
   itemSelected(item){
-    this.navCtrl.parent.select(5);
+    this.app.getRootNavs()[0].push("ProductdetailPage");
   }
 
   slideItemSelect(){

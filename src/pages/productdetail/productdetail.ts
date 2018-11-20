@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { TabsPage } from '../tabs/tabs'
 
 /**
  * Generated class for the ProductdetailPage page.
@@ -15,11 +16,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ProductdetailPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  shopTitle: string = "MARKET LUCKY";
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
+
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductdetailPage');
+    //console.log('ionViewDidLoad ProductdetailPage');
   }
 
+  backToHome(){
+    this.navCtrl.pop();
+  }
+
+  moveToHome(){
+    this.navCtrl.setRoot(TabsPage);
+  }
+
+  goToShoppingBasket() {
+    this.navCtrl.setRoot(TabsPage, { tabIndex: 4 });
+  }
 }

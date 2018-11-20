@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Tabs, NavController } from 'ionic-angular';
+import { Tabs, NavController, NavParams } from 'ionic-angular';
 import { CategoryPage } from '../category/category';
 import { SearchPage } from '../search/search';
 import { MypagePage } from '../mypage/mypage';
@@ -25,10 +25,12 @@ export class TabsPage {
   @ViewChild('myTabs') tabRef: Tabs;
 
   selectedTab;
+  tabParams;
   showHeader;
 
-  constructor(public navCtrl: NavController) {
-    
+  constructor(public navCtrl: NavController, public navParams:NavParams) {
+    this.tabParams = navParams.get("tabIndex");
+    console.log(this.tabParams);
   }
 
   public onTabsChange() {
@@ -38,6 +40,13 @@ export class TabsPage {
       this.showHeader = false;
     }else{
       this.showHeader = true;
+    }
+
+    console.log(this.tabParams);
+    
+    if (this.tabParams != undefined) {
+      this.tabRef.select(this.tabParams);
+      this.tabParams=undefined;
     }
   }
 

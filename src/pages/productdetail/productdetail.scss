@@ -1,3 +1,79 @@
 page-productdetail {
+    ion-header{
+        background-color: color($colors, title);
+        height: 50px;
+        width: 100%;
 
+        .toolbar-md{
+            min-height: 50px;
+        }
+
+        ion-title{
+            background-color: color($colors, title);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .back-arrow{
+            margin:0;
+            padding:0;
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+
+            button{
+                margin:0;
+                width: 40px;
+                height: 40px;
+                font-size:18px;
+
+                .button-inner{
+                    color:white;
+                }
+            }
+        }
+    }
+    
+    .title-home-button{
+        text-align: center;
+        color: color($colors, light);
+        background-color: color($colors, title);
+        width: 144px;
+        height: 34px;
+        font-size:18px;
+        margin:0;
+        padding:0;
+    }
+
+    .home-cart{
+        box-shadow: none;
+        background-color: color($colors, title);
+        color:color($colors, light);
+        margin-right:8px;;
+        padding:0;
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .header-md .header-ios{
+        box-shadow: none;
+        display: fixed;
+        height: 50px;
+        margin:0;
+        padding:0;
+        border:0;
+    }
+
+    .tabbar{
+        width:100%;
+        height: 50px;
+    }
 }

@@ -5,11 +5,21 @@
   Ionic pages and navigation.
 -->
 <ion-header no-shadow no-border>
-
-  <ion-navbar>
-    <ion-title>productdetail</ion-title>
-  </ion-navbar>
-
+  <ion-toolbar no-border no-padding no-shadow>
+    <ion-buttons class="back-arrow" start>
+      <button full ion-button icon-only color='white' (click)="backToHome()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title class="market-title">
+      <button ion-buttion class="title-home-button" (click)="moveToHome()"><b>{{shopTitle}}</b></button>
+    </ion-title>
+    <ion-buttons end>
+      <button class="home-cart" (click)="goToShoppingBasket()">
+        <ion-icon name="ios-cart-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 
