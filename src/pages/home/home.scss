@@ -115,7 +115,7 @@ page-home {
     }
 
     .best-scroll{
-        height: 90%;
+        height: 85%;
         width: 100%;
         margin: 0;
         background-color: color($colors,default);
@@ -174,10 +174,17 @@ page-home {
                 width: 168px;           // 추후 dp로 수정 필요
                 height: 268px;          // 추후 dp로 수정 필요
 
-                img{
+                .best-product-img{
+                    margin:0;
+                    padding:0;
                     width:168px;        // 추후 dp로 수정 필요
                     height:168px;       // 추후 dp로 수정 필요
-                    background-size: 100%;
+
+                    img{
+                        width:168px;        // 추후 dp로 수정 필요
+                        height:168px;       // 추후 dp로 수정 필요
+                        background-size: 100%;
+                    }
                 }
 
                 ion-card-content{
