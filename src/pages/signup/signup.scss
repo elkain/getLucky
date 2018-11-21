@@ -1,3 +1,278 @@
 page-signup {
 
+    
+    ion-header{
+
+        height: 50px;
+
+        .toolbar{
+            padding: 0;
+            height: 50px;
+            min-height: 50px;
+
+            .toolbar-background{
+                background-color: color($colors, title);
+            }
+
+            .back-button{
+                color:white;
+                min-width: 40px;
+                width: 40px;
+                height: 40px;
+                padding: 0;
+                margin: 0;
+                margin-left: 8px;
+
+                .back-button-icon{
+                    font-size:32px;
+                    padding:0;
+                }
+            }
+
+            .toolbar-title{
+                color:white;
+                text-align: center;
+                padding-right:48px;
+                padding-left:0;
+                font-weight: 600;
+            }
+        }
+    }
+
+    .scroll-content{
+        background-color: color($colors,default);
+        overflow: hidden;
+    }
+
+    .signup-grid{
+        width:344px;
+        height: auto;
+        margin:8px;
+        padding:8px 0px 0px 8px;
+        background-color: white;
+        
+        /* 공통 부분 시작 */
+        ion-row{
+            margin:0;
+            margin-bottom: 8px;
+            padding:0;
+            height: 32px;
+
+            div{
+                width:100px;
+
+                p{
+                    margin:0;
+                    margin-top:7px;
+                    font-size:14px;
+                    font-weight: 600;
+                }
+            }
+
+            ion-input{
+                border: 1px solid color($colors,default);
+
+                .text-input{
+                    margin: 0;
+                    height: 100%;
+                    width: 100%;
+                    font-size:16px;
+                    padding-left:8px;
+                }
+
+                ::-webkit-input-placeholder {
+                    font-size:14px;
+                }
+
+                :-moz-placeholder {
+                    font-size:14px;
+                }
+
+                :-ms-input-placeholder { 
+                    font-size:14px;
+                }
+            }
+            
+            button{
+                margin: 0;
+                padding: 0;
+                background-color: color($colors,default);
+                color:black;
+                height: 32px;
+                font-size:14px;
+                border:1px solid gray;
+            }
+        }
+        /* 공통 부분 끝 */
+
+        /* 아이디 입력 */
+        .signup-id{
+            .id-input{
+                margin-right:16px;
+            }
+
+            .id-confirm{
+                width:100px;
+                border:1px solid gray;
+            }
+        }
+        
+        /* 비빌번호 입력과 이름은 공통 사항으로 충분 */
+        //.signup-pwd{}
+        //.signup-name{}
+
+        /* 이메일 입력 */
+        .signup-email{
+            span{
+                width:16px;
+                
+                p{
+                    margin:6px 0px;
+                    text-align: center;
+                    font-size:16px;
+                }
+            }
+            
+            .email-input2{
+                width:100px;
+                border:1px solid color($colors,default);
+                -webkit-appearance:none; 
+                -moz-appearance:none;
+                background: url('../../assets/icon/ios-arrow-down.png');
+                background-size:28px;
+                background-repeat:no-repeat;
+                background-position: 98% 2px;
+            }
+        }
+
+        /* 전화 번호 입력 */
+        .signup-phone{
+            
+            margin-bottom: 2px;
+
+            .phone-input-area{
+                width:120px;
+                border: 1px solid color($colors,default);
+                margin-right:16px;
+
+                .input{
+                    display: block;
+                    float:left;
+                    width:32px;
+                    height: 32px;
+                    margin:0;
+                    border:none;
+
+                    .text-input{
+                        padding:0;
+                        font-size:14px;
+                    }
+                }
+
+                .input:first-child{
+                    padding-left:5px;
+                }
+
+                span{
+                    width: 12px;
+                    height: 32px;
+
+                    P{
+                        width:11px;
+                        float: left;
+                        margin: 0;
+                        margin-top:2px;
+                        text-align: center;
+                        font-size:22px;
+                        font-weight: 200;
+                    }
+                }
+                
+            }
+
+            .phone-confirm{
+                width:100px;
+            }
+
+            .phone-confirm-num{
+                margin-right:16px;
+            }
+        }
+
+        /* 주소 입력 */
+        .signup-addr{
+            margin-bottom: 2px;
+
+            .addr-find{
+                width:64px;
+            }
+
+            .addr-input1{
+                margin-left:12px;
+            }
+        }
+
+        /* 생년월일 입력 */
+        .signup-birth{
+            margin-bottom: 2px;
+            .year, .month, .day{
+                width:68px;
+                
+                ::-webkit-input-placeholder {
+                    padding-right: 8px;
+                    text-align: center;
+                }
+
+                :-moz-placeholder {
+                    text-align: center;
+                }
+
+                :-ms-input-placeholder { 
+                    text-align: center;
+                }
+                
+            }
+
+            span{
+                width: 16px;
+
+                p{
+                    margin:5px 0;
+                    text-align: center;
+                    font-size:18px;
+                    font-weight: 600;
+                    color:color($colors,default);
+                }
+            }
+        }
+
+        /* 성별 입력 */
+        .signup-sex{
+            margin-bottom: 2px;
+
+            .male, .female{
+                width:117px;
+                border:1px solid color($colors,default);
+                text-align: center;
+                font-size: 16px;
+                font-weight: 800;
+            }
+
+            .male{
+                margin-right: 1px;
+            }
+        }
+    }
+
+    /*  가입하기 버튼 */
+    .signup-submit{
+        margin:8px;
+        padding:0;
+        width:344px;
+        height:50px;
+        background-color: color($colors,title);
+        color:white;
+        font-size:20px;
+        font-weight: 600;
+    }
 }

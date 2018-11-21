@@ -15,6 +15,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SignupPage {
 
+  emailOption;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
@@ -22,4 +24,7 @@ export class SignupPage {
     console.log('ionViewDidLoad SignupPage');
   }
 
+  emailOptionChange(){
+    
+  }
 }

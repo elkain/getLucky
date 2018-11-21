@@ -4,15 +4,112 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header no-shadow no-border>
 
   <ion-navbar>
-    <ion-title>signup</ion-title>
+    <ion-title>회원가입</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <ion-grid class="signup-grid">
+    <!-- 아이디 입력 -->
+    <ion-row class="signup-id">
+      <div class="signup-label">
+        <p>아이디*</p>
+      </div>
+      <ion-input class="id-input" type="text"></ion-input>
+      <button class="id-confirm" clear ion-button>중복확인</button>
+    </ion-row>
+    <!-- 비밀번호 입력 -->
+    <ion-row class="signup-pwd">
+      <div class="signup-label">
+        <p>비밀번호*</p>
+      </div>
+      <ion-input class="pwd-input" type="password"></ion-input>
+    </ion-row>
+    <!-- 비밀번호 확인 입력 -->
+    <ion-row class="signup-pwd-confirm">
+      <div class="signup-label">
+        <p>비밀번호 확인*</p>
+      </div>
+      <ion-input class="pwd-input" type="password"></ion-input>
+    </ion-row>
+    <!-- 이름 입력 -->
+    <ion-row class="signup-name">
+      <div class="signup-label">
+        <p>이름*</p>
+      </div>
+      <ion-input class="name-input" type="text"></ion-input>
+    </ion-row>
+    <!-- 이메일 입력 -->
+    <ion-row class="signup-email">
+      <div class="signup-label">
+        <p>이메일*</p>
+      </div>
+      <ion-input class="email-input" type="text"></ion-input>
+      <span><p>@</p></span>
+      <select class="email-input2" [(ngModel)]="emailOption" (change)="emailOptionChange()">
+        <option></option>
+      </select>
+    </ion-row>
+    <!-- 휴대폰 입력 -->
+    <ion-row class="signup-phone">
+      <div class="signup-label">
+        <p>휴대폰*</p>
+      </div>
+      <div class="phone-input-area">
+        <ion-input class="phone-input" type="tel" maxlength="3"></ion-input>
+        <span><p>-</p></span>
+        <ion-input class="phone-input" type="tel" maxlength="4"></ion-input>
+        <span><p>-</p></span>
+        <ion-input class="phone-input" type="tel" maxlength="4"></ion-input>
+      </div>
+      <button clear class="phone-confirm" ion-button>인증번호 받기</button>
+    </ion-row>
+    <ion-row class="signup-phone">
+      <div class="signup-label"></div>
+      <ion-input class="phone-confirm-num" type="number"></ion-input>
+      <button clear class="phone-confirm" ion-button>인증번호 확인</button>
+    </ion-row>
+    <!-- 주소 입력 -->
+    <ion-row class="signup-addr">
+      <div class="signup-label">
+        <p>주소</p>
+      </div>
+      <button clear class="addr-find" ion-button>주소 찾기</button>
+      <ion-input class="addr-input1" type="text"></ion-input>
+    </ion-row>
+    <ion-row class="signup-addr">
+      <div class="signup-label"></div>
+      <ion-input class="addr-input2" type="text"></ion-input>
+    </ion-row>
+    <ion-row class="signup-addr">
+      <div class="signup-label"></div>
+      <ion-input class="addr-input2" placeholder="상세 주소를 입력해 주세요" type="text"></ion-input>
+    </ion-row>
+    <!-- 생년월일 입력 -->
+    <ion-row class="signup-birth">
+      <div class="signup-label">
+        <p>생년월일</p>
+      </div>
+      <ion-input class="year" placeholder="YYYY" type="number"></ion-input>
+      <span><p>/</p></span>
+      <ion-input class="month" placeholder="MM" type="number"></ion-input>
+      <span><p>/</p></span>
+      <ion-input class="day" placeholder="DD" type="number"></ion-input>
+    </ion-row>
+    <!-- 성별 입력 -->
+    <ion-row class="signup-sex">
+      <div class="signup-label">
+        <p>성별</p>
+      </div>
+      <div class="male" #male><p>남자</p></div>
+      <div class="female" #female><p>여자</p></div>
+    </ion-row>
+  </ion-grid>
+  <!-- 가입하기 버튼 -->
+  <button class="signup-submit" clear full ion-button>가입하기</button>
 </ion-content>
