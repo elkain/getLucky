@@ -142,6 +142,12 @@ page-home {
                 border : none;
                 float:right;
                 background-color: color($colors,default);
+                -webkit-appearance:none; 
+                -moz-appearance:none;
+                background: url('../../assets/icon/ios-arrow-down.png');
+                background-size:24px;
+                background-repeat:no-repeat;
+                background-position: 98% 9px;
 
                 option{
                     height: 40px;
