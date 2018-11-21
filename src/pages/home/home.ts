@@ -80,4 +80,8 @@ export class HomePage {
     let idx = this.bestCategories.indexOf(Category);
     this.bestCategorySelected = this.bestCategories[idx];
   }
+
+  productsOptionChange(){
+    console.log('productOptionChange:', this.productSortOptionSelected);
+  }
 }
