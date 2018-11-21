@@ -15,9 +15,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SignupPage {
 
+  titleColor = "#3498DB";
+  whiteColor = "#ffffff";
+
   emailOption;
+  sex;
+  male;
+  female;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.male = this.whiteColor;
+    this.female = this.whiteColor;
   }
 
   ionViewDidLoad() {
@@ -26,5 +34,17 @@ export class SignupPage {
 
   emailOptionChange(){
     
+  }
+
+  selectMale(){
+    this.sex = "male";
+    this.male = this.titleColor;
+    this.female = this.whiteColor;
+  }
+
+  selectFemale(){
+    this.sex = "female";
+    this.male = this.whiteColor;
+    this.female = this.titleColor;
   }
 }

@@ -106,8 +106,8 @@
       <div class="signup-label">
         <p>성별</p>
       </div>
-      <div class="male" #male><p>남자</p></div>
-      <div class="female" #female><p>여자</p></div>
+      <div class="male" [style.background-color]="male" (click)="selectMale()"><p>남자</p></div>
+      <div class="female" [style.background-color]="female" (click)="selectFemale()"><p>여자</p></div>
     </ion-row>
   </ion-grid>
   <!-- 가입하기 버튼 -->
