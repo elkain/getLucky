@@ -1,5 +1,6 @@
 import { Component} from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { OrderPage } from '../order/order';
 
 /**
  * Generated class for the ShoppingbasketPage page.
@@ -15,7 +16,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ShoppingbasketPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
   }
 
   ionViewDidLoad() {
@@ -24,5 +25,9 @@ export class ShoppingbasketPage {
 
   goToHome(){
     this.navCtrl.parent.select(0);
+  }
+
+  goToOrder(){
+    this.app.getRootNavs()[0].push("OrderPage");
   }
 }
