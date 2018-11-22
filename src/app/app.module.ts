@@ -11,6 +11,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { ShoppingbasketPageModule } from '../pages/shoppingbasket/shoppingbasket.module';
 import { ProductdetailPageModule } from '../pages/productdetail/productdetail.module';
 import { SignupPageModule } from '../pages/signup/signup.module';
+import { OrderPageModule } from '../pages/order/order.module';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -29,6 +30,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ShoppingbasketPageModule,
     ProductdetailPageModule,
     SignupPageModule,
+    OrderPageModule,
     IonicModule.forRoot(MyApp,{
       scrollPadding: false,
       scrollAssist: false
