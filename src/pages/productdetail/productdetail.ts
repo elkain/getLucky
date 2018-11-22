@@ -23,7 +23,7 @@ export class ProductdetailPage {
   }
 
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad ProductdetailPage');
+    console.log('ionViewDidLoad ProductdetailPage');
   }
 
   backToHome(){

@@ -82,6 +82,6 @@ export class HomePage {
   }
 
   productsOptionChange(){
-    console.log('productOptionChange:', this.productSortOptionSelected);
+    
   }
 }

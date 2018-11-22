@@ -30,7 +30,6 @@ export class TabsPage {
 
   constructor(public navCtrl: NavController, public navParams:NavParams) {
     this.tabParams = navParams.get("tabIndex");
-    console.log(this.tabParams);
   }
 
   public onTabsChange() {
