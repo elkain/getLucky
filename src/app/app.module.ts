@@ -32,6 +32,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SignupPageModule,
     OrderPageModule,
     IonicModule.forRoot(MyApp,{
+      mode:'md',
       scrollPadding: false,
       scrollAssist: false
     })
