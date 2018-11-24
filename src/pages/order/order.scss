@@ -1,3 +1,497 @@
 page-order {
 
+    .scroll-content{
+        background-color: color($colors,default);
+    }
+
+    /* 주문 페이지 header 시작 */
+    ion-header{
+        height: 50px;
+
+        .toolbar{
+            padding: 0;
+            height: 50px;
+            min-height: 50px;
+
+            .toolbar-background{
+                background-color: color($colors, title);
+            }
+
+            .back-button{
+                color:white;
+                min-width: 40px;
+                width: 40px;
+                height: 40px;
+                padding: 0;
+                margin: 0;
+                margin-left: 8px;
+
+                .back-button-icon{
+                    font-size:32px;
+                    padding:0;
+                }
+            }
+
+            .toolbar-title{
+                color:white;
+                text-align: center;
+                padding-right:48px;
+                padding-left:0;
+                font-weight: 600;
+            }
+        }
+    }
+    /* 주문 페이지 header 끝 */
+
+    /* 공통 정보 */
+    ion-grid{
+        background-color: white;
+    }
+
+    ion-row{
+        width:100%;
+        
+        ion-icon{
+            width: 40px;
+            height:30px;
+            display:block;
+            float:right;
+            font-size:30px;
+            margin-top:5px;
+            text-align: center;
+        }
+
+        ion-list{
+            width: 100%;
+            
+            .item{
+                height: 32px;
+                min-height: 32px;
+                padding:0;
+            }
+
+            .item-md.item-block .item-inner{
+                padding:0;
+                border:none;
+
+                .label{
+                    margin:0;
+                }
+            }
+        }
+    }
+
+    .list{
+        margin-bottom:8px;
+    }
+
+    
+
+    /* 배송정보 시작 */ 
+    .delivery-info{
+        margin:16px 8px 0px;
+        width: 344px;
+        height: auto;
+        padding:0;
+
+        .delivery-info-head{
+            background-color: white;
+            width: 100%;
+            height: 40px;
+            padding:0;
+            padding-left:8px;
+            border-bottom:2px solid color($colors,default);
+
+            .delivery-info-label{
+                height:40px;
+                padding-top:8px;
+
+                label{
+                    font-size:16px;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+
+    .delivery-segment-row{
+        height: 31px;
+        width: 100%;
+        
+        p{
+            margin:0;
+            margin-top:6px;
+            font-size:14px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .select-segment{
+            background-color: white;
+            border:none;
+            height: 31px;
+            padding: 0;
+        }   
+
+        .unselect-segment{
+            background-color: color($colors, default);
+            border-bottom:2px solid gray;
+            height: 31px;
+            padding: 0;
+            
+            p{
+                color:gray;
+            }
+        }
+    }
+
+    /* 기본 배송지 시작 */ 
+    .delivery-detail-basic{
+        width:100%;
+        height: auto;
+        margin-top:1px;
+
+        .delivery-basic-name{
+            padding-left:8px;
+
+            .name-label{
+                margin: 0;
+                width:100px;
+                display: block;
+                float:left;
+                font-weight: 800;
+            }
+        }
+
+        .delivery-basic-place{
+            width:100%;
+            height: 95px;
+            padding-left:8px;
+
+            .place-label{
+                width:100px;
+                max-width: 100px;
+                height: 95px;
+                p{
+                    color:color($colors,title);
+                    font-weight: 600;
+                }
+            }
+
+            .delivery-place{
+                width:236px;
+                min-width: 236px;
+                height:95px;
+                border:1px solid gray;
+                padding:0;
+                display:block;
+                
+                .select-text{
+                    white-space: normal;
+                    width:201px;
+                    margin:0;
+                    float: left;
+                    font-size:14px;
+                }
+
+                .select-icon{
+                    float: right;
+                    width:33px;
+                    height: 95px;
+                    background-color: color($colors,default);
+                    
+                    .select-icon-inner{
+                        border-width: 2px;
+                        border-top-width:0;
+                        border-left-width:0;
+                        border-style: solid;
+                        transform: rotate(45deg);
+                        border-color:color($colors,title);
+                        margin:0;
+                        text-align: center;
+                        top:37%;
+                        left:30%;
+                        display: block;
+                        width: 12px;
+                        height: 12px;
+                    }
+                }
+                
+                button{
+                    padding:0;
+                }
+                
+            }
+        }
+
+        .delivery-basic-phone, .delivery-basic-time, .delivery-basic-memo{
+            width:100%;
+            height: 33px;
+            padding-left:8px;
+            margin-top:2px;
+
+            .phone-label, .time-label, .memo-label{
+                width:100px;
+                max-width: 100px;
+                height: 33px;
+                float: left;
+
+                p{
+                    font-size: 14px;
+                    font-weight: 800;
+                    margin-top: 7px;
+                }
+            }
+
+            .delivery-phone{
+                width:236px;
+                height: 33px;
+                display: block;
+                float: right;
+                border:1px solid gray;
+
+                p{
+                    margin-top:7px;
+                    font-weight: 500;
+                }
+            }
+
+            .arrow-down-icon{
+                border-width: 2px;
+                border-top-width:0;
+                border-left-width:0;
+                border-style: solid;
+                transform: rotate(45deg);
+                border-color:color($colors,default);
+                position: absolute;
+                right:1rem;
+                top:27%;
+                width: 12px;
+                height: 12px;
+            }
+
+            .delivery-time, .delivery-memo{
+                width:236px;
+                height: 33px;
+                display: block;
+                float: right;
+                font-size:14px;
+                color:color($colors,default);
+                font-weight: 600;
+                padding-left:8px;
+                
+                -webkit-appearance:none; 
+                -moz-appearance:none;
+                
+                /*background-color: color($colors,default);
+                background: url('../../assets/icon/ios-arrow-down.png');
+                background-size:24px;
+                background-repeat:no-repeat;
+                background-position: 98% 5px;*/
+            }
+        }
+    }
+    /* 기본 배송지 끝 */
+    
+    /* 새로운 배송지 */
+    .delivery-detail-new{
+        padding-top:2px;
+        /* 공통 부분 시작 */
+        .delivery-new-grid{
+            padding:0;
+            padding-left:8px;
+        }
+
+        ion-row{
+            margin:0;
+            margin-bottom: 2px;
+            padding:0;
+            height: 33px;
+
+            div{
+                width:100px;
+
+                p{
+                    margin:0;
+                    margin-top:7px;
+                    font-size:14px;
+                    font-weight: 600;
+                }
+            }
+
+            ion-input{
+                border: 1px solid gray;
+
+                .text-input{
+                    margin: 0;
+                    height: 100%;
+                    width: 100%;
+                    font-size:16px;
+                    padding-left:8px;
+                }
+
+                ::-webkit-input-placeholder {
+                    font-size:14px;
+                }
+
+                :-moz-placeholder {
+                    font-size:14px;
+                }
+
+                :-ms-input-placeholder { 
+                    font-size:14px;
+                }
+            }
+            
+            button{
+                margin: 0;
+                padding: 0;
+                background-color: color($colors,default);
+                color:black;
+                height: 33px;
+                width: 64px;
+                min-width:64px;
+                font-size:12px;
+                font-weight: 600;
+                border:1px solid gray;
+            }
+        }
+        /* 공통 부분 끝 */
+
+        /* 받는분은 기본 변경사항으로 충분하기에 따로 수정x*/
+
+        /* 주소 입력 */
+        .delivery-new-place{
+            margin-bottom: 2px;
+
+            .addr-find{
+                width:64px;
+            }
+
+            .delivery-place1{
+                margin-left:12px;
+            }
+            /* delivery-place2 는 기본 변경사항으로 충분하기 때문에 따로 수정 x*/
+        }
+        
+        /* 전화 번호 입력 */
+        .delivery-new-phone{
+
+            .delivery-phone{
+                width:236px;
+
+                select{
+                    width: 70px;
+                    height: 31px;
+                    float: left;
+                    display: block;
+                    font-size:1.4rem;
+                    -webkit-appearance:none; 
+                    -moz-appearance:none;
+                    padding-left: 8px;
+                    border: 1px solid gray;
+                }
+
+                .arrow-down-icon{
+                    border-width: 2px;
+                    border-top-width:0;
+                    border-left-width:0;
+                    border-style: solid;
+                    transform: rotate(45deg);
+                    border-color:color($colors,default);
+                    position: absolute;
+                    top:40%;
+                    left:46%;
+                    width: 12px;
+                    height: 12px;
+                }
+
+                span p{
+                    width:13px;
+                    height: 31px;
+                    display:block;
+                    float: left;
+                    margin: 0;
+                    text-align: center;
+                    font-size:22px;
+                    font-weight: 200;
+                }
+
+                ion-input{
+                    width:70px;
+                    height: 100%;
+                    border: 1px solid gray;
+                    
+                    display: block;
+                    float:left;
+
+                    .text-input{
+                        font-size:1.4rem;
+                    }
+                }
+            }
+        }
+
+        .delivery-new-time .arrow-down-icon{
+            top:46%;
+        }
+
+        .delivery-new-memo .arrow-down-icon{
+            top:52%;
+        }
+
+        .delivery-new-time, .delivery-new-memo{
+            width:100%;
+            height: 33px;
+
+            .time-label, .memo-label{
+                width:100px;
+                max-width: 100px;
+                height: 33px;
+                float: left;
+
+                p{
+                    font-size: 14px;
+                    font-weight: 800;
+                    margin-top: 7px;
+                }
+            }
+
+            .arrow-down-icon{
+                border-width: 2px;
+                border-top-width:0;
+                border-left-width:0;
+                border-style: solid;
+                transform: rotate(45deg);
+                border-color:color($colors,default);
+                position: absolute;
+                right:1.8rem;
+                width: 12px;
+                height: 12px;
+            }
+
+            .delivery-time, .delivery-memo{
+                width:236px;
+                height: 33px;
+                display: block;
+                float: right;
+                font-size:14px;
+                color:color($colors,default);
+                border: 1px solid gray;
+                font-weight: 600;
+                padding-left:8px;
+                
+                -webkit-appearance:none; 
+                -moz-appearance:none;
+                
+                /*background-color: color($colors,default);
+                background: url('../../assets/icon/ios-arrow-down.png');
+                background-size:24px;
+                background-repeat:no-repeat;
+                background-position: 98% 5px;*/
+            }
+        }
+    }
+    /* 새로운 배송지 끝*/
+    /* 배송정보 끝 */
 }

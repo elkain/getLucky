@@ -4,15 +4,135 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header no-shadow no-border>
 
   <ion-navbar>
-    <ion-title>order</ion-title>
+    <ion-title>MARKET LUCKY</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
+  <ion-grid class="delivery-info">
+    <ion-row class="delivery-info-head">
+      <ion-col class="delivery-info-label" no-padding col-10>
+        <label>1. 배송 정보</label>
+      </ion-col>
+      <ion-col no-padding col-2>
+        <ion-icon (click)="hideDeliveryInfo()" *ngIf="showDeliveryInfo==true" class="info-icon" name="ios-arrow-up"></ion-icon>
+        <ion-icon (click)="hideDeliveryInfo()" *ngIf="showDeliveryInfo==false" class="info-icon" name="ios-arrow-down"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row class="delivery-segment-row" *ngIf="showDeliveryInfo==true">
+      <ion-col class="basic-segment" [ngClass]="basicPlaceStyle" (click)="selectBasicPlaceSegment()">
+        <p>기본 배송지</p>
+      </ion-col>
+      <ion-col class="new-segment" [ngClass]="newPlaceStyle" (click)="selectNewPlaceSegment()">
+        <p>새로운 배송지</p>
+      </ion-col>
+    </ion-row>
+    <ion-row [ngSwitch]="deliveryCategorySelected" *ngIf="showDeliveryInfo==true" class="delivery-detail-basic">
+      <ion-list *ngSwitchCase="'basicPlace'">
+        <ion-item class="delivery-basic-name">
+          <div class="name-label"><p>받는 분</p></div>
+          <div class="delivery-name"><p>이충민</p></div>
+        </ion-item>
+        <ion-item class="delivery-basic-place">
+          <ion-label class="place-label"><p>배송지 선택</p></ion-label>
+          <ion-select class="delivery-place">
+            <ion-option [selected]="true">서울시 강동구 고덕로 131 암사동, 강동 롯데캐슬퍼스트 123동 1234호</ion-option>
+            <ion-option>서울시 강동구 고덕로 131 암사동, 강동 롯데캐슬퍼스트 123동 1235호</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="delivery-basic-phone">
+          <div class="phone-label"><p>연락처</p></div>
+          <div class="delivery-phone"><p>010-1234-5678</p></div>
+        </ion-item>
+        <ion-item class="delivery-basic-time">
+          <div class="time-label"><p>배송시간</p></div>
+          <div class="arrow-down-icon"></div>
+          <select placeholder="선택사항" class="delivery-time">
+            <option>선택사항</option>
+            <option>1시</option>
+            <option>2시</option>
+          </select>
+        </ion-item>
+        <ion-item class="delivery-basic-memo">
+          <div class="memo-label"><p>배송메모</p></div>
+          <div class="arrow-down-icon"></div>
+          <select class="delivery-memo">
+            <option>선택사항</option>
+            <option>안녕히 오세요</option>
+            <option>안녕히 가세요</option>
+          </select>
+        </ion-item>
+      </ion-list>
+    </ion-row>
+    <ion-row [ngSwitch]="deliveryCategorySelected" *ngIf="showDeliveryInfo==true" class="delivery-detail-new">
+      <ion-grid class="delivery-new-grid" *ngSwitchCase="'newPlace'">
+        <!-- 받는분 입력 -->
+        <ion-row class="delivery-new-name">
+          <div class="name-label">
+            <p>받는 분</p>
+          </div>
+          <ion-input class="delivery-name" type="text"></ion-input>
+        </ion-row>
+        <!-- 주소 입력 -->
+        <ion-row class="delivery-new-place">
+          <div class="place-label">
+            <p>주소</p>
+          </div>
+          <button clear class="addr-find" ion-button>주소 찾기</button>
+          <ion-input class="delivery-place1" type="text"></ion-input>
+        </ion-row>
+        <ion-row class="delivery-new-place">
+          <div class="place-label"></div>
+          <ion-input class="delivery-place2" type="text"></ion-input>
+        </ion-row>
+        <ion-row class="delivery-new-place">
+          <div class="place-label"></div>
+          <ion-input class="delivery-place2" placeholder="상세 주소를 입력해 주세요" type="text"></ion-input>
+        </ion-row>
+        <!-- 휴대폰 입력 -->
+        <ion-row class="delivery-new-phone">
+          <div class="phone-label">
+            <p>연락처</p>
+          </div>
+          <div class="delivery-phone">
+            <div class="arrow-down-icon"></div>
+            <select>
+              <option>010</option>
+              <option>011</option>
+            </select>
+            <span><p>-</p></span>
+            <ion-input class="phone-input" type="tel" maxlength="4"></ion-input>
+            <span><p>-</p></span>
+            <ion-input class="phone-input" type="tel" maxlength="4"></ion-input>
+          </div>
+        </ion-row>
+        <ion-row class="delivery-new-time">
+          <div class="time-label">
+            <p>배송시간</p>
+          </div>
+          <div class="arrow-down-icon"></div>
+          <select placeholder="선택사항" class="delivery-time">
+            <option>선택사항</option>
+            <option>1시</option>
+            <option>2시</option>
+          </select>
+        </ion-row>
+        <ion-row class="delivery-new-memo">
+          <div class="memo-label">
+            <p>배송메모</p>
+          </div>
+          <div class="arrow-down-icon"></div>
+          <select class="delivery-memo">
+            <option>선택사항</option>
+            <option>안녕히 오세요</option>
+            <option>안녕히 가세요</option>
+          </select>
+        </ion-row>
+      </ion-grid>
+    </ion-row>
+  </ion-grid>
 </ion-content>
