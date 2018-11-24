@@ -184,14 +184,16 @@ page-order {
                 height:95px;
                 border:1px solid gray;
                 padding:0;
-                display:block;
-                
+                display:block;  
+                overflow-wrap: normal;
+                    
                 .select-text{
                     white-space: normal;
                     width:201px;
                     margin:0;
                     float: left;
                     font-size:14px;
+                    overflow-wrap: normal;
                 }
 
                 .select-icon{
