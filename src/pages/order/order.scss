@@ -68,11 +68,12 @@ page-order {
                 
         ion-icon{
             width: 40px;
-            height:30px;
+            height:40px;
             display:block;
             float:right;
             font-size:30px;
-            margin-top:5px;
+            margin:0;
+            padding-top:5px;
             text-align: center;
         }
 
@@ -516,9 +517,198 @@ page-order {
     }
     /* 새로운 배송지 끝*/
     /* 배송정보 끝 */
+
+    /* 상품/결제/결제수단 정보 시작 */
+    .product-info, .payment-info, .payment-method-info{
+        margin:8px;
+        height: auto;
+        background-color:white;
+
+        .product-info-head, .payment-info-head, .payment-method-head{
+            height: 40px;
+            min-height: 40px;
+            padding: 0;
+            padding-left: 8px;
+            border-bottom:2px solid color($colors,default);  
+
+            .item-inner{
+                padding: 0;
+                border:none;   
+                
+                .label{
+                    margin:0;
+                    font-size: 17px;
+                    padding-bottom: 5px;
+                }
+
+                .info-icon{
+                    margin:0;
+                    font-size:18px;
+                    width:40px;
+                    height: 40px;
+                    color:black;
+                }
+            }
+        }
+
+        .payment-info-item, .payment-info-item-last{
+            height: 31px;
+            min-height: 31px;
+            padding:0;
+
+            .item-inner{
+                border:none;
+                padding:0;
+                padding-left: 8px;
+
+                .label{
+                    margin:0;
+                    width:100px;
+                    font-weight: 600;
+                    font-size:14px;
+                }
+
+                .product-price{
+                    margin:0;
+                    margin-left:24px;
+                    padding-right:8px;
+                    font-weight: 400;
+                }
+
+                .product-total-price{
+                    font-size:18px;
+                    font-weight: 800;
+                    color:red;
+                    margin:0;
+                    padding-right:8px;
+                }
+
+                ion-icon{
+                    margin:0;
+                    font-size:18px;
+                    color:color($colors,default);
+                    padding-top:5px;
+                }
+            }
+        }
+
+        .payment-info-item-last{
+            height: 39px;
+            padding-bottom:8px;
+        }
+
+        .product-detail-item{
+            height: 144px;
+            
+            padding:0;
+
+            .item-inner{
+                padding:0;
+            }
+
+            .label{
+                margin:0;
+                width:auto;
+                height: 144px;
+                padding:8px 0 8px 8px;
+
+                .thumbnail-img{
+                    height: 64px;
+                    width: 64px;
+                    float: left;
+                }
+
+                .product-info-name{
+                    float: left;
+                    margin:0;
+                    padding-left:8px;
+                    height: 64px;
+                    font-size:16px;
+                }
+
+                .product-info-compo{
+                    margin:0;
+                    padding-left:8px;
+                    height: 64px;
+                    padding-top:5px;
+                    font-size:12px;
+                }
+
+                .product-info-count, .product-info-price{
+                    margin:0;
+                    padding-left:72px;
+                    height: 31px;
+                    padding-top:5px;
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .payment-method-cash, .payment-method-card, .payment-method-bank{
+            width:328px;
+            height: 33px;
+            min-height: 33px;
+
+            .label{
+                margin:0;
+                text-align: center;
+                font-weight: 600;
+            }
+        }
+
+        .payment-method-cash{
+            margin:0;
+            padding:0;
+            margin:8px;
+            margin-bottom:0;
+            
+            .item-inner{
+                padding:0;
+                border:2px solid color($colors, default);
+            }
+        }
+
+        .payment-method-card{
+            margin:0;
+            padding:0;
+            margin:0px 8px;
+
+            .item-inner{
+                padding:0;
+                border:2px solid color($colors, default);
+                border-top:none;
+                border-bottom:none;
+            }
+        }
+
+        .payment-method-bank{
+            margin:0;
+            padding:0;
+            margin:0px 8px;
+            padding-bottom: 8px;
+            height: 41px;
+            
+            .item-inner{
+                padding:0;
+                height: 33px;
+                border:2px solid color($colors, default) !important;
+            }
+        }
+    }
+    /* 상품/결제/결제수단 정보 끝 */
+
+    .payment-submit{
+        margin:0;
+        height: 46px;
+        font-size:16px;
+        background-color: color($colors, title);
+        font-weight: 600;
+        padding-bottom: 5px;
+    }
 }
 
-ion-popover{
+/* 배송지 선택 popup */
+.delivery-popover{
     box-shadow: 1px;
 
     .popover-wrapper{

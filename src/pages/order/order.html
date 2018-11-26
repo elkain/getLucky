@@ -13,7 +13,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid class="delivery-info">
+  <!-- 배송정보 시작(회원) -->
+  <ion-grid class="delivery-info" *ngIf="false">
     <ion-row class="delivery-info-head">
       <ion-col class="delivery-info-label" no-padding col-10>
         <label>1. 배송 정보</label>
@@ -138,4 +139,74 @@
       </ion-grid>
     </ion-row>
   </ion-grid>
+  <!-- 배송정보 끝(회원) -->
+
+  <!-- 상품 정보 시작-->
+  <ion-list class="product-info">
+    <ion-item class="product-info-head">
+      <label class="product-info-label">2. 상품 정보</label>
+      <button (click)="hideProductInfo()" class="info-icon" item-end clear ion-button icon-only>
+        <ion-icon class="ion-icon" *ngIf="showProductInfo==true" name="ios-arrow-down"></ion-icon>
+        <ion-icon class="ion-icon" *ngIf="showProductInfo==false" name="ios-arrow-up"></ion-icon>
+      </button>
+    </ion-item>
+    <ion-item class="product-detail-item" *ngIf="showProductInfo==true">
+      <img class="thumbnail-img" src = "./assets/slides/slide1.jpg">
+      <p class="product-info-name"><b>상품명</b></p><p class="product-info-compo">구성/용량</p>
+      <p class="product-info-count"><b>수량</b></p>
+      <p class="product-info-price"><b>혜택가</b></p>
+    </ion-item>
+  </ion-list>
+  <!-- 상품 정보 끝 -->
+
+  <!-- 결재 정보 시작 -->
+  <ion-list class="payment-info">
+    <ion-item class="payment-info-head">
+      <label class="payment-info-label">3. 결제 금액</label>
+      <button (click)="hidePaymentInfo()" class="info-icon" item-end clear ion-button icon-only>
+        <ion-icon class="ion-icon" *ngIf="showPaymentInfo==true" name="ios-arrow-down"></ion-icon>
+        <ion-icon class="ion-icon" *ngIf="showPaymentInfo==false" name="ios-arrow-up"></ion-icon>
+      </button>
+    </ion-item>
+    <ion-item class="payment-info-item" *ngIf="showPaymentInfo==true"> 
+      <label class="payment-info-label">상품금액</label>
+      <p item-end class="product-price">20,000원</p>
+    </ion-item>
+    <ion-item class="payment-info-item" *ngIf="showPaymentInfo==true">
+      <label class="payment-info-label">할인금액</label>
+      <ion-icon item-end name="md-remove-circle"></ion-icon>
+      <p item-end class="product-price">1,000원</p>
+    </ion-item>
+    <ion-item class="payment-info-item" *ngIf="showPaymentInfo==true">
+      <label class="payment-info-label">배송비</label>
+      <ion-icon item-end name="md-add-circle"></ion-icon>
+      <p item-end class="product-price">3,000원</p>
+    </ion-item>
+    <ion-item class="payment-info-item-last" *ngIf="showPaymentInfo==true">
+      <label class="payment-info-label">최종 결제금액</label>
+      <p item-end class="product-total-price">22,000원</p>
+    </ion-item>
+  </ion-list>
+  <!-- 결재 정보 끝 -->
+  <!-- 결제 방법 시작 -->
+  <ion-list class="payment-method-info" style="margin-bottom:0;">
+    <ion-item class="payment-method-head">
+      <label class="payment-method-label">4. 결제 수단</label>
+      <button (click)="hidePaymentMethodInfo()" class="info-icon" item-end clear ion-button icon-only>
+        <ion-icon class="ion-icon" *ngIf="showPaymentMethodInfo==true" name="ios-arrow-down"></ion-icon>
+        <ion-icon class="ion-icon" *ngIf="showPaymentMethodInfo==false" name="ios-arrow-up"></ion-icon>
+      </button>
+    </ion-item>
+    <ion-item class="payment-method-cash" *ngIf="showPaymentMethodInfo==true">
+      <p>현장결재</p>
+    </ion-item>
+    <ion-item class="payment-method-card" *ngIf="showPaymentMethodInfo==true">
+      <p>신용카드</p>
+    </ion-item>
+    <ion-item class="payment-method-bank" *ngIf="showPaymentMethodInfo==true">
+      <p>무통장입금</p>
+    </ion-item>
+  </ion-list>
+  <!-- 결제 방법 끝 -->
+  <button class="payment-submit" full ion-button>결제하기</button>
 </ion-content>

@@ -21,6 +21,9 @@ export class OrderPage {
   basicPlaceStyle;
   newPlaceStyle;
   showDeliveryInfo:boolean=true;
+  showProductInfo:boolean=true;
+  showPaymentInfo:boolean=true;
+  showPaymentMethodInfo: boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController) {
     this.deliveryCategorySelected='basicPlace';
@@ -59,8 +62,44 @@ export class OrderPage {
     }
   }
 
+  hideProductInfo(){
+    console.log("button click", this.showProductInfo);
+
+    if (this.showProductInfo == true) {
+      this.showProductInfo = false;
+    } else if (this.showProductInfo == false) {
+      this.showProductInfo = true;
+    } else {
+      console.log("showProductInfo error");
+    }
+  }
+
+  hidePaymentInfo(){
+    console.log("button click", this.showPaymentInfo);
+
+    if (this.showPaymentInfo == true) {
+      this.showPaymentInfo = false;
+    } else if (this.showPaymentInfo == false) {
+      this.showPaymentInfo = true;
+    } else {
+      console.log("showPaymentInfo error");
+    }
+  }
+
+  hidePaymentMethodInfo() {
+    console.log("button click", this.showPaymentMethodInfo);
+
+    if (this.showPaymentMethodInfo == true) {
+      this.showPaymentMethodInfo = false;
+    } else if (this.showPaymentMethodInfo == false) {
+      this.showPaymentMethodInfo = true;
+    } else {
+      console.log("showPaymentInfo error");
+    }
+  }
+
   presentPopover() {
-    const popover = this.popoverCtrl.create(SelectPopoverPage);
+    const popover = this.popoverCtrl.create(SelectPopoverPage, {}, { cssClass:'delivery-popover'});
     popover.present();
   }
 
