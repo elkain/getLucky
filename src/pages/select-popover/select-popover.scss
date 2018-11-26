@@ -1,3 +1,109 @@
 page-select-popover {
 
+    .sel-pop-grid{
+        width:345px;
+        height: auto;
+        margin:0;
+        padding:0;
+        
+        .sel-pop-head{
+            width: 100%;
+            height: 50px;
+            margin:0;
+            padding:0;
+            border-bottom:3px solid color($colors,title);
+            font-size:1.8rem;
+            color:color($colors,title);
+
+            p{  
+                padding-left:8px;
+                margin:12px 0;
+                text-align: center;
+                font-weight: 600;
+            }
+        }
+
+        .sel-pop-radio-group{
+            width:100%;
+            height: 100px;
+            border-bottom:1px solid color($colors,default);
+
+            .sel-pop-button{
+                width: 100%;
+                height: 100%;
+                padding:0;
+                margin:0;
+
+                .sel-pop-radio-icon{
+                    width: 40px;
+                    min-width:40px;
+                    height: 100px;
+                    padding-top:40px;
+
+                    ion-icon{
+                        width: 40px;
+                        height: auto;
+                        color:black;
+                        font-size:20px;
+                    }
+                }
+
+                .sel-pop-radio-label{
+                    width:305px;
+                    height: 100%;
+                    padding: 0;
+                    
+                    p{
+                        margin: 0;
+                        text-align: left;
+                    }
+
+                    .sel-pop-delivery-name{
+                        padding-top: 8px;
+                        height: 40px;
+                        font-weight: 800;
+                        font-size:1.4rem;
+                    }
+
+                    .sel-pop-delivery-place{
+                        color:black;
+                        height: 60px;
+                        white-space: normal;
+                        line-height: 2.2rem;
+                        font-size:1.6rem;
+                    }
+                }
+            }
+        }
+
+        .sel-pop-button-group{
+            height: 50px;
+            border-bottom: 1px solid color($colors,default);
+
+            ion-col{
+                padding:0;
+
+                button{
+                    padding: 0;
+                    margin: 0;
+                    width: 100%;
+                    height: 100%;
+                    font-size:1.6rem;
+                    border-radius: 0;
+                    font-weight: 800;
+                }
+
+                .sel-pop-cancel{
+                    border-right: 1px solid color($colors,default);
+                    color:black;
+                }
+
+                .sel-pop-confirm{
+                    border-right: 1px solid color($colors,default);
+                    background-color:color($colors,title);
+                    color:white;
+                }
+            }
+        }
+    }
 }

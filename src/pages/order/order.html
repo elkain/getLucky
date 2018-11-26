@@ -32,23 +32,26 @@
       </ion-col>
     </ion-row>
     <ion-row [ngSwitch]="deliveryCategorySelected" *ngIf="showDeliveryInfo==true" class="delivery-detail-basic">
-      <ion-list *ngSwitchCase="'basicPlace'">
-        <ion-item class="delivery-basic-name">
+      <ion-grid class="delivery-basic-list" *ngSwitchCase="'basicPlace'">
+        <ion-row class="delivery-basic-name">
           <div class="name-label"><p>받는 분</p></div>
           <div class="delivery-name"><p>이충민</p></div>
-        </ion-item>
-        <ion-item class="delivery-basic-place">
-          <ion-label class="place-label"><p>배송지 선택</p></ion-label>
-          <ion-select class="delivery-place">
-            <ion-option [selected]="true">서울시 강동구 고덕로 131 암사동, 강동 롯데캐슬퍼스트 123동 1234호</ion-option>
-            <ion-option>서울시 강동구 고덕로 131 암사동, 강동 롯데캐슬퍼스트 123동 1235호</ion-option>
-          </ion-select>
-        </ion-item>
-        <ion-item class="delivery-basic-phone">
+        </ion-row>
+        <ion-row class="delivery-basic-place">
+          <!--popover 방식으로 재구현-->
+          <div class="place-label">
+            <p>배송지 선택</p>
+          </div>
+          <button class="delivery-place" ion-button clear (click)="presentPopover()">
+            <div class="delivery-text">서울시 강동구 고덕로 131 (암사동, 강동롯데캐슬퍼스트) 123동 1234호</div>
+            <div class="delivery-icon"><ion-icon name="ios-arrow-down"></ion-icon></div>
+          </button>
+        </ion-row>
+        <ion-row class="delivery-basic-phone">
           <div class="phone-label"><p>연락처</p></div>
           <div class="delivery-phone"><p>010-1234-5678</p></div>
-        </ion-item>
-        <ion-item class="delivery-basic-time">
+        </ion-row>
+        <ion-row class="delivery-basic-time">
           <div class="time-label"><p>배송시간</p></div>
           <div class="arrow-down-icon"></div>
           <select placeholder="선택사항" class="delivery-time">
@@ -56,8 +59,8 @@
             <option>1시</option>
             <option>2시</option>
           </select>
-        </ion-item>
-        <ion-item class="delivery-basic-memo">
+        </ion-row>
+        <ion-row class="delivery-basic-memo">
           <div class="memo-label"><p>배송메모</p></div>
           <div class="arrow-down-icon"></div>
           <select class="delivery-memo">
@@ -65,8 +68,8 @@
             <option>안녕히 오세요</option>
             <option>안녕히 가세요</option>
           </select>
-        </ion-item>
-      </ion-list>
+        </ion-row>
+      </ion-grid>
     </ion-row>
     <ion-row [ngSwitch]="deliveryCategorySelected" *ngIf="showDeliveryInfo==true" class="delivery-detail-new">
       <ion-grid class="delivery-new-grid" *ngSwitchCase="'newPlace'">

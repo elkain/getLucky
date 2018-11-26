@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { SelectPopoverPage } from '../select-popover/select-popover';
 
 /**
  * Generated class for the OrderPage page.
@@ -20,7 +21,7 @@ export class OrderPage {
   newPlaceStyle;
   showDeliveryInfo:boolean=true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController) {
     this.deliveryCategorySelected='basicPlace';
     this.basicPlaceStyle = { 'select-segment': true, 'unselect-segment': false};
     this.newPlaceStyle = { 'select-segment': false, 'unselect-segment': true };
@@ -56,4 +57,10 @@ export class OrderPage {
       console.log("ShowDeliveryInfo error");
     }
   }
+
+  presentPopover() {
+    const popover = this.popoverCtrl.create(SelectPopoverPage);
+    popover.present();
+  }
+
 }

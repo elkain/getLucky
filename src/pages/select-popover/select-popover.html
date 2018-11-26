@@ -4,15 +4,30 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>selectPopover</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
+<ion-content>
+  <ion-grid class="sel-pop-grid">
+    <ion-row class="sel-pop-head">
+      <div class="sel-pop-title"><p>배송지 선택</p></div>
+    </ion-row>
+    <ion-row *ngFor="let deliveryAddr of deliveryAddrs" [style.background-color]="deliveryAddr.color" class="sel-pop-radio-group">
+      <button class="sel-pop-button" (click)="selectDeliveryAddr(deliveryAddr)" ion-button clear>
+        <div class="sel-pop-radio-icon">
+          <ion-icon *ngIf="deliveryAddr.select==true" name="md-radio-button-on"></ion-icon>
+          <ion-icon *ngIf="deliveryAddr.select==false" name="md-radio-button-off"></ion-icon>
+        </div>
+        <div class="sel-pop-radio-label">
+          <p class="sel-pop-delivery-name">{{deliveryAddr.title}}</p>
+          <p class="sel-pop-delivery-place">{{deliveryAddr.address}}</p>
+        </div>
+      </button>
+    </ion-row>
+    <ion-row class="sel-pop-button-group">
+      <ion-col>
+        <button ion-button clear (click)="cancel()" class="sel-pop-cancel">취소</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button clear (click)="confirm()" class="sel-pop-confirm">확인</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

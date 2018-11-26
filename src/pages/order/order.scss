@@ -50,7 +50,7 @@ page-order {
 
     ion-row{
         width:100%;
-        
+                
         ion-icon{
             width: 40px;
             height:30px;
@@ -61,31 +61,7 @@ page-order {
             text-align: center;
         }
 
-        ion-list{
-            width: 100%;
-            
-            .item{
-                height: 32px;
-                min-height: 32px;
-                padding:0;
-            }
-
-            .item-md.item-block .item-inner{
-                padding:0;
-                border:none;
-
-                .label{
-                    margin:0;
-                }
-            }
-        }
     }
-
-    .list{
-        margin-bottom:8px;
-    }
-
-    
 
     /* 배송정보 시작 */ 
     .delivery-info{
@@ -151,8 +127,14 @@ page-order {
         height: auto;
         margin-top:1px;
 
+        .delivery-basic-list{
+            margin:0;
+            padding:0;
+        }
+
         .delivery-basic-name{
             padding-left:8px;
+            height: 33px;
 
             .name-label{
                 margin: 0;
@@ -160,6 +142,10 @@ page-order {
                 display: block;
                 float:left;
                 font-weight: 800;
+            }
+
+            p{
+                margin:7px 0;
             }
         }
 
@@ -175,52 +161,57 @@ page-order {
                 p{
                     color:color($colors,title);
                     font-weight: 600;
+                    margin-top:8px;
                 }
+            }
+
+            .select-icon-inner{
+                border-width: 2px;
+                border-top-width:0;
+                border-left-width:0;
+                border-style: solid;
+                transform: rotate(45deg);
+                border-color:color($colors,title);
+                margin:0;
+                text-align: center;
+                top:37%;
+                left:30%;
+                display: block;
+                width: 12px;
+                height: 12px;
             }
 
             .delivery-place{
                 width:236px;
-                min-width: 236px;
+                
                 height:95px;
                 border:1px solid gray;
                 padding:0;
                 display:block;
-                
-                .select-text{
-                    white-space: normal;
-                    width:201px;
-                    margin:0;
-                    float: left;
-                    font-size:14px;
+                margin:0;
+                white-space: normal;
+
+                .delivery-text{
+                    height: 100%; 
+                    width: 203px; 
+                    color:black; 
+                    text-align:left;
+                    font-size:1.5rem;
+                    line-height: 3rem;
                 }
 
-                .select-icon{
-                    float: right;
-                    width:33px;
-                    height: 95px;
-                    background-color: color($colors,default);
-                    
-                    .select-icon-inner{
-                        border-width: 2px;
-                        border-top-width:0;
-                        border-left-width:0;
-                        border-style: solid;
-                        transform: rotate(45deg);
-                        border-color:color($colors,title);
+                .delivery-icon{
+                    height: 100%; 
+                    width: 33px; 
+                    color:#d3d3d3; 
+                    padding-top:30px;
+
+                    .icon{
+                        width: 33px;
+                        height: 100%;
                         margin:0;
-                        text-align: center;
-                        top:37%;
-                        left:30%;
-                        display: block;
-                        width: 12px;
-                        height: 12px;
                     }
                 }
-                
-                button{
-                    padding:0;
-                }
-                
             }
         }
 
@@ -252,7 +243,7 @@ page-order {
 
                 p{
                     margin-top:7px;
-                    font-weight: 500;
+                    font-weight: 400;
                 }
             }
 
@@ -264,8 +255,7 @@ page-order {
                 transform: rotate(45deg);
                 border-color:color($colors,default);
                 position: absolute;
-                right:1rem;
-                top:27%;
+                right:1.8rem;
                 width: 12px;
                 height: 12px;
             }
@@ -290,12 +280,23 @@ page-order {
                 background-position: 98% 5px;*/
             }
         }
+
+        .delivery-basic-memo{
+            margin-bottom:8px;
+        }
+
+        .delivery-basic-time .arrow-down-icon{
+            top:260px;
+        }
+        
+        .delivery-basic-memo .arrow-down-icon{
+            top:295px;
+        }
     }
     /* 기본 배송지 끝 */
     
     /* 새로운 배송지 */
     .delivery-detail-new{
-        padding-top:2px;
         /* 공통 부분 시작 */
         .delivery-new-grid{
             padding:0;
@@ -362,10 +363,12 @@ page-order {
 
         /* 주소 입력 */
         .delivery-new-place{
+            height: 30px;
             margin-bottom: 2px;
 
             .addr-find{
                 width:64px;
+                height: 30px;
             }
 
             .delivery-place1{
@@ -400,8 +403,8 @@ page-order {
                     transform: rotate(45deg);
                     border-color:color($colors,default);
                     position: absolute;
-                    top:40%;
-                    left:46%;
+                    top:226px;
+                    left:168px;
                     width: 12px;
                     height: 12px;
                 }
@@ -433,11 +436,11 @@ page-order {
         }
 
         .delivery-new-time .arrow-down-icon{
-            top:46%;
+            top:261px;
         }
 
         .delivery-new-memo .arrow-down-icon{
-            top:52%;
+            top:296px;
         }
 
         .delivery-new-time, .delivery-new-memo{
@@ -491,7 +494,27 @@ page-order {
                 background-position: 98% 5px;*/
             }
         }
+
+        .delivery-new-memo{
+            margin-bottom: 8px;
+        }
     }
     /* 새로운 배송지 끝*/
     /* 배송정보 끝 */
+}
+
+ion-popover{
+    box-shadow: 1px;
+
+    .popover-wrapper{
+        height: auto;
+
+        .popover-content{
+            width: 345px;
+            height: auto;
+            position: absolute;
+            top:170px   !important;
+            left:0.8rem !important;
+        }
+    }
 }
