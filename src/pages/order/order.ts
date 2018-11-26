@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { SelectPopoverPage } from '../select-popover/select-popover';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the OrderPage page.
@@ -63,4 +64,7 @@ export class OrderPage {
     popover.present();
   }
 
+  moveToHome() {
+    this.navCtrl.setRoot(TabsPage);
+  }
 }

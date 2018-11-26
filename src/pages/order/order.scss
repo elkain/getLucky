@@ -33,14 +33,29 @@ page-order {
             }
 
             .toolbar-title{
-                color:white;
                 text-align: center;
-                padding-right:48px;
-                padding-left:0;
-                font-weight: 600;
+                padding:0;
+                
+                button{
+                    color:white;
+                    text-align: center;
+                    font-weight: 600;
+                }
+            }
+
+            .title-home-button{
+                text-align: center;
+                color: color($colors, light);
+                background-color: color($colors, title);
+                width: 144px;
+                height: 34px;
+                font-size:18px;
+                margin:0;
+                padding:0;
             }
         }
     }
+
     /* 주문 페이지 header 끝 */
 
     /* 공통 정보 */
