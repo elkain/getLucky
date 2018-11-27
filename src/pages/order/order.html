@@ -14,7 +14,7 @@
 
 <ion-content>
   <!-- 배송정보 시작(회원) -->
-  <ion-grid class="delivery-info" *ngIf="false">
+  <ion-grid class="delivery-info" *ngIf="isMember==true">
     <ion-row class="delivery-info-head">
       <ion-col class="delivery-info-label" no-padding col-10>
         <label>1. 배송 정보</label>
@@ -25,15 +25,15 @@
       </ion-col>
     </ion-row>
     <ion-row class="delivery-segment-row" *ngIf="showDeliveryInfo==true">
-      <ion-col class="basic-segment" [ngClass]="basicPlaceStyle" (click)="selectBasicPlaceSegment()">
+      <ion-col class="basic-segment" [ngClass]="basicPlaceStyle" (click)="selectBasicPlaceSegment()"> 
         <p>기본 배송지</p>
       </ion-col>
       <ion-col class="new-segment" [ngClass]="newPlaceStyle" (click)="selectNewPlaceSegment()">
         <p>새로운 배송지</p>
       </ion-col>
     </ion-row>
-    <ion-row [ngSwitch]="deliveryCategorySelected" *ngIf="showDeliveryInfo==true" class="delivery-detail-basic">
-      <ion-grid class="delivery-basic-list" *ngSwitchCase="'basicPlace'">
+    <ion-row *ngIf="showDeliveryInfo==true" class="delivery-detail-basic">
+      <ion-grid class="delivery-basic-list" *ngIf="selectedDeliveryType=='memberSaved'">
         <ion-row class="delivery-basic-name">
           <div class="name-label"><p>받는 분</p></div>
           <div class="delivery-name"><p>이충민</p></div>
@@ -72,8 +72,8 @@
         </ion-row>
       </ion-grid>
     </ion-row>
-    <ion-row [ngSwitch]="deliveryCategorySelected" *ngIf="showDeliveryInfo==true" class="delivery-detail-new">
-      <ion-grid class="delivery-new-grid" *ngSwitchCase="'newPlace'">
+    <ion-row *ngIf="showDeliveryInfo==true" class="delivery-detail-new">
+      <ion-grid class="delivery-new-grid" *ngIf="selectedDeliveryType=='memberNew'">
         <!-- 받는분 입력 -->
         <ion-row class="delivery-new-name">
           <div class="name-label">
@@ -141,13 +141,132 @@
   </ion-grid>
   <!-- 배송정보 끝(회원) -->
 
+  <!-- 배송정보 시작(비회원) -->
+  <ion-grid class="orderer-info" *ngIf="isMember==false">
+    <ion-row class="orderer-info-head">
+      <label class="orderer-info-label">1. 주문자 정보</label>
+    </ion-row>
+    <ion-row class="orderer-name">
+      <div class="orderer-name-label">
+        <p>받는 분</p>
+      </div>
+      <ion-input class="orderer-name-input" type="text"></ion-input>
+    </ion-row>
+    <ion-row class="orderer-phone">
+      <div class="orderer-phone-label">
+        <p>연락처</p>
+      </div>
+      <div class="orderer-phone-input">
+        <div class="arrow-down-icon"></div>
+        <select>
+          <option>010</option>
+          <option>011</option>
+        </select>
+        <span>
+          <p>-</p>
+        </span>
+        <ion-input class="phone-input" type="tel" maxlength="4"></ion-input>
+        <span>
+          <p>-</p>
+        </span>
+        <ion-input class="phone-input" type="tel" maxlength="4"></ion-input>
+      </div>
+    </ion-row>
+    <ion-row class="orderer-email">
+      <div class="orderer-email-label">
+        <p>이메일</p>
+      </div>
+      <ion-input class="orderer-email-input" type="text"></ion-input>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="orderer-info" *ngIf="isMember==false">
+    <ion-row class="delivery-info-head">
+      <ion-col class="delivery-info-label" no-padding col-10>
+        <label>2. 배송 정보</label>
+      </ion-col>
+      <ion-col no-padding col-2>
+        <ion-icon (click)="hideDeliveryInfo()" *ngIf="showDeliveryInfo==true" class="info-icon" name="ios-arrow-up"></ion-icon>
+        <ion-icon (click)="hideDeliveryInfo()" *ngIf="showDeliveryInfo==false" class="info-icon" name="ios-arrow-down"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <!-- 받는분 입력 -->
+    <ion-row class="delivery-new-name" *ngIf="showDeliveryInfo==true">
+      <div class="name-label">
+        <p>받는 분</p>
+      </div>
+      <ion-input class="delivery-name" type="text"></ion-input>
+    </ion-row>
+    <!-- 주소 입력 -->
+    <ion-row class="delivery-new-place" *ngIf="showDeliveryInfo==true">
+      <div class="place-label">
+        <p>주소</p>
+      </div>
+      <button clear class="addr-find" ion-button>주소 찾기</button>
+      <ion-input class="delivery-place1" type="text"></ion-input>
+    </ion-row>
+    <ion-row class="delivery-new-place" *ngIf="showDeliveryInfo==true">
+      <div class="place-label"></div>
+      <ion-input class="delivery-place2" type="text"></ion-input>
+    </ion-row>
+    <ion-row class="delivery-new-place" *ngIf="showDeliveryInfo==true">
+      <div class="place-label"></div>
+      <ion-input class="delivery-place2" placeholder="상세 주소를 입력해 주세요" type="text"></ion-input>
+    </ion-row>
+    <!-- 휴대폰 입력 -->
+    <ion-row class="delivery-new-phone" *ngIf="showDeliveryInfo==true">
+      <div class="phone-label">
+        <p>연락처</p>
+      </div>
+      <div class="delivery-phone">
+        <div class="arrow-down-icon"></div>
+        <select>
+          <option>010</option>
+          <option>011</option>
+        </select>
+        <span>
+          <p>-</p>
+        </span>
+        <ion-input class="phone-input" type="tel" maxlength="4"></ion-input>
+        <span>
+          <p>-</p>
+        </span>
+        <ion-input class="phone-input" type="tel" maxlength="4"></ion-input>
+      </div>
+    </ion-row>
+    <ion-row class="delivery-new-time" *ngIf="showDeliveryInfo==true">
+      <div class="time-label">
+        <p>배송시간</p>
+      </div>
+      <div class="arrow-down-icon"></div>
+      <select placeholder="선택사항" class="delivery-time">
+        <option>선택사항</option>
+        <option>1시</option>
+        <option>2시</option>
+      </select>
+    </ion-row>
+    <ion-row class="delivery-new-memo" *ngIf="showDeliveryInfo==true">
+      <div class="memo-label">
+        <p>배송메모</p>
+      </div>
+      <div class="arrow-down-icon"></div>
+      <select class="delivery-memo">
+        <option>선택사항</option>
+        <option>안녕히 오세요</option>
+        <option>안녕히 가세요</option>
+      </select>
+    </ion-row>
+  </ion-grid>
+  <!-- 배송정보 끝(비회원) -->
+
   <!-- 상품 정보 시작-->
   <ion-list class="product-info">
     <ion-item class="product-info-head">
-      <label class="product-info-label">2. 상품 정보</label>
+      <label class="product-info-label" *ngIf="isMember==true"> 2. 상품 정보</label>
+      <label class="product-info-label" *ngIf="isMember==false">3. 상품 정보</label>
       <button (click)="hideProductInfo()" class="info-icon" item-end clear ion-button icon-only>
-        <ion-icon class="ion-icon" *ngIf="showProductInfo==true" name="ios-arrow-down"></ion-icon>
-        <ion-icon class="ion-icon" *ngIf="showProductInfo==false" name="ios-arrow-up"></ion-icon>
+        <ion-icon class="ion-icon" *ngIf="showProductInfo==true" name="ios-arrow-up"></ion-icon>
+        <ion-icon class="ion-icon" *ngIf="showProductInfo==false" name="ios-arrow-down"></ion-icon>
       </button>
     </ion-item>
     <ion-item class="product-detail-item" *ngIf="showProductInfo==true">
@@ -162,10 +281,11 @@
   <!-- 결재 정보 시작 -->
   <ion-list class="payment-info">
     <ion-item class="payment-info-head">
-      <label class="payment-info-label">3. 결제 금액</label>
+      <label class="payment-info-label" *ngIf="isMember==true"> 3. 결제 금액</label>
+      <label class="payment-info-label" *ngIf="isMember==false">4. 결제 금액</label>
       <button (click)="hidePaymentInfo()" class="info-icon" item-end clear ion-button icon-only>
-        <ion-icon class="ion-icon" *ngIf="showPaymentInfo==true" name="ios-arrow-down"></ion-icon>
-        <ion-icon class="ion-icon" *ngIf="showPaymentInfo==false" name="ios-arrow-up"></ion-icon>
+        <ion-icon class="ion-icon" *ngIf="showPaymentInfo==true" name="ios-arrow-up"></ion-icon>
+        <ion-icon class="ion-icon" *ngIf="showPaymentInfo==false" name="ios-arrow-down"></ion-icon>
       </button>
     </ion-item>
     <ion-item class="payment-info-item" *ngIf="showPaymentInfo==true"> 
@@ -191,10 +311,11 @@
   <!-- 결제 방법 시작 -->
   <ion-list class="payment-method-info" style="margin-bottom:0;">
     <ion-item class="payment-method-head">
-      <label class="payment-method-label">4. 결제 수단</label>
+      <label class="payment-method-label" *ngIf="isMember==true"> 4. 결제 수단</label>
+      <label class="payment-method-label" *ngIf="isMember==false">5. 결제 수단</label>
       <button (click)="hidePaymentMethodInfo()" class="info-icon" item-end clear ion-button icon-only>
-        <ion-icon class="ion-icon" *ngIf="showPaymentMethodInfo==true" name="ios-arrow-down"></ion-icon>
-        <ion-icon class="ion-icon" *ngIf="showPaymentMethodInfo==false" name="ios-arrow-up"></ion-icon>
+        <ion-icon class="ion-icon" *ngIf="showPaymentMethodInfo==true" name="ios-arrow-up"></ion-icon>
+        <ion-icon class="ion-icon" *ngIf="showPaymentMethodInfo==false" name="ios-arrow-down"></ion-icon>
       </button>
     </ion-item>
     <ion-item class="payment-method-cash" *ngIf="showPaymentMethodInfo==true">
