@@ -17,18 +17,20 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class OrderPage {
 
-  deliveryCategorySelected;
   basicPlaceStyle;
   newPlaceStyle;
+  selectedDeliveryType;
+  isMember:boolean = true;
   showDeliveryInfo:boolean=true;
   showProductInfo:boolean=true;
   showPaymentInfo:boolean=true;
   showPaymentMethodInfo: boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController) {
-    this.deliveryCategorySelected='basicPlace';
     this.basicPlaceStyle = { 'select-segment': true, 'unselect-segment': false};
     this.newPlaceStyle = { 'select-segment': false, 'unselect-segment': true };
+
+    this.selectedDeliveryType='memberSaved';
   }
 
   ionViewDidLoad() {
@@ -38,16 +40,16 @@ export class OrderPage {
   selectBasicPlaceSegment(){
     this.basicPlaceStyle = { 'select-segment': true, 'unselect-segment': false };
     this.newPlaceStyle = { 'select-segment': false, 'unselect-segment': true };
-    this.deliveryCategorySelected="basicPlace";
-    console.log(this.deliveryCategorySelected);
+    this.selectedDeliveryType ="memberSaved";
+    console.log(this.selectedDeliveryType);
     
   }
 
   selectNewPlaceSegment(){
     this.basicPlaceStyle = { 'select-segment': false, 'unselect-segment': true };
     this.newPlaceStyle = { 'select-segment': true, 'unselect-segment': false };
-    this.deliveryCategorySelected = "newPlace";
-    console.log(this.deliveryCategorySelected);
+    this.selectedDeliveryType = "memberNew";
+    console.log(this.selectedDeliveryType);
   }
 
   hideDeliveryInfo(){

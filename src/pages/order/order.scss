@@ -80,7 +80,7 @@ page-order {
     }
 
     /* 배송정보 시작 */ 
-    .delivery-info{
+    .delivery-info, .delivery-non-info{
         margin:16px 8px 0px;
         width: 344px;
         height: auto;
@@ -516,6 +516,325 @@ page-order {
         }
     }
     /* 새로운 배송지 끝*/
+
+    /* 비회원 배송 시작 */
+    .orderer-info{
+        background-color: white;
+        padding:0;
+        width:344px;
+        margin: 16px 8px 8px 8px;
+
+        /* 공통사항 */
+        ion-row{
+            margin:0;
+            padding:0;
+            padding-left:8px;
+            height: 33px;
+            background-color: color($colors, white);
+
+            div{
+                width:100px;
+
+                p{
+                    margin:0;
+                    margin-top:7px;
+                    font-size:14px;
+                    font-weight: 600;
+                }
+            }
+
+            ion-input{
+
+                border: 1px solid gray;
+                margin:1px 0;
+
+                .text-input{
+                    margin: 0;
+                    height: 100%;
+                    width: 100%;
+                    font-size:16px;
+                    padding-left:8px;
+                }
+
+                ::-webkit-input-placeholder {
+                    font-size:14px;
+                }
+
+                :-moz-placeholder {
+                    font-size:14px;
+                }
+
+                :-ms-input-placeholder { 
+                    font-size:14px;
+                }
+            }
+
+            button{
+                margin: 1px 0;
+                padding: 0;
+                background-color: color($colors,default);
+                color:black;
+                height: 33px;
+                width: 64px;
+                min-width:64px;
+                font-size:12px;
+                font-weight: 600;
+                border:1px solid gray;
+            }
+        }
+        /* 공통부분 끝 */ 
+
+        /* 주문자 정보 부분 시작 */
+        .orderer-info-head{
+            height:40px;
+            padding-top:8px;
+            border-bottom: 2px solid color($colors,default);
+            label{
+                font-size:16px;
+                font-weight: 500;
+            }
+        }
+        
+        .orderer-name{
+            padding-top:1px;
+        }
+
+        /* 전화 번호 입력 */
+        .orderer-phone{
+
+            .orderer-phone-input{
+                width:236px;
+
+                select{
+                    width: 70px;
+                    height: 31px;
+                    float: left;
+                    display: block;
+                    font-size:1.4rem;
+                    -webkit-appearance:none; 
+                    -moz-appearance:none;
+                    padding-left: 8px;
+                    border: 1px solid gray;
+                    margin:1px 0;
+                }
+
+                .arrow-down-icon{
+                    border-width: 2px;
+                    border-top-width:0;
+                    border-left-width:0;
+                    border-style: solid;
+                    transform: rotate(45deg);
+                    border-color:color($colors,default);
+                    position: absolute;
+                    top:95px;
+                    left:168px;
+                    width: 12px;
+                    height: 12px;
+                    z-index: 99;
+                }
+
+                span p{
+                    width:13px;
+                    height: 31px;
+                    display:block;
+                    float: left;
+                    margin: 0;
+                    text-align: center;
+                    font-size:22px;
+                    font-weight: 200;
+                }
+
+                ion-input{
+                    width:70px;
+                    height: 31px;
+                    border: 1px solid gray;
+                    
+                    display: block;
+                    float:left;
+
+                    .text-input{
+                        font-size:1.4rem;
+                    }
+                }
+            }
+        }
+
+        /* 이메일 입력 */
+        .orderer-email{
+            height: 39px;
+            
+            padding-bottom:8px;
+        }
+        /* 주문자 정보 부분 끝 */
+
+        /* 비회원 배송정보 시작 */
+        /* 배송정보 head */
+        .delivery-info-head{
+            background-color: white;
+            width: 100%;
+            height: 40px;
+            padding:0;
+            padding-left:8px;
+            border-bottom:2px solid color($colors,default);
+
+            .delivery-info-label{
+                height:40px;
+                padding-top:8px;
+
+                label{
+                    font-size:16px;
+                    font-weight: 500;
+                }
+            }
+        }
+
+        .delivery-new-name{
+            margin-top:1px;
+        }
+        
+        /* 주소 입력 */
+        .delivery-new-place{
+            height: 30px;
+
+            .addr-find{
+                width: 64px;
+                height: 28px;
+            }
+
+            .delivery-place1{
+                margin-left:12px;
+            }
+            /* delivery-place2 는 기본 변경사항으로 충분하기 때문에 따로 수정 x*/
+        }
+
+         /* 전화 번호 입력 */
+        .delivery-new-phone{
+
+            .delivery-phone{
+                width:236px;
+
+                select{
+                    width: 70px;
+                    height: 31px;
+                    float: left;
+                    display: block;
+                    font-size:1.4rem;
+                    -webkit-appearance:none; 
+                    -moz-appearance:none;
+                    padding-left: 8px;
+                    border: 1px solid gray;
+                    margin:1px 0;
+                }
+
+                .arrow-down-icon{
+                    border-width: 2px;
+                    border-top-width:0;
+                    border-left-width:0;
+                    border-style: solid;
+                    transform: rotate(45deg);
+                    border-color:color($colors,default);
+                    position: absolute;
+                    top:347px;
+                    left:168px;
+                    width: 12px;
+                    height: 12px;
+                }
+
+                span p{
+                    width:13px;
+                    height: 31px;
+                    display:block;
+                    float: left;
+                    margin: 0;
+                    text-align: center;
+                    font-size:22px;
+                    font-weight: 200;
+                }
+
+                ion-input{
+                    width:70px;
+                    height: 31px;
+                    border: 1px solid gray;
+                    
+                    display: block;
+                    float:left;
+
+                    .text-input{
+                        font-size:1.4rem;
+                    }
+                }
+            }
+        }
+
+        .delivery-new-time .arrow-down-icon{
+            top:380px;
+        }
+
+        .delivery-new-memo .arrow-down-icon{
+            top:412px;
+        }
+
+        .delivery-new-time, .delivery-new-memo{
+            width:100%;
+            height: 33px;
+            
+
+            .time-label, .memo-label{
+                width:100px;
+                max-width: 100px;
+                height: 33px;
+                float: left;
+
+                p{
+                    font-size: 14px;
+                    font-weight: 800;
+                    margin-top: 7px;
+                }
+            }
+
+            .arrow-down-icon{
+                border-width: 2px;
+                border-top-width:0;
+                border-left-width:0;
+                border-style: solid;
+                transform: rotate(45deg);
+                border-color:color($colors,default);
+                position: absolute;
+                right:1.8rem;
+                width: 12px;
+                height: 12px;
+            }
+
+            .delivery-time, .delivery-memo{
+                width:236px;
+                height: 31px;
+                display: block;
+                float: right;
+                font-size:14px;
+                color:color($colors,default);
+                border: 1px solid gray;
+                margin:1px 0;
+                font-weight: 600;
+                padding-left:8px;
+                
+                -webkit-appearance:none; 
+                -moz-appearance:none;
+                
+                /*background-color: color($colors,default);
+                background: url('../../assets/icon/ios-arrow-down.png');
+                background-size:24px;
+                background-repeat:no-repeat;
+                background-position: 98% 5px;*/
+            }
+        }
+
+        .delivery-new-memo{
+            margin-bottom: 8px;
+        }
+        /* 비회원 배송정보 끝 */
+    }
+    /* 비회원 배송 끝 */
+
     /* 배송정보 끝 */
 
     /* 상품/결제/결제수단 정보 시작 */
@@ -697,6 +1016,7 @@ page-order {
     }
     /* 상품/결제/결제수단 정보 끝 */
 
+    /* 결재 확인 */
     .payment-submit{
         margin:0;
         height: 46px;
@@ -705,6 +1025,8 @@ page-order {
         font-weight: 600;
         padding-bottom: 5px;
     }
+
+
 }
 
 /* 배송지 선택 popup */
