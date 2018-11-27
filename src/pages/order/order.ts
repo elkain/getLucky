@@ -108,4 +108,8 @@ export class OrderPage {
   moveToHome() {
     this.navCtrl.setRoot(TabsPage);
   }
+
+  confirmOrder(){
+    this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
+  }
 }
