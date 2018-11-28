@@ -5,7 +5,7 @@ import { SearchPage } from '../search/search';
 import { MypagePage } from '../mypage/mypage';
 import { HomePage } from '../home/home';
 import { ShoppingbasketPage } from '../shoppingbasket/shoppingbasket';
-import { ProductdetailPage } from '../productdetail/productdetail';
+import { OrderDetailPage } from '../order-detail/order-detail';
 import { OrderCompletePage } from '../order-complete/order-complete';
 
 @Component({
@@ -20,6 +20,7 @@ export class TabsPage {
   tab4Root = MypagePage;
   tab5Root = ShoppingbasketPage;
   tab6Root = OrderCompletePage;
+  tab7Root = OrderDetailPage;
   
   shopTitle:string = "MARKET LUCKY";
 
@@ -55,6 +56,10 @@ export class TabsPage {
       window.location.reload();
     }
     this.tabRef.select(0);
+  }
+
+  back() {
+    this.tabRef.select(5);
   }
 
   goToShoppingBasket(){

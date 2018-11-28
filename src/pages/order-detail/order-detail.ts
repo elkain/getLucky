@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the OrderCompletePage page.
+ * Generated class for the OrderDetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -10,19 +10,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-order-complete',
-  templateUrl: 'order-complete.html',
+  selector: 'page-order-detail',
+  templateUrl: 'order-detail.html',
 })
-export class OrderCompletePage {
+export class OrderDetailPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad OrderCompletePage');
+    console.log('ionViewDidLoad OrderDetailPage');
   }
 
-  goToOrderDetail(){
-    this.navCtrl.parent.select(6);
-  }
 }

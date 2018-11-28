@@ -1,10 +1,10 @@
 <ion-header no-border no-shadow *ngIf="showHeader==true">
   <ion-toolbar no-border no-padding no-shadow>
-    <!--<ion-buttons class="back-arrow" start *ngIf="selectedTab==4">
-      <button full ion-button icon-only color='white' (click)="moveToHome()">
+    <ion-buttons class="back-arrow" start *ngIf="selectedTab==6">
+      <button full ion-button icon-only color='white' (click)="back()">
         <ion-icon name="md-arrow-back"></ion-icon>
       </button>
-    </ion-buttons>-->
+    </ion-buttons>
     <ion-title class="market-title">
       <button ion-buttion class="title-home-button" (click)="moveToHome()"><b>{{shopTitle}}</b></button>
     </ion-title>
@@ -22,4 +22,5 @@
   <ion-tab [root]="tab4Root" tabTitle="마이럭키" tabIcon="person"></ion-tab>
   <ion-tab [root]="tab5Root" tabTitle="장바구니" show="false"></ion-tab>
   <ion-tab [root]="tab6Root" tabTitle="주문완료" show="false"></ion-tab>
+  <ion-tab [root]="tab7Root" tabTitle="주문상세" show="false"></ion-tab>
 </ion-tabs>
