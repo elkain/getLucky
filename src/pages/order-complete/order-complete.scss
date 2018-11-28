@@ -1,3 +1,177 @@
 page-order-complete {
+    /* 전체 배경색 */
+    .content{
+        background-color: color($colors, default);
+    }
 
+    /* 주문 완료 구역 시작 */
+    .order-comp-grid{
+        width:100%;
+        height: auto;
+        background-color: color($colors, default);
+        margin-bottom:8px;
+        
+        .order-comp-label{
+            width:100%;
+            height: 48px;
+            background-color: white;
+            
+            label{
+                font-size:18px;
+                font-weight: 600;
+                width:100%;
+                padding-top: 12px;
+                display: block;    
+                text-align: center;
+            }
+        }
+
+        .order-comp-icon{
+            width:344px;
+            height: 100px;
+            margin:16px 8px 0 8px;
+            background-color: white;
+            
+            .icon{
+                width: 100%;
+                height: 100%;
+                font-size:64px;
+                text-align: center;
+                color: color($colors, title);
+                padding-top:18px;
+            }
+        }
+
+        .order-comp-msg{
+            width:344px;
+            height: 70px;
+            margin:0 8px;
+            padding-bottom: 20px;
+            background-color: white;
+
+            p{
+                width:100%;
+                height: auto;
+                float: none;
+                margin:0;
+                text-align: center;
+                font-size:1.8rem;
+                font-weight: 600;
+            }
+        }
+
+        .order-comp-btn{
+            width:344px;
+            height: 70px;
+            margin:0 8px;
+            background-color: white;
+            align-items: center;
+
+            .col{
+                text-align: center;
+            }
+
+            button{
+                width:140px;
+                height: 32px;
+                margin:0;
+                padding:0;
+                background-color: color($colors,title);
+                color:white;    
+                font-size:16px;
+                font-weight: 600;
+            }
+        }
+    }
+    /* 주문 완료 구역 끝 */
+
+    /* 상세 주문 정보 시작 */
+    .order-comp-detail-info{
+        width:100%;
+        height: auto;
+        background-color: color($colors, default);
+        margin:0;
+
+        /* 주소를 제외한 상세 정보 부분 */
+        .order-comp-pyament-method, .order-comp-detail-price, .order-comp-detail-name, .order-comp-detail-phone{
+            width:344px;
+            height: 32px;
+            margin: 0 8px;
+            padding-left:8px;
+            height: 32px;
+            min-height: 32px;
+
+            .item-inner{
+                border:none;
+                padding:0;
+
+                .label{
+                    margin:0;
+
+                    p{
+                        display: block;
+                        float: left;
+                        font-size:1.6rem;
+                    }
+                }
+
+                .order-comp-detail-label{
+                    width:100px;
+                    font-weight: 800;
+                }
+
+                .order-comp-detail{
+                    width:236px;
+                }
+            }
+        }
+
+        /* 주문 시 받는 주소 에 대한 부분 */
+        .order-comp-detail-addr{
+            width:344px;
+            height: 95px;
+            margin: 0 8px;
+            padding-left:8px;
+
+            .item-inner{
+                border:none;
+                padding:0;
+                align-items: flex-start;
+
+                .label{
+                    margin:0;
+
+                    p{
+                        font-size:1.6rem;
+                        display: block;
+                        float: left;
+                    }
+                }
+
+                .order-comp-detail-label{
+                    width:100px;
+                    font-weight: 800;
+                }
+
+                .order-comp-detail{
+                    width:236px;
+                    white-space: normal;
+                    line-height: 28px;
+                }
+            }
+        }
+
+        /* 첫 아이템 윗 공백 */
+        ion-item:first-child{
+            padding-top: 2px;
+            height: 34px;
+        }
+
+        /* 마지막 아이템 아래 공백 */
+        ion-item:last-child{
+            padding-bottom: 3px;
+            height: 35px;
+        }
+    }
+    /* 상세 주문 정보 끝 */
 }
