@@ -9,76 +9,145 @@
   
 </ion-header>
 
-
+<!-- 로그인 페이지 -->
 <ion-content>
-  <!-- 상단 회원 비회원 선택 탭 -->
-  <ion-grid no-margin no-padding class="login-nav-menu">
-    <ion-row>
-      <ion-col *ngFor="let loginTab of loginTabs">
-        <ion-segment [(ngModel)]="loginTabsSelected">
-          <ion-segment-button [value]="loginTab" (click)="loginTabChange(loginTab)">
-            {{loginTab}}
-          </ion-segment-button>
-        </ion-segment>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div *ngIf="findPage==false">
+    <!-- 상단 회원 비회원 선택 탭 -->
+    <ion-grid no-margin no-padding class="login-nav-menu">
+      <ion-row>
+        <ion-col *ngFor="let loginTab of loginTabs">
+          <ion-segment [(ngModel)]="loginTabsSelected">
+            <ion-segment-button [value]="loginTab" (click)="loginTabChange(loginTab)">
+              {{loginTab}}
+            </ion-segment-button>
+          </ion-segment>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-  <!-- 회원 탭 시작 -->
-  <!-- 아이디 비번 입력창 -->
-  <ion-list class="login–input-area" *ngIf="loginTabsSelected=='회원'">
-    <ion-item class="id-input">
-      <ion-input type="text" [placeholder]="usernamePlaceHolder" [(ngModel)]="username"></ion-input>
-    </ion-item>
-    <ion-item class="pwd-input">
-      <ion-input type="text" [placeholder]="passwordPlaceHolder" [(ngModel)]="password"></ion-input>
-    </ion-item>
-    <ion-item class="auto-login-check">
-      <ion-label><b>자동로그인</b></ion-label>
-      <ion-checkbox color="white" mode="md" checked="false"></ion-checkbox>
-    </ion-item>
-  </ion-list>
+    <!-- 회원 탭 시작 -->
+    <!-- 아이디 비번 입력창 -->
+    <ion-list class="login–input-area" *ngIf="loginTabsSelected=='회원'">
+      <ion-item class="id-input">
+        <ion-input type="text" [placeholder]="usernamePlaceHolder" [(ngModel)]="username"></ion-input>
+      </ion-item>
+      <ion-item class="pwd-input">
+        <ion-input type="text" [placeholder]="passwordPlaceHolder" [(ngModel)]="password"></ion-input>
+      </ion-item>
+      <ion-item class="auto-login-check">
+        <ion-label><b>자동로그인</b></ion-label>
+        <ion-checkbox color="white" mode="md" checked="false"></ion-checkbox>
+      </ion-item>
+    </ion-list>
 
-  <!-- 로그인 회원가입 버튼 -->
-  <ion-grid class="login-button-area" *ngIf="loginTabsSelected=='회원'">
-    <ion-row  class="login-button">
-      <button full ion-button>로그인</button>
-    </ion-row>
-    <ion-row class="register-button">
-      <button (click)="moveToSignup()" full ion-button>회원가입</button>
-    </ion-row>
-    <ion-row class="find-login-inform">
-      <button clear ion-button>아이디 찾기</button><p>|</p><button clear ion-button>비밀번호 찾기</button>
-    </ion-row>
-  </ion-grid>
-  <!-- 회원 탭 끝 -->
+    <!-- 로그인 회원가입 버튼 -->
+    <ion-grid class="login-button-area" *ngIf="loginTabsSelected=='회원'">
+      <ion-row  class="login-button">
+        <button full ion-button>로그인</button>
+      </ion-row>
+      <ion-row class="register-button">
+        <button (click)="moveToSignup()" full ion-button>회원가입</button>
+      </ion-row>
+      <ion-row class="find-login-inform">
+        <button clear (click)="changeIdPwdFind('아이디 찾기')" ion-button>아이디 찾기</button><p>|</p><button (click)="changeIdPwdFind('비밀번호 찾기')" clear ion-button>비밀번호 찾기</button>
+      </ion-row>
+    </ion-grid>
+    <!-- 회원 탭 끝 -->
 
-  <!-- 비회원 탭 시작 -->
-  <!-- 주문자 명 주문 번호 입력 -->
-  <ion-list class="nonlogin-input-area" *ngIf="loginTabsSelected=='비회원'">
-    <ion-item class="order-name-input">
-      <ion-input type="text" [placeholder]="orderNamePlaceHolder" [(ngModel)]="orderName"></ion-input>
-    </ion-item>
-    <ion-item class="order-number-input">
-      <ion-input type="text" [placeholder]="orderNumberPlaceHolder" [(ngModel)]="orderNumber"></ion-input>
-    </ion-item>
-  </ion-list>
+    <!-- 비회원 탭 시작 -->
+    <!-- 주문자 명 주문 번호 입력 -->
+    <ion-list class="nonlogin-input-area" *ngIf="loginTabsSelected=='비회원'">
+      <ion-item class="order-name-input">
+        <ion-input type="text" [placeholder]="orderNamePlaceHolder" [(ngModel)]="orderName"></ion-input>
+      </ion-item>
+      <ion-item class="order-number-input">
+        <ion-input type="text" [placeholder]="orderNumberPlaceHolder" [(ngModel)]="orderNumber"></ion-input>
+      </ion-item>
+    </ion-list>
 
-  <!-- 주문자 확인 버튼 -->
-  <ion-grid class="login-button-area" *ngIf="loginTabsSelected=='비회원'">
-    <ion-row class="login-button">
-      <button full ion-button>주문확인</button>
-    </ion-row>
-  </ion-grid>
-  <!-- 비회원 탭 종료 -->
+    <!-- 주문자 확인 버튼 -->
+    <ion-grid class="login-button-area" *ngIf="loginTabsSelected=='비회원'">
+      <ion-row class="login-button">
+        <button full ion-button>주문확인</button>
+      </ion-row>
+    </ion-grid>
+    <!-- 비회원 탭 종료 -->
 
-  <!-- 비회원 주문시 보여지는 페이지 (조건 미추가)-->
-  <ion-grid class="login-button-area" *ngIf="false">
-    <ion-row class="login-button">
-      <button full ion-button>비회원구매</button>
-    </ion-row>
-    <ion-row class="register-button">
-      <button full ion-button>회원가입</button>
-    </ion-row>
-  </ion-grid>
+    <!-- 비회원 주문시 보여지는 페이지 (조건 미추가)-->
+    <ion-grid class="login-button-area" *ngIf="false">
+      <ion-row class="login-button">
+        <button full ion-button>비회원구매</button>
+      </ion-row>
+      <ion-row class="register-button">
+        <button full ion-button>회원가입</button>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- 아이디/비밀번호 찾기 시작-->
+  <div style="background-color: white; height: 100%;" *ngIf="findPage==true">
+    <!-- 아이디/비밀번호 찾기 선택 segment 시작 -->
+    <ion-grid no-margin no-padding class="find-nav-menu">
+      <ion-row>
+        <ion-col *ngFor="let category of findCategories">
+          <ion-segment [(ngModel)]="findCategorySelected">
+            <ion-segment-button [value]="category" (click)="findCategoryChange(category)">
+              {{category}}
+            </ion-segment-button>
+          </ion-segment>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- 아이디/비밀번호 찾기 선택 segment 끝 -->
+
+    <!-- 아이디/비밀번호 찾기 정보 입력 시작 -->
+    <ion-grid class="login-find" [ngSwitch]="findCategorySelected">
+      <ion-row class="login-find-checkbox">
+        <ion-col>
+          <ion-icon class="find-type-checkbox" *ngIf="findLoginInfoMethod=='phone'" name="md-radio-button-on"></ion-icon>
+          <ion-icon class="find-type-checkbox" (click)="checkFindLogintype('phone')" *ngIf="findLoginInfoMethod!='phone'" name="md-radio-button-off"></ion-icon>
+          <p><b>휴대폰</b></p>
+        </ion-col>
+        <ion-col>
+          <ion-icon class="find-type-checkbox" *ngIf="findLoginInfoMethod=='email'" name="md-radio-button-on"></ion-icon>
+          <ion-icon class="find-type-checkbox" (click)="checkFindLogintype('email')" *ngIf="findLoginInfoMethod!='email'" name="md-radio-button-off"></ion-icon>
+          <p><b>이메일</b></p>
+        </ion-col>
+      </ion-row>
+      <ion-row class="login-find-id" *ngSwitchCase="findCategories[1]">
+        <div class="login-find-label"><p><b>아이디</b></p></div>
+        <ion-input class="login-find-input" type="text"></ion-input>
+      </ion-row>
+      <ion-row class="login-find-name">
+        <div class="login-find-label"><p><b>이름</b></p></div>
+        <ion-input class="login-find-input" type="text"></ion-input>
+      </ion-row>
+      <ion-row class="login-find-phone" *ngIf="findLoginInfoMethod=='phone'">
+        <div class="login-find-label"><p><b>연락처</b></p></div>
+        <div class="login-find-phone-input">
+          <div class="arrow-down-icon"></div>
+          <select>
+            <option>010</option>
+            <option>011</option>
+          </select>
+          <span>
+            <p>-</p>
+          </span>
+          <ion-input class="login-find-phone-input" type="tel" maxlength="4"></ion-input>
+          <span>
+            <p>-</p>
+          </span>
+          <ion-input class="login-find-phone-input" type="tel" maxlength="4"></ion-input>
+        </div>
+      </ion-row>
+      <ion-row class="login-find-email" *ngIf="findLoginInfoMethod=='email'">
+        <div class="login-find-label"><p><b>가입 이메일</b></p></div>
+        <ion-input class="login-find-input" type="phone"></ion-input>
+      </ion-row>
+    </ion-grid>
+    <!-- 아이디/비밀번호 찾기 정보 입력 끝 -->
+    <!-- confirm 버튼 -->
+    <button ion-button clear class="login-button">확인</button>
+    <!-- 아이디/비밀번호 찾기 끝 -->
+  </div>
 </ion-content>

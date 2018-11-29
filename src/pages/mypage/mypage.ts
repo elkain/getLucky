@@ -31,12 +31,20 @@ export class MypagePage {
   orderNamePlaceHolder: string = "주문자명";
   orderNumberPlaceHolder: string = "주문번호";
 
+  findPage:boolean;
+  findCategories = ["아이디 찾기", "비밀번호 찾기"];
+  findCategorySelected;
+  findLoginInfoMethod;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
     this.loginTabsSelected = this.loginTabs[0];
+    this.findCategorySelected = this.findCategories[0];
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MypagePage');
+  ionViewDidEnter() {
+    this.findPage = false;
+    this.findLoginInfoMethod = 'phone';
+    console.log('ionViewDidLoad MypagePage' + this.findPage);
   }
 
   loginTabChange(Category){
@@ -46,5 +54,20 @@ export class MypagePage {
 
   moveToSignup(){
     this.app.getRootNavs()[0].push("SignupPage");
+  }
+
+  findCategoryChange(Category) {
+    let idx = this.findCategories.indexOf(Category);
+    this.findCategorySelected = this.findCategories[idx];
+  }
+
+  changeIdPwdFind(type){
+    this.findPage=true;
+    let idx = this.findCategories.indexOf(type);
+    this.findCategorySelected = this.findCategories[idx];
+  }
+
+  checkFindLogintype(type){
+    this.findLoginInfoMethod = type;
   }
 }
