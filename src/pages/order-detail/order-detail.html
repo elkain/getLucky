@@ -10,5 +10,97 @@
 
 
 <ion-content>
+  <!-- 상품 내역 상세 -->
+  <div class="order-detail-head"> <p class="order-detail-title">주문 내역 상세 </p></div>
+  <ion-scroll scrollY="true">
+    <!-- 상품 정보 시작-->
+    <ion-list class="product-info">
+      <ion-item class="product-info-head">
+        <label class="product-info-label">1. 주문 정보</label>
+        <button (click)="hideProductInfo()" class="info-icon" item-end clear ion-button icon-only>
+          <ion-icon class="ion-icon" *ngIf="showProductInfo==true" name="ios-arrow-up"></ion-icon>
+          <ion-icon class="ion-icon" *ngIf="showProductInfo==false" name="ios-arrow-down"></ion-icon>
+        </button>
+      </ion-item>
+      <ion-item class="order-id" *ngIf="showProductInfo==true">
+        <label class="order-id-label">주문번호</label>
+        <p item-end class="order-id-num">20181107123456</p>
+      </ion-item>
+      <ion-item class="product-detail-item" *ngIf="showProductInfo==true">
+        <img class="thumbnail-img" src="./assets/slides/slide1.jpg">
+        <p class="product-info-name"><b>상품명</b></p>
+        <p class="product-info-compo">구성/용량</p>
+        <p class="product-info-count"><b>수량</b></p>
+        <p class="product-info-price"><b>혜택가</b></p>
+      </ion-item>
+      <ion-item class="order-status" *ngIf="showProductInfo==true">
+        <label class="order-status-label">배송준비중</label>
+        <button ion-button item-end clear class="order-cancel">취소신청</button>
+      </ion-item>
+    </ion-list>
+    <!-- 상품 정보 끝 -->
 
+    <!-- 결재 정보 시작 -->
+    <ion-list class="payment-info">
+      <ion-item class="payment-info-head">
+        <label class="payment-info-label">2. 결제 정보</label>
+        <button (click)="hidePaymentInfo()" class="info-icon" item-end clear ion-button icon-only>
+          <ion-icon class="ion-icon" *ngIf="showPaymentInfo==true" name="ios-arrow-up"></ion-icon>
+          <ion-icon class="ion-icon" *ngIf="showPaymentInfo==false" name="ios-arrow-down"></ion-icon>
+        </button>
+      </ion-item>
+      <ion-item class="payment-info-item" *ngIf="showPaymentInfo==true">
+        <label class="payment-info-label">결재방법</label>
+        <p item-end class="product-price">{{paymentMethod}}</p>
+      </ion-item>
+      <ion-item class="payment-info-item" *ngIf="showPaymentInfo==true">
+        <label class="payment-info-label">결재금액</label>
+        <p item-end class="product-price">2,0000원</p>
+      </ion-item>
+      <ion-item class="payment-info-item" *ngIf="showPaymentbank==true">
+        <label class="payment-info-label">입금은행</label>
+        <p item-end class="product-price">우리은행 123-12345-12-123</p>
+      </ion-item>
+      <ion-item class="payment-info-item" *ngIf="showPaymentInfo==true">
+        <label class="payment-info-label">결재일시</label>
+        <p item-end class="product-price">2018-11-07 16:10:55</p>
+      </ion-item>
+    </ion-list>
+    <!-- 결재 정보 끝 -->
+
+    <!-- 배송 정보 시작 -->
+    <ion-list class="order-comp-detail-info">
+      <ion-item class="order-comp-detail-head">
+        <label class="order-comp-detail-label">3. 배송 정보</label>
+        <button (click)="hideDeliveryInfo()" class="info-icon" item-end clear ion-button icon-only>
+          <ion-icon class="ion-icon" *ngIf="showDeliveryInfo==true" name="ios-arrow-up"></ion-icon>
+          <ion-icon class="ion-icon" *ngIf="showDeliveryInfo==false" name="ios-arrow-down"></ion-icon>
+        </button>
+      </ion-item>
+      <ion-item class="order-comp-detail-name" *ngIf="showDeliveryInfo==true">
+        <p class="order-comp-detail-label">받는분</p>
+        <p class="order-comp-detail">이충민</p>
+      </ion-item>
+      <ion-item class="order-comp-detail-addr" *ngIf="showDeliveryInfo==true">
+        <p class="order-comp-detail-label">주소</p>
+        <p class="order-comp-detail">서울시 강동구 고덕로 131 (암사동, 강동롯데캐슬퍼스트아파트) 123동 1234호</p>
+      </ion-item>
+      <ion-item class="order-comp-detail-phone" *ngIf="showDeliveryInfo==true">
+        <p class="order-comp-detail-label">연락처</p>
+        <p class="order-comp-detail">010-1234-5678</p>
+      </ion-item>
+      <ion-item class="order-comp-detail-time" *ngIf="showDeliveryInfo==true">
+        <p class="order-comp-detail-label">배송시간</p>
+        <p class="order-comp-detail">18:00 ~ 21:00</p>
+      </ion-item>
+      <ion-item class="order-comp-detail-memo" *ngIf="showDeliveryInfo==true">
+        <p class="order-comp-detail-label">배송메모</p>
+        <p class="order-comp-detail">부재시 경비실에 맡겨주세요</p>
+      </ion-item>
+    </ion-list>
+    <!-- 배송 정보 시작 -->
+
+    <!--1:1 문의 작성 버튼-->
+    <button ion-button class="write-qs">1:1 문의작성</button>
+  </ion-scroll>
 </ion-content>

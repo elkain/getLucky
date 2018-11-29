@@ -1,3 +1,282 @@
 page-order-detail {
 
+    .content{
+        background-color: color($colors,default);
+    }
+        
+    ion-scroll{
+        height: 90%;
+    }
+
+    /* 주문 내역 상세 문구 시작 */
+    .order-detail-head{
+        height: 48px;
+        width: 100%;
+        background-color: white;
+        border-bottom: 1px solid color($colors, default);
+        margin:0;
+        padding:0;
+        
+        .order-detail-title{
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin: 0;
+            padding:13px;
+            text-align: center;
+            display: block;
+            
+        }
+    }
+    /* 주문 내역 상세 문구 끝 */
+
+    /* 주문 정보, 결제 정보, 배송 정보 시작 */
+    .product-info, .payment-info, .order-comp-detail-info{
+        margin:8px;
+        height: auto;
+        background-color:white;
+
+        /* 주문 정보, 결제 정보, 배송 정보 head 시작 */
+        .product-info-head, .payment-info-head, .order-comp-detail-head{
+            height: 40px;
+            min-height: 40px;
+            padding: 0;
+            padding-left: 8px;
+            border-bottom:2px solid color($colors,default);  
+
+            .item-inner{
+                padding: 0;
+                border:none;   
+                
+                .label{
+                    margin:0;
+                    font-size: 1.6rem;
+                    padding-bottom: 5px;
+                }
+
+                .info-icon{
+                    margin:0;
+                    font-size:18px;
+                    width:40px;
+                    height: 40px;
+                    color:black;
+                }
+            }
+        }
+        /* 주문 정보, 결제 정보, 배송 정보 head 끝 */
+
+        /* 주문 정보 내 주문 번호, 배송준비중 시작 */
+        .order-id, .order-status{
+            height: 33px;
+            min-height: 33px;
+            padding:0;
+            
+            .item-inner{
+                border:none;
+                padding:0;
+                padding-left: 8px;
+
+                .label{
+                    margin:0;
+                    width:100px;
+                    font-weight: 600;
+                    font-size:14px;
+
+                    .order-status-label{
+                        align-items: center;
+                        display: flex;
+                        color:lightgreen;
+                        font-size: 1.2rem;
+                        font-weight: 600;
+                    }
+                }
+
+                .order-id-num{
+                    text-align: right;
+                    font-size:1.4rem;
+                    font-weight: 400;
+                    margin: 0;
+                    padding-right:8px;
+                }
+
+                .order-cancel{
+                    margin:0;
+                    //margin-right:8px;
+                    font-weight: 600;
+                    border:1px solid color($colors, default);
+                    color:gray;
+                }
+            }
+        }
+
+        /* 주문 정보 내 상품 정보 시작 */
+        .product-detail-item{
+            height: 144px;
+            padding:0;
+
+            .item-inner{
+                padding:0;
+            }
+
+            .label{
+                margin:0;
+                width:auto;
+                height: 144px;
+                padding:8px 0 8px 8px;
+
+                .thumbnail-img{
+                    height: 64px;
+                    width: 64px;
+                    float: left;
+                }
+
+                .product-info-name{
+                    float: left;
+                    margin:0;
+                    padding-left:8px;
+                    height: 64px;
+                    font-size:1.4rem;
+                    color:black;
+                }
+
+                .product-info-compo{
+                    margin:0;
+                    padding-left:8px;
+                    height: 64px;
+                    padding-top:5px;
+                    font-size:12px;
+                    color:black;
+                }
+
+                .product-info-count, .product-info-price{
+                    margin:0;
+                    padding-left:72px;
+                    height: 31px;
+                    padding-top:5px;
+                    font-size: 1.4rem;
+                    color:black;
+                }
+            }
+        }
+        /* 주문 정보 내 상품 정보 끝 */
+
+        .order-id{
+            border-bottom:1px solid color($colors, default);
+        }
+        /* 주문 정보 내 주문 번호, 배송준비중 끝 */
+
+        /* 결재 정보 시작 */
+        .payment-info-item{
+            height: 33px;
+            min-height: 33px;
+            padding:0;
+
+            .item-inner{
+                border:none;
+                padding:0;
+                padding-left: 8px;
+
+                .label{
+                    margin:0;
+                    width:100px;
+                    font-weight: 600;
+                    font-size:14px;
+                }
+
+                .product-price{
+                    margin:0;
+                    margin-left:24px;
+                    padding-right:8px;
+                    font-weight: 400;
+                }
+
+                ion-icon{
+                    margin:0;
+                    font-size:18px;
+                    color:color($colors,default);
+                    padding-top:5px;
+                }
+            }
+        }
+        /* 결재 정보 끝 */
+        
+        /* 주소를 제외한 상세 정보 부분 */
+        .order-comp-detail-name, .order-comp-detail-phone, .order-comp-detail-time ,.order-comp-detail-memo{
+            width:344px;
+            height: 32px;
+            padding-left:8px;
+            height: 32px;
+            min-height: 32px;
+
+            .item-inner{
+                border:none;
+                padding:0;
+
+                .label{
+                    margin:0;
+
+                    p{
+                        display: block;
+                        float: left;
+                        font-size:1.4rem;
+                        color:black;
+                    }
+                }
+
+                .order-comp-detail-label{
+                    width:100px;
+                    font-weight: 800;
+                }
+
+                .order-comp-detail{
+                    width:236px;
+                }
+            }
+        }
+
+        /* 주문 시 받는 주소 에 대한 부분 */
+        .order-comp-detail-addr{
+            width:344px;
+            height: 95px;
+            padding-left:8px;
+
+            .item-inner{
+                border:none;
+                padding:0;
+                align-items: flex-start;
+
+                .label{
+                    margin:0;
+
+                    p{
+                        font-size:1.4rem;
+                        display: block;
+                        float: left;
+                        color:black;
+                    }
+                }
+
+                .order-comp-detail-label{
+                    width:100px;
+                    font-weight: 800;
+                }
+
+                .order-comp-detail{
+                    width:236px;
+                    white-space: normal;
+                    line-height: 28px;
+                    word-break: keep-all;
+                }
+            }
+        }
+    }
+    /* 상품/결제/결제수단 정보 끝 */
+
+    .write-qs{
+        margin:0 8px;
+        padding:0;
+        width:344px;
+        height: 46px;
+        font-size: 1.4rem;
+        background-color: color($colors,title);
+    }
 }
