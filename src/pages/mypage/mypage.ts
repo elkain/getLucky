@@ -31,10 +31,14 @@ export class MypagePage {
   orderNamePlaceHolder: string = "주문자명";
   orderNumberPlaceHolder: string = "주문번호";
 
-  findPage:boolean;
   findCategories = ["아이디 찾기", "비밀번호 찾기"];
   findCategorySelected;
   findLoginInfoMethod;
+
+  loginStatus:boolean = false;
+
+  showPageType : string;
+  mypageMenus = ["주문내역", "1:1 문의", "공지사항", "회원정보수정", "배송지관리"];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
     this.loginTabsSelected = this.loginTabs[0];
@@ -42,9 +46,14 @@ export class MypagePage {
   }
 
   ionViewDidEnter() {
-    this.findPage = false;
+    if (this.loginStatus == true){
+      this.showPageType = "mypage";
+    }else{
+      this.showPageType = "login";
+    }
+    
     this.findLoginInfoMethod = 'phone';
-    console.log('ionViewDidLoad MypagePage' + this.findPage);
+    console.log('ionViewDidLoad MypagePage' + this.showPageType);
   }
 
   loginTabChange(Category){
@@ -61,13 +70,22 @@ export class MypagePage {
     this.findCategorySelected = this.findCategories[idx];
   }
 
+  login(){
+    this.loginStatus=true;
+    this.showPageType = "mypage";
+  }
+
   changeIdPwdFind(type){
-    this.findPage=true;
+    this.showPageType="find";
     let idx = this.findCategories.indexOf(type);
     this.findCategorySelected = this.findCategories[idx];
   }
 
   checkFindLogintype(type){
     this.findLoginInfoMethod = type;
+  }
+
+  menuSelected(menu){
+
   }
 }

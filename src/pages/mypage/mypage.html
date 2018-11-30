@@ -11,7 +11,7 @@
 
 <!-- 로그인 페이지 -->
 <ion-content>
-  <div *ngIf="findPage==false">
+  <div *ngIf="showPageType=='login'">
     <!-- 상단 회원 비회원 선택 탭 -->
     <ion-grid no-margin no-padding class="login-nav-menu">
       <ion-row>
@@ -43,7 +43,7 @@
     <!-- 로그인 회원가입 버튼 -->
     <ion-grid class="login-button-area" *ngIf="loginTabsSelected=='회원'">
       <ion-row  class="login-button">
-        <button full ion-button>로그인</button>
+        <button full ion-button (click)="login()">로그인</button>
       </ion-row>
       <ion-row class="register-button">
         <button (click)="moveToSignup()" full ion-button>회원가입</button>
@@ -85,7 +85,7 @@
   </div>
 
   <!-- 아이디/비밀번호 찾기 시작-->
-  <div style="background-color: white; height: 100%;" *ngIf="findPage==true">
+  <div style="background-color: white; height: 100%;" *ngIf="showPageType=='find'">
     <!-- 아이디/비밀번호 찾기 선택 segment 시작 -->
     <ion-grid no-margin no-padding class="find-nav-menu">
       <ion-row>
@@ -150,4 +150,27 @@
     <button ion-button clear class="login-button">확인</button>
     <!-- 아이디/비밀번호 찾기 끝 -->
   </div>
+
+  <!-- 마이 페이지 시작 -->
+  <div *ngIf="showPageType=='mypage'">
+    <!-- 마이 페이지 타이틀(마이럭키) -->
+    <div class="mypage-head">
+      <p class="mypage-head-label">마이럭키 </p>
+    </div>
+
+    <!-- 메이페이지 메뉴 시작 -->
+    <ion-list class="mypage-menu-list">
+      <ion-item-divider class="mypage-status">
+        <h2><b>이충민님</b></h2>
+        <p>마이 럭키에 오신 것을 환영합니다.</p>
+        <p>현재 회원등급 <span>5등급</span>/구매누적 총액 <span>1,000,000</span>원 입니다.</p>
+      </ion-item-divider>
+      <button class="mypage-menu" ion-item *ngFor="let menu of mypageMenus" (click)="menuSelected(menu)">
+        <p class="mypage-menu-label">{{ menu }}</p>
+        <ion-icon item-end name="ios-arrow-forward"></ion-icon>
+      </button>
+    </ion-list>
+    <!-- 메이페이지 메뉴 끝 -->
+  </div>
+  <!-- 마이 페이지 끝 -->
 </ion-content>

@@ -207,6 +207,7 @@ page-mypage {
     }
     /* 아이디/비밀번호 찾기 선택 segment 종료 */
 
+    /* 아이디/비밀번호 찾기 정보 입력 시작 */
     .login-find{
         background-color: white;
         padding:0;
@@ -318,6 +319,8 @@ page-mypage {
             }
         }
     }
+    /* 아이디/비밀번호 찾기 정보 입력 끝 */
+
     /* 확인 버튼 */
     .login-button{
         height: 50px;
@@ -330,4 +333,98 @@ page-mypage {
         padding:0;
     }
     /* 아이디 비번 찾기 끝 */  
+
+
+    /* 마이페이지 시작 */
+    /* 마이럭키 상당 문구 시작 */
+    .mypage-head{
+        height: 48px;
+        width: 100%;
+        background-color: white;
+        border-bottom: 1px solid color($colors, default);
+        margin:0;
+        padding:0;
+        
+        .mypage-head-label{
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0;
+            padding:13px;
+            text-align: center;
+            display: block;
+            
+        }
+    }
+    /* 마이럭키 상당 문구 끝 */
+
+    /* 마이럭키 메뉴 시작 */
+    .mypage-menu-list{
+        margin:16px 8px 0;
+        width: 344px;
+        height: auto;
+
+        .mypage-status{
+            width: 100%;
+            height: 80px;
+            margin-bottom: 16px;
+            padding: 0;
+            border:0;
+
+            .label{
+                margin:0;
+            }
+
+            h2{
+                height:40px;
+                margin:0;
+                display: flex;
+                align-items: center;
+                color:black;
+                font-size: 1.8rem;
+            }
+
+            p{
+                height:20px;
+                margin:0;
+                font-weight: 600;
+            }
+
+            span:first-child{
+                color:red;
+                font-weight: 1000;
+            }
+
+            span:last-child{
+                color:red;
+                font-weight: 1000;
+                font-size:1.6rem;
+            }
+        }
+        
+        .mypage-menu{
+            width: 100%;
+            height: 60px;
+            padding:0;
+            border:1px solid gray;
+
+            .item-inner{
+                padding:0;
+                border:none;
+                height: 60px;
+
+                .label{
+                    margin:0;
+                }
+
+                p{
+                    font-size: 1.6rem;
+                    font-weight: 800;
+                    text-align: center;
+                    color:black;
+                }
+            }
+        }
+    }
+    /* 마이럭키 메뉴 끝 */
+    /* 마이페이지 끝 */
 }
