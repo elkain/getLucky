@@ -9,8 +9,9 @@
   
 </ion-header>
 
-<!-- 로그인 페이지 -->
+
 <ion-content>
+  <!-- 로그인 페이지 시작 -->
   <div *ngIf="showPageType=='login'">
     <!-- 상단 회원 비회원 선택 탭 -->
     <ion-grid no-margin no-padding class="login-nav-menu">
@@ -83,6 +84,7 @@
       </ion-row>
     </ion-grid>
   </div>
+  <!-- 로그인 페이지 끝 -->
 
   <!-- 아이디/비밀번호 찾기 시작-->
   <div style="background-color: white; height: 100%;" *ngIf="showPageType=='find'">
@@ -155,7 +157,7 @@
   <div *ngIf="showPageType=='mypage'">
     <!-- 마이 페이지 타이틀(마이럭키) -->
     <div class="mypage-head">
-      <p class="mypage-head-label">마이럭키 </p>
+      <p class="mypage-head-label">마이럭키</p>
     </div>
 
     <!-- 메이페이지 메뉴 시작 -->
@@ -173,4 +175,46 @@
     <!-- 메이페이지 메뉴 끝 -->
   </div>
   <!-- 마이 페이지 끝 -->
+
+  <!-- 주문내역 시작 -->
+  <ion-scroll scrollY="true" *ngIf="showPageType=='주문내역'">
+    <div class="order-history-head">
+      <p class="order-history-head-label">주문내역</p>
+    </div>
+    <ion-list class="order-history-list" *ngFor="let orderedProduct of orderedProducts">
+      <ion-item-divider class="order-history-list-head">
+        <p class="order-number-label"><b>주문번호</b></p>
+        <p class="order-number">{{orderedProduct.orderedNumber}}</p>
+        <button ion-button item-end clear class="order-detail-btn">
+          <p>상세보기</p>
+          <ion-icon name="ios-arrow-forward"></ion-icon>
+        </button>
+      </ion-item-divider>
+      <ion-item class="order-history">
+        <p class="order-history-label">상품명</p>
+        <p class="order-history-content">{{orderedProduct.productName}}</p>
+      </ion-item>
+      <ion-item class="order-history">
+        <p class="order-history-label">받는 분</p>
+        <p class="order-history-content">{{orderedProduct.productReceiver}}</p>
+      </ion-item>
+      <ion-item class="order-history">
+        <p class="order-history-label">결제방법</p>
+        <p class="order-history-content">{{orderedProduct.paymentMethod}}</p>
+      </ion-item>
+      <ion-item class="order-history">
+        <p class="order-history-label">결재금액</p>
+        <p class="order-history-content">{{orderedProduct.price}}</p>
+      </ion-item>
+      <ion-item class="order-history">
+        <p class="order-history-label">결제일시</p>
+        <p class="order-history-content">{{orderedProduct.buyDate}}</p>
+      </ion-item>
+      <ion-item class="order-history">
+        <p class="order-history-label">주문상태</p>
+        <p class="order-history-content">{{orderedProduct.status}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-scroll>
+  <!-- 주문내역 끝 -->
 </ion-content>

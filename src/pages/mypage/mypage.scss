@@ -427,4 +427,111 @@ page-mypage {
     }
     /* 마이럭키 메뉴 끝 */
     /* 마이페이지 끝 */
+
+    /* 주문내역 시작 */
+    .order-history-head{
+        height: 48px;
+        width: 100%;
+        background-color: white;
+        border-bottom: 1px solid color($colors, default);
+        margin:0;
+        margin-bottom: 16px;
+        padding:0;
+        
+        .order-history-head-label{
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0;
+            padding:13px;
+            text-align: center;
+            display: block;
+        }
+    }
+
+    ion-scroll{
+        height: 100%;
+    }
+
+    .order-history-list{
+
+        width:344px;
+        margin:0 8px 8px;
+        background-color:white;
+
+        .order-history-list-head{
+
+            padding:0 8px;
+            height: 40x;
+            
+            border-bottom:2px solid color($colors, default);
+
+            .label{
+                margin:0;
+                height: 40px;
+            }
+
+            .order-number-label{
+                float:left;
+                width:100px;
+                font-size:1.6rem;
+                color:color($colors, title);
+                font-weight: bold;
+                margin-top:9px;
+            }
+
+            .order-number{
+                font-size:1.6rem;
+                color:color($colors, title);
+                font-weight: 500;
+                margin-top:10px;
+            }
+
+            .order-detail-btn{
+                margin:0;
+                width:81px;
+                height: 35px;
+                background-color: color($colors, title);
+
+                p{
+                    font-size:1.4rem;
+                    color:white;
+                    font-weight: 800;
+                }
+
+                ion-icon{
+                    font-size: 2.2rem;
+                    margin-left:4px;
+                    color:white;
+                }
+            }
+        }
+
+        .order-history{
+            padding-left:8px;
+            margin-bottom:2px;
+            height: 31x;
+            min-height: 31px;
+            
+            .item-inner{
+                border:none;
+            }
+
+            .label{
+                margin:0;
+            }
+
+            .order-history-label{
+                float:left;
+                width:100px;
+                font-weight: bold;
+                color:black;
+                font-size: 1.4rem;
+            }
+
+            .order-history-content{ 
+                color:black;
+                font-size: 1.4rem;
+            }   
+        }
+    }
 }

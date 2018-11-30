@@ -40,6 +40,11 @@ export class MypagePage {
   showPageType : string;
   mypageMenus = ["주문내역", "1:1 문의", "공지사항", "회원정보수정", "배송지관리"];
 
+  orderedProducts=[
+    { orderedNumber: "20181107123456", productName: "비비고 왕교자 1.05kg 외 3건", productReceiver: "이충민", paymentMethod: "신용카드", price: "35,000원", buyDate: "2018-11-07 17:55", status: "배송완료" },
+    { orderedNumber: "20181108589675", productName: "진라면 멀티팩 외 7건", productReceiver: "이충민", paymentMethod: "현장수령", price: "90,000원", buyDate: "2018-11-08 19:20", status: "배송완료" }
+  ];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
@@ -86,6 +91,6 @@ export class MypagePage {
   }
 
   menuSelected(menu){
-
+    this.showPageType=menu;
   }
 }
