@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the SignupPage page.
@@ -26,6 +27,7 @@ export class SignupPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.male = this.whiteColor;
     this.female = this.whiteColor;
+    
   }
 
   ionViewDidLoad() {
@@ -46,5 +48,10 @@ export class SignupPage {
     this.sex = "female";
     this.male = this.whiteColor;
     this.female = this.titleColor;
+  }
+
+
+  signupCompBtn(){
+    this.navCtrl.setRoot(TabsPage, { tabIndex: 7 });
   }
 }

@@ -15,6 +15,7 @@ import { OrderPageModule } from '../pages/order/order.module';
 import { SelectPopoverPageModule } from '../pages/select-popover/select-popover.module';
 import { OrderCompletePageModule } from '../pages/order-complete/order-complete.module';
 import { OrderDetailPageModule } from '../pages/order-detail/order-detail.module';
+import { SignupCompletePageModule } from '../pages/signup-complete/signup-complete.module';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -37,6 +38,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SelectPopoverPageModule,
     OrderCompletePageModule,
     OrderDetailPageModule,
+    SignupCompletePageModule,
     IonicModule.forRoot(MyApp,{
       mode:'md',
       scrollPadding: false,

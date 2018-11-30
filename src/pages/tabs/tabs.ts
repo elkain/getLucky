@@ -7,6 +7,7 @@ import { HomePage } from '../home/home';
 import { ShoppingbasketPage } from '../shoppingbasket/shoppingbasket';
 import { OrderDetailPage } from '../order-detail/order-detail';
 import { OrderCompletePage } from '../order-complete/order-complete';
+import { SignupCompletePage } from '../signup-complete/signup-complete';
 
 @Component({
   selector: 'page-tabs',
@@ -21,6 +22,7 @@ export class TabsPage {
   tab5Root = ShoppingbasketPage;
   tab6Root = OrderCompletePage;
   tab7Root = OrderDetailPage;
+  tab8Root = SignupCompletePage;
   
   shopTitle:string = "MARKET LUCKY";
 
