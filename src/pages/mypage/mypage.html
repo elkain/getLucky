@@ -5,10 +5,22 @@
   Ionic pages and navigation.
 -->
 <ion-header no-shadow no-border>
-
-  
+  <ion-toolbar no-border no-padding no-shadow>
+    <ion-buttons class="back-arrow" start *ngIf="showBackbtn==true">
+      <button full ion-button icon-only color='white' (click)="back()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title class="market-title">
+      <button ion-buttion class="title-home-button" (click)="moveToHome()"><b>{{shopTitle}}</b></button>
+    </ion-title>
+    <ion-buttons end *ngIf="showPageType!='배송지관리'">
+      <button class="home-cart" (click)="goToShoppingBasket()">
+        <ion-icon name="ios-cart-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
-
 
 <ion-content>
   <!-- 로그인 페이지 시작 -->
@@ -217,4 +229,10 @@
     </ion-list>
   </ion-scroll>
   <!-- 주문내역 끝 -->
+
+  <!-- 배송지 관리 시작 -->
+  <ion-scroll scrollY="true" *ngIf="showPageType=='배송지관리'">
+
+  </ion-scroll>
+  <!-- 배송지 관리 끝 -->
 </ion-content>

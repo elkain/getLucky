@@ -16,6 +16,8 @@ import { SignupPage } from '../signup/signup';
 })
 export class MypagePage {
 
+  shopTitle: string = "MARKET LUCKY";
+
   loginTabs = ["회원", "비회원"];
   loginTabsSelected;
 
@@ -38,6 +40,7 @@ export class MypagePage {
   loginStatus:boolean = false;
 
   showPageType : string;
+  showBackbtn: boolean;
   mypageMenus = ["주문내역", "1:1 문의", "공지사항", "회원정보수정", "배송지관리"];
 
   orderedProducts=[
@@ -56,6 +59,8 @@ export class MypagePage {
     }else{
       this.showPageType = "login";
     }
+
+    this.showBackbtn=false;
     
     this.findLoginInfoMethod = 'phone';
     console.log('ionViewDidLoad MypagePage' + this.showPageType);
@@ -92,5 +97,19 @@ export class MypagePage {
 
   menuSelected(menu){
     this.showPageType=menu;
+    this.showBackbtn = true;
+  }
+
+  moveToHome() {
+    this.navCtrl.parent.select(0);
+  }
+
+  goToShoppingBasket(){
+    this.navCtrl.parent.select(4);
+  }
+
+  back() {
+    this.showPageType = "mypage";
+    this.showBackbtn = false;
   }
 }

@@ -39,7 +39,7 @@ export class TabsPage {
   public onTabsChange() {
     this.selectedTab = this.tabRef.getSelected().index;
     
-    if (this.selectedTab == 2 || this.selectedTab == 4){
+    if (this.selectedTab == 2 || this.selectedTab == 4 || this.selectedTab == 3){
       this.showHeader = false;
     }else{
       this.showHeader = true;
