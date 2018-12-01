@@ -189,10 +189,10 @@
   <!-- 마이 페이지 끝 -->
 
   <!-- 주문내역 시작 -->
+  <div class="order-history-head" *ngIf="showPageType=='주문내역'">
+    <p class="order-history-head-label">주문내역</p>
+  </div>
   <ion-scroll scrollY="true" *ngIf="showPageType=='주문내역'">
-    <div class="order-history-head">
-      <p class="order-history-head-label">주문내역</p>
-    </div>
     <ion-list class="order-history-list" *ngFor="let orderedProduct of orderedProducts">
       <ion-item-divider class="order-history-list-head">
         <p class="order-number-label"><b>주문번호</b></p>
@@ -231,8 +231,32 @@
   <!-- 주문내역 끝 -->
 
   <!-- 배송지 관리 시작 -->
+  <div class="delivery-des-head" *ngIf="showPageType=='배송지관리'">
+    <p class="delivery-des-head-label">배송지관리</p>
+  </div>
   <ion-scroll scrollY="true" *ngIf="showPageType=='배송지관리'">
-
+    <div class="delivery-des-button">
+      <button item-end ion-button clear>배송지 추가</button>
+    </div>
+    <ion-list class="delivery-des-list" *ngFor="let deliveryDesInfo of deliveryDesInfos">
+      <ion-item-divider class="delivery-des-list-head">
+        <p class="delivery-des-list-label">{{deliveryDesInfo.type}}</p>
+        <button class="delivery-des-edit-btn" ion-button item-end clear>수정</button>
+        <button class="delivery-des-del-btn" ion-button item-end clear>삭제</button>
+      </ion-item-divider>
+      <ion-item class="delivery-des-addr">
+        <p class="delivery-des-label">주소</p>
+        <p class="delivery-des-addr-content">{{deliveryDesInfo.addr}}</p>
+      </ion-item>
+      <ion-item class="delivery-des">
+        <p class="delivery-des-label">받는분</p>
+        <p class="delivery-des-content">{{deliveryDesInfo.receiver}}</p>
+      </ion-item>
+      <ion-item class="delivery-des">
+        <p class="delivery-des-label">연락처</p>
+        <p class="delivery-des-content">{{deliveryDesInfo.phone}}</p>
+      </ion-item>
+    </ion-list>
   </ion-scroll>
   <!-- 배송지 관리 끝 -->
 </ion-content>

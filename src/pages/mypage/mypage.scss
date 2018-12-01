@@ -1,5 +1,9 @@
 page-mypage {
 
+    ion-scroll{
+        height: 92%;
+    }
+
     ion-header{
         background-color: color($colors, title);
         height: 50px;
@@ -514,7 +518,6 @@ page-mypage {
         background-color: white;
         border-bottom: 1px solid color($colors, default);
         margin:0;
-        margin-bottom: 16px;
         padding:0;
         
         .order-history-head-label{
@@ -527,14 +530,10 @@ page-mypage {
         }
     }
 
-    ion-scroll{
-        height: 100%;
-    }
-
     .order-history-list{
 
         width:344px;
-        margin:0 8px 8px;
+        margin:16px 8px 8px;
         background-color:white;
 
         .order-history-list-head{
@@ -613,4 +612,154 @@ page-mypage {
             }   
         }
     }
+    /* 주문내역 끝 */
+
+    /* 배송지관리 시작 */
+    .delivery-des-head{
+        height: 48px;
+        width: 100%;
+        background-color: white;
+        border-bottom: 1px solid color($colors, default);
+        margin:0;
+        
+        padding:0;
+        
+        .delivery-des-head-label{
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0;
+            padding:13px;
+            text-align: center;
+            display: block;
+        }
+    }
+
+    .delivery-des-button{
+        height: 40px;
+        width: 100%;
+        margin-top: 8px;
+
+        button{
+            margin:5px;
+            margin-right: 13px;
+            padding:0;
+            width:90px;
+            height: 30px;
+            float: right;
+            background-color:color($colors, title);
+            color:white;
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+    }
+
+    .delivery-des-list{
+        width:344px;
+        height: auto;
+        margin:0 8px 8px;
+
+
+        /* 배송지 종류 정보 (수정, 삭제) */
+        .delivery-des-list-head{
+            width:100%;
+            height: 33px;
+            border-bottom: 2px solid color($colors, default);
+            padding:0;
+            
+            .delivery-des-list-label{
+                font-size:1.8rem;
+                color:black;
+                padding-left: 8px;
+                font-weight: bold;
+            }
+
+            .delivery-des-edit-btn, .delivery-des-del-btn{
+                width:60px;
+                height: 28px;
+                margin:0;
+                padding:0;
+                margin-left:4px;
+                background-color: gray;
+                color:white;
+                font-size:1.4rem;
+                font-weight: bold;
+            }
+        }
+
+        /* 배송지 주소 */
+        .delivery-des-addr{
+
+            width:100;
+            height:48px;
+            padding-left:0px;
+            
+            .item-inner{
+                padding:0;
+
+                .label{
+                    margin:0;
+                    height:48px;
+                }
+            }
+
+            .delivery-des-label{
+                padding-left:8px;
+                padding-top:6px;
+                float:left;
+                width:100px;
+                font-weight: bold;
+                color:black;
+                font-size: 1.4rem;
+                display:flex;
+                align-items: center;
+            }
+
+            .delivery-des-addr-content{
+                float:left;
+                height: 48px;
+                width: 244px;
+                font-size: 1.3rem;
+                padding-top:6px;
+                white-space: normal;
+                word-break: normal;
+            }
+        }
+
+        .delivery-des{
+            height: 31px;
+            min-height: 31px;
+            width:100%;
+            padding-left:0px;
+
+            .item-inner{
+                padding:0;
+
+                .label{
+                    margin:0;
+                    height:31px;
+                }
+            }
+
+            .delivery-des-label{
+                padding-left:8px;
+                float:left;
+                display:flex;
+                align-items: center;
+                width:100px;
+                height: 31px;
+                font-weight: bold;
+                color:black;
+                font-size: 1.4rem;
+            }
+
+            .delivery-des-content{
+                display:flex;
+                align-items: center;
+                float:left;
+                height: 31px;
+                width:244px;
+            }
+        }
+    }
+    /* 배송지관리 끝 */
 }

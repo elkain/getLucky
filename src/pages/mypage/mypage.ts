@@ -48,6 +48,12 @@ export class MypagePage {
     { orderedNumber: "20181108589675", productName: "진라면 멀티팩 외 7건", productReceiver: "이충민", paymentMethod: "현장수령", price: "90,000원", buyDate: "2018-11-08 19:20", status: "배송완료" }
   ];
 
+  deliveryDesInfos=[
+    { type: "기본주소", addr: "서울시 강동구 고덕로 131 (암사동, 강동롯데캐슬퍼스트아파트) 123동 1234호", receiver: "이충민", phone: "010-1234-5678" },
+    { type: "사무실", addr: "서울시 강동구 성암로 11길 24 3층", receiver: "이충민", phone: "010-1234-5678" },
+    { type: "매장", addr: "서울시 강동구 상암로 18길 암사럭키슈퍼", receiver: "이충민", phone: "02-441-3545" }
+  ];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
