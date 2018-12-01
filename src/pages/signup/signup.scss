@@ -70,7 +70,7 @@ page-signup {
             }
 
             ion-input{
-                border: 1px solid color($colors,default);
+                border: 1px solid gray;
 
                 .text-input{
                     margin: 0;
@@ -135,7 +135,7 @@ page-signup {
             
             .email-input2{
                 width:100px;
-                border:1px solid color($colors,default);
+                border:1px solid gray;
                 -webkit-appearance:none; 
                 -moz-appearance:none;
                 background: url('../../assets/icon/ios-arrow-down.png');
@@ -152,7 +152,7 @@ page-signup {
 
             .phone-input-area{
                 width:120px;
-                border: 1px solid color($colors,default);
+                border: 1px solid gray;
                 margin-right:16px;
 
                 .input{
@@ -252,7 +252,7 @@ page-signup {
 
             .male, .female{
                 width:117px;
-                border:1px solid color($colors,default);
+                border:1px solid gray;
                 text-align: center;
                 font-size: 16px;
                 font-weight: 800;
