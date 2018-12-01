@@ -14,9 +14,10 @@
 
 
 <ion-content>
-  <ion-grid class="signup-grid">
+  <!-- 회원 가입 시작 -->
+  <ion-grid class="signup-grid" *ngIf="loginStatus==false">
     <!-- 아이디 입력 -->
-    <ion-row class="signup-id">
+    <ion-row class="signup-id" *ngIf="loginStatus==false">
       <div class="signup-label">
         <p>아이디*</p>
       </div>
@@ -61,11 +62,15 @@
         <p>휴대폰*</p>
       </div>
       <div class="phone-input-area">
-        <ion-input class="phone-input" type="tel" maxlength="3"></ion-input>
-        <span><p>-</p></span>
-        <ion-input class="phone-input" type="tel" maxlength="4"></ion-input>
-        <span><p>-</p></span>
-        <ion-input class="phone-input" type="tel" maxlength="4"></ion-input>
+        <ion-input class="phone-input" [(ngModel)]="phone1" type="tel" maxlength="3"></ion-input>
+        <span>
+          <p>-</p>
+        </span>
+        <ion-input class="phone-input" [(ngModel)]="phone2" type="tel" maxlength="4"></ion-input>
+        <span>
+          <p>-</p>
+        </span>
+        <ion-input class="phone-input" [(ngModel)]="phone3" type="tel" maxlength="4"></ion-input>
       </div>
       <button clear class="phone-confirm" ion-button>인증번호 받기</button>
     </ion-row>
@@ -95,11 +100,15 @@
       <div class="signup-label">
         <p>생년월일</p>
       </div>
-      <ion-input class="year" placeholder="YYYY" type="number"></ion-input>
-      <span><p>/</p></span>
-      <ion-input class="month" placeholder="MM" type="number"></ion-input>
-      <span><p>/</p></span>
-      <ion-input class="day" placeholder="DD" type="number"></ion-input>
+      <ion-input class="year" [(ngModel)]="birthYear" placeholder="YYYY" maxlength="4" type="tel"></ion-input>
+      <span>
+        <p>/</p>
+      </span>
+      <ion-input class="month" [(ngModel)]="birthMonth" placeholder="MM" maxlength="2" type="tel"></ion-input>
+      <span>
+        <p>/</p>
+      </span>
+      <ion-input class="day" [(ngModel)]="birthDay" placeholder="DD" maxlength="2" type="tel"></ion-input>
     </ion-row>
     <!-- 성별 입력 -->
     <ion-row class="signup-sex">
@@ -111,5 +120,112 @@
     </ion-row>
   </ion-grid>
   <!-- 가입하기 버튼 -->
-  <button class="signup-submit" (click)="signupCompBtn()" clear full ion-button>가입하기</button>
+  <button class="signup-submit" *ngIf="loginStatus==false" (click)="signupCompBtn()" clear full ion-button>가입하기</button>
+  <!-- 회원 가입 끝 -->
+
+  <!-- 회원 정보 수정 시작 -->
+  <ion-grid class="signup-grid" *ngIf="loginStatus==true">
+    <!-- 아이디 입력 -->
+    <ion-row class="signup-id">
+      <div class="signup-label">
+        <p>아이디*</p>
+      </div>
+      <ion-input readonly="true" [(ngModel)]="id" style="background-color:#d3d3d3; margin:0;"  class="id-input" type="text"></ion-input>
+    </ion-row>
+    <!-- 련재 비밀번호 입력 -->
+    <ion-row class="signup-pwd">
+      <div class="signup-label">
+        <p>현재 비밀번호</p>
+      </div>
+      <ion-input placeholder="현재 비밀번호를 입력해주세요." class="pwd-input" type="password"></ion-input>
+    </ion-row>
+    <!-- 새 비밀번호 입력 -->
+    <ion-row class="signup-pwd-confirm">
+      <div class="signup-label">
+        <p>새 비밀번호</p>
+      </div>
+      <ion-input placeholder="새 비밀번호를 입력해주세요." class="pwd-input" type="password"></ion-input>
+    </ion-row>
+    <!-- 새 비밀번호 입력 -->
+    <ion-row class="signup-pwd-confirm">
+      <div class="signup-label">
+        <p style="font-size:1.3rem;">새 비밀번호 확인</p>
+      </div>
+      <ion-input placeholder="새 비밀번호를 한번더 입력해주세요." class="pwd-input" type="password"></ion-input>
+    </ion-row>
+    <!-- 이름 입력 -->
+    <ion-row class="signup-name">
+      <div class="signup-label">
+        <p>이름*</p>
+      </div>
+      <ion-input [(ngModel)]="name" class="name-input" type="text"></ion-input>
+    </ion-row>
+    <!-- 이메일 입력 -->
+    <ion-row class="signup-email">
+      <div class="signup-label">
+        <p>이메일*</p>
+      </div>
+      <ion-input [(ngModel)]="email" class="email-input" type="text"></ion-input>
+      <span>
+        <p>@</p>
+      </span>
+      <select class="email-input2" [(ngModel)]="emailOption" (change)="emailOptionChange()">
+        <option>naver.com</option>
+        <option>gmail.com</option>
+      </select>
+    </ion-row>
+    <!-- 휴대폰 입력 -->
+    <ion-row class="signup-phone">
+      <div class="signup-label">
+        <p>휴대폰*</p>
+      </div>
+      <div class="phone-input-area">
+        <ion-input class="phone-input" [(ngModel)]="phone1" type="tel" maxlength="3"></ion-input>
+        <span>
+          <p>-</p>
+        </span>
+        <ion-input class="phone-input" [(ngModel)]="phone2" type="tel" maxlength="4"></ion-input>
+        <span>
+          <p>-</p>
+        </span>
+        <ion-input class="phone-input" [(ngModel)]="phone3" type="tel" maxlength="4"></ion-input>
+      </div>
+      <button clear class="phone-confirm" ion-button>다른번호 인증</button>
+    </ion-row>
+    <ion-row class="signup-phone">
+      <div class="signup-label"></div>
+      <ion-input class="phone-confirm-num" type="number"></ion-input>
+      <button clear class="phone-confirm" ion-button>인증번호 확인</button>
+    </ion-row>
+    <!-- 생년월일 입력 -->
+    <ion-row class="signup-birth">
+      <div class="signup-label">
+        <p>생년월일</p>
+      </div>
+      <ion-input class="year" [(ngModel)]="birthYear" placeholder="YYYY" maxlength="4" type="tel"></ion-input>
+      <span>
+        <p>/</p>
+      </span>
+      <ion-input class="month" [(ngModel)]="birthMonth" placeholder="MM" maxlength="2" type="tel"></ion-input>
+      <span>
+        <p>/</p>
+      </span>
+      <ion-input class="day" [(ngModel)]="birthDay" placeholder="DD" maxlength="2" type="tel"></ion-input>
+    </ion-row>
+    <!-- 성별 입력 -->
+    <ion-row class="signup-sex">
+      <div class="signup-label">
+        <p>성별</p>
+      </div>
+      <div class="male" [style.background-color]="male" (click)="selectMale()">
+        <p>남자</p>
+      </div>
+      <div class="female" [style.background-color]="female" (click)="selectFemale()">
+        <p>여자</p>
+      </div>
+    </ion-row>
+  </ion-grid>
+  <!-- 수정하기 버튼 -->
+  <button class="signup-submit" *ngIf="loginStatus==true" clear full ion-button>수정하기</button>
+  <!-- 회원 정보 수정 끝 -->
 </ion-content>

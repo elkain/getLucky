@@ -19,19 +19,57 @@ export class SignupPage {
   titleColor = "#3498DB";
   whiteColor = "#ffffff";
 
+  loginStatus: boolean = false;
+  id;
+  name;
+  email;
   emailOption;
+  phone1;
+  phone2;
+  phone3;
+  birthYear;
+  birthMonth;
+  birthDay;
   sex;
   male;
   female;
 
+  customerInfo;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.male = this.whiteColor;
     this.female = this.whiteColor;
-    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignupPage');
+    if (this.loginStatus==true){
+      this.customerInfo = { id: "chungmin93", name:"이충민" , email:"chungmin93@gmail.com", phone:"010-3769-4456", birth:"1985-09-03", sex:"male"};
+      this.id=this.customerInfo.id;
+      this.name=this.customerInfo.name;
+      let emailTemp = this.customerInfo.email.split('@');
+      this.email = emailTemp[0];
+      this.emailOption = emailTemp[1];
+      let phoneTemp = this.customerInfo.phone.split('-');
+      this.phone1 = phoneTemp[0];
+      this.phone2 = phoneTemp[1];
+      this.phone3 = phoneTemp[2];
+      let birthTemp = this.customerInfo.birth.split('-');
+      this.birthDay = birthTemp[2];
+      this.birthYear = birthTemp[0];
+      this.birthMonth = birthTemp[1];
+      this.birthDay = birthTemp[2];
+
+      if(this.customerInfo.sex=="male"){
+        this.selectMale();
+      } else if (this.customerInfo.sex == "female"){
+        this.selectFemale();
+      }
+      
+    }else{
+      this.male = this.whiteColor;
+      this.female = this.whiteColor;
+    }
   }
 
   emailOptionChange(){
