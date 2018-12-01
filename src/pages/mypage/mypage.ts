@@ -102,8 +102,12 @@ export class MypagePage {
   }
 
   menuSelected(menu){
-    this.showPageType=menu;
-    this.showBackbtn = true;
+    if (menu == "회원정보수정") {
+      this.app.getRootNavs()[0].push("SignupPage");
+    }else{
+      this.showPageType = menu;
+      this.showBackbtn = true;
+    }
   }
 
   moveToHome() {
