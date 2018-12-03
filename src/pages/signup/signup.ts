@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 
 /**
@@ -19,7 +19,7 @@ export class SignupPage {
   titleColor = "#3498DB";
   whiteColor = "#ffffff";
 
-  loginStatus: boolean = false;
+  loginStatus: boolean = true;
   id;
   name;
   email;
@@ -36,7 +36,7 @@ export class SignupPage {
 
   customerInfo;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController) {
     this.male = this.whiteColor;
     this.female = this.whiteColor;
   }
@@ -88,8 +88,16 @@ export class SignupPage {
     this.female = this.titleColor;
   }
 
-
   signupCompBtn(){
     this.navCtrl.setRoot(TabsPage, { tabIndex: 7 });
+  }
+
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      message: '회원정보가 수정되었습니다.',
+      buttons: ['확인'],
+      cssClass:'alert-modify-member'
+    });
+    alert.present();
   }
 }
