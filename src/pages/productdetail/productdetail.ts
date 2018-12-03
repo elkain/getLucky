@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs'
 import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
+import { BuyPage } from '../buy/buy';
 
 /**
  * Generated class for the ProductdetailPage page.
@@ -40,7 +41,8 @@ export class ProductdetailPage {
     this.navCtrl.setRoot(TabsPage, { tabIndex: 4 });
   }
 
-  goToOrderPage(){
+  goToBuyPage(){
+    this.navCtrl.push(BuyPage, { class:"BuyPage"});
   }
 
   addToShoppingBasket(){
