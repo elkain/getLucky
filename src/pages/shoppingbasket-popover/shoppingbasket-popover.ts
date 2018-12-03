@@ -28,7 +28,8 @@ export class ShoppingbasketPopoverPage {
   }
 
   confirm() {
-    this.viewCtrl.dismiss();
-    this.navCtrl.setRoot(TabsPage, { tabIndex: 4 });
+    this.viewCtrl.dismiss().then(()=>{
+      this.app.getRootNavs()[0].push(TabsPage, { tabIndex:4});
+    });
   }
 }
