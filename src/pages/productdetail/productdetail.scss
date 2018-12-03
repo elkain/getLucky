@@ -204,3 +204,16 @@ page-productdetail {
         }
     }
 }
+
+/* 장바구니 alert */
+.popover-shopping-basket{
+    box-shadow: 1px;
+
+    .popover-content{
+        width: 300px;
+        height: 160px;
+        //position: absolute;
+        //top:170px   !important;
+        //left:0.8rem !important;
+    }
+}

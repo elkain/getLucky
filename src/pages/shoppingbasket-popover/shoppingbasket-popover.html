@@ -4,15 +4,24 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
 
-  <ion-navbar>
-    <ion-title>shoppingbasketPopover</ion-title>
-  </ion-navbar>
+<ion-content>
 
-</ion-header>
-
-
-<ion-content padding>
+  <ion-grid class="shopping-basket-grid">
+    <ion-row class="shopping-basket-row">
+      <ion-icon class="shopping-basket-icon" name="ios-cart-outline"></ion-icon>
+    </ion-row>
+    <ion-row class="shopping-basket-row">
+      <p class="shopping-basket-msg">선택된 상품이 장바구니에 담겼습니다.</p>
+    </ion-row>
+    <ion-row class="shopping-basket-row">
+      <ion-col class="keep-shopping-btn">
+        <button (click)="keepShopping()" ion-button clear>계속 쇼핑하기</button>
+      </ion-col>
+      <ion-col class="shopping-confirm-btn">
+        <button (click)="confirm()" ion-button clear>장바구니 확인</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, PopoverController} from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs'
+import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
 
 /**
  * Generated class for the ProductdetailPage page.
@@ -18,7 +19,7 @@ export class ProductdetailPage {
 
   shopTitle: string = "MARKET LUCKY";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, public popoverCtrl: PopoverController) {
 
   }
 
@@ -36,5 +37,11 @@ export class ProductdetailPage {
 
   goToShoppingBasket() {
     this.navCtrl.setRoot(TabsPage, { tabIndex: 4 });
+  }
+
+  addToShoppingBasket(){
+    
+    const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {}, { cssClass: 'popover-shopping-basket' });
+    popover.present();
   }
 }

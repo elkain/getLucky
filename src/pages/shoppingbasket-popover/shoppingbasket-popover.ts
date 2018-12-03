@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, App } from 'ionic-angular';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the ShoppingbasketPopoverPage page.
@@ -15,11 +16,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ShoppingbasketPopoverPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private app:App) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ShoppingbasketPopoverPage');
   }
 
+  keepShopping() {
+    this.viewCtrl.dismiss();
+  }
+
+  confirm() {
+    this.viewCtrl.dismiss();
+    this.navCtrl.setRoot(TabsPage, { tabIndex: 4 });
+  }
 }
