@@ -28,6 +28,6 @@ export class ShoppingbasketPage {
   }
 
   goToOrder(){
-    this.app.getRootNavs()[0].push("OrderPage");
+    this.app.getRootNavs()[0].push(OrderPage, {class:"OrderPage"});
   }
 }

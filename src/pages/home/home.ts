@@ -1,5 +1,7 @@
 import { Component, ViewChild} from '@angular/core';
-import { NavController, Slides, App} from 'ionic-angular';
+import { NavController, Slides, App, ViewController} from 'ionic-angular';
+import { ProductdetailPage } from '../productdetail/productdetail';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-home',
@@ -64,7 +66,7 @@ export class HomePage {
   }
 
   itemSelected(item){
-    this.app.getRootNavs()[0].push("ProductdetailPage");
+    this.app.getRootNavs()[0].push(ProductdetailPage, {class:"ProductdetailPage"});
   }
 
   slideItemSelect(){
