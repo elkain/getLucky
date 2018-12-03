@@ -45,14 +45,12 @@ export class TabsPage {
       this.showHeader = true;
     }
 
-    console.log(this.tabParams);
-    
     if (this.tabParams != undefined) {
       this.tabRef.select(this.tabParams);
       this.tabParams=undefined;
     }
   }
-
+  
   moveToHome(){
     if(this.selectedTab==0){
       window.location.reload();
