@@ -95,7 +95,12 @@ export class SignupPage {
   presentAlert() {
     let alert = this.alertCtrl.create({
       message: '회원정보가 수정되었습니다.',
-      buttons: ['확인'],
+      buttons: [{
+          text:'확인',
+          handler:()=>{
+            this.navCtrl.setRoot(TabsPage, {class:"TabsPage"});
+          }
+        }],
       cssClass:'alert-modify-member'
     });
     alert.present();
