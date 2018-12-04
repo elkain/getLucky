@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TabsPage} from '../tabs/tabs';
 
 /**
  * Generated class for the BuyPage page.
@@ -20,6 +21,14 @@ export class BuyPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BuyPage');
+  }
+
+  moveToHome() {
+    this.navCtrl.setRoot(TabsPage, {class:"TabsPage"});
+  }
+
+  goToShoppingBasket() {
+    this.navCtrl.setRoot(TabsPage, { tabIndex: 4 });
   }
 
 }

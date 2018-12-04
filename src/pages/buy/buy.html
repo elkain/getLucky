@@ -6,9 +6,61 @@
 -->
 <ion-header no-shadow no-border>
 
+  <ion-navbar>
+    <ion-title><button ion-buttion clear class="title-home-button" (click)="moveToHome()">MARKET LUCKY</button></ion-title>
+    <ion-buttons end>
+      <button class="home-cart" (click)="goToShoppingBasket()">
+        <ion-icon name="ios-cart-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
-
 <ion-content>
-
+  <div class="buy-head">
+    <p class="buy-head-label"></p>
+  </div>
+  <ion-grid class="buy-list">
+    <ion-row class="buy-info-name">
+      <label>상품명</label>
+    </ion-row>
+    <ion-row class="buy-info-price">
+      <label>혜택가<del>판매가</del></label>
+    </ion-row>
+    <ion-row class="delivery-fee-info">
+      <p>배송비 <span>3,000원</span>(<span>3만원</span> 이상 무료)</p>
+    </ion-row>
+    <ion-row class="buy-detail-info">
+      <p>상세/정보고시</p>
+    </ion-row>
+    <ion-row class="buy-info-count">
+      <ion-col col-7>
+        <label class="buy-product-name">상품명</label>
+      </ion-col>
+      <ion-col col-5>
+        <div class="product-add-remove">
+          <button ion-button icon-only outline item-end>
+            <ion-icon name="add"></ion-icon>
+          </button>
+          <div class="product-count">
+            <p>1</p>
+          </div>
+          <button ion-button icon-only outline item-end>
+            <ion-icon name="remove"></ion-icon>
+          </button>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="buy-total-price">
+      <p>총 상품 금액 : <span>25,000</span>원</p>
+    </ion-row>
+    <ion-row class="buy-button-group">
+      <ion-col class="buy-basket-btn">
+        <button clear ion-button>장바구니</button>
+      </ion-col>
+      <ion-col class="buy-order-btn">
+        <button clear ion-button>주문하기</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -1,3 +1,259 @@
 page-buy {
 
+    .scroll-content{
+        background-color: color($colors,default);
+    }
+    
+    /* 주문 페이지 header 시작 */
+    ion-header{
+        height: 50px;
+
+        .toolbar{
+            padding: 0;
+            height: 50px;
+            min-height: 50px;
+
+            .toolbar-background{
+                background-color: color($colors, title);
+            }
+
+            .back-button{
+                color:white;
+                min-width: 40px;
+                width: 40px;
+                height: 40px;
+                padding: 0;
+                margin: 0;
+                margin-left: 8px;
+
+                .back-button-icon{
+                    font-size:32px;
+                    padding:0;
+                }
+            }
+
+            .toolbar-title{
+                text-align: center;
+                padding:0;
+                
+                button{
+                    color:white;
+                    text-align: center;
+                    font-weight: 600;
+                }
+            }
+
+            .title-home-button{
+                text-align: center;
+                color: color($colors, light);
+                background-color: color($colors, title);
+                width: 144px;
+                height: 34px;
+                font-size:18px;
+                margin:0;
+                padding:0;
+            }
+        }
+
+        .home-cart{
+            box-shadow: none;
+            background-color: color($colors, title);
+            color:color($colors, light);
+            margin-right:8px;;
+            padding:0;
+            width: 48px;
+            height: 48px;
+            font-size: 24px;
+            text-align: center;
+        }
+    }
+
+    /* 구매 페이지 본문 시작 */
+    .buy-head{
+        height: 48px;
+        width: 100%;
+        background-color: white;
+        margin:0;
+        
+        padding:0;
+        
+        .buy-head-label{
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0;
+            padding:13px;
+            text-align: center;
+            display: block;
+        }
+    }
+    
+    .buy-list{
+        background-color: color($colors, default);
+        width:100%;
+        height: auto;
+        margin-top:16px;
+        padding:0;
+
+        ion-row{
+            margin: 0;
+            padding: 0;
+            padding-left:8px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+
+            ion-col{
+                padding:0;
+                height: 100%;
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .buy-info-name, .buy-info-price, .buy-info-count{
+            width:100%;
+            height: 48px;
+            font-size:1.6rem;
+
+            label{
+                padding-bottom: 4px;
+            }
+
+            del{
+                font-size:1.2rem;
+                margin-left: 1rem;
+            }
+        }
+
+        .buy-info-price{
+            border-bottom:1px solid color($colors, default);
+        }
+
+        .delivery-fee-info{
+            width:100%;
+            height: 40px;
+            padding-left:8px;
+            
+            p{
+                margin:0;
+            }
+        }
+
+        .buy-detail-info{
+            width:100%;
+            height: 208px;
+            margin-top: 8px;
+
+            p{
+                width: 100%;
+                display: block;
+                text-align: center;
+                font-size: 2em;
+            }
+        }
+
+        .buy-info-count{
+            margin:16px 8px 0px;
+            width: 344px;
+            padding:0;
+
+            .buy-product-name{
+                margin: 0;
+                font-weight: bold;
+                font-size:1.8rem;
+                padding-bottom: 4px;
+            }
+
+            /* 상품 수량 선택 */
+            .product-add-remove{
+                text-align: right;
+                width: 100%;
+                padding-right: 8px;
+                height: 36px;
+
+                .product-count{
+                    width:60px;
+                    height: 36px;
+                    margin:0;
+                    float: right;
+                    display: flex;
+                    align-items: center;
+                    border:1px solid gray;
+                    border-radius: 3px;
+                    
+                    p{
+                        margin : 0;
+                        width: 100%;
+                        display: block;
+                        text-align: center;
+                        font-size: 1.6rem;
+                    }
+                }
+
+                button{
+                    width: 36px;
+                    height: 36px;
+                    margin:0px;
+                    float: right;
+                    background-color:color($colors,default);
+                    color:white;
+                    border:0;
+                }
+            }
+        }
+
+        .buy-total-price{
+            margin:0 8px;
+            padding: 0;
+            
+            width: 344px;
+            height: 40px;
+            background-color: color($colors, default);
+
+            p{
+                width: 100%;
+                text-align: right;
+                margin:0;
+                font-size: 1.8rem;
+                font-weight: bold;
+            }
+        }
+
+        .buy-button-group{
+            margin: 8px;
+            width: 344px;
+            height: 50px;
+            padding:0;
+
+            button{
+                margin:0;
+                padding:0;
+                width: 100%;
+                height: 100%;
+                font-size:1.4rem;
+            }
+
+            .buy-basket-btn{
+                background-color: white;
+
+                button{
+                    color: black;
+                    font-size:1.8rem;
+                    font-weight: bold;
+                }
+            }
+
+            .buy-order-btn{
+                background-color: color($colors, title);
+
+                button{
+                    color: white;
+                    font-size:1.8rem;
+                    font-weight: bold;
+                }
+                
+            }
+        }
+    }
+    /* 구매 페이지 본문 끝 */
 }
