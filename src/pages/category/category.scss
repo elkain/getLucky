@@ -3,35 +3,34 @@ page-category {
     .category-scroll{
         width: 100%;
         height: 100%;
-        background-color: color($colors, default);
+        background-color: $background-color;
 
         ::-webkit-scrollbar {
             width: 0px;  /* remove scrollbar space */
             background: transparent;  /* optional: just make scrollbar invisible */
-        }
-        /* optional: show position indicator in red */
-        ::-webkit-scrollbar-thumb {
-            background: #FF0000;
         }
 
         .category-grid{
             width: 100%;
             height: 100%;
             padding:0;
+            background-color: $background-color;
 
             .category-col{
                 padding : 0;                
-                height: 90px;
+                height: calc((90/540)*(100vh - 100px));
+                background-color: $background-color;
+
                 button{
-                    width:100%;
-                    height: 100%;
-                    border : 1px solid color($colors,default);
-                    margin:0;
+                    width:calc(100% - 2px);
+                    height: calc(100% - 2px);
+                    margin : 1px;
+                    
                     padding:0;
-                    background-color: white;
-                    color: black;
+                    background-color: $white-background-color;
+                    color: $black-font-color;
                     box-shadow: none;
-                    font-size:18px;
+                    font-size:$large-font-size;
                 }
             }
 
@@ -41,13 +40,13 @@ page-category {
                 button{
                     width:100%;
                     height: 100%;
-                    border : 1px solid gray;
+                    border : 1px solid $border-color;
                     margin:0;
                     padding:0;
-                    background-color: color($colors,default);
-                    color: black;
+                    background-color: $background-color;
+                    color: $black-font-color;
                     box-shadow: none;
-                    font-size:14px;
+                    font-size:$default-font-size;
                 }
             }
         }

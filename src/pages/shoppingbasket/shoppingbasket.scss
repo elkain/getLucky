@@ -2,7 +2,7 @@ page-shoppingbasket {
 
     /* 장바구니 title 시작 */
     .basket-title{
-        background-color: color($colors, title);
+        background-color: $default-title-color;
         min-height: 50px;
         width: 100%;
 
@@ -19,16 +19,16 @@ page-shoppingbasket {
                 margin:0;
                 width: 40px;
                 height: 40px;
-                font-size:18px;
+                font-size:1.4em;
 
                 .button-inner{
-                    color:white;
+                    color:$white-btn-color;
                 }
             }
         }
 
         ion-title{
-            background-color: color($colors, title);
+            background-color: $default-title-color;
             position: absolute;
             top: 0;
             left: 0;
@@ -44,8 +44,8 @@ page-shoppingbasket {
             }
 
             .basket-title-word{
-                color:white;
-                font-size:18px;
+                color:$white-font-color;
+                font-size:$title-font-size;
                 height: 26px;
                 margin:4px 0;
             }
@@ -57,11 +57,11 @@ page-shoppingbasket {
     .basket-scroll{
         height: 100%;
         width:100%;
-        background-color:color($colors,default);
+        background-color:$background-color;
 
         /* 상품 전체 선택 및 선택 삭제 부분 시작 */
         .basket-product-head{
-            width:344px;
+            width:calc(100%-16px);
             height:40px;
             margin:0px 8px;
             background-color: transparent;
@@ -85,7 +85,7 @@ page-shoppingbasket {
                         background-image:linear-gradient(to bottom, color($colors, default), white);
 
                         &.checkbox-checked{
-                            border:2px solid gray;
+                            border:2px solid $border-color;
                             
                             .checkbox-inner{
                                 width:10px;
@@ -110,7 +110,7 @@ page-shoppingbasket {
                     height: 24px;
                     margin:8px 0;
                     padding:0;
-                    font-size:16px;
+                    font-size:$label-font-size;
 
                     b{
                         font-weight: 800;
@@ -124,11 +124,11 @@ page-shoppingbasket {
                     height: 24px;
                     margin: 0;
                     padding: 0;
-                    background-color: white;
+                    background-color: $white-btn-color;
                     border-radius: 6px;
-                    color:gray;
+                    color:$default-font-color;
                     font-weight: 800;
-                    font-size:13px;
+                    font-size:$small-font-size;
                 }
             }
         }
@@ -136,13 +136,13 @@ page-shoppingbasket {
 
         /* 빈 장바구니 시작 */
         .basket-product-none{
-            background-color: white;
-            height: 132px;
-            width: 344px;
+            background-color: $white-background-color;
+            height: calc((132/640)*100vh);
+            width: calc(100% - 16px);
             margin-bottom: 16px;
             padding: 0;
-            font-size: 14px;
-            color:gray;
+            font-size: $default-font-size;
+            color:$default-font-color;
             font-weight: 800;
             
             ion-row{
@@ -160,21 +160,21 @@ page-shoppingbasket {
 
         /* 상품 장바구니 시작 */
         .basket-product-list{
-            height: 138px;
-            width: 344px;
+            height: auto;
+            width: calc(100% - 16px);
             padding:0;
             margin-bottom:14px;
             background-color: white;
 
             /* 상품 관련 내용 시작 */
             .basket-product{
-                height: 103px;
-                min-height: 103px;
-
+                height:calc((95/640)*100vmax + 8px);
+                min-height:calc((95/640)*100vmax + 8px);
+                
                 /* 체크 박스 */
                 .checkbox-md{
                     margin:8px;
-                    margin-bottom: 108px;
+                    margin-bottom: calc((108/640)*100vh);
                     width:  24px;
                     height: 24px;
                     
@@ -185,7 +185,7 @@ page-shoppingbasket {
                         background-image:linear-gradient(to bottom, color($colors, default), white);
 
                         &.checkbox-checked{
-                            border:2px solid gray;
+                            border:2px solid $border-color;
                             
                             .checkbox-inner{
                                 width:10px;
@@ -198,36 +198,35 @@ page-shoppingbasket {
 
                 /* 상품 이미지 */
                 .basket-product-img{
-                    width: 95px;
-                    height: 95px;
+                    width: calc((95/640)*100vmax);
+                    height: calc((95/640)*100vmax);
                     margin-top:8px;
 
                     img{
-                        width:95px;
-                        height: 95px;
+                        width: calc((95/640)*100vmax);
+                        height: calc((95/640)*100vmax);
                     }
                 }
 
                 /* 상품 정보 */
                 .basket-product-content{
-                    height: 95px;
-                    width: 200px;
+                    height:calc((95/640)*100vmax);
+                    width: calc(100% - ((95/640)*100vmax) - 47px);
                     margin-top : 8px;
-                    margin-left : 8px;
-                    font-size: 14px;
-                    color:gray;
-                    font-weight: 800;
+                    margin-left : 7px;
+                    font-size: $default-font-size;
+                    color:$default-font-color;
+                    font-weight: bold;
 
                     span:first-child{
-                        font-size:22px;
-                        font-weight: 400;
+                        font-size:$title-font-size;
+                        font-weight: bold;
                     }
                 }
 
                 /* 상품 수량 선택 */
                 .product-add-remove{
                     text-align: end;
-                    margin-top:30px;
                     height: 35px;
 
                     .product-count{
@@ -236,14 +235,16 @@ page-shoppingbasket {
                         margin:0;
                         float: right;
                         text-align: center;
-                        border:1px solid gray;
+                        border:1px solid $border-color;
                         border-radius: 3px;
-                        
+                        display: flex;
+                        align-items: center;
+
                         p{
                             margin : 0;
-                            margin-top: 4px;
-                            vertical-align: middle;
-                            font-size: 20px;
+                            width: 100%;
+                            text-align: center;
+                            font-size: $large-font-size;
                         }
                     }
 
@@ -252,8 +253,8 @@ page-shoppingbasket {
                         height: 35px;
                         margin:0px 1px;
                         float: right;
-                        background-color:color($colors,default);
-                        color:white;
+                        background-color:$background-color;
+                        color:$white-btn-color;
                         border:0;
                     }
                 }
@@ -264,14 +265,20 @@ page-shoppingbasket {
             ion-row:last-child{
                 height: 36px;
                 min-height: 36px;
+
+                ion-col{
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                }
                 
                 div{
                     width:40px;
                 }
 
                 p{
-                    margin:8px 0;
-                    font-size:16px;
+                    margin:0;
+                    font-size:$label-font-size;
                     color:gray;
                     font-weight: 800;
                 }
@@ -279,15 +286,16 @@ page-shoppingbasket {
                 .total-price{
                     padding:0;
                     padding-left: 8px;
-                    width:304px;
-                    height: 36px;
                 }
 
                 .real-price{
                     padding:0;
-                    width : 144px;
-                    height: 36px;
-                    text-align: right;
+
+                    p{
+                        width: 100%;
+                        display: block;
+                        text-align: right;
+                    }
                 }
             }
         }
@@ -296,7 +304,7 @@ page-shoppingbasket {
         /* 주문 금액 시작  */
         .basket-product-sum{
             margin:0 8px 16px 8px;
-            width: 344px;
+            width: calc(100% - 16px);
             height: 128px;
 
             ion-item{
@@ -330,7 +338,7 @@ page-shoppingbasket {
     /* 주문 현황 시작 */
     .oder-submit{
         padding:0;
-        background-color: white;
+        background-color: $background-color;
         height: 50px;
         width: 100%;
         position: absolute;
@@ -340,8 +348,8 @@ page-shoppingbasket {
         ion-row{
             height: 50px;
             min-height: 50px;
-            border-left:1px solid color($colors, default);
-            border-right:1px solid color($colors, default);
+            margin:0 1px;
+            background-color: $white-background-color;
         }
 
         ion-col{
@@ -353,11 +361,11 @@ page-shoppingbasket {
             p:first-child{
                 margin: 0;
                 margin-top:4px;
-                font-size:12px;
+                font-size:$small-font-size;
             }
             
             span{
-                font-size:16px;
+                font-size:$btn-font-size;
             }
             /* 주문 정보 끝 */
 
@@ -368,10 +376,12 @@ page-shoppingbasket {
                 width: 100%;
                 height: 100%;
                 border:none;
-                background-color: color($colors, title);
-                color:white;
+                background-color: $default-btn-color;
+                color:$white-btn-color;
+
                 .button-inner{
-                    font-size: 18px;
+                    font-size: $btn-font-size;
+                    font-weight: bold;
                 }
             }
         }

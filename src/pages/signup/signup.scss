@@ -11,11 +11,11 @@ page-signup {
             min-height: 50px;
 
             .toolbar-background{
-                background-color: color($colors, title);
+                background-color: $default-title-color;
             }
 
             .back-button{
-                color:white;
+                color:$white-btn-color;
                 min-width: 40px;
                 width: 40px;
                 height: 40px;
@@ -24,32 +24,32 @@ page-signup {
                 margin-left: 8px;
 
                 .back-button-icon{
-                    font-size:32px;
+                    font-size:$large-icon-size;
                     padding:0;
                 }
             }
 
             .toolbar-title{
-                color:white;
+                color:$white-title-color;
                 text-align: center;
                 padding-right:48px;
                 padding-left:0;
-                font-weight: 600;
+                font-weight: bold;
             }
         }
     }
 
     .scroll-content{
-        background-color: color($colors,default);
+        background-color: $background-color;
         overflow: hidden;
     }
 
     .signup-grid{
-        width:344px;
+        width:calc(100% - 16px);
         height: auto;
         margin:8px;
         padding:8px 0px 0px 8px;
-        background-color: white;
+        background-color: $white-background-color;
         
         /* 공통 부분 시작 */
         ion-row{
@@ -64,43 +64,43 @@ page-signup {
                 p{
                     margin:0;
                     margin-top:7px;
-                    font-size:14px;
-                    font-weight: 600;
+                    font-size:$default-font-size;
+                    font-weight: bold;
                 }
             }
 
             ion-input{
-                border: 1px solid gray;
+                border: 1px solid $border-color;
 
                 .text-input{
                     margin: 0;
                     height: 100%;
                     width: 100%;
-                    font-size:16px;
+                    font-size:$default-font-size;
                     padding-left:8px;
                 }
 
                 ::-webkit-input-placeholder {
-                    font-size:14px;
+                    font-size:$default-font-size;
                 }
 
                 :-moz-placeholder {
-                    font-size:14px;
+                    font-size:$default-font-size;
                 }
 
                 :-ms-input-placeholder { 
-                    font-size:14px;
+                    font-size:$default-font-size;
                 }
             }
             
             button{
                 margin: 0;
                 padding: 0;
-                background-color: color($colors,default);
+                background-color: $background-color;
                 color:black;
                 height: 32px;
-                font-size:14px;
-                border:1px solid gray;
+                font-size:$default-font-size;
+                border:1px solid $border-color;
             }
         }
         /* 공통 부분 끝 */
@@ -113,7 +113,7 @@ page-signup {
 
             .id-confirm{
                 width:100px;
-                border:1px solid gray;
+                border:1px solid $border-color;
             }
         }
         
@@ -125,20 +125,21 @@ page-signup {
         .signup-email{
             span{
                 width:16px;
-                
+                display: flex;
+                align-items: center;
+
                 p{
-                    margin:6px 0px;
                     text-align: center;
-                    font-size:16px;
+                    font-size:$large-font-size;
                 }
             }
             
             .email-input2{
                 width:100px;
-                border:1px solid gray;
+                border:1px solid $border-color;
                 -webkit-appearance:none; 
                 -moz-appearance:none;
-                background: url('../../assets/icon/ios-arrow-down.png');
+                background: url('../../assets/icon/ios-arrow-down-white.png');
                 background-size:28px;
                 background-repeat:no-repeat;
                 background-position: 98% 2px;
@@ -151,21 +152,23 @@ page-signup {
             margin-bottom: 2px;
 
             .phone-input-area{
-                width:120px;
-                border: 1px solid gray;
+                width: calc(100% - 216px);
+                border: 1px solid $border-color;
                 margin-right:16px;
 
                 .input{
                     display: block;
                     float:left;
-                    width:32px;
-                    height: 32px;
+                    width:calc((100% - 24px)/3);
+                    height: 30px;
                     margin:0;
                     border:none;
 
                     .text-input{
                         padding:0;
-                        font-size:14px;
+                        font-size:$default-font-size;
+                        width: 100%;
+                        text-align: center;
                     }
                 }
 
@@ -178,13 +181,12 @@ page-signup {
                     height: 32px;
 
                     P{
-                        width:11px;
+                        width:12px;
                         float: left;
-                        margin: 0;
-                        margin-top:2px;
+                        margin: 4px 0;
                         text-align: center;
-                        font-size:22px;
-                        font-weight: 200;
+                        font-size:$large-font-size;
+                        font-weight: bold;
                     }
                 }
                 
@@ -215,11 +217,15 @@ page-signup {
         /* 생년월일 입력 */
         .signup-birth{
             margin-bottom: 2px;
+
             .year, .month, .day{
-                width:68px;
-                
+
+                input{
+                    padding: 0;
+                    text-align: center;
+                }
+
                 ::-webkit-input-placeholder {
-                    padding-right: 8px;
                     text-align: center;
                 }
 
@@ -230,18 +236,19 @@ page-signup {
                 :-ms-input-placeholder { 
                     text-align: center;
                 }
-                
             }
 
             span{
                 width: 16px;
+                display: flex;
+                align-items: center;
 
                 p{
-                    margin:5px 0;
+                    width: 100%;
                     text-align: center;
-                    font-size:18px;
-                    font-weight: 600;
-                    color:color($colors,default);
+                    font-size:$large-font-size;
+                    font-weight: bold;
+                    color:$icon-color-default;
                 }
             }
         }
@@ -251,11 +258,11 @@ page-signup {
             margin-bottom: 2px;
 
             .male, .female{
-                width:117px;
-                border:1px solid gray;
+                width:calc((100% - 101px)/2);
+                border:1px solid $border-color;
                 text-align: center;
-                font-size: 16px;
-                font-weight: 800;
+                font-size: $default-btn-color;
+                font-weight: bold;
             }
 
             .male{
@@ -268,12 +275,12 @@ page-signup {
     .signup-submit{
         margin:8px;
         padding:0;
-        width:344px;
+        width:calc(100% - 16px);
         height:50px;
-        background-color: color($colors,title);
-        color:white;
-        font-size:20px;
-        font-weight: 600;
+        background-color: $default-btn-color;
+        color:$white-btn-color;
+        font-size:$large-font-size;
+        font-weight: bold;
     }
 }
 
@@ -294,9 +301,9 @@ page-signup {
             margin:10px;
             height: 40px;
             padding: 0;
-            color:gray;
-            font-size: 1.6rem;
-            font-weight: 600;
+            color:$default-font-color;
+            font-size: $nav-font-size;
+            font-weight: bold;
             text-align: center;
             padding:6px;
         }
@@ -309,8 +316,8 @@ page-signup {
         }
 
         .alert-button{
-            background-color: color($colors, title);
-            color:white;
+            background-color: $default-btn-color;
+            color:$white-btn-color;
             width: 100px;
             height: 40px;
             border-radius: 5px;
@@ -319,8 +326,8 @@ page-signup {
             .button-inner{
                 text-align: center;
                 display: block;
-                font-size:1.6rem;
-                font-weight: 600;
+                font-size:$btn-font-size;
+                font-weight: bold;
             }
         }
     }

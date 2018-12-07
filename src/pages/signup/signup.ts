@@ -19,7 +19,7 @@ export class SignupPage {
   titleColor = "#3498DB";
   whiteColor = "#ffffff";
 
-  loginStatus: boolean = true;
+  loginStatus: boolean = false;
   id;
   name;
   email;

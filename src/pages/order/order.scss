@@ -1,7 +1,7 @@
 page-order {
 
     .scroll-content{
-        background-color: color($colors,default);
+        background-color: $background-color;
     }
 
     /* 주문 페이지 header 시작 */
@@ -14,20 +14,20 @@ page-order {
             min-height: 50px;
 
             .toolbar-background{
-                background-color: color($colors, title);
+                background-color: $default-title-color;
             }
 
             .back-button{
-                color:white;
+                color:$white-btn-color;
                 min-width: 40px;
                 width: 40px;
                 height: 40px;
                 padding: 0;
                 margin: 0;
                 margin-left: 8px;
-
+                
                 .back-button-icon{
-                    font-size:32px;
+                    font-size:$large-icon-size;
                     padding:0;
                 }
             }
@@ -37,70 +37,71 @@ page-order {
                 padding:0;
                 
                 button{
-                    color:white;
+                    color:$white-btn-color;
                     text-align: center;
                     font-weight: 600;
                 }
             }
 
             .title-home-button{
+                font-size:$title-font-size;
                 text-align: center;
-                color: color($colors, light);
-                background-color: color($colors, title);
-                width: 144px;
+                color: $white-title-color;
+                background-color: $default-title-color;
                 height: 34px;
-                font-size:18px;
                 margin:0;
                 padding:0;
             }
         }
     }
-
     /* 주문 페이지 header 끝 */
 
     /* 공통 정보 */
     ion-grid{
-        background-color: white;
+        background-color: $white-background-color;
     }
 
     ion-row{
         width:100%;
-                
-        ion-icon{
-            width: 40px;
-            height:40px;
-            display:block;
-            float:right;
-            font-size:30px;
-            margin:0;
-            padding-top:5px;
-            text-align: center;
-        }
+        
+        ion-col{
+            display: flex;
+            align-items: center;
 
+            ion-icon{
+                width: 100%;
+                padding-right:8px;
+                color:$icon-color-black;
+                font-size:$large-icon-size;
+                margin:0;
+                text-align: right;
+                display:block;
+            }
+        }
     }
 
     /* 배송정보 시작 */ 
     .delivery-info, .delivery-non-info{
         margin:16px 8px 0px;
-        width: 344px;
+        width: calc(100% - 16px);
         height: auto;
         padding:0;
+        background-color: $background-color;
 
         .delivery-info-head{
-            background-color: white;
+            background-color: $white-background-color;
             width: 100%;
-            height: 40px;
+            height: 38px;
             padding:0;
             padding-left:8px;
-            border-bottom:2px solid color($colors,default);
+            margin-bottom: 2px;
 
             .delivery-info-label{
                 height:40px;
-                padding-top:8px;
 
                 label{
-                    font-size:16px;
-                    font-weight: 500;
+                    font-size:$nav-font-size;
+                    font-weight: bold;
                 }
             }
         }
@@ -112,27 +113,28 @@ page-order {
         
         p{
             margin:0;
-            margin-top:6px;
-            font-size:14px;
+            width:100%;
+            font-size:$label-font-size;
             text-align: center;
-            font-weight: 500;
         }
 
         .select-segment{
-            background-color: white;
+            background-color: $white-background-color;
+            font-weight:normal;
             border:none;
             height: 31px;
             padding: 0;
         }   
 
         .unselect-segment{
-            background-color: color($colors, default);
-            border-bottom:2px solid gray;
+            background-color: $background-color;
+            border-bottom:2px solid $border-color;
             height: 31px;
             padding: 0;
             
             p{
-                color:gray;
+                color:$default-font-color;
+                font-weight:bold;
             }
         }
     }
@@ -141,7 +143,8 @@ page-order {
     .delivery-detail-basic{
         width:100%;
         height: auto;
-        margin-top:1px;
+        padding-top:2px;
+        background-color: $white-background-color;
 
         .delivery-basic-list{
             margin:0;
@@ -155,13 +158,19 @@ page-order {
             .name-label{
                 margin: 0;
                 width:100px;
-                display: block;
+                display: flex;
                 float:left;
+                align-items: center;
                 font-weight: 800;
             }
 
             p{
-                margin:7px 0;
+                margin:0;
+            }
+
+            .delivery-name{
+                display: flex;
+                align-items: center;
             }
         }
 
@@ -174,34 +183,18 @@ page-order {
                 width:100px;
                 max-width: 100px;
                 height: 95px;
+                
                 p{
-                    color:color($colors,title);
-                    font-weight: 600;
+                    color:$label-color-title;
+                    font-weight: bold;
                     margin-top:8px;
                 }
             }
 
-            .select-icon-inner{
-                border-width: 2px;
-                border-top-width:0;
-                border-left-width:0;
-                border-style: solid;
-                transform: rotate(45deg);
-                border-color:color($colors,title);
-                margin:0;
-                text-align: center;
-                top:37%;
-                left:30%;
-                display: block;
-                width: 12px;
-                height: 12px;
-            }
-
             .delivery-place{
-                width:236px;
-                
+                width:calc(100% - 100px);
                 height:95px;
-                border:1px solid gray;
+                border:1px solid $border-color;
                 padding:0;
                 display:block;
                 margin:0;
@@ -209,23 +202,24 @@ page-order {
 
                 .delivery-text{
                     height: 100%; 
-                    width: 203px; 
-                    color:black; 
+                    width: 100%; 
+                    color:$black-font-color; 
                     text-align:left;
-                    font-size:1.5rem;
+                    font-size:$default-font-size;
                     line-height: 3rem;
                 }
 
                 .delivery-icon{
                     height: 100%; 
                     width: 33px; 
-                    color:#d3d3d3; 
-                    padding-top:30px;
+                    color:$icon-color-default; 
+                    display: flex;
+                    align-items: center;
 
                     .icon{
                         width: 33px;
-                        height: 100%;
                         margin:0;
+                        font-size:$icon-size;
                     }
                 }
             }
@@ -241,25 +235,27 @@ page-order {
                 width:100px;
                 max-width: 100px;
                 height: 33px;
+                display: flex;
+                align-items: center;
                 float: left;
 
                 p{
-                    font-size: 14px;
-                    font-weight: 800;
-                    margin-top: 7px;
+                    font-size: $label-font-size;
+                    margin: 0;
+                    font-weight: bold;
                 }
             }
 
             .delivery-phone{
-                width:236px;
+                 width:calc(100% - 100px);
                 height: 33px;
-                display: block;
+                display: flex;
+                align-items: center;
                 float: right;
-                border:1px solid gray;
+                border:1px solid $border-color;
 
                 p{
-                    margin-top:7px;
-                    font-weight: 400;
+                    margin:0;
                 }
             }
 
@@ -269,7 +265,7 @@ page-order {
                 border-left-width:0;
                 border-style: solid;
                 transform: rotate(45deg);
-                border-color:color($colors,default);
+                border-color:$icon-color-default;
                 position: absolute;
                 right:1.8rem;
                 width: 12px;
@@ -277,13 +273,13 @@ page-order {
             }
 
             .delivery-time, .delivery-memo{
-                width:236px;
+                 width:calc(100% - 100px);
                 height: 33px;
                 display: block;
                 float: right;
-                font-size:14px;
-                color:color($colors,default);
-                font-weight: 600;
+                font-size:$default-font-size;
+                color:$default-font-color;
+                font-weight: bold;
                 padding-left:8px;
                 
                 -webkit-appearance:none; 
@@ -327,50 +323,51 @@ page-order {
 
             div{
                 width:100px;
+                display: flex;
+                align-items: center;
 
                 p{
                     margin:0;
-                    margin-top:7px;
-                    font-size:14px;
-                    font-weight: 600;
+                    font-size:$label-font-size;
+                    font-weight: bold;
                 }
             }
 
             ion-input{
-                border: 1px solid gray;
+                border: 1px solid $border-color;
 
                 .text-input{
                     margin: 0;
                     height: 100%;
                     width: 100%;
-                    font-size:16px;
+                    font-size:$default-font-size;
                     padding-left:8px;
                 }
 
                 ::-webkit-input-placeholder {
-                    font-size:14px;
+                    font-size:$default-font-size;
                 }
 
                 :-moz-placeholder {
-                    font-size:14px;
+                    font-size:$default-font-size;
                 }
 
                 :-ms-input-placeholder { 
-                    font-size:14px;
+                    font-size:$default-font-size;
                 }
             }
             
             button{
                 margin: 0;
                 padding: 0;
-                background-color: color($colors,default);
-                color:black;
+                background-color: $background-color;
+                color:$black-font-color;
                 height: 33px;
                 width: 64px;
                 min-width:64px;
-                font-size:12px;
-                font-weight: 600;
-                border:1px solid gray;
+                font-size:$small-font-size;
+                font-weight: bold;
+                border:1px solid $border-color;
             }
         }
         /* 공통 부분 끝 */
@@ -397,10 +394,10 @@ page-order {
         .delivery-new-phone{
 
             .delivery-phone{
-                width:236px;
+                width:calc(100% - 100px);
 
                 select{
-                    width: 70px;
+                    width: calc((100% - 26px)/3);
                     height: 31px;
                     float: left;
                     display: block;
@@ -408,7 +405,7 @@ page-order {
                     -webkit-appearance:none; 
                     -moz-appearance:none;
                     padding-left: 8px;
-                    border: 1px solid gray;
+                    border: 1px solid $border-color;
                 }
 
                 .arrow-down-icon{
@@ -417,10 +414,11 @@ page-order {
                     border-left-width:0;
                     border-style: solid;
                     transform: rotate(45deg);
-                    border-color:color($colors,default);
+                    border-color:$icon-color-default;
                     position: absolute;
                     top:226px;
-                    left:168px;
+                    //left:168px;
+                    left:calc(46px + (100%/3));
                     width: 12px;
                     height: 12px;
                 }
@@ -433,13 +431,13 @@ page-order {
                     margin: 0;
                     text-align: center;
                     font-size:22px;
-                    font-weight: 200;
+                    font-weight: normal;
                 }
 
                 ion-input{
-                    width:70px;
+                    width:calc((100% - 26px)/3);
                     height: 100%;
-                    border: 1px solid gray;
+                    border: 1px solid $border-color;
                     
                     display: block;
                     float:left;
@@ -470,9 +468,8 @@ page-order {
                 float: left;
 
                 p{
-                    font-size: 14px;
-                    font-weight: 800;
-                    margin-top: 7px;
+                    font-size: $label-font-size;
+                    font-weight: bold;
                 }
             }
 
@@ -482,22 +479,22 @@ page-order {
                 border-left-width:0;
                 border-style: solid;
                 transform: rotate(45deg);
-                border-color:color($colors,default);
+                border-color:$icon-color-default;
                 position: absolute;
-                right:1.8rem;
+                right:18px;
                 width: 12px;
                 height: 12px;
             }
 
             .delivery-time, .delivery-memo{
-                width:236px;
+                width:calc(100% - 100px);
                 height: 33px;
                 display: block;
                 float: right;
-                font-size:14px;
-                color:color($colors,default);
-                border: 1px solid gray;
-                font-weight: 600;
+                font-size:$default-font-size;
+                color:$default-font-color;
+                border: 1px solid $border-color;
+                font-weight: bold;
                 padding-left:8px;
                 
                 -webkit-appearance:none; 
@@ -512,16 +509,17 @@ page-order {
         }
 
         .delivery-new-memo{
-            margin-bottom: 8px;
+            height: 41px;
+            padding-bottom: 8px;
         }
     }
     /* 새로운 배송지 끝*/
 
     /* 비회원 배송 시작 */
     .orderer-info{
-        background-color: white;
+        background-color: $background-color;
         padding:0;
-        width:344px;
+        width:calc(100% - 16px);
         margin: 16px 8px 8px 8px;
 
         /* 공통사항 */
@@ -530,91 +528,90 @@ page-order {
             padding:0;
             padding-left:8px;
             height: 33px;
-            background-color: color($colors, white);
+            background-color: $white-background-color;
 
             div{
                 width:100px;
+                display: flex;
+                align-items: center;
 
                 p{
                     margin:0;
-                    margin-top:7px;
-                    font-size:14px;
-                    font-weight: 600;
+                    font-size:$default-font-size;
+                    font-weight: bold;
                 }
             }
 
             ion-input{
 
-                border: 1px solid gray;
+                border: 1px solid $border-color;
                 margin:1px 0;
 
                 .text-input{
                     margin: 0;
                     height: 100%;
                     width: 100%;
-                    font-size:16px;
+                    font-size:$default-font-size;
                     padding-left:8px;
                 }
 
                 ::-webkit-input-placeholder {
-                    font-size:14px;
+                    font-size:$default-font-size;
                 }
 
                 :-moz-placeholder {
-                    font-size:14px;
+                    font-size:$default-font-size;
                 }
 
                 :-ms-input-placeholder { 
-                    font-size:14px;
+                    font-size:$default-font-size;
                 }
             }
 
             button{
                 margin: 1px 0;
                 padding: 0;
-                background-color: color($colors,default);
-                color:black;
+                background-color: $background-color;
+                color:$black-font-color;
                 height: 33px;
                 width: 64px;
                 min-width:64px;
-                font-size:12px;
-                font-weight: 600;
-                border:1px solid gray;
+                font-size:$small-font-size;
+                font-weight: bold;
+                border:1px solid $border-color;
             }
         }
         /* 공통부분 끝 */ 
 
         /* 주문자 정보 부분 시작 */
         .orderer-info-head{
-            height:40px;
-            padding-top:8px;
-            border-bottom: 2px solid color($colors,default);
+            height:38px;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+
             label{
-                font-size:16px;
-                font-weight: 500;
+                font-size:$nav-font-size;
+                font-weight: bold;
             }
         }
         
-        .orderer-name{
-            padding-top:1px;
-        }
-
         /* 전화 번호 입력 */
         .orderer-phone{
 
             .orderer-phone-input{
-                width:236px;
+                width:calc(100% - 100px);
 
                 select{
-                    width: 70px;
+                    width: calc((100% - 26px)/3);
                     height: 31px;
                     float: left;
                     display: block;
-                    font-size:1.4rem;
+                    font-size:$default-font-size;
                     -webkit-appearance:none; 
                     -moz-appearance:none;
                     padding-left: 8px;
-                    border: 1px solid gray;
+                    border: 1px solid $border-color;
                     margin:1px 0;
                 }
 
@@ -624,13 +621,13 @@ page-order {
                     border-left-width:0;
                     border-style: solid;
                     transform: rotate(45deg);
-                    border-color:color($colors,default);
+                    border-color:$icon-color-default;
                     position: absolute;
-                    top:95px;
-                    left:168px;
+                    top:96px;
+                    left:calc(46px + (100%/3));
+                    //left:168px;
                     width: 12px;
                     height: 12px;
-                    z-index: 99;
                 }
 
                 span p{
@@ -641,19 +638,19 @@ page-order {
                     margin: 0;
                     text-align: center;
                     font-size:22px;
-                    font-weight: 200;
+                    font-weight: normal;
                 }
 
                 ion-input{
-                    width:70px;
+                    width: calc((100% - 26px)/3);
                     height: 31px;
-                    border: 1px solid gray;
+                    border: 1px solid $border-color;
                     
                     display: block;
                     float:left;
 
                     .text-input{
-                        font-size:1.4rem;
+                        font-size:$default-font-size;
                     }
                 }
             }
@@ -670,26 +667,26 @@ page-order {
         /* 비회원 배송정보 시작 */
         /* 배송정보 head */
         .delivery-info-head{
-            background-color: white;
+            background-color: $white-background-color;
             width: 100%;
-            height: 40px;
+            height: 38px;
             padding:0;
             padding-left:8px;
-            border-bottom:2px solid color($colors,default);
+            margin-bottom: 2px;
 
             .delivery-info-label{
                 height:40px;
-                padding-top:8px;
 
                 label{
-                    font-size:16px;
-                    font-weight: 500;
+                    font-size:$nav-font-size;
+                    font-weight: bold;
                 }
             }
         }
 
         .delivery-new-name{
-            margin-top:1px;
+            padding-top:1px;
+            height: 34px;
         }
         
         /* 주소 입력 */
@@ -711,18 +708,18 @@ page-order {
         .delivery-new-phone{
 
             .delivery-phone{
-                width:236px;
+                width:calc(100% - 100px);
 
                 select{
-                    width: 70px;
+                    width: calc((100% - 26px)/3);
                     height: 31px;
                     float: left;
                     display: block;
-                    font-size:1.4rem;
+                    font-size:$default-font-size;
                     -webkit-appearance:none; 
                     -moz-appearance:none;
                     padding-left: 8px;
-                    border: 1px solid gray;
+                    border: 1px solid $border-color;
                     margin:1px 0;
                 }
 
@@ -732,10 +729,11 @@ page-order {
                     border-left-width:0;
                     border-style: solid;
                     transform: rotate(45deg);
-                    border-color:color($colors,default);
+                    border-color:$icon-color-default;
                     position: absolute;
-                    top:347px;
-                    left:168px;
+                    top:349px;
+                    left:calc(46px + (100%/3));
+                    //left:168px;
                     width: 12px;
                     height: 12px;
                 }
@@ -748,47 +746,46 @@ page-order {
                     margin: 0;
                     text-align: center;
                     font-size:22px;
-                    font-weight: 200;
+                    font-weight: normal;
                 }
 
                 ion-input{
-                    width:70px;
+                    width: calc((100% - 26px)/3);
                     height: 31px;
-                    border: 1px solid gray;
+                    border: 1px solid $border-color;
                     
                     display: block;
                     float:left;
 
                     .text-input{
-                        font-size:1.4rem;
+                        font-size:$default-font-size;
                     }
                 }
             }
         }
 
         .delivery-new-time .arrow-down-icon{
-            top:380px;
+            top:383px;
         }
 
         .delivery-new-memo .arrow-down-icon{
-            top:412px;
+            top:417px;
         }
 
         .delivery-new-time, .delivery-new-memo{
             width:100%;
-            height: 33px;
-            
 
             .time-label, .memo-label{
                 width:100px;
                 max-width: 100px;
                 height: 33px;
                 float: left;
+                display: flex;
+                align-items: center;
 
                 p{
-                    font-size: 14px;
-                    font-weight: 800;
-                    margin-top: 7px;
+                    font-size: $default-font-size;
+                    font-weight: bold;
                 }
             }
 
@@ -798,23 +795,23 @@ page-order {
                 border-left-width:0;
                 border-style: solid;
                 transform: rotate(45deg);
-                border-color:color($colors,default);
+                border-color:$background-color;
                 position: absolute;
-                right:1.8rem;
+                right:18px;
                 width: 12px;
                 height: 12px;
             }
 
             .delivery-time, .delivery-memo{
-                width:236px;
+                width:calc(100% - 100px);
                 height: 31px;
                 display: block;
                 float: right;
-                font-size:14px;
-                color:color($colors,default);
-                border: 1px solid gray;
+                font-size:$default-font-size;
+                color:$default-font-color;
+                border: 1px solid $border-color;
                 margin:1px 0;
-                font-weight: 600;
+                font-weight: bold;
                 padding-left:8px;
                 
                 -webkit-appearance:none; 
@@ -829,26 +826,27 @@ page-order {
         }
 
         .delivery-new-memo{
-            margin-bottom: 8px;
+            height: 39px;
+            padding-bottom: 8px;
         }
         /* 비회원 배송정보 끝 */
     }
     /* 비회원 배송 끝 */
-
     /* 배송정보 끝 */
 
     /* 상품/결제/결제수단 정보 시작 */
     .product-info, .payment-info, .payment-method-info{
         margin:8px;
         height: auto;
-        background-color:white;
+        background-color:$background-color;
 
         .product-info-head, .payment-info-head, .payment-method-head{
-            height: 40px;
-            min-height: 40px;
+            height: 38px;
+            min-height: 38px;
             padding: 0;
             padding-left: 8px;
-            border-bottom:2px solid color($colors,default);  
+            margin-bottom: 2px;
+            background-color: $white-background-color;
 
             .item-inner{
                 padding: 0;
@@ -856,16 +854,16 @@ page-order {
                 
                 .label{
                     margin:0;
-                    font-size: 17px;
-                    padding-bottom: 5px;
+                    font-size: $nav-font-size;
+                    font-weight: bold;
                 }
 
                 .info-icon{
                     margin:0;
-                    font-size:18px;
+                    font-size:1.8rem;
                     width:40px;
                     height: 40px;
-                    color:black;
+                    color:$icon-color-black;
                 }
             }
         }
@@ -883,29 +881,29 @@ page-order {
                 .label{
                     margin:0;
                     width:100px;
-                    font-weight: 600;
-                    font-size:14px;
+                    font-weight: bold;
+                    font-size:$label-font-size;
                 }
 
                 .product-price{
                     margin:0;
                     margin-left:24px;
                     padding-right:8px;
-                    font-weight: 400;
+                    font-weight: normal;
                 }
 
                 .product-total-price{
-                    font-size:18px;
-                    font-weight: 800;
-                    color:red;
+                    font-size:$large-font-size;
+                    font-weight: bold;
+                    color:$font-color-highlight;
                     margin:0;
                     padding-right:8px;
                 }
 
                 ion-icon{
                     margin:0;
-                    font-size:18px;
-                    color:color($colors,default);
+                    font-size:1.8rem;
+                    color:$icon-color-default;
                     padding-top:5px;
                 }
             }
@@ -964,53 +962,46 @@ page-order {
         }
 
         .payment-method-cash, .payment-method-card, .payment-method-bank{
-            width:328px;
-            height: 33px;
-            min-height: 33px;
+            width:100%;
 
             .label{
                 margin:0;
                 text-align: center;
-                font-weight: 600;
+                font-weight: bold;
+            }
+
+            .item-inner{
+                border:1px solid $border-color;
+                padding:0;
             }
         }
 
         .payment-method-cash{
             margin:0;
-            padding:0;
-            margin:8px;
-            margin-bottom:0;
-            
-            .item-inner{
-                padding:0;
-                border:2px solid color($colors, default);
-            }
+            padding:8px 8px 0px;
+            height: 41px;
+            min-height: 41px;            
         }
 
         .payment-method-card{
             margin:0;
-            padding:0;
-            margin:0px 8px;
-
-            .item-inner{
-                padding:0;
-                border:2px solid color($colors, default);
-                border-top:none;
-                border-bottom:none;
-            }
+            padding:0 8px;
+            height: 33px;
+            min-height: 33px;
         }
 
         .payment-method-bank{
             margin:0;
-            padding:0;
-            margin:0px 8px;
-            padding-bottom: 8px;
+            padding:0 8px 8px;
             height: 41px;
-            
+            min-height: 41px;
+            border:none;
+
             .item-inner{
-                padding:0;
                 height: 33px;
-                border:2px solid color($colors, default) !important;
+                min-height: 33px;
+                border-bottom:1px solid $border-color !important;
+                border-top:none;
             }
         }
     }
@@ -1020,13 +1011,10 @@ page-order {
     .payment-submit{
         margin:0;
         height: 46px;
-        font-size:16px;
-        background-color: color($colors, title);
-        font-weight: 600;
-        padding-bottom: 5px;
+        font-size:$btn-font-size;
+        background-color: $default-btn-color;
+        font-weight: bold;
     }
-
-
 }
 
 /* 배송지 선택 popup */
@@ -1037,7 +1025,7 @@ page-order {
         height: auto;
 
         .popover-content{
-            width: 345px;
+            width: calc(100% - 16px);
             height: auto;
             position: absolute;
             top:170px   !important;

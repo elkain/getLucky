@@ -5,82 +5,102 @@ page-home {
     /* home navigation 화면 시작*/
     .home-nav-menu{
         width: 100%;
-        height: 42px;
+        height: 48px;
 
-        .segment-button .segment-md{
-            width: 90px;
-            height: 49px;
+        ion-row{
+            height: 100%;
+        }
+
+        ion-segment{
+            height: 100%;
+
+            ion-segment-button{
+                min-height: 100%;
+                display: flex;
+                align-items: center;
+
+                p{
+                    width: 100%;
+                    display: block;
+                    text-align: center;
+                    margin:0;
+                    font-weight: bold;
+                    font-size:$label-font-size;
+                }
+            }
         }
     }
     /* home navigation 화면 종료*/
 
     /* recommand 화면 시작 */
     .home-scroll{
-        height: 92%;
+        height: calc(100% - 48px);
         width:  100%;
-        background-color: color($colors,default);
+        background-color: $background-color;
 
         ::-webkit-scrollbar {
             width: 0px;  /* remove scrollbar space */
             background: transparent;  /* optional: just make scrollbar invisible */
         }
-        /* optional: show position indicator in red */
-        ::-webkit-scrollbar-thumb {
-            background: #FF0000;
-        }
         
         .home-slide{
-            height: 168px;                          // 추후 dp로 수정 필요
-            width: 344px;                           // 추후 dp로 수정 필요
-            margin: 0px 8px 8px 8px;            
+            height: calc((168/640)*100vh);                      
+            width: calc(100% - 16px);                           
+            margin: 0px 8px 8px 8px;    
+
             cursor:pointer;
 
             .home-slide-child{
-                background-size:100%;
+                background-size:100% calc((168/640)*100vh);
+                background-repeat: no-repeat;
             }
 
-            .btnPrev .brnNext{
+            .button{
                 height: 64px;
                 width: 64px;
-            }
-
-            .button-md{
-                font-size:28px;
+                padding:0 20px;
+                font-size:$icon-size;
             }
         }
 
         .home-product-list{
             padding: 0;
             margin: 16px 8px 0px 8px;
-
-            width : 344px;
+            width : calc(100% - 16px);
             height: 100%;
 
-            .button-md{
+            ion-row{
+                width: 100%;
+                height: calc((168/640)*100vh);
                 padding: 0;
-                margin: 0;
-                width:100%;
-                height: 168px;
-                box-shadow: none;
-                background-color: white;
                 margin-bottom: 8px;
 
-                ion-item{
-                    width: 100%;
-                    height: 168px;
+                .button{
                     padding: 0;
-                    
-                    ion-thumbnail{
-                        width: 168px;
-                        height: 168px;
-                        padding:0;
-                        margin:0px 8px 0px 0px;
+                    margin: 0;
+                    width:100%;
+                    height: 100%;
+                    box-shadow: none;
+                    background-color: white;
 
-                        img{
-                            width: 100%;
-                            height: 100%;
-                            background-size: 100%;
+                    ion-col{
+                        padding:0;
+                        height: 100%;
+                        color:$black-font-color;
+
+                        h2, p{
+                            text-align: left;
+
+                            del{
+                                font-size:$small-font-size;
+                            }
                         }
+                    }
+
+                    img{
+                        width: 100%;
+                        height: 100%;
+                        background-size: 100%;
                     }
                 }
             }
@@ -107,41 +127,35 @@ page-home {
 
             ion-segment-button.segment-button {
                 display: inline-block;
-                width: 60px;
+                width: ((60/360)*100vw);
                 height: 40px;
-                font-size:12px;
+                font-size:1.2rem;
+                font-weight: bold;
             }
         }
     }
 
     .best-scroll{
-        height: 85%;
+        height: calc(100% - 90px);
         width: 100%;
         margin: 0;
-        background-color: color($colors,default);
-        
-        
+        background-color: $background-color;
+
         ::-webkit-scrollbar {
             width: 0px;  /* remove scrollbar space */
             background: transparent;  /* optional: just make scrollbar invisible */
         }
-        /* optional: show position indicator in red */
-        ::-webkit-scrollbar-thumb {
-            background: #FF0000;
-        }
 
         .best-sort-option{
-            width: 344px;               // 나중에 dp 단위로 수정 필요
+            width: calc(100% - 16px); 
             height: 40px;
             margin: 0px 8px;
-            background-color: color($colors,default);
 
             select{
                 height: 40px;
                 width: 100px;
                 border : none;
                 float:right;
-                background-color: color($colors,default);
                 -webkit-appearance:none; 
                 -moz-appearance:none;
                 background: url('../../assets/icon/ios-arrow-down.png');
@@ -165,51 +179,51 @@ page-home {
 
             ion-row{
                 margin:0px 4px;
-                width: 352px;           // 추후 dp로 수정 필요
+                width: calc(100% - 8px);          
                 height: 100%;
             }
 
             ion-col{
-                height: 268px;          // 추후 dp로 수정 필요
                 padding:0;
                 margin-bottom: 16px;
             }
 
             .best-product{
                 margin:0px 4px;
-                width: 168px;           // 추후 dp로 수정 필요
-                height: 268px;          // 추후 dp로 수정 필요
+                width: calc(100% - 8px);
+                height: calc((268/640)*100vh);  
+                display: block;        
+                float:left;
 
                 .best-product-img{
                     margin:0;
                     padding:0;
-                    width:168px;        // 추후 dp로 수정 필요
-                    height:168px;       // 추후 dp로 수정 필요
+                    width: 100%;
+                    height:calc((168/640)*100vh);       
 
                     img{
-                        width:168px;        // 추후 dp로 수정 필요
-                        height:168px;       // 추후 dp로 수정 필요
-                        background-size: 100%;
+                        width: 100%;
+                        height:calc((168/640)*100vh);       
                     }
                 }
 
                 ion-card-content{
-                    width: 168px;       // 추후 dp로 수정 필요
-                    height: 100px;      // 추후 dp로 수정 필요
+                    width: 100%;      
+                    height: calc((100/640)*100vh);       
                     padding: 16px 8px;
 
                     ion-card-title{
-                        font-size: 18px;
+                        font-size: $title-font-size;
                         padding: 0;
                         margin:0;
                     }
 
                     .best-cart{
                         float: right;
-                        background-color: white;
+                        background-color: $white-background-color;
                         box-shadow:none;
-                        color: color($colors,title);
-                        font-size:24px;
+                        color: $icon-color-title;
+                        font-size:$icon-size;
                         padding: 0;
                         position: absolute;
                         right:30px;
@@ -223,33 +237,24 @@ page-home {
 
     /* event 화면 시작 */
     .event-scroll{
-        height: 92%;
+        height: calc(100% - 48px);
         width: 100%;
         ion-grid{
-            width: 344px;
+            width: calc(100% - 16px);
             height: 100%;
             margin: 0px 8px;
             padding: 0;
 
             ion-row{
                 margin-bottom: 8px;
-                width: 344px;
-                height: 168px;
-            }
-
-            // 마지막 row
-            ion-row:last-child{
-
+                width: 100%;
+                height: calc((168/640)*100vh);
             }
         }
 
         ::-webkit-scrollbar {
             width: 0px;  /* remove scrollbar space */
             background: transparent;  /* optional: just make scrollbar invisible */
-        }
-        /* optional: show position indicator in red */
-        ::-webkit-scrollbar-thumb {
-            background: #FF0000;
         }
     }
     /* event 화면 종료 */

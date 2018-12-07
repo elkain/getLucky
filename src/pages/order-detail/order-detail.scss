@@ -1,30 +1,30 @@
 page-order-detail {
 
     .content{
-        background-color: color($colors,default);
+        background-color: $background-color;
     }
         
     ion-scroll{
-        height: 90%;
+        height: calc(100% - 48px);
     }
 
     /* 주문 내역 상세 문구 시작 */
     .order-detail-head{
         height: 48px;
         width: 100%;
-        background-color: white;
-        border-bottom: 1px solid color($colors, default);
+        background-color: $white-background-color;
         margin:0;
         padding:0;
+        display: flex;
+        align-items: center;
         
         .order-detail-title{
-            font-size: 1.6rem;
-            font-weight: 800;
+            width: 100%;
+            font-size: $title-font-size;
+            font-weight: bold;
             margin: 0;
-            padding:13px;
             text-align: center;
             display: block;
-            
         }
     }
     /* 주문 내역 상세 문구 끝 */
@@ -33,15 +33,16 @@ page-order-detail {
     .product-info, .payment-info, .order-comp-detail-info{
         margin:8px;
         height: auto;
-        background-color:white;
+        background-color:$background-color;
 
         /* 주문 정보, 결제 정보, 배송 정보 head 시작 */
         .product-info-head, .payment-info-head, .order-comp-detail-head{
-            height: 40px;
-            min-height: 40px;
+            height: 38px;
+            min-height: 38px;
             padding: 0;
             padding-left: 8px;
-            border-bottom:2px solid color($colors,default);  
+            margin-bottom: 2px;
+            background-color:$white-background-color;
 
             .item-inner{
                 padding: 0;
@@ -49,16 +50,16 @@ page-order-detail {
                 
                 .label{
                     margin:0;
-                    font-size: 1.6rem;
-                    padding-bottom: 5px;
+                    font-size: $nav-font-size;
+                    font-weight: bold;
                 }
 
                 .info-icon{
                     margin:0;
-                    font-size:18px;
+                    font-size:1.8rem;
                     width:40px;
                     height: 40px;
-                    color:black;
+                    color:$icon-color-black;
                 }
             }
         }
@@ -78,22 +79,22 @@ page-order-detail {
                 .label{
                     margin:0;
                     width:100px;
-                    font-weight: 600;
-                    font-size:14px;
+                    font-weight: bold;
+                    font-size:$label-font-size;
 
                     .order-status-label{
                         align-items: center;
                         display: flex;
-                        color:lightgreen;
-                        font-size: 1.2rem;
-                        font-weight: 600;
+                        color:green;
+                        font-size: $small-font-size;
+                        font-weight: bold;
                     }
                 }
 
                 .order-id-num{
                     text-align: right;
-                    font-size:1.4rem;
-                    font-weight: 400;
+                    font-size:$default-font-size;
+                    font-weight: normal;
                     margin: 0;
                     padding-right:8px;
                 }
@@ -101,9 +102,9 @@ page-order-detail {
                 .order-cancel{
                     margin:0;
                     //margin-right:8px;
-                    font-weight: 600;
-                    border:1px solid color($colors, default);
-                    color:gray;
+                    font-weight: bold;
+                    border:1px solid $border-color;
+                    color:$default-font-color;
                 }
             }
         }
@@ -134,17 +135,17 @@ page-order-detail {
                     margin:0;
                     padding-left:8px;
                     height: 64px;
-                    font-size:1.4rem;
-                    color:black;
+                    font-size:$label-font-size;
+                    color:$black-font-color;
                 }
 
                 .product-info-compo{
                     margin:0;
                     padding-left:8px;
                     height: 64px;
-                    padding-top:5px;
-                    font-size:12px;
-                    color:black;
+                    padding-top:2px;
+                    font-size:$small-font-size;
+                    color:$black-font-color;
                 }
 
                 .product-info-count, .product-info-price{
@@ -152,15 +153,15 @@ page-order-detail {
                     padding-left:72px;
                     height: 31px;
                     padding-top:5px;
-                    font-size: 1.4rem;
-                    color:black;
+                    font-size: $label-font-size;
+                    color:$black-font-color;
                 }
             }
         }
         /* 주문 정보 내 상품 정보 끝 */
 
         .order-id{
-            border-bottom:1px solid color($colors, default);
+            margin-bottom:1px;
         }
         /* 주문 정보 내 주문 번호, 배송준비중 끝 */
 
@@ -178,21 +179,21 @@ page-order-detail {
                 .label{
                     margin:0;
                     width:100px;
-                    font-weight: 600;
-                    font-size:14px;
+                    font-weight: bold;
+                    font-size:$label-font-size;
                 }
 
                 .product-price{
                     margin:0;
                     margin-left:24px;
                     padding-right:8px;
-                    font-weight: 400;
+                    font-weight: normal;
                 }
 
                 ion-icon{
                     margin:0;
-                    font-size:18px;
-                    color:color($colors,default);
+                    font-size:1.8rem;
+                    color:$icon-color-default;
                     padding-top:5px;
                 }
             }
@@ -201,7 +202,7 @@ page-order-detail {
         
         /* 주소를 제외한 상세 정보 부분 */
         .order-comp-detail-name, .order-comp-detail-phone, .order-comp-detail-time ,.order-comp-detail-memo{
-            width:344px;
+            width:100%;
             height: 32px;
             padding-left:8px;
             height: 32px;
@@ -217,25 +218,25 @@ page-order-detail {
                     p{
                         display: block;
                         float: left;
-                        font-size:1.4rem;
-                        color:black;
+                        font-size:$label-font-size;
+                        color:$black-font-color;
                     }
                 }
 
                 .order-comp-detail-label{
                     width:100px;
-                    font-weight: 800;
+                    font-weight: bold;
                 }
 
                 .order-comp-detail{
-                    width:236px;
+                    width:calc(100% - 100px);
                 }
             }
         }
 
         /* 주문 시 받는 주소 에 대한 부분 */
         .order-comp-detail-addr{
-            width:344px;
+            width:100%;
             height: 95px;
             padding-left:8px;
 
@@ -248,20 +249,21 @@ page-order-detail {
                     margin:0;
 
                     p{
-                        font-size:1.4rem;
+                        font-size:$label-font-size;
                         display: block;
                         float: left;
-                        color:black;
+                        color:$black-font-color;
                     }
                 }
 
                 .order-comp-detail-label{
                     width:100px;
-                    font-weight: 800;
+                    font-weight: bold;
                 }
 
                 .order-comp-detail{
-                    width:236px;
+                    width:calc(100% - 100px);
+                    font-size: $default-font-size;
                     white-space: normal;
                     line-height: 28px;
                     word-break: keep-all;
@@ -272,11 +274,12 @@ page-order-detail {
     /* 상품/결제/결제수단 정보 끝 */
 
     .write-qs{
-        margin:0 8px;
+        margin:0 8px 8px;
         padding:0;
-        width:344px;
+        width:calc(100% - 16px);
         height: 46px;
-        font-size: 1.4rem;
-        background-color: color($colors,title);
+        font-size: $btn-font-size;
+        font-weight: bold;
+        background-color: $default-btn-color;
     }
 }

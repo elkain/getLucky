@@ -7,7 +7,7 @@
 <ion-header no-shadow no-border>
   <ion-toolbar no-border no-padding no-shadow>
     <ion-buttons class="back-arrow" start *ngIf="showBackbtn==true">
-      <button full ion-button icon-only color='white' (click)="back()">
+      <button full ion-button icon-only (click)="back()">
         <ion-icon name="md-arrow-back"></ion-icon>
       </button>
     </ion-buttons>
@@ -62,7 +62,7 @@
         <button (click)="moveToSignup()" full ion-button>회원가입</button>
       </ion-row>
       <ion-row class="find-login-inform">
-        <button clear (click)="changeIdPwdFind('아이디 찾기')" ion-button>아이디 찾기</button><p>|</p><button (click)="changeIdPwdFind('비밀번호 찾기')" clear ion-button>비밀번호 찾기</button>
+        <button clear (click)="changeIdPwdFind('아이디 찾기')" ion-button>아이디 찾기</button><button (click)="changeIdPwdFind('비밀번호 찾기')" clear ion-button>비밀번호 찾기</button>
       </ion-row>
     </ion-grid>
     <!-- 회원 탭 끝 -->
@@ -99,14 +99,14 @@
   <!-- 로그인 페이지 끝 -->
 
   <!-- 아이디/비밀번호 찾기 시작-->
-  <div style="background-color: white; height: 100%;" *ngIf="showPageType=='find'">
+  <div *ngIf="showPageType=='find'">
     <!-- 아이디/비밀번호 찾기 선택 segment 시작 -->
     <ion-grid no-margin no-padding class="find-nav-menu">
       <ion-row>
         <ion-col *ngFor="let category of findCategories">
           <ion-segment [(ngModel)]="findCategorySelected">
             <ion-segment-button [value]="category" (click)="findCategoryChange(category)">
-              {{category}}
+              <p>{{category}}</p>
             </ion-segment-button>
           </ion-segment>
         </ion-col>
@@ -139,7 +139,7 @@
       <ion-row class="login-find-phone" *ngIf="findLoginInfoMethod=='phone'">
         <div class="login-find-label"><p><b>연락처</b></p></div>
         <div class="login-find-phone-input">
-          <div class="arrow-down-icon"></div>
+          <div class="arrow-down-icon" [style.top]="arrowIconTop"></div>
           <select>
             <option>010</option>
             <option>011</option>

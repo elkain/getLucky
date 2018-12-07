@@ -15,18 +15,61 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+/* font-size */
+$default-font-size:1.4rem;
+$title-font-size:2rem;
+$nav-font-size:1.6rem;
+$btn-font-size:1.6rem;
+$label-font-size:1.4rem;
+$back-icon-size:1.4em;
+$icon-size:1.8em;
+$small-font-size:1.2rem;
+$large-font-size:1.8rem;
+$large-icon-size:2.4em;
+
+/* color */
+$background-color:#d3d3d3;
+$white-background-color:white;
+$default-title-color:color($colors,title);
+$white-title-color : white;
+$default-btn-color:color($colors,title);
+$white-btn-color:white;
+$black-font-color:black;
+$white-font-color:white;
+$default-font-color:gray;
+$border-color:gray;
+$icon-color-title:color($colors,title);
+$label-color-title:color($colors,title);
+$icon-color-default:#d3d3d3;
+$icon-color-black:black;
+$font-color-highlight : red;
+$icon-color-white:white;
+
+@mixin calc($property, $expression){
+    #{$property}: -webkit-calc(#{$expression});
+    #{$property}: -moz-calc(#{$expression});
+    #{$property}: calc(#{$expression});
+}
+
 page-tabs{
+    ion-tabs .tabbar {
+        max-height: 50px; //set pixels here
+
+        .tab-button{
+            min-height: 50px !important;
+        }
+    }
+
     ion-header{
-        background-color: color($colors, title);
         height: 50px;
         width: 100%;
 
-        .toolbar-md{
+        .toolbar{
             min-height: 50px;
         }
 
         ion-title{
-            background-color: color($colors, title);
+            background-color: $default-title-color;
             position: absolute;
             top: 0;
             left: 0;
@@ -48,10 +91,10 @@ page-tabs{
                 margin:0;
                 width: 40px;
                 height: 40px;
-                font-size:18px;
+                font-size: $back-icon-size;
 
                 .button-inner{
-                    color:white;
+                    color:$white-btn-color;
                 }
             }
         }
@@ -61,39 +104,25 @@ page-tabs{
 
     .title-home-button{
         text-align: center;
-        color: color($colors, light);
-        background-color: color($colors, title);
-        width: 144px;
+        color: $white-title-color;
+        background-color: $default-title-color;
+        width: calc((144/360)*100vw);
         height: 34px;
-        font-size:18px;
+        font-size:$title-font-size;
         margin:0;
         padding:0;
     }
 
     .home-cart{
         box-shadow: none;
-        background-color: color($colors, title);
-        color:color($colors, light);
-        margin-right:8px;;
+        background-color: $default-title-color;
+        color:$white-title-color;
+        margin-right:8px;
         padding:0;
         width: 48px;
         height: 48px;
-        font-size: 24px;
+        font-size: $icon-size;
         text-align: center;
-    }
-
-    .header-md .header-ios{
-        box-shadow: none;
-        display: fixed;
-        height: 50px;
-        margin:0;
-        padding:0;
-        border:0;
-    }
-
-    .tabbar{
-        width:100%;
-        height: 50px;
-    }
+    }   
 }
 

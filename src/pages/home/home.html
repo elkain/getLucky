@@ -9,7 +9,7 @@
             <ion-col *ngFor="let category of homeCategories">
                 <ion-segment [(ngModel)]="homeCategorySelected">
                     <ion-segment-button [value]="category" (click)="homeCategoryChange(category)">
-                        {{category}}
+                        <p>{{category}}</p>
                     </ion-segment-button>
                 </ion-segment>
             </ion-col>
@@ -19,7 +19,7 @@
 
     <!-- recommand page start -->
     <ion-scroll scrollY="true" class="home-scroll" *ngIf="homeCategorySelected==homeCategories[0]"> 
-        <ion-slides pager class="home-slide" >
+        <ion-slides pager="true" class="home-slide" >
             <ion-slide class="home-slide-child" *ngFor="let image of images" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
                 <button type="submit" float-left ion-button outline clear color="black" class="btnPrev" (click)="prev()">  
                     <ion-icon name="ios-arrow-back"></ion-icon>
@@ -30,22 +30,25 @@
             </ion-slide>
         </ion-slides>
     
-        <ion-list class="home-product-list">
-            <button ion-button no-border *ngFor="let product of products" (click)="itemSelected(product)">
-                <ion-item>
-                    <ion-thumbnail item-start>
+        <ion-grid class="home-product-list">
+            <ion-row *ngFor="let product of products">
+                <button ion-button no-border (click)="itemSelected(product)">
+                    <ion-col>
                         <img src="{{product.imagePath}}">
-                    </ion-thumbnail>
-                    <h2>{{product.name}}</h2>
-                    <p><del>{{product.price}}</del></p>
-                    <p>{{product.salePrice}}</p>
-                </ion-item>
-            </button>
-        </ion-list>
+                    </ion-col>
+                    <ion-col>
+                        <h2>{{product.name}}</h2>
+                        <p><del>{{product.price}}</del></p>
+                        <p>{{product.salePrice}}</p>
+                    </ion-col>
+                </button>
+            </ion-row>
+        </ion-grid>
     </ion-scroll>
     <!-- recommand page end -->
 
     <!-- best page & sale page start -->
+    <!-- 슬라이드가 현대 모바일 상에서는 구현되지만 web 에서는 구현 안됨 추가로 구현이 필요 -->
     <div class="best-nav-menu" *ngIf="homeCategorySelected==homeCategories[1] || homeCategorySelected==homeCategories[2]">
         <ion-segment [(ngModel)]="bestCategorySelected">
             <ion-segment-button [value]="category" (click)="bestCategoryChange(category)" *ngFor="let category of bestCategories">

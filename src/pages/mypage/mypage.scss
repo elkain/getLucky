@@ -1,11 +1,11 @@
 page-mypage {
 
     ion-scroll{
-        height: 92%;
+        height: calc(100% - 48px);
     }
 
     ion-header{
-        background-color: color($colors, title);
+        background-color: $default-title-color;
         height: 50px;
         width: 100%;
 
@@ -14,7 +14,6 @@ page-mypage {
         }
 
         ion-title{
-            background-color: color($colors, title);
             position: absolute;
             top: 0;
             left: 0;
@@ -36,10 +35,10 @@ page-mypage {
                 margin:0;
                 width: 40px;
                 height: 40px;
-                font-size:18px;
+                font-size:$back-icon-size;
 
                 .button-inner{
-                    color:white;
+                    color:$white-title-color;
                 }
             }
         }
@@ -47,30 +46,28 @@ page-mypage {
 
     .title-home-button{
         text-align: center;
-        color: color($colors, light);
-        background-color: color($colors, title);
-        width: 144px;
+        color: $white-title-color;
+        width: calc((144/360)*100vw);
         height: 34px;
-        font-size:18px;
+        font-size:$title-font-size;
         margin:0;
         padding:0;
     }
 
     .home-cart{
         box-shadow: none;
-        background-color: color($colors, title);
-        color:color($colors, light);
+        background-color: $default-title-color;
+        color:$white-title-color;
         margin-right:8px;;
         padding:0;
         width: 48px;
         height: 48px;
-        font-size: 24px;
+        font-size: $icon-size;
         text-align: center;
     }
 
     .header-md .header-ios{
         box-shadow: none;
-        display: fixed;
         height: 50px;
         margin:0;
         padding:0;
@@ -84,25 +81,26 @@ page-mypage {
 
     // 전체 배경 색
     .scroll-content{
-        background-color: color($colors, default);
+        background-color: $background-color;
     }
     /* 로그인 시작 */ 
     // 상단 회원/비회원 탭
     .login-nav-menu{
         width: 100%;
         height: 48px;
-        background-color: color($colors, default);
+        background-color: $background-color;
         margin:16px 0px;
         border:none;
-        border:1px solid color($colors, default);
 
         ion-segment{
-            background-color: white;
+            background-color: $white-background-color;
+
             .segment-button{
-                font-size:16px;
-                font-weight: 600;
+                font-size:$btn-font-size;
+                font-weight: bold;
                 height: 48px;
-                border-bottom-color: gray;
+                padding-top:4px;
+                border-bottom-color: $border-color;
             }
         }
     }
@@ -113,18 +111,18 @@ page-mypage {
         height: auto;
         margin:0px;
         margin-bottom: 8px;
+        background-color: $background-color;
 
         .id-input, .pwd-input{
             margin:0;
             padding:0;
-            height: 48px;
-
-            border-top:2px solid color($colors, default);
-            border-left:2px solid color($colors, default);
-            border-right:2px solid color($colors, default);
-
+            height: 46px;
+            background-color: $white-background-color;
+            width:auto;
+            margin: 2px 2px 0;
+            
             ion-input{
-                font-weight: 600;
+                font-weight: bold;
             }
 
             .item-inner{
@@ -136,10 +134,11 @@ page-mypage {
         .auto-login-check{
             margin:0;
             padding:0;
-            border:2px solid color($colors, default);
-
-            min-height: 32px;
-            height: 32px;
+            width: auto;
+            margin:2px 2px 0;
+            min-height: 28px;
+            height: 28px;
+            background-color: $white-background-color;
             
             .checkbox-md{
                 margin:6px;
@@ -151,7 +150,7 @@ page-mypage {
                     background-image:linear-gradient(to bottom, color($colors, default), white);
 
                     &.checkbox-checked{
-                        border:2px solid gray;
+                        border:2px solid $border-color;
                         
                         .checkbox-inner{
                             width:7px;
@@ -165,7 +164,7 @@ page-mypage {
                 height: 20px;
                 margin:3px 12px 6px;
 
-                font-size:14px;
+                font-size:$label-font-size;
             }
         }
     }
@@ -178,17 +177,13 @@ page-mypage {
         margin-bottom: 8px;
 
         .order-name-input, .order-number-input{
-            margin:0;
+            margin:0 1px;
             padding:0;
             height: 48px;
-
-            border-left:1px solid color($colors, default);
-            border-right:1px solid color($colors, default);
-            border-bottom: none;
-            
+            width: auto;
 
             ion-input{
-                font-weight: 600;
+                font-weight: bold;
             }
 
             .item-inner{
@@ -206,20 +201,21 @@ page-mypage {
     // 회원/비회원 버튼(로그인, 회원가입, 주문완료)
     .login-button-area{
         width: 100%;
-        height: 152;
+        height: auto;
         padding: 0px;
 
         .login-button{
             height:48px;
             min-height:48px;
-            width:344px;
+            width:calc(100% - 16px);
             margin:0px 8px;
+
             button , .button-md{
                 height: 48px;
                 padding: 0;
                 margin: 0;
-                font-size:16px;
-                font-weight: 600;
+                font-size:$btn-font-size;
+                font-weight: bold;
                 box-shadow: none;
             }
         }
@@ -227,16 +223,16 @@ page-mypage {
         .register-button{
             height:48px;
             min-height:48px;
-            width:344px;
+            width:calc(100% - 16px);
             margin:8px 8px 0px;
 
             button , .button-md{
                 height: 48px;
-                background-color: white;
-                color: color($colors, primary);
-                border:1px solid color($colors, primary);
-                font-size:16px;
-                font-weight: 500;
+                background-color: $white-background-color;
+                color: $default-btn-color;
+                border:1px solid color($colors, title);
+                font-size:$btn-font-size;
+                font-weight: bold;
                 padding: 0;
                 margin: 0;
                 box-shadow: none;
@@ -244,24 +240,24 @@ page-mypage {
         }
 
         .find-login-inform{
-            height:32px;
-            margin-top:8px;
-            background-color: white;
-            border:1px solid color($colors, default);
+            height:30px;
+            width: auto;
+            margin:1px;
+            margin-top:9px;
+            background-color: $white-background-color;
+            display: flex;
+            align-items: center;
 
-            .button-md{
-                color:black;
-                margin:6px 8px;
-                padding:0;
-                width : auto;
-                height: 20px;
-                font-size:14px;
+            button{
+                color:$black-font-color;
+                padding:0 8px;
+                margin:0;
+                height: 16px;
+                font-size:$default-font-color;
             }
 
-            p{
-                height: 20px;
-                margin:6px 0;     
-                font-size:14px;       
+            button:first-child{
+                border-right:2px solid $border-color;
             }
         }
     }
@@ -273,18 +269,24 @@ page-mypage {
         width: 100%;
         height: 80px;
         padding:16px 0;
-        background-color: white;
+        background-color: $background-color;
 
         ion-row{
             height: 48px;
             min-height: 48px;
             margin:16px 0;
+            background-color: $white-background-color;
 
             .segment-button{
-                width: 90px;
                 height: 48px;
-                font-size:1.6rem;
-                font-weight: 600;
+                font-weight: bold;
+
+                p{
+                    padding-top:2px;
+                    height: 100%;
+                    margin:0;
+                    font-size:$nav-font-size;
+                }
             }
         }
     }
@@ -292,45 +294,46 @@ page-mypage {
 
     /* 아이디/비밀번호 찾기 정보 입력 시작 */
     .login-find{
-        background-color: white;
+        background-color: $white-background-color;
         padding:0;
         height: auto;
 
         /* 체크박스로 휴대폰/이메일 선택 */
         .login-find-checkbox{
-            width: 344px;
-            height: 40px;
-            margin:0 8px;
+            width: calc(100% - 16px);
+            height: 39px;
+            margin:1px 8px 0;
 
-            background-color: color($colors, default);
+            background-color: $background-color;
 
             ion-col{
                 padding:0;
 
+                display: flex;
+                align-items: center;
+
                 .find-type-checkbox{
                     float: left;
                     width: 40px;
-                    height: 40px;
+                    
                     text-align: center;
-                    font-size:1.6em;
-                    padding:9px 0 10px;
+                    font-size:$icon-size;
                     margin-left:8px;
                 }
 
                 p{
                     float: left;
-                    width:124px;
+                    width:calc(100% - 48px);
                     margin:0;
-                    font-size:1.4rem;
+                    font-size:$label-font-size;
                     text-align: center;
-                    padding:9px 0 10px;
                 }
             }
         }
 
         /* 아이디, 이름, 휴대폰, 이메일 입력 */
         .login-find-id, .login-find-name, .login-find-phone, .login-find-email{
-            background-color: white;
+            background-color: $white-background-color;
 
             height: 48px;
             margin:0 8px;
@@ -341,24 +344,24 @@ page-mypage {
             }
 
             .login-find-input{
-                border:1px solid color($colors,default);
+                border:1px solid $border-color;
                 margin:2px 0;
             }
             
             /* 전화번호 입력 */
             .login-find-phone-input{
-                width:236px;
+                width:calc(100% - 100px);
 
                 select{
-                    width: 70px;
-                    height: 48px;
+                    width: calc((100% - 26px)/3);
+                    height: 100%;
                     float: left;
                     display: block;
-                    font-size:1.4rem;
+                    font-size:$default-font-size;
                     -webkit-appearance:none; 
                     -moz-appearance:none;
                     padding-left: 8px;
-                    border: 1px solid color($colors,default);
+                    border: 1px solid $border-color;
                 }
 
                 .arrow-down-icon{
@@ -367,39 +370,43 @@ page-mypage {
                     border-left-width:0;
                     border-style: solid;
                     transform: rotate(45deg);
-                    border-color:color($colors,default);
+                    border-color:$icon-color-default;
                     position: absolute;
-                    top:226px;
-                    left:168px;
+                    left:calc((100%/3) + 46px);
                     width: 12px;
                     height: 12px;
                 }
 
                 span p{
                     width:13px;
-                    height: 31px;
+                    padding: 6px 0;
+                    height: 100%;
                     display:block;
                     float: left;
                     margin: 0;
                     text-align: center;
-                    font-size:22px;
-                    font-weight: 200;
+                    font-size:$icon-size;
+                    font-weight: normal;
                 }
 
                 ion-input{
-                    width:70px;
+                    width: calc((100% - 26px)/3);
                     height: 100%;
-                    border: 1px solid color($colors,default);
+                    border: 1px solid $border-color;
                     
                     display: block;
                     float:left;
 
                     .text-input{
-                        font-size:1.4rem;
+                        font-size:$default-font-size;
                     }
                 }
 
             }
+        }
+
+        .login-find-phone{
+            margin-bottom: 8px;
         }
     }
     /* 아이디/비밀번호 찾기 정보 입력 끝 */
@@ -407,35 +414,35 @@ page-mypage {
     /* 확인 버튼 */
     .login-button{
         height: 50px;
-        font-size:1.6rem;
+        font-size:$btn-font-size;
         margin:8px;
-        width:344px;
-        background-color: color($colors, title);
-        color:white;
-        font-weight: 800;
+        width:calc(100% - 16px);
+        background-color: $default-title-color;
+        color:$white-font-color;
+        font-weight: bold;
         padding:0;
     }
     /* 아이디 비번 찾기 끝 */  
 
 
     /* 마이페이지 시작 */
-    /* 마이럭키 상당 문구 시작 */
+    /* 마이럭키 상단 문구 시작 */
     .mypage-head{
         height: 48px;
         width: 100%;
-        background-color: white;
-        border-bottom: 1px solid color($colors, default);
+        background-color: $white-background-color;
         margin:0;
         padding:0;
-        
+        display: flex;
+        align-items: center;
+
         .mypage-head-label{
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin: 0;
-            padding:13px;
+            font-size: $title-font-size;
+            font-weight: bold;
+            width: 100%;
             text-align: center;
+            margin: 0;
             display: block;
-            
         }
     }
     /* 마이럭키 상당 문구 끝 */
@@ -443,7 +450,7 @@ page-mypage {
     /* 마이럭키 메뉴 시작 */
     .mypage-menu-list{
         margin:16px 8px 0;
-        width: 344px;
+        width: calc(100% - 16px);
         height: auto;
 
         .mypage-status{
@@ -462,24 +469,24 @@ page-mypage {
                 margin:0;
                 display: flex;
                 align-items: center;
-                color:black;
-                font-size: 1.8rem;
+                color:$black-font-color;
+                font-size: $large-font-size;
             }
 
             p{
                 height:20px;
                 margin:0;
-                font-weight: 600;
+                font-weight: bold;
             }
 
             span:first-child{
-                color:red;
-                font-weight: 1000;
+                color:$font-color-highlight;
+                font-weight: bold;
             }
 
             span:last-child{
-                color:red;
-                font-weight: 1000;
+                color:$font-color-highlight;
+                font-weight: bold;
                 font-size:1.6rem;
             }
         }
@@ -488,7 +495,7 @@ page-mypage {
             width: 100%;
             height: 60px;
             padding:0;
-            border:1px solid gray;
+            border:1px solid $border-color;
 
             .item-inner{
                 padding:0;
@@ -500,10 +507,10 @@ page-mypage {
                 }
 
                 p{
-                    font-size: 1.6rem;
-                    font-weight: 800;
+                    font-size: $nav-font-size;
+                    font-weight: bold;
                     text-align: center;
-                    color:black;
+                    color:$black-font-color;
                 }
             }
         }
@@ -515,80 +522,83 @@ page-mypage {
     .order-history-head{
         height: 48px;
         width: 100%;
-        background-color: white;
-        border-bottom: 1px solid color($colors, default);
+        background-color: $white-background-color;
         margin:0;
+        margin-bottom: 1px;
         padding:0;
-        
+        display: flex;
+        align-items: center;
+
         .order-history-head-label{
-            font-size: 1.8rem;
-            font-weight: 800;
+            font-size: $title-font-size;
+            font-weight: bold;
+            width: 100%;
             margin: 0;
-            padding:13px;
             text-align: center;
             display: block;
         }
     }
 
     .order-history-list{
-
-        width:344px;
+        width: calc(100% - 16px);
         margin:16px 8px 8px;
-        background-color:white;
+        background-color:$background-color;
+
+        .label{
+            margin:0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
 
         .order-history-list-head{
 
             padding:0 8px;
             height: 40x;
-            
-            border-bottom:2px solid color($colors, default);
-
-            .label{
-                margin:0;
-                height: 40px;
-            }
+            min-height: 40px;
+            border:none;
+            background-color:$white-background-color;
+            margin-bottom: 2px;
 
             .order-number-label{
                 float:left;
                 width:100px;
-                font-size:1.6rem;
+                font-size:$nav-font-size;
                 color:color($colors, title);
                 font-weight: bold;
-                margin-top:9px;
             }
 
             .order-number{
-                font-size:1.6rem;
+                font-size:$nav-font-size;
                 color:color($colors, title);
-                font-weight: 500;
-                margin-top:10px;
+                font-weight: bold;
             }
 
             .order-detail-btn{
                 margin:0;
                 width:81px;
                 height: 35px;
-                background-color: color($colors, title);
+                background-color: $default-btn-color;
 
                 p{
-                    font-size:1.4rem;
-                    color:white;
-                    font-weight: 800;
+                    font-size:$default-font-size;
+                    color:$white-btn-color;
+                    font-weight: bold;
                 }
 
                 ion-icon{
-                    font-size: 2.2rem;
+                    font-size: $icon-size;
                     margin-left:4px;
-                    color:white;
+                    color:$icon-color-white;
                 }
             }
         }
 
         .order-history{
             padding-left:8px;
-            margin-bottom:2px;
-            height: 31x;
-            min-height: 31px;
+            padding-bottom:2px;
+            height: 33x;
+            min-height: 33px;
             
             .item-inner{
                 border:none;
@@ -602,13 +612,13 @@ page-mypage {
                 float:left;
                 width:100px;
                 font-weight: bold;
-                color:black;
-                font-size: 1.4rem;
+                color:$black-font-color;
+                font-size: $label-font-size;
             }
 
             .order-history-content{ 
-                color:black;
-                font-size: 1.4rem;
+                color:$black-font-color;
+                font-size: $default-font-size;
             }   
         }
     }
@@ -618,17 +628,17 @@ page-mypage {
     .delivery-des-head{
         height: 48px;
         width: 100%;
-        background-color: white;
-        border-bottom: 1px solid color($colors, default);
+        background-color: $white-background-color;
         margin:0;
-        
         padding:0;
+        display:flex;
+        align-items: center;
         
         .delivery-des-head-label{
-            font-size: 1.8rem;
-            font-weight: 800;
+            width: 100%;
+            font-size: $title-font-size;
+            font-weight: bold;
             margin: 0;
-            padding:13px;
             text-align: center;
             display: block;
         }
@@ -646,15 +656,15 @@ page-mypage {
             width:90px;
             height: 30px;
             float: right;
-            background-color:color($colors, title);
-            color:white;
+            background-color:$default-btn-color;
+            color:$white-btn-color;
             font-weight: bold;
-            font-size: 1.4rem;
+            font-size: $default-font-size;
         }
     }
 
     .delivery-des-list{
-        width:344px;
+        width:calc(100% - 16px);
         height: auto;
         margin:0 8px 8px;
 
@@ -662,13 +672,14 @@ page-mypage {
         /* 배송지 종류 정보 (수정, 삭제) */
         .delivery-des-list-head{
             width:100%;
-            height: 33px;
-            border-bottom: 2px solid color($colors, default);
+            height: 31px;
+            border: 0;
+            margin-bottom: 2px;
             padding:0;
             
             .delivery-des-list-label{
-                font-size:1.8rem;
-                color:black;
+                font-size:$nav-font-size;
+                color:$black-font-color;
                 padding-left: 8px;
                 font-weight: bold;
             }
@@ -680,21 +691,21 @@ page-mypage {
                 padding:0;
                 margin-left:4px;
                 background-color: gray;
-                color:white;
-                font-size:1.4rem;
+                color:$white-font-color;
+                font-size:$default-font-size;
                 font-weight: bold;
             }
         }
 
         /* 배송지 주소 */
         .delivery-des-addr{
-
-            width:100;
+            width:100%;
             height:48px;
             padding-left:0px;
             
             .item-inner{
                 padding:0;
+                border:none;
 
                 .label{
                     margin:0;
@@ -704,24 +715,23 @@ page-mypage {
 
             .delivery-des-label{
                 padding-left:8px;
-                padding-top:6px;
+                padding-top:4px;
                 float:left;
                 width:100px;
                 font-weight: bold;
-                color:black;
-                font-size: 1.4rem;
-                display:flex;
-                align-items: center;
+                color:$black-font-color;
+                font-size: $label-font-size;
             }
 
             .delivery-des-addr-content{
                 float:left;
                 height: 48px;
-                width: 244px;
-                font-size: 1.3rem;
-                padding-top:6px;
+                padding-top:4px;
+                width: calc(100% - 100px);
+                letter-spacing: -1px;
+                font-size: $default-font-size;
                 white-space: normal;
-                word-break: normal;
+                word-break: keep-all;
             }
         }
 
@@ -733,6 +743,7 @@ page-mypage {
 
             .item-inner{
                 padding:0;
+                border:none;
 
                 .label{
                     margin:0;
@@ -748,8 +759,8 @@ page-mypage {
                 width:100px;
                 height: 31px;
                 font-weight: bold;
-                color:black;
-                font-size: 1.4rem;
+                color:$black-font-color;
+                font-size: $label-font-size;
             }
 
             .delivery-des-content{
@@ -757,7 +768,8 @@ page-mypage {
                 align-items: center;
                 float:left;
                 height: 31px;
-                width:244px;
+                font-size: $default-font-size;
+                width:calc(100% - 100px);
             }
         }
     }

@@ -37,6 +37,8 @@ export class MypagePage {
   findCategorySelected;
   findLoginInfoMethod;
 
+  arrowIconTop = "231px";
+
   loginStatus:boolean = false;
 
   showPageType : string;
@@ -66,9 +68,12 @@ export class MypagePage {
       this.showPageType = "login";
     }
 
+    this.loginTabsSelected = this.loginTabs[0];
+    this.findCategorySelected = this.findCategories[0];
     this.showBackbtn=false;
-    
+    this.arrowIconTop = "183px";
     this.findLoginInfoMethod = 'phone';
+
     console.log('ionViewDidLoad MypagePage' + this.showPageType);
   }
 
@@ -84,6 +89,12 @@ export class MypagePage {
   findCategoryChange(Category) {
     let idx = this.findCategories.indexOf(Category);
     this.findCategorySelected = this.findCategories[idx];
+
+    if (this.findCategorySelected == this.findCategories[0]) {
+      this.arrowIconTop = "183px";
+    } else if (this.findCategorySelected == this.findCategories[1]) {
+      this.arrowIconTop = "231px"; 
+    }
   }
 
   login(){
@@ -95,6 +106,12 @@ export class MypagePage {
     this.showPageType="find";
     let idx = this.findCategories.indexOf(type);
     this.findCategorySelected = this.findCategories[idx];
+    
+    if (this.findCategorySelected == this.findCategories[0]) {
+      this.arrowIconTop = "183px";
+    } else if (this.findCategorySelected == this.findCategories[1]) {
+      this.arrowIconTop = "231px";
+    }
   }
 
   checkFindLogintype(type){
