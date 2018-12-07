@@ -249,6 +249,11 @@ page-home {
                 margin-bottom: 8px;
                 width: 100%;
                 height: calc((168/640)*100vh);
+
+                img{
+                    width: 100%;
+                    height: calc((168/640)*100vh);
+                }
             }
         }
 
