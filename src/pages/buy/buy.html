@@ -56,10 +56,10 @@
     </ion-row>
     <ion-row class="buy-button-group">
       <ion-col class="buy-basket-btn">
-        <button clear ion-button>장바구니</button>
+        <button clear (click)="addToShoppingBasket()" ion-button>장바구니</button>
       </ion-col>
       <ion-col class="buy-order-btn">
-        <button clear ion-button>주문하기</button>
+        <button clear (click)="goToOrder()" ion-button>주문하기</button>
       </ion-col>
     </ion-row>
   </ion-grid>
