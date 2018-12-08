@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { SelectPopoverPage } from '../select-popover/select-popover';
 import { TabsPage } from '../tabs/tabs';
-
+import { StorageProvider } from '../../providers/storage/storage';
 /**
  * Generated class for the OrderPage page.
  *
@@ -20,17 +20,18 @@ export class OrderPage {
   basicPlaceStyle;
   newPlaceStyle;
   selectedDeliveryType:string;
-  isMember:boolean = true;
+  isMember:boolean;
   showDeliveryInfo:boolean=true;
   showProductInfo:boolean=true;
   showPaymentInfo:boolean=true;
   showPaymentMethodInfo: boolean = true;
+  paymentMethodColor = {cash:"white", card:"white", bank:"white"};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public storageProvider:StorageProvider) {
     this.basicPlaceStyle = { 'select-segment': true, 'unselect-segment': false};
     this.newPlaceStyle = { 'select-segment': false, 'unselect-segment': true };
-
     this.selectedDeliveryType='memberSaved';
+    this.isMember = this.storageProvider.isMember;
   }
 
   ionViewDidLoad() {
@@ -111,5 +112,17 @@ export class OrderPage {
 
   confirmOrder(){
     this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
+  }
+
+  selectedPaymentMethod(method){
+
+    if (this.paymentMethodColor[method] == "#d3d3d3"){
+      this.paymentMethodColor[method] = "white";  
+    }else{
+      for (let key in this.paymentMethodColor) {
+        this.paymentMethodColor[key] = "white";
+      }
+      this.paymentMethodColor[method] = "#d3d3d3";
+    }
   }
 }

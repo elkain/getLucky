@@ -966,13 +966,26 @@ page-order {
 
             .label{
                 margin:0;
-                text-align: center;
                 font-weight: bold;
+                height: 100%;
+                
+                div{
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+
+                    p{  
+                        width: 100%;
+                        text-align: center;
+                    }
+                }
             }
 
             .item-inner{
                 border:1px solid $border-color;
                 padding:0;
+                height: 33px;
+                min-height: 33px;
             }
         }
 
@@ -980,7 +993,11 @@ page-order {
             margin:0;
             padding:8px 8px 0px;
             height: 41px;
-            min-height: 41px;            
+            min-height: 41px;
+
+            .item-inner{
+                border-bottom:none;
+            }
         }
 
         .payment-method-card{
