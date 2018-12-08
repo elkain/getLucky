@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
+import { StorageProvider } from '../../providers/storage/storage';
 
 /**
  * Generated class for the SignupPage page.
@@ -19,7 +20,7 @@ export class SignupPage {
   titleColor = "#3498DB";
   whiteColor = "#ffffff";
 
-  loginStatus: boolean = false;
+  isMember: boolean = false;
   id;
   name;
   email;
@@ -36,14 +37,15 @@ export class SignupPage {
 
   customerInfo;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public storageProvider:StorageProvider) {
     this.male = this.whiteColor;
     this.female = this.whiteColor;
+    this.isMember = this.storageProvider.isMember;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignupPage');
-    if (this.loginStatus==true){
+    if (this.isMember==true){
       this.customerInfo = { id: "chungmin93", name:"이충민" , email:"chungmin93@gmail.com", phone:"010-3769-4456", birth:"1985-09-03", sex:"male"};
       this.id=this.customerInfo.id;
       this.name=this.customerInfo.name;
@@ -89,6 +91,7 @@ export class SignupPage {
   }
 
   signupCompBtn(){
+    this.storageProvider.isMember = true;
     this.navCtrl.setRoot(TabsPage, { tabIndex: 7 });
   }
 

@@ -322,14 +322,20 @@
         <ion-icon class="ion-icon" *ngIf="showPaymentMethodInfo==false" name="ios-arrow-down"></ion-icon>
       </button>
     </ion-item>
-    <ion-item class="payment-method-cash" *ngIf="showPaymentMethodInfo==true">
-      <p>현장결제</p>
+    <ion-item class="payment-method-cash" (click)="selectedPaymentMethod('cash')" *ngIf="showPaymentMethodInfo==true">
+      <div [style.backgroundColor]="paymentMethodColor.cash">
+        <p>현장결제</p>
+      </div>
     </ion-item>
-    <ion-item class="payment-method-card" *ngIf="showPaymentMethodInfo==true">
-      <p>신용카드</p>
+    <ion-item class="payment-method-card" (click)="selectedPaymentMethod('card')" *ngIf="showPaymentMethodInfo==true">
+      <div [style.backgroundColor]="paymentMethodColor.card" >
+        <p>신용카드</p>
+      </div>
     </ion-item>
-    <ion-item class="payment-method-bank" *ngIf="showPaymentMethodInfo==true">
-      <p>무통장입금</p>
+    <ion-item class="payment-method-bank" (click)="selectedPaymentMethod('bank')" *ngIf="showPaymentMethodInfo==true">
+      <div [style.backgroundColor]="paymentMethodColor.bank">
+        <p>무통장입금</p>
+      </div>
     </ion-item>
   </ion-list>
   <!-- 결제 방법 끝 -->

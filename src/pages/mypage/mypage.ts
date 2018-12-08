@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { SignupPage } from '../signup/signup';
+import { StorageProvider } from '../../providers/storage/storage';
 
 /**
  * Generated class for the MypagePage page.
@@ -39,7 +40,7 @@ export class MypagePage {
 
   arrowIconTop = "231px";
 
-  loginStatus:boolean = false;
+  isMember:boolean;
 
   showPageType : string;
   showBackbtn: boolean;
@@ -56,13 +57,14 @@ export class MypagePage {
     { type: "매장", addr: "서울시 강동구 상암로 18길 암사럭키슈퍼", receiver: "이충민", phone: "02-441-3545" }
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public storageProvider:StorageProvider) {
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
+    this.isMember = this.storageProvider.isMember;
   }
 
   ionViewDidEnter() {
-    if (this.loginStatus == true){
+    if (this.isMember == true){
       this.showPageType = "mypage";
     }else{
       this.showPageType = "login";
@@ -83,7 +85,7 @@ export class MypagePage {
   }
 
   moveToSignup(){
-    this.app.getRootNavs()[0].push("SignupPage");
+    this.app.getRootNavs()[0].push(SignupPage, {class:"SignupPage"});
   }
 
   findCategoryChange(Category) {
@@ -98,7 +100,8 @@ export class MypagePage {
   }
 
   login(){
-    this.loginStatus=true;
+    this.isMember=true;
+    this.storageProvider.isMember = this.isMember;
     this.showPageType = "mypage";
   }
 
@@ -120,7 +123,7 @@ export class MypagePage {
 
   menuSelected(menu){
     if (menu == "회원정보수정") {
-      this.app.getRootNavs()[0].push("SignupPage");
+      this.app.getRootNavs()[0].push(SignupPage, { class: "SignupPage" });
     }else{
       this.showPageType = menu;
       this.showBackbtn = true;

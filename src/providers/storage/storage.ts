@@ -10,8 +10,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class StorageProvider {
 
+  isMember:boolean;
+
   constructor() {
     console.log('Hello StorageProvider Provider');
+    this.isMember = false;
   }
-
 }
