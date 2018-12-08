@@ -6,13 +6,12 @@
 -->
 <ion-header no-shadow no-border>
   <ion-title>
-    <ion-searchbar class="search-tab-bar" [(ngModel)]="searchInput" placeholder="검색어를 입력해주세요."></ion-searchbar>
+    <ion-searchbar class="search-tab-bar" [(ngModel)]="searchInput" (search)="findProducts()" placeholder="검색어를 입력해주세요."></ion-searchbar>
   </ion-title>
 </ion-header>
 
 
 <ion-content>
-
   <ion-grid no-margin no-padding class="search-nav-menu">
     <ion-row>
       <ion-col *ngFor="let seacrhTab of searchTabs">

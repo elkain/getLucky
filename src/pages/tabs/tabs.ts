@@ -31,9 +31,13 @@ export class TabsPage {
   selectedTab;
   tabParams;
   showHeader;
+  childParam= {category:{}, homeSegmentCategory:0, class:"TasPage"};
 
   constructor(public navCtrl: NavController, public navParams:NavParams) {
     this.tabParams = navParams.get("tabIndex");
+    this.childParam.category = navParams.get("category");
+    this.childParam.homeSegmentCategory = navParams.get("homeSegmentCategory");
+    this.childParam.class = navParams.get("class");
   }
 
   public onTabsChange() {

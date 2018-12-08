@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the SearchPage page.
@@ -29,11 +30,14 @@ export class SearchPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchPage');
-    
   }
 
   searchTabChange(Category) {
     let idx = this.searchTabs.indexOf(Category);
     this.seacrhTabSelected = this.searchTabs[idx];
+  }
+
+  findProducts(){
+    this.navCtrl.setRoot(TabsPage, { tabIndex: 0, class:"search", homeSegmentCategory: 1, category: this.searchInput });
   }
 }

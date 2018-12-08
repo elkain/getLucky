@@ -29,7 +29,7 @@ export class ProductdetailPage {
 
   }
 
-  backToHome(){
+  back(){
     this.navCtrl.pop();
   }
 
@@ -41,13 +41,9 @@ export class ProductdetailPage {
     this.navCtrl.setRoot(TabsPage, { tabIndex: 4 });
   }
 
-  goToBuyPage(){
-    this.navCtrl.push(BuyPage, { class:"BuyPage"});
-  }
-
   addToShoppingBasket(){
-    
-    const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {}, { cssClass: 'popover-shopping-basket' });
-    popover.present();
+    this.navCtrl.push(BuyPage, { class: "BuyPage" });
+    //const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {}, { cssClass: 'popover-shopping-basket' });
+    //popover.present();
   }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the CategoryPage page.
@@ -67,5 +68,9 @@ export class CategoryPage {
 
       this.productAllCategories[idx].selected = true;
     }
+  }
+
+  moveToCategory(category){
+    this.navCtrl.setRoot(TabsPage, { tabIndex: 0, class: "category", homeSegmentCategory: 1, category:category });
   }
 }

@@ -76,7 +76,7 @@
                                 {{product.name}}
                             </ion-card-title>
                             <p> {{product.salePrice}} <del> {{product.price}} </del> </p>
-                            <button ion-button class="best-cart">
+                            <button (click)="addToShoppingBasket(product)" ion-button class="best-cart">
                                 <ion-icon name="ios-cart-outline"></ion-icon>
                             </button>
                         </ion-card-content>

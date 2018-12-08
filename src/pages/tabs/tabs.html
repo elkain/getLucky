@@ -16,7 +16,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-tabs #myTabs [selectedIndex]="0" (ionChange)="onTabsChange()" color="white">
-  <ion-tab [root]="tab1Root" tabTitle="홈" tabIcon="home"></ion-tab>
+  <ion-tab [root]="tab1Root" [rootParams]="childParam" tabTitle="홈" tabIcon="home"></ion-tab>
   <ion-tab [root]="tab2Root" tabTitle="카테고리" tabIcon="list"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="검색" tabIcon="search"></ion-tab>
   <ion-tab [root]="tab4Root" tabTitle="마이럭키" tabIcon="person"></ion-tab>

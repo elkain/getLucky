@@ -19,7 +19,7 @@ export class OrderPage {
 
   basicPlaceStyle;
   newPlaceStyle;
-  selectedDeliveryType;
+  selectedDeliveryType:string;
   isMember:boolean = true;
   showDeliveryInfo:boolean=true;
   showProductInfo:boolean=true;

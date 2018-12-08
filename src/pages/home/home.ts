@@ -1,7 +1,7 @@
 import { Component, ViewChild} from '@angular/core';
-import { NavController, Slides, App, ViewController} from 'ionic-angular';
+import { NavController, Slides, App, PopoverController, NavParams} from 'ionic-angular';
 import { ProductdetailPage } from '../productdetail/productdetail';
-import { TabsPage } from '../tabs/tabs';
+import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
 
 @Component({
   selector: 'page-home',
@@ -22,12 +22,13 @@ export class HomePage {
   productSortOptionSelected;
 
   events = [this.imageURL + "slide1.png", this.imageURL + "slide2.png", this.imageURL + "slide3.png"];
-
+  homeParams;
   products;
 
   images: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
-  constructor(public navCtrl: NavController, private app:App) {
+  constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams) {
+    this.homeParams = navParams.data;     // category from category page
 
     this.products = [   // sale method : fixed, percent
       { name: "사과", price: 3000, discount: 2000, saleMethod: "fixed", saleCount: 2, imagePath: this.imageURL + "slide1.png" },
@@ -52,7 +53,12 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    this.homeCategorySelected = this.homeCategories[0];
+    if (this.homeParams.homeSegmentCategory==1){
+      this.homeCategorySelected = this.homeCategories[1];  
+    }else{
+      this.homeCategorySelected = this.homeCategories[0];
+      this.homeParams.homeSegmentCategory=undefined;
+    }
     this.bestCategorySelected = this.bestCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
   }
@@ -85,5 +91,10 @@ export class HomePage {
 
   productsOptionChange(){
     
+  }
+
+  addToShoppingBasket(product) {
+    const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {product:product}, { cssClass: 'popover-shopping-basket'});
+    popover.present();
   }
 }
