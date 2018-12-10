@@ -50,4 +50,8 @@ export class SearchPage {
     this.recentSearchItems.splice(index,1);
     this.storageProvider.recentSearchItems = this.recentSearchItems;
   }
+
+  selectSearchItem(item){
+    this.searchInput = item;
+  }
 }
