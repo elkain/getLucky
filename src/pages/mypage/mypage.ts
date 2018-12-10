@@ -142,4 +142,13 @@ export class MypagePage {
     this.showPageType = "mypage";
     this.showBackbtn = false;
   }
+
+  ionSelected(){
+    console.log("ionSelected on mypage");
+    if (this.isMember==true){
+      this.showPageType = "mypage";
+    }else{
+      this.showPageType = "login";
+    }
+  }
 }
