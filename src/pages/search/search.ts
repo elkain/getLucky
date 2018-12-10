@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
+import { StorageProvider } from '../../providers/storage/storage';
 
 /**
  * Generated class for the SearchPage page.
@@ -17,18 +18,19 @@ import { TabsPage } from '../tabs/tabs';
 export class SearchPage {
 
   searchInput: string = '';
-  recentSearchItems :string[];
+  recentSearchItems = new Array();
   seacrhTabSelected;
-  popularSearchItems: string[];
+  popularSearchItems;
   searchTabs = ['최근검색어', '인기검색어'];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public storageProvider:StorageProvider) {
     this.seacrhTabSelected = this.searchTabs[0];
-    this.recentSearchItems = ["A", "B", "C"];
-    this.popularSearchItems = ["가", "나", "다"];
+    this.popularSearchItems = this.storageProvider.popularSearchItems;
+    this.recentSearchItems = this.storageProvider.recentSearchItems;
   }
 
   ionViewDidLoad() {
+    
     console.log('ionViewDidLoad SearchPage');
   }
 
@@ -38,6 +40,14 @@ export class SearchPage {
   }
 
   findProducts(){
+    this.storageProvider.recentSearchItems.push(this.searchInput);
     this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "search", homeSegmentCategory: 1, category: this.searchInput});
+  }
+
+  deleteRecentSearchItem(index){
+    console.dir(index);
+    
+    this.recentSearchItems.splice(index,1);
+    this.storageProvider.recentSearchItems = this.recentSearchItems;
   }
 }
