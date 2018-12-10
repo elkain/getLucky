@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 
 /**
@@ -18,7 +18,7 @@ export class CategoryPage {
 
   productAllCategories;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
   }
 
   ionViewDidLoad() {
@@ -71,6 +71,6 @@ export class CategoryPage {
   }
 
   moveToCategory(category){
-    this.navCtrl.setRoot(TabsPage, { tabIndex: 0, class: "category", homeSegmentCategory: 1, category:category });
+    this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "category", homeSegmentCategory: 1, category:category });
   }
 }
