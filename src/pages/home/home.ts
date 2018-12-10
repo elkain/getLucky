@@ -17,6 +17,7 @@ export class HomePage {
 
   bestCategories = ["전체", "정육", "청과", "쌀잡곡", "계란", "유제품", "조미료", "과자류", "커피/음료"];
   bestCategorySelected;
+  categorySelected;
 
   productSortOptions = ["판매인기순","높은가격순", "낮은가격순"];
   productSortOptionSelected;
@@ -84,6 +85,11 @@ export class HomePage {
     this.bestCategorySelected = this.bestCategories[idx];
   }
 
+  categoryChange(Category) {
+    let idx = this.homeParams.category.subCategories.indexOf(Category);
+    this.bestCategorySelected = this.homeParams.category.subCategories[idx];
+  }
+
   productsOptionChange(){
     
   }
@@ -96,11 +102,14 @@ export class HomePage {
   ionSelected() {
 
     if (this.homeParams.homeSegmentCategory == 1) {
-      console.log(this.homeParams.class);
+      console.log(this.homeParams);
       this.homeCategorySelected = this.homeCategories[1];
+      this.categorySelected=this.homeParams.subCategory;
       this.homeParams.homeSegmentCategory = undefined;
     } else {
+      console.log(this.homeParams);
       this.homeCategorySelected = this.homeCategories[0];
+      this.homeParams.class = undefined;
     }
 
     this.bestCategorySelected = this.bestCategories[0];

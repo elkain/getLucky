@@ -9,6 +9,20 @@ page-home {
 
         ion-row{
             height: 100%;
+
+            ion-col{
+
+                display: flex;
+                align-items: center;
+
+                p{
+                    width: 100%;
+                    text-align: center;
+                    font-weight: bold;
+                    font-size: $title-font-size;
+                    margin:0;  
+                }
+            }
         }
 
         ion-segment{

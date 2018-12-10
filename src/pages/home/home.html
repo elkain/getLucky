@@ -5,13 +5,18 @@
 <ion-content>
     <!-- home navigation segment start-->
     <ion-grid no-margin no-padding class="home-nav-menu">
-        <ion-row>
+        <ion-row *ngIf="homeParams.class==undefined">
             <ion-col *ngFor="let category of homeCategories">
                 <ion-segment [(ngModel)]="homeCategorySelected">
                     <ion-segment-button [value]="category" (click)="homeCategoryChange(category)">
                         <p>{{category}}</p>
                     </ion-segment-button>
                 </ion-segment>
+            </ion-col>
+        </ion-row>
+        <ion-row style="border-bottom:2px solid #d3d3d3" *ngIf="homeParams.class=='category'">
+            <ion-col>
+                <p>{{homeParams.category.category}}</p>
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -50,8 +55,13 @@
     <!-- best page & sale page start -->
     <!-- 슬라이드가 현대 모바일 상에서는 구현되지만 web 에서는 구현 안됨 추가로 구현이 필요 -->
     <div class="best-nav-menu" *ngIf="homeCategorySelected==homeCategories[1] || homeCategorySelected==homeCategories[2]">
-        <ion-segment [(ngModel)]="bestCategorySelected">
+        <ion-segment [(ngModel)]="bestCategorySelected" *ngIf="homeParams.class==undefined">
             <ion-segment-button [value]="category" (click)="bestCategoryChange(category)" *ngFor="let category of bestCategories">
+                {{category}}
+            </ion-segment-button>
+        </ion-segment>
+        <ion-segment [(ngModel)]="categorySelected" *ngIf="homeParams.class=='category'">
+            <ion-segment-button [value]="category" (click)="categoryChange(category)" *ngFor="let category of homeParams.category.subCategories">
                 {{category}}
             </ion-segment-button>
         </ion-segment>

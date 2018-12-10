@@ -70,7 +70,7 @@ export class CategoryPage {
     }
   }
 
-  moveToCategory(category){
-    this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "category", homeSegmentCategory: 1, category:category });
+  moveToCategory(category, subCategory){
+    this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "category", homeSegmentCategory: 1, category: category, subCategory: subCategory});
   }
 }
