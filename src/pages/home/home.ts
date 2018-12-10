@@ -26,6 +26,9 @@ export class HomePage {
   homeParams;
   products;
 
+  showProductPage:boolean;
+  bestScrollHeight = "calc(100% - 88px)";
+
   images: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
   constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams) {
@@ -78,6 +81,17 @@ export class HomePage {
   homeCategoryChange(Category) {
     let idx = this.homeCategories.indexOf(Category);
     this.homeCategorySelected = this.homeCategories[idx];
+
+    if (this.homeCategorySelected == this.homeCategories[3] ){
+      this.showProductPage=false;
+      this.bestScrollHeight = "calc(100% - 48px)";
+    }else{
+      this.showProductPage = true;
+      this.bestScrollHeight = "calc(100% - 88px)";
+    }
+
+    console.log(this.showProductPage);
+    
   }
 
   bestCategoryChange(Category) {
@@ -113,5 +127,13 @@ export class HomePage {
 
     this.bestCategorySelected = this.bestCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
+
+    if (this.homeParams.class == "search") {
+      this.showProductPage = false;
+      this.bestScrollHeight = "calc(100% - 48px)";
+    } else {
+      this.showProductPage = true;
+      this.bestScrollHeight = "calc(100% - 88px)";
+    }
   }
 }
