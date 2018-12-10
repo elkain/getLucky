@@ -19,6 +19,11 @@
                 <p>{{homeParams.category.category}}</p>
             </ion-col>
         </ion-row>
+        <ion-row style="border-bottom:2px solid #d3d3d3" *ngIf="homeParams.class=='search'">
+            <ion-col>
+                <p>'{{homeParams.category}}'의 검색결과</p>
+            </ion-col>
+        </ion-row>
     </ion-grid>
     <!-- home navigation segment end -->
 
@@ -54,14 +59,19 @@
 
     <!-- best page & sale page start -->
     <!-- 슬라이드가 현대 모바일 상에서는 구현되지만 web 에서는 구현 안됨 추가로 구현이 필요 -->
-    <div class="best-nav-menu" *ngIf="homeCategorySelected==homeCategories[1] || homeCategorySelected==homeCategories[2]">
-        <ion-segment [(ngModel)]="bestCategorySelected" *ngIf="homeParams.class==undefined">
+    <div class="best-nav-menu" *ngIf="homeParams.class!='search'" >
+        <ion-segment [(ngModel)]="categorySelected" *ngIf="homeParams.class=='category'">
+            <ion-segment-button [value]="category" (click)="categoryChange(category)" *ngFor="let category of homeParams.category.subCategories">
+                {{category}}
+            </ion-segment-button>
+        </ion-segment>
+        <ion-segment [(ngModel)]="bestCategorySelected" *ngIf="homeCategorySelected==homeCategories[1]">
             <ion-segment-button [value]="category" (click)="bestCategoryChange(category)" *ngFor="let category of bestCategories">
                 {{category}}
             </ion-segment-button>
         </ion-segment>
-        <ion-segment [(ngModel)]="categorySelected" *ngIf="homeParams.class=='category'">
-            <ion-segment-button [value]="category" (click)="categoryChange(category)" *ngFor="let category of homeParams.category.subCategories">
+        <ion-segment [(ngModel)]="bestCategorySelected" *ngIf="homeCategorySelected==homeCategories[2]">
+            <ion-segment-button [value]="category" (click)="bestCategoryChange(category)" *ngFor="let category of bestCategories">
                 {{category}}
             </ion-segment-button>
         </ion-segment>

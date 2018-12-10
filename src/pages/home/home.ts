@@ -100,14 +100,13 @@ export class HomePage {
   }
 
   ionSelected() {
-
+  
     if (this.homeParams.homeSegmentCategory == 1) {
       console.log(this.homeParams);
       this.homeCategorySelected = this.homeCategories[1];
       this.categorySelected=this.homeParams.subCategory;
       this.homeParams.homeSegmentCategory = undefined;
     } else {
-      console.log(this.homeParams);
       this.homeCategorySelected = this.homeCategories[0];
       this.homeParams.class = undefined;
     }

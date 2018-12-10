@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 
 /**
@@ -22,7 +22,7 @@ export class SearchPage {
   popularSearchItems: string[];
   searchTabs = ['최근검색어', '인기검색어'];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
     this.seacrhTabSelected = this.searchTabs[0];
     this.recentSearchItems = ["A", "B", "C"];
     this.popularSearchItems = ["가", "나", "다"];
@@ -38,6 +38,6 @@ export class SearchPage {
   }
 
   findProducts(){
-    this.navCtrl.setRoot(TabsPage, { tabIndex: 0, class:"search", homeSegmentCategory: 1, category: this.searchInput });
+    this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "search", homeSegmentCategory: 1, category: this.searchInput});
   }
 }
