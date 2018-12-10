@@ -11,6 +11,9 @@ import { Injectable } from '@angular/core';
 export class StorageProvider {
 
   isMember:boolean;
+  deliveryFee = 3000;
+  deliveryFreeString = "3만원";
+  deliveryFreeFee = 30000;
 
   constructor() {
     console.log('Hello StorageProvider Provider');

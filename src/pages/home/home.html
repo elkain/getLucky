@@ -59,7 +59,7 @@
 
     <!-- best page & sale page start -->
     <!-- 슬라이드가 현대 모바일 상에서는 구현되지만 web 에서는 구현 안됨 추가로 구현이 필요 -->
-    <div class="best-nav-menu" *ngIf="homeParams.class!='search'" >
+    <div class="best-nav-menu" *ngIf="showProductPage==true" >
         <ion-segment [(ngModel)]="categorySelected" *ngIf="homeParams.class=='category'">
             <ion-segment-button [value]="category" (click)="categoryChange(category)" *ngFor="let category of homeParams.category.subCategories">
                 {{category}}
@@ -77,7 +77,7 @@
         </ion-segment>
     </div>
 
-    <ion-scroll scrollY="true" class="best-scroll" *ngIf="homeCategorySelected==homeCategories[1] || homeCategorySelected==homeCategories[2]">
+    <ion-scroll scrollY="true" class="best-scroll" [style.height]="bestScrollHeight" *ngIf="homeCategorySelected==homeCategories[1] || homeCategorySelected==homeCategories[2]">
         <div left class="best-sort-option">
             <select [(ngModel)]="productSortOptionSelected" (change)="productsOptionChange()">
                 <option [value]="productSortOption" *ngFor="let productSortOption of productSortOptions">{{productSortOption}}</option>
