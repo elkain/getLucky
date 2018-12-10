@@ -53,12 +53,7 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    if (this.homeParams.homeSegmentCategory==1){
-      this.homeCategorySelected = this.homeCategories[1];  
-    }else{
-      this.homeCategorySelected = this.homeCategories[0];
-      this.homeParams.homeSegmentCategory=undefined;
-    }
+    this.homeCategorySelected = this.homeCategories[0];
     this.bestCategorySelected = this.bestCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
   }
@@ -96,5 +91,19 @@ export class HomePage {
   addToShoppingBasket(product) {
     const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {product:product}, { cssClass: 'popover-shopping-basket'});
     popover.present();
+  }
+
+  ionSelected() {
+
+    if (this.homeParams.homeSegmentCategory == 1) {
+      console.log(this.homeParams.class);
+      this.homeCategorySelected = this.homeCategories[1];
+      this.homeParams.homeSegmentCategory = undefined;
+    } else {
+      this.homeCategorySelected = this.homeCategories[0];
+    }
+
+    this.bestCategorySelected = this.bestCategories[0];
+    this.productSortOptionSelected = this.productSortOptions[0];
   }
 }
