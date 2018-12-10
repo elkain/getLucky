@@ -291,6 +291,10 @@ page-shoppingbasket {
                 .real-price{
                     padding:0;
 
+                    del{
+                        font-size: $small-font-size;
+                    }
+
                     p{
                         width: 100%;
                         display: block;
@@ -383,6 +387,10 @@ page-shoppingbasket {
                     font-size: $btn-font-size;
                     font-weight: bold;
                 }
+            }
+
+            .button:hover{
+                background-color: $default-btn-color;
             }
         }
     }

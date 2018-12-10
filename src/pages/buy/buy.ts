@@ -28,7 +28,7 @@ export class BuyPage {
     this.product.saleMethod="fixed";
     this.product.discount=1000;
     this.product.count=1;
-    this.product.salePrice = this.calProductSalePrice();
+    this.product.salePrice = this.storageProvider.calProductSalePrice(this.product);
     this.product.totalPrice = this.product.salePrice * this.product.count;
     this.deliveryFee = storageProvider.deliveryFee;
     this.deliveryFreeString = storageProvider.deliveryFreeString;
@@ -53,23 +53,6 @@ export class BuyPage {
   addToShoppingBasket(product) {
     const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, { product: product }, { cssClass: 'popover-shopping-basket' });
     popover.present();
-  }
-
-  calProductSalePrice(){
-    let salePrice:number;
-
-    if(this.product.saleMethod=="fixed"){
-      salePrice = (this.product.price - this.product.discount) 
-    } else if (this.product.saleMethod == "percent"){
-      salePrice = (this.product.price * (100 - this.product.discount)/100) 
-    } else if (this.product.saleMethod == "none"){
-      salePrice = this.product.price;
-    } else{
-      console.log("error calProductTotalPrice saleMethod dismatched", this.product.saleMethod);
-      salePrice = 0;
-    }
-
-    return salePrice;
   }
 
   increaseProductNum(){

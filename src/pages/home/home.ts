@@ -40,7 +40,7 @@ export class HomePage {
       { name: "감", price: 5000, discount: 1500, saleMethod: "fixed", saleCount: 6, imagePath: this.imageURL + "slide3.png" },
       { name: "야채", price: 2500, discount: 5, saleMethod: "percent", saleCount: 8, imagePath: this.imageURL + "slide1.png" },
       { name: "빼빼로", price: 4000, discount: 1000, saleMethod: "fixed", saleCount: 1, imagePath: this.imageURL + "slide2.png" },
-      { name: "초콜릿", price: 7000, discount: 8, saleMethod: "fixed", saleCount: 0, imagePath: this.imageURL + "slide3.png" },
+      { name: "초콜릿", price: 7000, discount: 8, saleMethod: "percent", saleCount: 0, imagePath: this.imageURL + "slide3.png" },
       { name: "요구르트", price: 500, discount: 0, saleMethod: "none", saleCount: 12, imagePath: this.imageURL + "slide1.png" },
     ]; 
 
@@ -49,7 +49,7 @@ export class HomePage {
       if (this.products[i].saleMethod == "fixed") {
         this.products[i].salePrice = this.products[i].price - this.products[i].discount;
       } else if (this.products[i].saleMethod == "percent") {
-        this.products[i].salePrice = this.products[i].price * (100 - this.products[i].discount);
+        this.products[i].salePrice = this.products[i].price * (100 - this.products[i].discount)/100;
       } else {
         this.products[i].salePrice = this.products[i].price;
       }

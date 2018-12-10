@@ -16,10 +16,30 @@ export class StorageProvider {
   deliveryFreeFee = 30000;
   recentSearchItems = new Array();
   popularSearchItems ;
+  product;
 
   constructor() {
     console.log('Hello StorageProvider Provider');
     this.isMember = false;
     this.popularSearchItems = ["가", "나", "다"];
   }
+
+  calProductSalePrice(product) {
+    let salePrice: number;
+
+    if (product.saleMethod == "fixed") {
+      salePrice = (product.price - product.discount);
+    } else if (product.saleMethod == "percent") {
+      salePrice = (product.price * ((100 - product.discount) / 100));
+    } else if (product.saleMethod == "none") {
+      salePrice = product.price;
+    } else {
+      console.log("error calProductTotalPrice saleMethod dismatched", product.saleMethod);
+      salePrice = 0;
+    }
+
+    return salePrice;
+  }
+
+  
 }
