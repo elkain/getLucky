@@ -35,6 +35,12 @@ export class MypagePage {
   orderNamePlaceHolder: string = "주문자명";
   orderNumberPlaceHolder: string = "주문번호";
 
+  name;
+  email;
+  mobile1;
+  mobile2;
+  mobile3;
+  mobileOptionLists = ["010", "011", "018"]
   memberData = {userName:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", classs:0, totalPurchase:0};
 
   findCategories = ["아이디 찾기", "비밀번호 찾기"];
@@ -170,4 +176,23 @@ export class MypagePage {
     
     this.navCtrl.parent.select(6);
   }
+
+  confirmInfoFind(){
+    let mobile = this.mobile1 + "-" + this.mobile2 + "-" + this.mobile3;
+
+    console.log(this.username);
+    console.log(this.name);
+    console.log(this.email);
+    console.log(mobile);
+    console.log(this.findLoginInfoMethod);
+    console.log(this.findCategorySelected);
+
+    this.storageProvider.findMemberData.name = this.name;
+    this.storageProvider.findMemberData.username = this.username;
+    this.storageProvider.findMemberData.email = this.email;
+    this.storageProvider.findMemberData.mobile = mobile;
+    this.storageProvider.findMemberData.method = this.findLoginInfoMethod;
+    this.storageProvider.findMemberData.type = this.findCategorySelected;
+  }
 }
+

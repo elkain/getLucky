@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { StorageProvider } from '../../providers/storage/storage';
-
+import Sha from 'sha.js';
 /**
  * Generated class for the SignupPage page.
  *
@@ -51,7 +51,6 @@ export class SignupPage {
     this.male = this.whiteColor;
     this.female = this.whiteColor;
     this.isMember = this.storageProvider.isMember;
-    
   }
 
   ionViewDidLoad() {
@@ -87,7 +86,16 @@ export class SignupPage {
   }
 
   checkIDDuplication(){
-    this.checkID=true;
+    this.checkID = true;
+
+    let alert = this.alertCtrl.create({
+      message: '아이디 중복을 체크했습니다.',
+      buttons: [{
+        text: '확인',
+      }],
+      cssClass: 'alert-modify-member'
+    });
+    alert.present();
   }
 
   emailOptionChange(){
@@ -100,6 +108,15 @@ export class SignupPage {
 
   confirmMobile(){
     this.mobileCheck = true;
+
+    let alert = this.alertCtrl.create({
+      message: '인증번호를 확인했습니다.',
+      buttons: [{
+        text: '확인',
+      }],
+      cssClass: 'alert-modify-member'
+    });
+    alert.present();
   }
 
   findAddr(){
@@ -119,7 +136,6 @@ export class SignupPage {
   }
 
   signupCompBtn(){
-
     if(this.checkID == false){
       let alert = this.alertCtrl.create({
         message: '아이디 중복을 체크하세요',
@@ -139,8 +155,9 @@ export class SignupPage {
       });
       alert.present();
     } else{
-      this.enterMemberData();      
-      this.navCtrl.setRoot(TabsPage, { tabIndex: 7 });
+      if(this.enterMemberData()==true){
+        this.navCtrl.setRoot(TabsPage, { class: "TabsPage" });
+      }
     }
   }
 
@@ -150,8 +167,9 @@ export class SignupPage {
       buttons: [{
           text:'확인',
           handler:()=>{
-            this.enterMemberData();
-            this.navCtrl.setRoot(TabsPage, {class:"TabsPage"});
+            if (this.enterMemberData() == true) {
+              this.navCtrl.setRoot(TabsPage, { class: "TabsPage" });
+            }
           }
         }],
       cssClass:'alert-modify-member'
@@ -160,40 +178,183 @@ export class SignupPage {
   }
 
   enterMemberData(){
-    console.log("username : " + this.username);
-    console.log("password : " + this.password);
-    console.log("name : " + this.name);
+    if(this.evalMemberInfo()==true) {
+      console.log("username : " + this.username);
+      console.log("password : " + this.password);
+      console.log("name : " + this.name);
 
-    let email = this.email + "@" + this.emailOption;
-    email = this.trim(email);
-    console.log("email : " + email);
+      let email = this.email + "@" + this.emailOption;
+      email = this.trim(email);
+      console.log("email : " + email);
 
-    let mobile = this.mobile1 + "-" + this.mobile2 + "-" + this.mobile3;
-    console.log("mobile : " + mobile);
+      let mobile = this.mobile1 + "-" + this.mobile2 + "-" + this.mobile3;
+      console.log("mobile : " + mobile);
 
-    let address = this.password + " " + this.address2 + " " + this.address3;
-    address = this.trim(address);
-    console.log("address : " + address);
+      let address = this.password + " " + this.address2 + " " + this.address3;
+      address = this.trim(address);
+      console.log("address : " + address);
 
-    let birth = this.birthYear + "-" + this.birthMonth + "-" + this.birthDay;
-    console.log("birth : " + birth);
+      let birth = this.birthYear + "-" + this.birthMonth + "-" + this.birthDay;
+      console.log("birth : " + birth);
 
-    this.storageProvider.isMember = true;
-    this.storageProvider.memberData.username = this.username;
-    this.storageProvider.memberData.password = this.password;
-    this.storageProvider.memberData.name = this.name;
-    this.storageProvider.memberData.email = email;
-    this.storageProvider.memberData.mobile = mobile;
-    this.storageProvider.memberData.address = address;
-    this.storageProvider.memberData.birth = birth;
-    this.storageProvider.memberData.sex = this.sex;
+      this.storageProvider.isMember = true;
+      this.storageProvider.memberData.username = this.trim(this.username);
+      this.storageProvider.memberData.password = this.trim(this.password);
+      this.storageProvider.memberData.name = this.trim(this.name);
+      this.storageProvider.memberData.email = email;
+      this.storageProvider.memberData.mobile = mobile;
+      this.storageProvider.memberData.address = address;
+      this.storageProvider.memberData.birth = birth;
+      this.storageProvider.memberData.sex = this.sex;
+
+      return true;
+    }else{
+      return false;
+    }
   }
 
   trim(str) {
     return str.replace(/(^\s*)|(\s*$)/gi, "");
   }
 
-  checkPassowrd(){
-    
+  evalMemberInfo(){
+  
+    let flag = true;
+
+    if (this.username == undefined) {
+      flag = false;
+
+      let alert = this.alertCtrl.create({
+        message: '아이디를 입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+      
+    } else if (this.username.length < 3){
+      flag = false;
+
+      let alert = this.alertCtrl.create({
+        message: '아이디는 세글자 이상입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+    }else if (this.password == undefined) {
+      flag = false;
+
+      let alert = this.alertCtrl.create({
+        message: '비밀번호를 입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+    } else if (this.username.length < 6) {
+      flag = false;
+
+      let alert = this.alertCtrl.create({
+        message: '비밀번호는 6글자 이상입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+    }else if (this.passwordConfirm == undefined) {
+      flag = false;
+
+      let alert = this.alertCtrl.create({
+        message: '비밀번호를 확인해주세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+    }else if (this.password !== this.passwordConfirm){
+      flag = false;
+      
+      let alert = this.alertCtrl.create({
+        message: '비밀번호가 일치하지 않습니다.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+    }else if(this.password.length <6 ){
+      flag = false;
+
+      let alert = this.alertCtrl.create({
+        message: '비밀번호는 6글자 이상어야합니다.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+    }else if (this.name == undefined){
+      flag = false;
+
+      let alert = this.alertCtrl.create({
+        message: '이름을 입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    }else if(this.email == undefined || this.emailOption == undefined){
+      flag = false;
+
+      let alert = this.alertCtrl.create({
+        message: '이메일을 입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    }else if (this.mobile1 == undefined || this.mobile2 == undefined || this.mobile3 == undefined ) {
+      flag = false;
+
+      let alert = this.alertCtrl.create({
+        message: '휴대폰을 입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    } else if (this.mobile1.toString().length <3 || this.mobile2.toString().length < 3 || this.mobile3.toString().length<4){
+      flag = false;
+
+      let alert = this.alertCtrl.create({
+        message: '적합한 휴대폰 번호가 아닙니다.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    }
+
+    if(flag==true){
+      return true;
+    }else{
+      return false;
+    }
   }
 }

@@ -130,38 +130,37 @@
       </ion-row>
       <ion-row class="login-find-id" *ngSwitchCase="findCategories[1]">
         <div class="login-find-label"><p><b>아이디</b></p></div>
-        <ion-input class="login-find-input" type="text"></ion-input>
+        <ion-input class="login-find-input" [(ngModel)]="username" type="text"></ion-input>
       </ion-row>
       <ion-row class="login-find-name">
         <div class="login-find-label"><p><b>이름</b></p></div>
-        <ion-input class="login-find-input" type="text"></ion-input>
+        <ion-input class="login-find-input" [(ngModel)]="name" type="text"></ion-input>
       </ion-row>
       <ion-row class="login-find-phone" *ngIf="findLoginInfoMethod=='phone'">
         <div class="login-find-label"><p><b>연락처</b></p></div>
         <div class="login-find-phone-input">
           <div class="arrow-down-icon" [style.top]="arrowIconTop"></div>
-          <select>
-            <option>010</option>
-            <option>011</option>
-          </select>
+          <ion-select [(ngModel)]="mobile1">
+            <ion-option *ngFor="let mobileOptionList of mobileOptionLists">{{mobileOptionList}}</ion-option>
+          </ion-select>
           <span>
             <p>-</p>
           </span>
-          <ion-input class="login-find-phone-input" type="tel" maxlength="4"></ion-input>
+          <ion-input class="login-find-phone-input" [(ngModel)]="mobile2" type="tel" maxlength="4"></ion-input>
           <span>
             <p>-</p>
           </span>
-          <ion-input class="login-find-phone-input" type="tel" maxlength="4"></ion-input>
+          <ion-input class="login-find-phone-input" [(ngModel)]="mobile2" type="tel" maxlength="4"></ion-input>
         </div>
       </ion-row>
       <ion-row class="login-find-email" *ngIf="findLoginInfoMethod=='email'">
         <div class="login-find-label"><p><b>가입 이메일</b></p></div>
-        <ion-input class="login-find-input" type="phone"></ion-input>
+        <ion-input class="login-find-input" [(ngModel)]="email" type="phone"></ion-input>
       </ion-row>
     </ion-grid>
     <!-- 아이디/비밀번호 찾기 정보 입력 끝 -->
     <!-- confirm 버튼 -->
-    <button ion-button clear class="login-button">확인</button>
+    <button ion-button clear (click)="confirmInfoFind()" class="login-button">확인</button>
     <!-- 아이디/비밀번호 찾기 끝 -->
   </div>
 

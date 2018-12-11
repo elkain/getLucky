@@ -19,13 +19,16 @@ export class StorageProvider {
   popularSearchItems ;
   product;
   memberData: { username: string, password: string, name: string, email: string, mobile: string, address: string, birth: string, sex: string };
+  findMemberData : {username: string, name:string, email:string, mobile:string, type:string, method:string};
 
   constructor() {
     console.log('Hello StorageProvider Provider');
     this.isMember = false;
     this.popularSearchItems = ["가", "나", "다"];
     this.memberData = { username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
+    this.findMemberData= { username: "", name: "", email: "", mobile: "", type: "", method: "" };
   }
+
   calProductSalePrice(product) {
     let salePrice: number;
 
@@ -41,11 +44,5 @@ export class StorageProvider {
     }
 
     return salePrice;
-  }
-
-  addMemberData(memberData){
-    console.log(memberData);
-    
-    this.memberData = memberData;
   }
 }
