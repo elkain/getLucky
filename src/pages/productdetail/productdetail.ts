@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, PopoverController} from 'ionic-ang
 import { TabsPage } from '../tabs/tabs'
 import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
 import { BuyPage } from '../buy/buy';
+import { StorageProvider } from '../../providers/storage/storage';
 
 /**
  * Generated class for the ProductdetailPage page.
@@ -20,7 +21,7 @@ export class ProductdetailPage {
 
   shopTitle: string = "MARKET LUCKY";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public storageProvider:StorageProvider) {
 
   }
 

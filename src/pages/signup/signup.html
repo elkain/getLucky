@@ -21,39 +21,39 @@
       <div class="signup-label">
         <p>아이디*</p>
       </div>
-      <ion-input class="id-input" type="text"></ion-input>
-      <button class="id-confirm" clear ion-button>중복확인</button>
+      <ion-input class="id-input" [(ngModel)]="username" type="text"></ion-input>
+      <button class="id-confirm" (click)="checkIDDuplication()" clear ion-button>중복확인</button>
     </ion-row>
     <!-- 비밀번호 입력 -->
     <ion-row class="signup-pwd">
       <div class="signup-label">
         <p>비밀번호*</p>
       </div>
-      <ion-input class="pwd-input" type="password"></ion-input>
+      <ion-input class="pwd-input" [(ngModel)]="password" type="password"></ion-input>
     </ion-row>
     <!-- 비밀번호 확인 입력 -->
     <ion-row class="signup-pwd-confirm">
       <div class="signup-label">
         <p>비밀번호 확인*</p>
       </div>
-      <ion-input class="pwd-input" type="password"></ion-input>
+      <ion-input class="pwd-input" [(ngModel)]="passwordConfirm" type="password"></ion-input>
     </ion-row>
     <!-- 이름 입력 -->
     <ion-row class="signup-name">
       <div class="signup-label">
         <p>이름*</p>
       </div>
-      <ion-input class="name-input" type="text"></ion-input>
+      <ion-input class="name-input" [(ngModel)]="name" type="text"></ion-input>
     </ion-row>
     <!-- 이메일 입력 -->
     <ion-row class="signup-email">
       <div class="signup-label">
         <p>이메일*</p>
       </div>
-      <ion-input class="email-input" type="text"></ion-input>
+      <ion-input class="email-input" [(ngModel)]="email" type="text"></ion-input>
       <span><p>@</p></span>
       <select class="email-input2" [(ngModel)]="emailOption" (change)="emailOptionChange()">
-        <option></option>
+        <option *ngFor="let emailOptionList of emailOptionLists">{{emailOptionList}}</option>
       </select>
     </ion-row>
     <!-- 휴대폰 입력 -->
@@ -62,38 +62,38 @@
         <p>휴대폰*</p>
       </div>
       <div class="phone-input-area">
-        <ion-input class="phone-input" [(ngModel)]="phone1" type="tel" maxlength="3"></ion-input>
+        <ion-input class="phone-input" [(ngModel)]="mobile1" type="tel" maxlength="3"></ion-input>
         <span>
           <p>-</p>
         </span>
-        <ion-input class="phone-input" [(ngModel)]="phone2" type="tel" maxlength="4"></ion-input>
+        <ion-input class="phone-input" [(ngModel)]="mobile2" type="tel" maxlength="4"></ion-input>
         <span>
           <p>-</p>
         </span>
-        <ion-input class="phone-input" [(ngModel)]="phone3" type="tel" maxlength="4"></ion-input>
+        <ion-input class="phone-input" [(ngModel)]="mobile3" type="tel" maxlength="4"></ion-input>
       </div>
-      <button clear class="phone-confirm" ion-button>인증번호 받기</button>
+      <button clear class="phone-confirm" (click)="recieveMobileConfirm()" ion-button>인증번호 받기</button>
     </ion-row>
     <ion-row class="signup-phone">
       <div class="signup-label"></div>
       <ion-input class="phone-confirm-num" type="number"></ion-input>
-      <button clear class="phone-confirm" ion-button>인증번호 확인</button>
+      <button clear class="phone-confirm" (click)="confirmMobile()" ion-button>인증번호 확인</button>
     </ion-row>
     <!-- 주소 입력 -->
     <ion-row class="signup-addr">
       <div class="signup-label">
         <p>주소</p>
       </div>
-      <button clear class="addr-find" ion-button>주소 찾기</button>
-      <ion-input class="addr-input1" type="text"></ion-input>
+      <button clear class="addr-find" (click)="findAddr()" ion-button>주소 찾기</button>
+      <ion-input class="addr-input1" [(ngModel)]="address1" type="text"></ion-input>
     </ion-row>
     <ion-row class="signup-addr">
       <div class="signup-label"></div>
-      <ion-input class="addr-input2" type="text"></ion-input>
+      <ion-input class="addr-input2" [(ngModel)]="address2" type="text"></ion-input>
     </ion-row>
     <ion-row class="signup-addr">
       <div class="signup-label"></div>
-      <ion-input class="addr-input2" placeholder="상세 주소를 입력해 주세요" type="text"></ion-input>
+      <ion-input class="addr-input2" [(ngModel)]="address3" placeholder="상세 주소를 입력해 주세요" type="text"></ion-input>
     </ion-row>
     <!-- 생년월일 입력 -->
     <ion-row class="signup-birth">
@@ -130,28 +130,28 @@
       <div class="signup-label">
         <p>아이디*</p>
       </div>
-      <ion-input readonly="true" [(ngModel)]="id" style="background-color:#d3d3d3; margin:0;"  class="id-input" type="text"></ion-input>
+      <ion-input readonly="true" [(ngModel)]="username" style="background-color:#d3d3d3; margin:0;"  class="id-input" type="text"></ion-input>
     </ion-row>
     <!-- 련재 비밀번호 입력 -->
     <ion-row class="signup-pwd">
       <div class="signup-label">
         <p>현재 비밀번호</p>
       </div>
-      <ion-input placeholder="현재 비밀번호를 입력해주세요." class="pwd-input" type="password"></ion-input>
+      <ion-input placeholder="현재 비밀번호를 입력해주세요." [(ngModel)]="currentPasssowrd" class="pwd-input" type="password"></ion-input>
     </ion-row>
     <!-- 새 비밀번호 입력 -->
     <ion-row class="signup-pwd-confirm">
       <div class="signup-label">
         <p>새 비밀번호</p>
       </div>
-      <ion-input placeholder="새 비밀번호를 입력해주세요." class="pwd-input" type="password"></ion-input>
+      <ion-input placeholder="새 비밀번호를 입력해주세요." [(ngModel)]="password" class="pwd-input" type="password"></ion-input>
     </ion-row>
     <!-- 새 비밀번호 입력 -->
     <ion-row class="signup-pwd-confirm">
       <div class="signup-label">
         <p style="font-size:1.3rem;">새 비밀번호 확인</p>
       </div>
-      <ion-input placeholder="새 비밀번호를 한번더 입력해주세요." class="pwd-input" type="password"></ion-input>
+      <ion-input placeholder="새 비밀번호를 한번더 입력해주세요." [(ngModel)]="passwordConfirm" class="pwd-input" type="password"></ion-input>
     </ion-row>
     <!-- 이름 입력 -->
     <ion-row class="signup-name">
@@ -180,15 +180,15 @@
         <p>휴대폰*</p>
       </div>
       <div class="phone-input-area">
-        <ion-input class="phone-input" [(ngModel)]="phone1" type="tel" maxlength="3"></ion-input>
+        <ion-input class="phone-input" [(ngModel)]="mobile1" type="tel" maxlength="3"></ion-input>
         <span>
           <p>-</p>
         </span>
-        <ion-input class="phone-input" [(ngModel)]="phone2" type="tel" maxlength="4"></ion-input>
+        <ion-input class="phone-input" [(ngModel)]="mobile2" type="tel" maxlength="4"></ion-input>
         <span>
           <p>-</p>
         </span>
-        <ion-input class="phone-input" [(ngModel)]="phone3" type="tel" maxlength="4"></ion-input>
+        <ion-input class="phone-input" [(ngModel)]="mobile3" type="tel" maxlength="4"></ion-input>
       </div>
       <button clear class="phone-confirm" ion-button>다른번호 인증</button>
     </ion-row>

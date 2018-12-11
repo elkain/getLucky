@@ -21,19 +21,29 @@ export class SignupPage {
   whiteColor = "#ffffff";
 
   isMember: boolean = false;
-  id;
-  name;
-  email;
-  emailOption;
-  phone1;
-  phone2;
-  phone3;
-  birthYear;
-  birthMonth;
-  birthDay;
-  sex;
-  male;
-  female;
+  username:string;
+  password: string;
+  currentPasssowrd: string;
+  passwordConfirm: string;
+  name: string;
+  email: string;
+  emailOption: string;
+  emailOptionLists =["naver.com", "gmail.com", "daum.net", "outlook.com", "nate.com", "yahoo.com"];
+  mobile1:number;
+  mobile2: number;
+  mobile3: number;
+  address1:string;
+  address2: string;
+  address3: string;
+  birthYear: number;
+  birthMonth: number;
+  birthDay: number;
+  sex: string;
+  male:string;
+  female:string;
+  checkID:boolean = false;
+  mobileCheck:boolean = false;
+  memberData: { username: string, password: string, name: string, email: string, mobile: string, address: string, birth: string, sex: string };
 
   customerInfo;
 
@@ -41,23 +51,25 @@ export class SignupPage {
     this.male = this.whiteColor;
     this.female = this.whiteColor;
     this.isMember = this.storageProvider.isMember;
+    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignupPage');
     if (this.isMember==true){
-      this.customerInfo = { id: "chungmin93", name:"이충민" , email:"chungmin93@gmail.com", phone:"010-3769-4456", birth:"1985-09-03", sex:"male"};
-      this.id=this.customerInfo.id;
+      //this.customerInfo = { username: "chungmin93", name:"이충민" , email:"chungmin93@gmail.com", mobile:"010-3769-4456", birth:"1985-09-03", sex:"male"};
+      this.customerInfo = this.storageProvider.memberData;
+      console.log(this.customerInfo);
+      this.username=this.customerInfo.username;
       this.name=this.customerInfo.name;
       let emailTemp = this.customerInfo.email.split('@');
       this.email = emailTemp[0];
       this.emailOption = emailTemp[1];
-      let phoneTemp = this.customerInfo.phone.split('-');
-      this.phone1 = phoneTemp[0];
-      this.phone2 = phoneTemp[1];
-      this.phone3 = phoneTemp[2];
+      let mobileTemp = this.customerInfo.mobile.split('-');
+      this.mobile1 = mobileTemp[0];
+      this.mobile2 = mobileTemp[1];
+      this.mobile3 = mobileTemp[2];
       let birthTemp = this.customerInfo.birth.split('-');
-      this.birthDay = birthTemp[2];
       this.birthYear = birthTemp[0];
       this.birthMonth = birthTemp[1];
       this.birthDay = birthTemp[2];
@@ -74,8 +86,24 @@ export class SignupPage {
     }
   }
 
+  checkIDDuplication(){
+    this.checkID=true;
+  }
+
   emailOptionChange(){
     
+  }
+
+  recieveMobileConfirm(){
+
+  }
+
+  confirmMobile(){
+    this.mobileCheck = true;
+  }
+
+  findAddr(){
+
   }
 
   selectMale(){
@@ -91,8 +119,29 @@ export class SignupPage {
   }
 
   signupCompBtn(){
-    this.storageProvider.isMember = true;
-    this.navCtrl.setRoot(TabsPage, { tabIndex: 7 });
+
+    if(this.checkID == false){
+      let alert = this.alertCtrl.create({
+        message: '아이디 중복을 체크하세요',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    } else if (this.mobileCheck == false){
+      let alert = this.alertCtrl.create({
+        message: '모바일 인증번호를 확인하세요',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    } else{
+      this.enterMemberData();      
+      this.navCtrl.setRoot(TabsPage, { tabIndex: 7 });
+    }
   }
 
   presentAlert() {
@@ -101,11 +150,50 @@ export class SignupPage {
       buttons: [{
           text:'확인',
           handler:()=>{
+            this.enterMemberData();
             this.navCtrl.setRoot(TabsPage, {class:"TabsPage"});
           }
         }],
       cssClass:'alert-modify-member'
     });
     alert.present();
+  }
+
+  enterMemberData(){
+    console.log("username : " + this.username);
+    console.log("password : " + this.password);
+    console.log("name : " + this.name);
+
+    let email = this.email + "@" + this.emailOption;
+    email = this.trim(email);
+    console.log("email : " + email);
+
+    let mobile = this.mobile1 + "-" + this.mobile2 + "-" + this.mobile3;
+    console.log("mobile : " + mobile);
+
+    let address = this.password + " " + this.address2 + " " + this.address3;
+    address = this.trim(address);
+    console.log("address : " + address);
+
+    let birth = this.birthYear + "-" + this.birthMonth + "-" + this.birthDay;
+    console.log("birth : " + birth);
+
+    this.storageProvider.isMember = true;
+    this.storageProvider.memberData.username = this.username;
+    this.storageProvider.memberData.password = this.password;
+    this.storageProvider.memberData.name = this.name;
+    this.storageProvider.memberData.email = email;
+    this.storageProvider.memberData.mobile = mobile;
+    this.storageProvider.memberData.address = address;
+    this.storageProvider.memberData.birth = birth;
+    this.storageProvider.memberData.sex = this.sex;
+  }
+
+  trim(str) {
+    return str.replace(/(^\s*)|(\s*$)/gi, "");
+  }
+
+  checkPassowrd(){
+    
   }
 }

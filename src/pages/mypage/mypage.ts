@@ -17,7 +17,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class MypagePage {
 
-  shopTitle: string = "MARKET LUCKY";
+  isMember: boolean;
 
   loginTabs = ["회원", "비회원"];
   loginTabsSelected;
@@ -27,6 +27,7 @@ export class MypagePage {
 
   usernamePlaceHolder: string = "아이디";
   passwordPlaceHolder: string = "비밀번호";
+  autoLoginCheckbox:boolean;
 
   orderName:string;
   orderNumber:string;
@@ -34,17 +35,17 @@ export class MypagePage {
   orderNamePlaceHolder: string = "주문자명";
   orderNumberPlaceHolder: string = "주문번호";
 
+  memberData = {userName:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", classs:0, totalPurchase:0};
+
   findCategories = ["아이디 찾기", "비밀번호 찾기"];
   findCategorySelected;
   findLoginInfoMethod;
 
-  arrowIconTop = "231px";
-
-  isMember:boolean;
-
   showPageType : string;
   showBackbtn: boolean;
   mypageMenus = ["주문내역", "1:1 문의", "공지사항", "회원정보수정", "배송지관리"];
+
+  arrowIconTop = "231px";
 
   orderedProducts=[
     { orderedNumber: "20181107123456", productName: "비비고 왕교자 1.05kg 외 3건", productReceiver: "이충민", paymentMethod: "신용카드", price: "35,000원", buyDate: "2018-11-07 17:55", status: "배송완료" },
@@ -57,12 +58,18 @@ export class MypagePage {
     { type: "매장", addr: "서울시 강동구 상암로 18길 암사럭키슈퍼", receiver: "이충민", phone: "02-441-3545" }
   ];
 
-  
-
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public storageProvider:StorageProvider) {
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
     this.isMember = this.storageProvider.isMember;
+    
+    for(let i in this.memberData){
+      for (let j in this.storageProvider.memberData){
+        if(i==j){
+          this.memberData[i] = this.storageProvider.memberData[j];
+        }
+      }
+    }
   }
 
   ionViewDidEnter() {
@@ -105,6 +112,10 @@ export class MypagePage {
     this.isMember=true;
     this.storageProvider.isMember = this.isMember;
     this.showPageType = "mypage";
+
+    console.log("userName : " + this.username);
+    console.log("password : " + this.password);
+    console.log("autoLoginCheckbox : " + this.autoLoginCheckbox);
   }
 
   changeIdPwdFind(type){
@@ -152,5 +163,11 @@ export class MypagePage {
     }else{
       this.showPageType = "login";
     }
+  }
+
+  goToOrderDetail(orderedNumber) {
+    console.log(orderedNumber);
+    
+    this.navCtrl.parent.select(6);
   }
 }

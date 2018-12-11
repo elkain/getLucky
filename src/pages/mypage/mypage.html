@@ -12,7 +12,7 @@
       </button>
     </ion-buttons>
     <ion-title class="market-title">
-      <button ion-buttion class="title-home-button" (click)="moveToHome()"><b>{{shopTitle}}</b></button>
+      <button ion-buttion class="title-home-button" (click)="moveToHome()"><b>{{storageProvider.shopTitle}}</b></button>
     </ion-title>
     <ion-buttons end *ngIf="showPageType!='배송지관리'">
       <button class="home-cart" (click)="goToShoppingBasket()">
@@ -49,7 +49,7 @@
       </ion-item>
       <ion-item class="auto-login-check">
         <ion-label><b>자동로그인</b></ion-label>
-        <ion-checkbox color="white" mode="md" checked="false"></ion-checkbox>
+        <ion-checkbox [(ngModel)]="autoLoginCheckbox" color="white" mode="md" checked="false"></ion-checkbox>
       </ion-item>
     </ion-list>
 
@@ -175,9 +175,9 @@
     <!-- 메이페이지 메뉴 시작 -->
     <ion-list class="mypage-menu-list">
       <ion-item-divider class="mypage-status">
-        <h2><b>이충민님</b></h2>
+        <h2><b>{{memberData.name}}님</b></h2>
         <p>마이 럭키에 오신 것을 환영합니다.</p>
-        <p>현재 회원등급 <span>5등급</span>/구매누적 총액 <span>1,000,000</span>원 입니다.</p>
+        <p>현재 회원등급 <span>{{memberData.classs}}등급</span>/구매누적 총액 <span>{{memberData.totalPurchase}}}</span>원 입니다.</p>
       </ion-item-divider>
       <button class="mypage-menu" ion-item *ngFor="let menu of mypageMenus" (click)="menuSelected(menu)">
         <p class="mypage-menu-label">{{ menu }}</p>
@@ -197,7 +197,7 @@
       <ion-item-divider class="order-history-list-head">
         <p class="order-number-label"><b>주문번호</b></p>
         <p class="order-number">{{orderedProduct.orderedNumber}}</p>
-        <button ion-button item-end clear class="order-detail-btn">
+        <button (click)="goToOrderDetail(orderedProduct.orderedNumber)" ion-button item-end clear class="order-detail-btn">
           <p>상세보기</p>
           <ion-icon name="ios-arrow-forward"></ion-icon>
         </button>

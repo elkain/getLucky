@@ -8,6 +8,7 @@ import { ShoppingbasketPage } from '../shoppingbasket/shoppingbasket';
 import { OrderDetailPage } from '../order-detail/order-detail';
 import { OrderCompletePage } from '../order-complete/order-complete';
 import { SignupCompletePage } from '../signup-complete/signup-complete';
+import { StorageProvider } from '../../providers/storage/storage';
 
 @Component({
   selector: 'page-tabs',
@@ -24,8 +25,6 @@ export class TabsPage {
   tab7Root = OrderDetailPage;
   tab8Root = SignupCompletePage;
   
-  shopTitle:string = "MARKET LUCKY";
-
   @ViewChild('myTabs') tabRef: Tabs;
 
   selectedTab;
@@ -33,7 +32,7 @@ export class TabsPage {
   showHeader;
   childParam= {category:{}, homeSegmentCategory:0, class:"TasPage", subCategory:""};
 
-  constructor(public navCtrl: NavController, public navParams:NavParams) {
+  constructor(public navCtrl: NavController, public navParams:NavParams, public storageProvider:StorageProvider) {
     this.tabParams = navParams.get("tabIndex");
     this.childParam.category = navParams.get("category");
     this.childParam.subCategory = navParams.get("subCategory");

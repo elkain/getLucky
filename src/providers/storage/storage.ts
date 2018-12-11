@@ -11,19 +11,21 @@ import { Injectable } from '@angular/core';
 export class StorageProvider {
 
   isMember:boolean;
+  shopTitle: string = "MARKET LUCKY";
   deliveryFee = 3000;
   deliveryFreeString = "3만원";
   deliveryFreeFee = 30000;
   recentSearchItems = new Array();
   popularSearchItems ;
   product;
+  memberData: { username: string, password: string, name: string, email: string, mobile: string, address: string, birth: string, sex: string };
 
   constructor() {
     console.log('Hello StorageProvider Provider');
     this.isMember = false;
     this.popularSearchItems = ["가", "나", "다"];
+    this.memberData = { username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
   }
-
   calProductSalePrice(product) {
     let salePrice: number;
 
@@ -41,5 +43,9 @@ export class StorageProvider {
     return salePrice;
   }
 
-  
+  addMemberData(memberData){
+    console.log(memberData);
+    
+    this.memberData = memberData;
+  }
 }
