@@ -70,8 +70,8 @@
                 {{category}}
             </ion-segment-button>
         </ion-segment>
-        <ion-segment [(ngModel)]="bestCategorySelected" *ngIf="homeCategorySelected==homeCategories[2]">
-            <ion-segment-button [value]="category" (click)="bestCategoryChange(category)" *ngFor="let category of bestCategories">
+        <ion-segment [(ngModel)]="saleCategorySelected" *ngIf="homeCategorySelected==homeCategories[2]">
+            <ion-segment-button [value]="category" (click)="saleCategoryChange(category)" *ngFor="let category of saleCategories">
                 {{category}}
             </ion-segment-button>
         </ion-segment>
