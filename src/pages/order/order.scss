@@ -281,7 +281,7 @@ page-order {
                 color:$default-font-color;
                 font-weight: bold;
                 padding-left:8px;
-                
+                background-color: $white-background-color;
                 -webkit-appearance:none; 
                 -moz-appearance:none;
                 
@@ -406,6 +406,7 @@ page-order {
                     -moz-appearance:none;
                     padding-left: 8px;
                     border: 1px solid $border-color;
+                    background-color: $white-background-color;
                 }
 
                 .arrow-down-icon{
@@ -417,7 +418,6 @@ page-order {
                     border-color:$icon-color-default;
                     position: absolute;
                     top:226px;
-                    //left:168px;
                     left:calc(46px + (100%/3));
                     width: 12px;
                     height: 12px;
@@ -496,7 +496,7 @@ page-order {
                 border: 1px solid $border-color;
                 font-weight: bold;
                 padding-left:8px;
-                
+                background-color: $white-background-color;
                 -webkit-appearance:none; 
                 -moz-appearance:none;
                 
@@ -613,6 +613,7 @@ page-order {
                     padding-left: 8px;
                     border: 1px solid $border-color;
                     margin:1px 0;
+                    background-color: $white-background-color;
                 }
 
                 .arrow-down-icon{
@@ -721,6 +722,7 @@ page-order {
                     padding-left: 8px;
                     border: 1px solid $border-color;
                     margin:1px 0;
+                    background-color: $white-background-color;
                 }
 
                 .arrow-down-icon{
@@ -813,7 +815,7 @@ page-order {
                 margin:1px 0;
                 font-weight: bold;
                 padding-left:8px;
-                
+                background-color: $white-background-color;
                 -webkit-appearance:none; 
                 -moz-appearance:none;
                 
