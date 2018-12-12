@@ -17,9 +17,16 @@ export class StorageProvider {
   deliveryFreeFee = 30000;
   recentSearchItems = new Array();
   popularSearchItems ;
-  product;
   memberData: { username: string, password: string, name: string, email: string, mobile: string, address: string, birth: string, sex: string };
   findMemberData : {username: string, name:string, email:string, mobile:string, type:string, method:string};
+  bestCategories;
+  saleCategories;
+
+  shoppingBasket = Array();
+
+  imageURL: string = "./assets/slides/";
+
+  products;
 
   constructor() {
     console.log('Hello StorageProvider Provider');
@@ -27,6 +34,26 @@ export class StorageProvider {
     this.popularSearchItems = ["가", "나", "다"];
     this.memberData = { username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
     this.findMemberData= { username: "", name: "", email: "", mobile: "", type: "", method: "" };
+
+    this.bestCategories = ["전체", "정육", "청과", "쌀잡곡", "계란", "유제품", "조미료", "과자류", "커피/음료"];
+    this.saleCategories = ["전체", "정육", "쌀잡곡", "계란", "유제품", "조미료", "과자류", "커피/음료"];
+
+    this.products = [
+      { productId: "1", category: "청과", subCategory: "사과/배", name: "사과", price: 3000, discount: 1000, saleMethod: "fixed", saleCount: 2, imagePath: this.imageURL + "사과.jpg" },
+      { productId: "2", category: "청과", subCategory: "사과/배", name: "배", price: 10000, discount: 10, saleMethod: "percent", saleCount: 4, imagePath: this.imageURL + "배.jpg" },
+      { productId: "3", category: "청과", subCategory: "감/꽂감", name: "감귤", price: 5000, discount: 1500, saleMethod: "fixed", saleCount: 8, imagePath: this.imageURL + "감귤.png" },
+      { productId: "4", category: "청과", subCategory: "감/꽂감", name: "황금향", price: 8000, discount: 10, saleMethod: "percent", saleCount: 6, imagePath: this.imageURL + "황금향.png" },
+      { productId: "5", category: "청과", subCategory: "사과/배", name: "사과1", price: 9000, discount: 2000, saleMethod: "fixed", saleCount: 12, imagePath: this.imageURL + "사과1.png" },
+      { productId: "6", category: "청과", subCategory: "감/꽂감", name: "감", price: 5000, discount: 1500, saleMethod: "fixed", saleCount: 6, imagePath: this.imageURL + "slide3.png" },
+      { productId: "7", category: "청과", subCategory: "감/꽂감", name: "감", price: 5000, discount: 1500, saleMethod: "fixed", saleCount: 6, imagePath: this.imageURL + "slide3.png" },
+      { productId: "8", category: "청과", subCategory: "감/꽂감", name: "감", price: 5000, discount: 1500, saleMethod: "fixed", saleCount: 6, imagePath: this.imageURL + "slide3.png" },
+      { productId: "9", category: "청과", subCategory: "감/꽂감", name: "감", price: 5000, discount: 1500, saleMethod: "fixed", saleCount: 6, imagePath: this.imageURL + "slide3.png" },
+
+      { productId: "101", category: "야채", subCategory: "고구마/감자",name: "고구마", price: 2500, discount: 5, saleMethod: "percent", saleCount: 8, imagePath: this.imageURL + "slide1.png" },
+      { productId: "201", category: "과자류", subCategory: "제과",name: "빼빼로", price: 4000, discount: 1000, saleMethod: "fixed", saleCount: 1, imagePath: this.imageURL + "slide2.png" },
+      { productId: "202", category: "과자류", subCategory: "초콜릿",name: "초콜릿", price: 7000, discount: 8, saleMethod: "percent", saleCount: 0, imagePath: this.imageURL + "slide3.png" },
+      { productId: "301", category: "유제품", subCategory: "요거트/요구르트",name: "요구르트", price: 500, discount: 0, saleMethod: "none", saleCount: 12, imagePath: this.imageURL + "slide1.png" }
+    ];
   }
 
   calProductSalePrice(product) {
@@ -44,5 +71,19 @@ export class StorageProvider {
     }
 
     return salePrice;
+  }
+
+  addShoppingBasket(item){
+    let flag = false;
+    
+    for(let i=0; i<this.shoppingBasket.length; i++){
+      if(item.name == this.shoppingBasket[i].name){
+        flag = true;
+      }
+    }
+
+    if(flag == false){
+      this.shoppingBasket.push(item);
+    }
   }
 }
