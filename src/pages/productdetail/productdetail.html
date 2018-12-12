@@ -27,16 +27,16 @@
   <ion-scroll scollY="true" class="product-detail-scroll">
     <ion-list class="product-detail-list">
       <ion-item class="product-detail-img">
-        <img src="./assets/slides/slide1.png">
+        <img src="{{product.imagePath}}">
       </ion-item>
       <ion-item class="product-detail-name">
-        상품명
+        {{product.name}}
       </ion-item>
       <ion-item class="product-detail-price">
-        혜택가 <del>판매가</del>
+        {{product.price}} <del>{{product.salePrice}}</del>
       </ion-item>
       <ion-item class="product-detail-delivery">
-        배송비 3,000원 (3만원 이상 무료)
+        배송비 {{deliveryFee}}원 ({{deliveryFreeString}} 이상 무료)
       </ion-item>
       <ion-item class="product-detail">
         상세/정보 고시
