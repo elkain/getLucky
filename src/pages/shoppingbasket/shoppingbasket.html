@@ -28,7 +28,7 @@
       <ion-item class="basket-product-check">
         <ion-label><b>전체선택(n/N)</b></ion-label>
         <ion-checkbox color="white" [(ngModel)]="checkedAllProduct" (click)="updateAllProductCheck()" mode="md" checked="false"></ion-checkbox>
-        <button class="basket-sel-del" ion-button clear item-end>선택삭제</button>
+        <button class="basket-sel-del" (click)="deleteItem()" ion-button clear item-end>선택삭제</button>
       </ion-item>
     </ion-list>
 
@@ -95,21 +95,23 @@
       </ion-item>
     </ion-list>
     <!-- 주문 금액 끝-->
-
-    <!-- 주문 현황 시작 -->
-    <ion-grid class="oder-submit">
-      <ion-row>
-        <ion-col col-6>
-          <p>전체 {{checkedItemNumber}} 개</p>
-          <span>
-            <b> {{totalPrice}}원</b>
-          </span>
-        </ion-col>
-        <ion-col col-6>
-          <button (click)="goToOrder()" ion-button outline>주문하기</button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <!-- 주문 현황 끝 -->
   </ion-scroll>
 </ion-content>
+
+<ion-footer>
+  <!-- 주문 현황 시작 -->
+  <ion-grid class="oder-submit">
+    <ion-row>
+      <ion-col col-6>
+        <p>전체 {{checkedItemNumber}} 개</p>
+        <span>
+          <b> {{totalPrice}}원</b>
+        </span>
+      </ion-col>
+      <ion-col col-6>
+        <button (click)="goToOrder()" ion-button outline>주문하기</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- 주문 현황 끝 -->
+</ion-footer>

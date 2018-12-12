@@ -55,7 +55,7 @@ page-shoppingbasket {
 
     /* 장바구니 컨텐츠 시작 */
     .basket-scroll{
-        height: 100%;
+        height: calc(100% - 50px);
         width:100%;
         background-color:$background-color;
 

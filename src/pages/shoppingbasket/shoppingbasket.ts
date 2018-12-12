@@ -95,7 +95,7 @@ export class ShoppingbasketPage {
       this.checkedProduct[i] = this.checkedAllProduct;
     }
     
-    this.calOrderPrice()
+    this.calOrderPrice();
   }
 
   calOrderPrice(){
@@ -130,5 +130,16 @@ export class ShoppingbasketPage {
     }
 
     this.totalPrice = this.orderPrice - this.sale + this.deliveryFee
+  }
+
+  deleteItem(){
+    for (let i = this.checkedProduct.length - 1; i >=0; i--) {
+      if (this.checkedProduct[i] == true) {
+        this.shoppingBasket.splice(i,1);
+        this.checkedProduct.splice(i,1);
+      }
+    }
+
+    this.calOrderPrice();
   }
 }
