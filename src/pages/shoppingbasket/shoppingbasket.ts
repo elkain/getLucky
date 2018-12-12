@@ -17,22 +17,36 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class ShoppingbasketPage {
 
-  product = { name: "", price: 0, saleMethod: "", discount: 0, count: 1, salePrice: 0, totalPrice: 0 };
+  shoppingBasket = Array();
+  orderPrice;
+  sale;
   deliveryFee;
+  totalPrice;
+  totalNumber;
   deliveryFreeString;
-  checkedProduct;
+  checkedProduct = Array();
   checkedAllProduct;
+  itemNumber:number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, public storageProvider:StorageProvider) {
-    this.product.name = "상품명";
+    this.shoppingBasket = this.storageProvider.shoppingBasket;
+    this.itemNumber = this.shoppingBasket.length;
+
+    for(let i = 0; i<this.itemNumber; i++){
+      this.checkedProduct.push(false);
+    }
+
+    this.deliveryFee = storageProvider.deliveryFee;
+    this.deliveryFreeString = storageProvider.deliveryFreeString;
+    
+    /*this.product.name = "상품명";
     this.product.price = 5000;
     this.product.saleMethod = "fixed";
     this.product.discount = 1000;
     this.product.count = 1;
     this.product.salePrice = this.storageProvider.calProductSalePrice(this.product);
     this.product.totalPrice = this.product.salePrice * this.product.count;
-    this.deliveryFee = storageProvider.deliveryFee;
-    this.deliveryFreeString = storageProvider.deliveryFreeString;
+    */
   }
 
   ionViewDidLoad() {
@@ -44,38 +58,68 @@ export class ShoppingbasketPage {
   }
 
   goToOrder(){
-    this.app.getRootNavs()[0].push(OrderPage, {class:"OrderPage"});
+    this.app.getRootNavs()[0].push(OrderPage, {class:"OrderPage", shoppingBasket:this.shoppingBasket});
   }
 
-  increaseProductNum() {
-    this.product.count++;
-    this.product.totalPrice = this.product.salePrice * this.product.count;
+  increaseProductNum(index) {
+    this.shoppingBasket[index].count++;
+    this.shoppingBasket[index].totalPrice = this.shoppingBasket[index].salePrice * this.shoppingBasket[index].count;
+
+    this.calOrderPrice()
   }
 
-  decreaseProductNum() {
+  decreaseProductNum(index) {
 
-    if (this.product.count > 1) {
-      this.product.count--;
+    if (this.shoppingBasket[index].count > 1) {
+      this.shoppingBasket[index].count--;
     }
 
-    this.product.totalPrice = this.product.salePrice * this.product.count;
+    this.shoppingBasket[index].totalPrice = this.shoppingBasket[index].salePrice * this.shoppingBasket[index].count;
+
+    this.calOrderPrice()
   }
 
-  updateProductCheck(){
-    console.log(this.checkedProduct);
-    if(this.checkedProduct==false){
+  updateProductCheck(index){
+
+    if(this.checkedProduct[index] == false){
       this.checkedAllProduct = false;
     }
+
+    this.calOrderPrice();
   }
 
   updateAllProductCheck(){
-    console.log(this.checkedAllProduct);
 
-    if(this.checkedAllProduct==true){
-      this.checkedProduct = true;
+    for(let i = 0; i<this.checkedProduct.length; i++){
+      this.checkedProduct[i] = this.checkedAllProduct;
     }
-    else{
-      this.checkedProduct = false;
+    
+    this.calOrderPrice()
+  }
+
+  calOrderPrice(){
+    let orderPrice;
+    let sale;
+
+    for(let i = 0; i<this.checkedProduct.length; i++){
+      if(this.checkedProduct[i]==true){
+        orderPrice += this.shoppingBasket[i].price;
+
+        if(this.shoppingBasket[i].saleMethod=='fixed'){
+          sale += this.shoppingBasket[i].discount;
+        }else{
+          sale += this.shoppingBasket[i].price * this.shoppingBasket[i].discount/100;
+        }
+      }
+    }
+
+    this.orderPrice = orderPrice;
+    this.sale = sale;
+
+    if ((orderPrice - sale) > this.storageProvider.deliveryFreeFee) {
+      this.deliveryFee = 0;
+    } else {
+      this.deliveryFee = this.storageProvider.deliveryFee;
     }
   }
 }

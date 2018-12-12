@@ -27,13 +27,13 @@
     <ion-list class="basket-product-head">
       <ion-item class="basket-product-check">
         <ion-label><b>전체선택(n/N)</b></ion-label>
-        <ion-checkbox color="white" [(ngModel)]="checkedAllProduct" (ionChange)="updateAllProductCheck()" mode="md" checked="false"></ion-checkbox>
+        <ion-checkbox color="white" [(ngModel)]="checkedAllProduct" (click)="updateAllProductCheck()" mode="md" checked="false"></ion-checkbox>
         <button class="basket-sel-del" ion-button clear item-end>선택삭제</button>
       </ion-item>
     </ion-list>
 
     <!-- 빈 장바구니 시작 -->
-    <ion-grid class="basket-product-none">
+    <ion-grid class="basket-product-none" *ngIf="itemNumber==0">
       <ion-row>
         <p>장바구니에 담긴 상품이 없습니다.</p>
       </ion-row>
@@ -41,11 +41,11 @@
     <!-- 빈 장바구니 끝 -->
 
     <!-- 상품 장바구니 시작-->
-    <ion-grid class="basket-product-list">
+    <ion-grid class="basket-product-list" *ngFor="let product of shoppingBasket; let i = index">
       <ion-row class="basket-product">
-        <ion-checkbox color="white" item-top mode="md" [(ngModel)]="checkedProduct" (ionChange)="updateProductCheck()" checked="false"></ion-checkbox>
+        <ion-checkbox color="white" item-top mode="md" [(ngModel)]="checkedProduct[i]" (ionChange)="updateProductCheck(i)" checked="false"></ion-checkbox>
         <div class="basket-product-img">
-          <img src="./assets/slides/slide1.jpg">
+          <img src="{{product.imagePath}}">
         </div>
         <div class="basket-product-content">
           <div style="height:calc(100% - 35px);">
@@ -53,11 +53,11 @@
             <span>구성/용량</span>
           </div>
           <div class="product-add-remove">
-            <button (click)="increaseProductNum()" ion-button icon-only outline item-end>
+            <button (click)="increaseProductNum(i)" ion-button icon-only outline item-end>
               <ion-icon name="add"></ion-icon>
             </button>
             <div class="product-count"><p>{{product.count}}</p></div>
-            <button (click)="increaseProductNum()" ion-button icon-only outline item-end>
+            <button (click)="decreaseProductNum(i)" ion-button icon-only outline item-end>
               <ion-icon name="remove"></ion-icon>
             </button>
           </div>
@@ -76,7 +76,7 @@
     <!-- 상품 장바구니 끝-->
 
     <!-- 주문 금액 시작-->
-    <ion-list class="basket-product-sum">
+    <!--<ion-list class="basket-product-sum">
       <ion-item>
         <p >주문금액</p>
         <p style="text-align: right;">{{product.price * product.count}}원</p>
@@ -93,11 +93,11 @@
         <p><b>주문 금액</b></p>
         <p style="text-align: right;">{{product.salePrice * product.count}}원</p>
       </ion-item>
-    </ion-list>
+    </ion-list>-->
     <!-- 주문 금액 끝-->
 
     <!-- 주문 현황 시작 -->
-    <ion-grid class="oder-submit">
+    <!--<ion-grid class="oder-submit">
       <ion-row>
         <ion-col col-6>
           <p>전체 {{product.count}} 개</p>
@@ -109,7 +109,7 @@
           <button (click)="goToOrder()" ion-button outline>주문하기</button>
         </ion-col>
       </ion-row>
-    </ion-grid>
+    </ion-grid>-->
     <!-- 주문 현황 끝 -->
   </ion-scroll>
 </ion-content>

@@ -21,8 +21,14 @@ export class ProductdetailPage {
 
   shopTitle: string = "MARKET LUCKY";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public storageProvider:StorageProvider) {
+  product;
+  deliveryFee;
+  deliveryFreeString;
 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public storageProvider:StorageProvider) {
+    this.product = this.navParams.get("product");
+    this.deliveryFee = this.storageProvider.deliveryFee;
+    this.deliveryFreeString = this.storageProvider.deliveryFreeString;
   }
 
   ionViewDidLoad() {
@@ -43,8 +49,6 @@ export class ProductdetailPage {
   }
 
   addToShoppingBasket(){
-    this.navCtrl.push(BuyPage, { class: "BuyPage" });
-    //const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {}, { cssClass: 'popover-shopping-basket' });
-    //popover.present();
+    this.navCtrl.push(BuyPage, { class: "BuyPage", product:this.product});
   }
 }
