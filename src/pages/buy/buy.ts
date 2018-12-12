@@ -19,15 +19,12 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class BuyPage {
 
-  product={name:"", price:0, saleMethod:"", discount:0, count:1, salePrice:0, totalPrice:0};
+  product;
   deliveryFee;
   deliveryFreeString;
   constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController, public storageProvider:StorageProvider) {
-    this.product.name="상품명";
-    this.product.price=5000;
-    this.product.saleMethod="fixed";
-    this.product.discount=1000;
-    this.product.count=1;
+    this.product = this.navParams.get("product");
+    
     this.product.salePrice = this.storageProvider.calProductSalePrice(this.product);
     this.product.totalPrice = this.product.salePrice * this.product.count;
     this.deliveryFee = storageProvider.deliveryFee;
@@ -50,8 +47,11 @@ export class BuyPage {
     this.navCtrl.push(OrderPage, { class: "OrderPage" });
   }
 
-  addToShoppingBasket(product) {
-    const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, { product: product }, { cssClass: 'popover-shopping-basket' });
+  addToShoppingBasket() {
+    
+    this.storageProvider.addShoppingBasket(this.product);
+
+    const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, { product: this.product }, { cssClass: 'popover-shopping-basket' });
     popover.present();
   }
 
@@ -61,8 +61,8 @@ export class BuyPage {
   }
 
   decreaseProductNum(){
-    this.product.count--;
     if (this.product.count > 1){
+      this.product.count--;
     }
 
     this.product.totalPrice = this.product.salePrice * this.product.count;
