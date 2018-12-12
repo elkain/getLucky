@@ -76,40 +76,40 @@
     <!-- 상품 장바구니 끝-->
 
     <!-- 주문 금액 시작-->
-    <!--<ion-list class="basket-product-sum">
+    <ion-list class="basket-product-sum">
       <ion-item>
         <p >주문금액</p>
-        <p style="text-align: right;">{{product.price * product.count}}원</p>
+        <p style="text-align: right;">{{orderPrice}}원</p>
       </ion-item>
       <ion-item>
         <p>할인금액</p>
-        <p style="text-align: right;">{{product.price * product.count - product.salePrice * product.count}}원</p>
+        <p style="text-align: right;">{{sale}}원</p>
       </ion-item>
       <ion-item>
         <p>배송비</p>
-        <p style="text-align: right;">{{storageProvider.deliveryFee}}원</p>
+        <p style="text-align: right;">{{deliveryFee}}원</p>
       </ion-item>
       <ion-item>
         <p><b>주문 금액</b></p>
-        <p style="text-align: right;">{{product.salePrice * product.count}}원</p>
+        <p style="text-align: right;">{{totalPrice}}원</p>
       </ion-item>
-    </ion-list>-->
+    </ion-list>
     <!-- 주문 금액 끝-->
 
     <!-- 주문 현황 시작 -->
-    <!--<ion-grid class="oder-submit">
+    <ion-grid class="oder-submit">
       <ion-row>
         <ion-col col-6>
-          <p>전체 {{product.count}} 개</p>
+          <p>전체 {{checkedItemNumber}} 개</p>
           <span>
-            <b> {{product.totalPrice}}원</b>
+            <b> {{totalPrice}}원</b>
           </span>
         </ion-col>
         <ion-col col-6>
           <button (click)="goToOrder()" ion-button outline>주문하기</button>
         </ion-col>
       </ion-row>
-    </ion-grid>-->
+    </ion-grid>
     <!-- 주문 현황 끝 -->
   </ion-scroll>
 </ion-content>

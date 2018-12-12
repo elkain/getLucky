@@ -27,6 +27,7 @@ export class ShoppingbasketPage {
   checkedProduct = Array();
   checkedAllProduct;
   itemNumber:number;
+  checkedItemNumber:number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, public storageProvider:StorageProvider) {
     this.shoppingBasket = this.storageProvider.shoppingBasket;
@@ -38,7 +39,7 @@ export class ShoppingbasketPage {
 
     this.deliveryFee = storageProvider.deliveryFee;
     this.deliveryFreeString = storageProvider.deliveryFreeString;
-    
+    this.calOrderPrice();
     /*this.product.name = "상품명";
     this.product.price = 5000;
     this.product.saleMethod = "fixed";
@@ -98,28 +99,36 @@ export class ShoppingbasketPage {
   }
 
   calOrderPrice(){
-    let orderPrice;
-    let sale;
+    let orderPrice = 0;
+    let sale = 0;
+    let checkedItemNumber = 0;
 
     for(let i = 0; i<this.checkedProduct.length; i++){
       if(this.checkedProduct[i]==true){
-        orderPrice += this.shoppingBasket[i].price;
-
+        orderPrice += this.shoppingBasket[i].price * this.shoppingBasket[i].count;
+        
         if(this.shoppingBasket[i].saleMethod=='fixed'){
-          sale += this.shoppingBasket[i].discount;
+          sale += this.shoppingBasket[i].discount * this.shoppingBasket[i].count;
         }else{
-          sale += this.shoppingBasket[i].price * this.shoppingBasket[i].discount/100;
+          sale += this.shoppingBasket[i].price * this.shoppingBasket[i].discount / 100 * this.shoppingBasket[i].count;
         }
+
+        checkedItemNumber++;
       }
     }
 
     this.orderPrice = orderPrice;
     this.sale = sale;
+    this.checkedItemNumber = checkedItemNumber;
 
-    if ((orderPrice - sale) > this.storageProvider.deliveryFreeFee) {
+    if ((orderPrice - sale) >= this.storageProvider.deliveryFreeFee) {
       this.deliveryFee = 0;
-    } else {
+    } else if(this.orderPrice == 0){
+      this.deliveryFee = 0;
+    }else{
       this.deliveryFee = this.storageProvider.deliveryFee;
     }
+
+    this.totalPrice = this.orderPrice - this.sale + this.deliveryFee
   }
 }
