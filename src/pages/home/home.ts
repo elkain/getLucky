@@ -2,6 +2,7 @@ import { Component, ViewChild} from '@angular/core';
 import { NavController, Slides, App, PopoverController, NavParams} from 'ionic-angular';
 import { ProductdetailPage } from '../productdetail/productdetail';
 import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
+import { StorageProvider } from '../../providers/storage/storage';
 
 @Component({
   selector: 'page-home',
@@ -15,8 +16,12 @@ export class HomePage {
   homeCategories = ["럭키추천", "베스트", "알뜰할인",  "이벤트"];
   homeCategorySelected;
 
-  bestCategories = ["전체", "정육", "청과", "쌀잡곡", "계란", "유제품", "조미료", "과자류", "커피/음료"];
+  bestCategories;
   bestCategorySelected;
+
+  saleCategories;
+  saleCategorySelected;
+
   categorySelected;
 
   productSortOptions = ["판매인기순","높은가격순", "낮은가격순"];
@@ -31,7 +36,7 @@ export class HomePage {
 
   images: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
-  constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams) {
+  constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams, public storageProvider:StorageProvider) {
     this.homeParams = navParams.data;     // category from category page
 
     this.products = [   // sale method : fixed, percent
@@ -46,17 +51,23 @@ export class HomePage {
 
     /* 할인율을 적용하여 가격 측정 */
     for (var i=0; i < this.products.length; i++) {
+      this.products[i].count = 1;
+      
       if (this.products[i].saleMethod == "fixed") {
         this.products[i].salePrice = this.products[i].price - this.products[i].discount;
       } else if (this.products[i].saleMethod == "percent") {
         this.products[i].salePrice = this.products[i].price * (100 - this.products[i].discount)/100;
       } else {
         this.products[i].salePrice = this.products[i].price;
+
       }
     }
   }
 
   ionViewDidEnter() {
+    this.bestCategories = this.storageProvider.bestCategories;
+    this.saleCategories = this.storageProvider.saleCategories;
+
     this.homeCategorySelected = this.homeCategories[0];
     this.bestCategorySelected = this.bestCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
@@ -71,7 +82,7 @@ export class HomePage {
   }
 
   itemSelected(item){
-    this.app.getRootNavs()[0].push(ProductdetailPage, {class:"ProductdetailPage"});
+    this.app.getRootNavs()[0].push(ProductdetailPage, {class:"ProductdetailPage", product:item});
   }
 
   slideItemSelect(){
@@ -98,6 +109,12 @@ export class HomePage {
     let idx = this.bestCategories.indexOf(Category);
     this.bestCategorySelected = this.bestCategories[idx];
   }
+
+  saleCategoryChange(Category) {
+    let idx = this.saleCategories.indexOf(Category);
+    this.saleCategorySelected = this.saleCategories[idx];
+  }
+
 
   categoryChange(Category) {
     let idx = this.homeParams.category.subCategories.indexOf(Category);
