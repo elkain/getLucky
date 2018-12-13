@@ -25,6 +25,10 @@ export class StorageProvider {
   nonMemberOrderInfo = {};
   memberOrderInfo = {};
   deliveryPlaceInfos = [];
+  mobileOptionLists = ["010", "011", "018"];
+  emailOptionLists = ["naver.com", "gmail.com", "daum.net", "outlook.com", "nate.com", "yahoo.com"];
+  deliveryTimeLists = ["9:00 ~ 12:00","12::00 ~ 15:00", "15:00 ~ 18:00", "18:00 ~ 21:00"];
+  deliveryMemoLists = ["부재시 경비실에 맡겨주세요", "오시기 전에 미리 연락주세요", "빨리 배송해주세요"];
 
   imageURL: string = "./assets/slides/";
 

@@ -53,7 +53,7 @@
       <ion-input class="email-input" [(ngModel)]="email" type="text"></ion-input>
       <span><p>@</p></span>
       <select class="email-input2" [(ngModel)]="emailOption" (change)="emailOptionChange()">
-        <option *ngFor="let emailOptionList of emailOptionLists">{{emailOptionList}}</option>
+        <option *ngFor="let emailOptionList of storageProvider.emailOptionLists">{{emailOptionList}}</option>
       </select>
     </ion-row>
     <!-- 휴대폰 입력 -->
@@ -170,8 +170,7 @@
         <p>@</p>
       </span>
       <select class="email-input2" [(ngModel)]="emailOption" (change)="emailOptionChange()">
-        <option>naver.com</option>
-        <option>gmail.com</option>
+        <option *ngFor="let emailOptionList of storageProvider.emailOptionLists">{{emailOptionList}}</option>
       </select>
     </ion-row>
     <!-- 휴대폰 입력 -->

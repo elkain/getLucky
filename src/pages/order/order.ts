@@ -25,10 +25,18 @@ export class OrderPage {
   showProductInfo:boolean=true;
   showPaymentInfo:boolean=true;
   showPaymentMethodInfo: boolean = true;
-  selectPaymentMethod:string;
   paymentMethodColor = {cash:"white", card:"white", bank:"white"};
-  orderInfo = { orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, shoppingBasket: [] };
-  nonMemberInfo = {};
+  orderInfo = {type:"", ordererInfo:{}, orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, paymentMethod:"", shoppingBasket: [] }; // type : member or nonMember 
+  nonMemberInfo = {ordererName : "", ordererMobile:"", ordererEmail:"", recieverName:"", recieverAddress:"", deliveryTime:"", deliveryMemo:""};
+  ordererMobile1: string;
+  ordererMobile2: string;
+  ordererMobile3: string;
+  recieverMobile1: string;
+  recieverMobile2: string;
+  recieverMobile3: string;
+  address1: string;
+  address2: string;
+  address3: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public storageProvider:StorageProvider) {
     this.basicPlaceStyle = { 'select-segment': true, 'unselect-segment': false};
@@ -37,6 +45,14 @@ export class OrderPage {
     this.isMember = this.storageProvider.isMember;
 
     this.orderInfo = this.navParams.get("orderInfo");
+
+    if(this.isMember == true){
+      this.orderInfo.type="member";
+      this.orderInfo.ordererInfo = this.storageProvider.memberData;
+    }else{
+      this.orderInfo.type="nonMember";
+      this.orderInfo.ordererInfo = this.nonMemberInfo;
+    }
     console.log(this.orderInfo);
   }
 
@@ -49,7 +65,6 @@ export class OrderPage {
     this.newPlaceStyle = { 'select-segment': false, 'unselect-segment': true };
     this.selectedDeliveryType ="memberSaved";
     console.log(this.selectedDeliveryType);
-    
   }
 
   selectNewPlaceSegment(){
@@ -117,11 +132,15 @@ export class OrderPage {
   }
 
   confirmOrder(){
+
+    console.log(this.orderInfo);
+    console.log(this.nonMemberInfo);
+    
     this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
   }
 
   selectedPaymentMethod(method){
-    this.selectPaymentMethod = method;
+    this.orderInfo.paymentMethod = method;
 
     if (this.paymentMethodColor[method] == "#d3d3d3"){
       this.paymentMethodColor[method] = "white";  
@@ -131,5 +150,9 @@ export class OrderPage {
       }
       this.paymentMethodColor[method] = "#d3d3d3";
     }
+  }
+
+  findAddr(){
+
   }
 }

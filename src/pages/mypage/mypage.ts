@@ -40,7 +40,6 @@ export class MypagePage {
   mobile1;
   mobile2;
   mobile3;
-  mobileOptionLists = ["010", "011", "018"]
   memberData = {userName:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", classs:0, totalPurchase:0};
 
   findCategories = ["아이디 찾기", "비밀번호 찾기"];

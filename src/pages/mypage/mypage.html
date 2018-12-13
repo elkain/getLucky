@@ -141,7 +141,7 @@
         <div class="login-find-phone-input">
           <div class="arrow-down-icon" [style.top]="arrowIconTop"></div>
           <select [(ngModel)]="mobile1">
-            <option *ngFor="let mobileOptionList of mobileOptionLists">{{mobileOptionList}}</option>
+            <option *ngFor="let mobileOptionList of storageProvider.mobileOptionLists">{{mobileOptionList}}</option>
           </select>
           <span>
             <p>-</p>
