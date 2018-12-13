@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs'
-import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
 import { BuyPage } from '../buy/buy';
 import { StorageProvider } from '../../providers/storage/storage';
 
@@ -21,9 +20,9 @@ export class ProductdetailPage {
 
   shopTitle: string = "MARKET LUCKY";
 
-  product;
-  deliveryFee;
-  deliveryFreeString;
+  product:any;
+  deliveryFee:number;
+  deliveryFreeString:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public storageProvider:StorageProvider) {
     this.product = this.navParams.get("product");
@@ -48,7 +47,7 @@ export class ProductdetailPage {
     this.navCtrl.setRoot(TabsPage, { tabIndex: 4 });
   }
 
-  addToShoppingBasket(){
+  goToBuy(){
     this.navCtrl.push(BuyPage, { class: "BuyPage", product:this.product});
   }
 }

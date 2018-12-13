@@ -126,6 +126,9 @@ export class HomePage {
   }
 
   addToShoppingBasket(product) {
+
+    this.storageProvider.addShoppingBasket(product);
+
     const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {product:product}, { cssClass: 'popover-shopping-basket'});
     popover.present();
   }

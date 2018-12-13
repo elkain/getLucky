@@ -19,9 +19,11 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class BuyPage {
 
-  product;
-  deliveryFee;
-  deliveryFreeString;
+  product:any;
+  deliveryFee:number;
+  deliveryFreeString:string;
+  orderInfo = { orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, shoppingBasket: [] };
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController, public storageProvider:StorageProvider) {
     this.product = this.navParams.get("product");
     
@@ -44,7 +46,10 @@ export class BuyPage {
   }
 
   goToOrder() {
-    this.navCtrl.push(OrderPage, { class: "OrderPage" });
+
+    this.calOrderInfo();
+
+    this.navCtrl.push(OrderPage, { class: "OrderPage" , orderInfo:this.orderInfo });
   }
 
   addToShoppingBasket() {
@@ -66,5 +71,22 @@ export class BuyPage {
     }
 
     this.product.totalPrice = this.product.salePrice * this.product.count;
+  }
+
+  calOrderInfo(){
+    this.orderInfo.shoppingBasket=[];
+    this.orderInfo.shoppingBasket.push(this.product);
+    this.orderInfo.orderPrice = this.product.price * this.product.count;
+    this.orderInfo.sale = (this.product.price - this.product.salePrice) * this.product.count;
+
+    if ((this.orderInfo.orderPrice - this.orderInfo.sale) >= this.storageProvider.deliveryFreeFee) {
+      this.orderInfo.deliveryFee = 0;
+    } else if (this.orderInfo.orderPrice == 0) {
+      this.orderInfo.deliveryFee = 0;
+    } else {
+      this.orderInfo.deliveryFee = this.storageProvider.deliveryFee;
+    }
+
+    this.orderInfo.totalPrice = this.orderInfo.orderPrice - this.orderInfo.sale + this.orderInfo.deliveryFee;
   }
 }

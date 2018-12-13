@@ -22,7 +22,6 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content>
   <ion-scroll scollY="true" class="product-detail-scroll">
     <ion-list class="product-detail-list">
@@ -48,10 +47,10 @@
   <ion-grid class="product-detail-tabs">
     <ion-row>
       <ion-col col-6>
-        <button class="basket-button" (click)="addToShoppingBasket()" ion-button clear>장바구니</button>
+        <button class="basket-button" (click)="goToBuy()" ion-button clear>장바구니</button>
       </ion-col>
       <ion-col col-6>
-        <button class="order-button" (click)="addToShoppingBasket()" ion-button clear>주문하기</button>
+        <button class="order-button" (click)="goToBuy()" ion-button clear>주문하기</button>
       </ion-col>
     </ion-row>
   </ion-grid>

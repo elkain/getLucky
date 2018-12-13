@@ -17,21 +17,27 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class OrderPage {
 
-  basicPlaceStyle;
-  newPlaceStyle;
+  basicPlaceStyle = new Object();
+  newPlaceStyle = new Object();
   selectedDeliveryType:string;
   isMember:boolean;
   showDeliveryInfo:boolean=true;
   showProductInfo:boolean=true;
   showPaymentInfo:boolean=true;
   showPaymentMethodInfo: boolean = true;
+  selectPaymentMethod:string;
   paymentMethodColor = {cash:"white", card:"white", bank:"white"};
+  orderInfo = { orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, shoppingBasket: [] };
+  nonMemberInfo = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public storageProvider:StorageProvider) {
     this.basicPlaceStyle = { 'select-segment': true, 'unselect-segment': false};
     this.newPlaceStyle = { 'select-segment': false, 'unselect-segment': true };
     this.selectedDeliveryType='memberSaved';
     this.isMember = this.storageProvider.isMember;
+
+    this.orderInfo = this.navParams.get("orderInfo");
+    console.log(this.orderInfo);
   }
 
   ionViewDidLoad() {
@@ -115,6 +121,7 @@ export class OrderPage {
   }
 
   selectedPaymentMethod(method){
+    this.selectPaymentMethod = method;
 
     if (this.paymentMethodColor[method] == "#d3d3d3"){
       this.paymentMethodColor[method] = "white";  

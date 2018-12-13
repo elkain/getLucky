@@ -16,17 +16,19 @@ export class StorageProvider {
   deliveryFreeString = "3만원";
   deliveryFreeFee = 30000;
   recentSearchItems = new Array();
-  popularSearchItems ;
+  popularSearchItems= new Array() ;
   memberData: { username: string, password: string, name: string, email: string, mobile: string, address: string, birth: string, sex: string };
   findMemberData : {username: string, name:string, email:string, mobile:string, type:string, method:string};
-  bestCategories;
-  saleCategories;
-
+  bestCategories = new Array();
+  saleCategories = new Array();
   shoppingBasket = Array();
+  nonMemberOrderInfo = {};
+  memberOrderInfo = {};
+  deliveryPlaceInfos = [];
 
   imageURL: string = "./assets/slides/";
 
-  products;
+  products = new Array();
 
   constructor() {
     console.log('Hello StorageProvider Provider');

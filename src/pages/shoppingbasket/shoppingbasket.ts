@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic-angular';
 import { OrderPage } from '../order/order';
 import { StorageProvider } from '../../providers/storage/storage';
 
@@ -17,37 +17,29 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class ShoppingbasketPage {
 
-  shoppingBasket = Array();
-  orderPrice;
-  sale;
-  deliveryFee;
-  totalPrice;
-  totalNumber;
-  deliveryFreeString;
+  totalNumber:number;
   checkedProduct = Array();
-  checkedAllProduct;
+  checkedAllProduct:boolean;
   itemNumber:number;
   checkedItemNumber:number;
+  deliveryFee:number;
+  shoppingBasket = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, public storageProvider:StorageProvider) {
+  orderInfo = {orderPrice:0, sale:0, deliveryFee:0, totalPrice:0, shoppingBasket:[]};
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, public storageProvider: StorageProvider, private alertCtrl:AlertController) {
+    //this.shoppingBasket = this.storageProvider.shoppingBasket;
     this.shoppingBasket = this.storageProvider.shoppingBasket;
     this.itemNumber = this.shoppingBasket.length;
+    this.checkedItemNumber = 0;
 
     for(let i = 0; i<this.itemNumber; i++){
-      this.checkedProduct.push(false);
+      this.checkedProduct.push(true);
     }
+    this.checkedAllProduct = true;
 
     this.deliveryFee = storageProvider.deliveryFee;
-    this.deliveryFreeString = storageProvider.deliveryFreeString;
     this.calOrderPrice();
-    /*this.product.name = "상품명";
-    this.product.price = 5000;
-    this.product.saleMethod = "fixed";
-    this.product.discount = 1000;
-    this.product.count = 1;
-    this.product.salePrice = this.storageProvider.calProductSalePrice(this.product);
-    this.product.totalPrice = this.product.salePrice * this.product.count;
-    */
   }
 
   ionViewDidLoad() {
@@ -59,25 +51,44 @@ export class ShoppingbasketPage {
   }
 
   goToOrder(){
-    this.app.getRootNavs()[0].push(OrderPage, {class:"OrderPage", shoppingBasket:this.shoppingBasket});
+    if (this.checkedItemNumber>0){
+      this.orderInfo.shoppingBasket = [];
+
+      for(let i = 0; i<this.shoppingBasket.length; i++){
+        if(this.checkedProduct[i]==true){
+          this.orderInfo.shoppingBasket.push(this.shoppingBasket[i]);
+        }
+      }
+
+      this.app.getRootNavs()[0].push(OrderPage, { class: "OrderPage", orderInfo: this.orderInfo});
+    }else{
+      let alert = this.alertCtrl.create({
+        message: '선택된 상품이 없습니다..',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    }
   }
 
   increaseProductNum(index) {
-    this.shoppingBasket[index].count++;
-    this.shoppingBasket[index].totalPrice = this.shoppingBasket[index].salePrice * this.shoppingBasket[index].count;
+    this.orderInfo.shoppingBasket[index].count++;
+    this.orderInfo.shoppingBasket[index].totalPrice = this.orderInfo.shoppingBasket[index].salePrice * this.orderInfo.shoppingBasket[index].count;
 
-    this.calOrderPrice()
+    this.calOrderPrice();
   }
 
   decreaseProductNum(index) {
 
-    if (this.shoppingBasket[index].count > 1) {
-      this.shoppingBasket[index].count--;
+    if (this.orderInfo.shoppingBasket[index].count > 1) {
+      this.orderInfo.shoppingBasket[index].count--;
     }
 
-    this.shoppingBasket[index].totalPrice = this.shoppingBasket[index].salePrice * this.shoppingBasket[index].count;
+    this.orderInfo.shoppingBasket[index].totalPrice = this.orderInfo.shoppingBasket[index].salePrice * this.orderInfo.shoppingBasket[index].count;
 
-    this.calOrderPrice()
+    this.calOrderPrice();
   }
 
   updateProductCheck(index){
@@ -107,7 +118,7 @@ export class ShoppingbasketPage {
       if(this.checkedProduct[i]==true){
         orderPrice += this.shoppingBasket[i].price * this.shoppingBasket[i].count;
         
-        if(this.shoppingBasket[i].saleMethod=='fixed'){
+        if (this.shoppingBasket[i].saleMethod=='fixed'){
           sale += this.shoppingBasket[i].discount * this.shoppingBasket[i].count;
         }else{
           sale += this.shoppingBasket[i].price * this.shoppingBasket[i].discount / 100 * this.shoppingBasket[i].count;
@@ -117,25 +128,25 @@ export class ShoppingbasketPage {
       }
     }
 
-    this.orderPrice = orderPrice;
-    this.sale = sale;
+    this.orderInfo.orderPrice = orderPrice;
+    this.orderInfo.sale = sale;
     this.checkedItemNumber = checkedItemNumber;
 
     if ((orderPrice - sale) >= this.storageProvider.deliveryFreeFee) {
-      this.deliveryFee = 0;
-    } else if(this.orderPrice == 0){
-      this.deliveryFee = 0;
+      this.orderInfo.deliveryFee = 0;
+    } else if (this.orderInfo.orderPrice == 0){
+      this.orderInfo.deliveryFee = 0;
     }else{
-      this.deliveryFee = this.storageProvider.deliveryFee;
+      this.orderInfo.deliveryFee = this.storageProvider.deliveryFee;
     }
 
-    this.totalPrice = this.orderPrice - this.sale + this.deliveryFee
+    this.orderInfo.totalPrice = this.orderInfo.orderPrice - this.orderInfo.sale + this.orderInfo.deliveryFee
   }
 
   deleteItem(){
     for (let i = this.checkedProduct.length - 1; i >=0; i--) {
       if (this.checkedProduct[i] == true) {
-        this.shoppingBasket.splice(i,1);
+        this.orderInfo.shoppingBasket.splice(i,1);
         this.checkedProduct.splice(i,1);
       }
     }

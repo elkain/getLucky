@@ -27,7 +27,7 @@
     <ion-list class="basket-product-head">
       <ion-item class="basket-product-check">
         <ion-label><b>전체선택(n/N)</b></ion-label>
-        <ion-checkbox color="white" [(ngModel)]="checkedAllProduct" (click)="updateAllProductCheck()" mode="md" checked="false"></ion-checkbox>
+        <ion-checkbox color="white" [(ngModel)]="checkedAllProduct" (click)="updateAllProductCheck()" mode="md"></ion-checkbox>
         <button class="basket-sel-del" (click)="deleteItem()" ion-button clear item-end>선택삭제</button>
       </ion-item>
     </ion-list>
@@ -43,7 +43,7 @@
     <!-- 상품 장바구니 시작-->
     <ion-grid class="basket-product-list" *ngFor="let product of shoppingBasket; let i = index">
       <ion-row class="basket-product">
-        <ion-checkbox color="white" item-top mode="md" [(ngModel)]="checkedProduct[i]" (ionChange)="updateProductCheck(i)" checked="false"></ion-checkbox>
+        <ion-checkbox color="white" item-top mode="md" [(ngModel)]="checkedProduct[i]" (ionChange)="updateProductCheck(i)"></ion-checkbox>
         <div class="basket-product-img">
           <img src="{{product.imagePath}}">
         </div>
@@ -79,19 +79,19 @@
     <ion-list class="basket-product-sum">
       <ion-item>
         <p >주문금액</p>
-        <p style="text-align: right;">{{orderPrice}}원</p>
+        <p style="text-align: right;">{{orderInfo.orderPrice}}원</p>
       </ion-item>
       <ion-item>
         <p>할인금액</p>
-        <p style="text-align: right;">{{sale}}원</p>
+        <p style="text-align: right;">{{orderInfo.sale}}원</p>
       </ion-item>
       <ion-item>
         <p>배송비</p>
-        <p style="text-align: right;">{{deliveryFee}}원</p>
+        <p style="text-align: right;">{{orderInfo.deliveryFee}}원</p>
       </ion-item>
       <ion-item>
         <p><b>주문 금액</b></p>
-        <p style="text-align: right;">{{totalPrice}}원</p>
+        <p style="text-align: right;">{{orderInfo.totalPrice}}원</p>
       </ion-item>
     </ion-list>
     <!-- 주문 금액 끝-->
@@ -105,7 +105,7 @@
       <ion-col col-6>
         <p>전체 {{checkedItemNumber}} 개</p>
         <span>
-          <b> {{totalPrice}}원</b>
+          <b> {{orderInfo.totalPrice}}원</b>
         </span>
       </ion-col>
       <ion-col col-6>
