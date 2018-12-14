@@ -9,15 +9,13 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class OrderProvider {
 
+  orderInfos = [];
+
   constructor() {
     console.log('Hello OrderProvider Provider');
   }
 
-  orderProduct(item) {
-
-  }
-
-  orderShoppingBasket(basket){
-
+  addOrderInfo(order){
+    this.orderInfos.push(order);
   }
 }
