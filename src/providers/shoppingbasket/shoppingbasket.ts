@@ -15,10 +15,6 @@ export class ShoppingbasketProvider {
     console.log('Hello ShoppingbasketProvider Provider');
   }
 
-  addShoppingBasket(item) {
-
-  }
-
   delShoppingBasket(item){
 
   }
@@ -41,7 +37,22 @@ export class ShoppingbasketProvider {
       salePrice = 0;
     }
 
+    product.salePrice = salePrice;
     return salePrice;
+  }
+
+  addShoppingBasket(item) {
+    let flag = false;
+
+    for (let i = 0; i < this.shoppingBasket.orderedProducts.length; i++) {
+      if (item.name == this.shoppingBasket.orderedProducts[i].name) {
+        flag = true;
+      }
+    }
+
+    if (flag == false) {
+      this.shoppingBasket.orderedProducts.push(item);
+    }
   }
 
 }
