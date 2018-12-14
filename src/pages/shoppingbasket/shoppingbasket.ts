@@ -2,6 +2,7 @@ import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic-angular';
 import { OrderPage } from '../order/order';
 import { StorageProvider } from '../../providers/storage/storage';
+import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
 
 /**
  * Generated class for the ShoppingbasketPage page.
@@ -24,16 +25,29 @@ export class ShoppingbasketPage {
   checkedItemNumber:number;
   deliveryFee:number;
   shoppingBasket = [];
+  shoppingBasket1 = { orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, checkedAllProduct: true, checkedProduct: [], orderedProducts: [] };
 
   orderInfo = {orderPrice:0, sale:0, deliveryFee:0, totalPrice:0, shoppingBasket:[]};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, public storageProvider: StorageProvider, private alertCtrl:AlertController) {
-    //this.shoppingBasket = this.storageProvider.shoppingBasket;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, private alertCtrl:AlertController , 
+    public storageProvider: StorageProvider, public shoppingbasketProvider:ShoppingbasketProvider) {
+
+    this.shoppingBasket1 = this.shoppingbasketProvider.shoppingBasket;
+
+    console.log("this.shoppingBasket1.orderedProducts.length : " + this.shoppingBasket1.orderedProducts.length);
+    
     this.shoppingBasket = this.storageProvider.shoppingBasket;
+    
     this.itemNumber = this.shoppingBasket.length;
+    this.itemNumber = this.shoppingBasket1.orderedProducts.length;
     this.checkedItemNumber = 0;
 
-    for(let i = 0; i<this.itemNumber; i++){
+    for (let i = 0; i < this.shoppingBasket1.orderedProducts.length; i++){
+      this.shoppingBasket1.checkedProduct.push(true);
+    }
+    this.shoppingBasket1.checkedAllProduct = true;
+
+    for (let i = 0; i < this.itemNumber; i++) {
       this.checkedProduct.push(true);
     }
     this.checkedAllProduct = true;

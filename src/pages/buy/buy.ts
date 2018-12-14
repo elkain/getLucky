@@ -60,6 +60,7 @@ export class BuyPage {
   addToShoppingBasket() {
     
     this.storageProvider.addShoppingBasket(this.product);
+    this.shoppingbasketProvider.addShoppingBasket(this.product);
 
     const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {}, { cssClass: 'popover-shopping-basket' });
     popover.present();
