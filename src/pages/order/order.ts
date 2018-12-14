@@ -69,8 +69,6 @@ export class OrderPage {
       this.orderInfo.totalPrice = product.salePrice * product.count + this.orderInfo.deliveryFee;
       this.orderInfo.orderedProducts.push(product);
 
-      console.log(this.orderInfo);
-
     } else if (navParams.get("class") == "shoppingbasket"){
       let shoppingbasket = this.shoppingbasketProvider.shoppingBasket;
       let productsCount = shoppingbasket.orderedProducts.length;
@@ -91,9 +89,6 @@ export class OrderPage {
       this.orderInfo.sale = shoppingbasket.sale;
       this.orderInfo.deliveryFee = shoppingbasket.deliveryFee;
       this.orderInfo.totalPrice = shoppingbasket.totalPrice;
-
-      console.log(this.orderInfo);
-      
     } else {
       console.log("link error(orderPage)");
     }
@@ -107,14 +102,12 @@ export class OrderPage {
     this.basicPlaceStyle = { 'select-segment': true, 'unselect-segment': false };
     this.newPlaceStyle = { 'select-segment': false, 'unselect-segment': true };
     this.selectedDeliveryType ="memberSaved";
-    console.log(this.selectedDeliveryType);
   }
 
   selectNewPlaceSegment(){
     this.basicPlaceStyle = { 'select-segment': false, 'unselect-segment': true };
     this.newPlaceStyle = { 'select-segment': true, 'unselect-segment': false };
     this.selectedDeliveryType = "memberNew";
-    console.log(this.selectedDeliveryType);
   }
 
   hideDeliveryInfo(){
@@ -129,8 +122,6 @@ export class OrderPage {
   }
 
   hideProductInfo(){
-    console.log("button click", this.showProductInfo);
-
     if (this.showProductInfo == true) {
       this.showProductInfo = false;
     } else if (this.showProductInfo == false) {
@@ -141,7 +132,6 @@ export class OrderPage {
   }
 
   hidePaymentInfo(){
-
     if (this.showPaymentInfo == true) {
       this.showPaymentInfo = false;
     } else if (this.showPaymentInfo == false) {
@@ -173,9 +163,6 @@ export class OrderPage {
 
   confirmOrder(){
 
-    console.log(this.orderInfo);
-    console.log(this.nonMemberInfo);
-    
     this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
   }
 

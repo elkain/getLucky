@@ -114,8 +114,6 @@ export class ShoppingbasketPage {
     let checkedItemNumber = 0;
     let itemNumber = this.shoppingBasket.checkedProducts.length;
 
-    console.log(this.shoppingBasket);
-    
     for (let i = 0; i < itemNumber; i++){
       if (this.shoppingBasket.checkedProducts[i]==true){
                 
