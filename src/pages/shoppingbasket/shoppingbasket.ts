@@ -152,9 +152,10 @@ export class ShoppingbasketPage {
       if (this.shoppingBasket.checkedProducts[i] == true) {
         this.shoppingBasket.orderedProducts.splice(i, 1);
         this.shoppingBasket.checkedProducts.splice(i, 1);
+        this.itemNumber--;
       }
     }
-
+    
     this.calOrderPrice();
     this.shoppingbasketProvider.substituteBasket(this.shoppingBasket);
   }

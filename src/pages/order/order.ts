@@ -73,8 +73,20 @@ export class OrderPage {
 
     } else if (navParams.get("class") == "shoppingbasket"){
       let shoppingbasket = this.shoppingbasketProvider.shoppingBasket;
+      let productsCount = shoppingbasket.orderedProducts.length;
 
-      this.orderInfo.orderedProducts = shoppingbasket.orderedProducts;
+      this.orderInfo.orderedProducts = [];
+
+      if (shoppingbasket.checkedAllProducts == true){
+        this.orderInfo.orderedProducts = shoppingbasket.orderedProducts;
+      }else{
+        for (let i = 0; i < productsCount; i++) {
+          if (shoppingbasket.checkedProducts[i] == true) {
+            this.orderInfo.orderedProducts.push(shoppingbasket.orderedProducts[i]);
+          }
+        }
+      }
+      
       this.orderInfo.orderPrice = shoppingbasket.orderPrice;
       this.orderInfo.sale = shoppingbasket.sale;
       this.orderInfo.deliveryFee = shoppingbasket.deliveryFee;
