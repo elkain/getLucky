@@ -64,7 +64,7 @@ export class ShoppingbasketPage {
         }
       }*/
 
-      this.app.getRootNavs()[0].push(OrderPage, { class: "OrderPage"});
+      this.app.getRootNavs()[0].push(OrderPage, { class: "shoppingbasket"});
     }else{
       let alert = this.alertCtrl.create({
         message: '선택된 상품이 없습니다..',

@@ -29,7 +29,7 @@ export class ShoppingbasketPopoverPage {
 
   confirm() {
     this.viewCtrl.dismiss().then(()=>{
-      this.app.getRootNavs()[0].push(TabsPage, { tabIndex:4});
+      this.app.getRootNavs()[0].push(TabsPage, {class:"shoppingbasket-popover", tabIndex:4});
     });
   }
 }

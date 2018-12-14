@@ -90,7 +90,7 @@ export class HomePage {
   }
 
   itemSelected(item){
-    this.app.getRootNavs()[0].push(ProductdetailPage, {class:"ProductdetailPage", product:item});
+    this.app.getRootNavs()[0].push(ProductdetailPage, {class:"home", product:item});
   }
 
   slideItemSelect(){
@@ -136,7 +136,7 @@ export class HomePage {
   addToShoppingBasket(product) {
 
     this.shoppingbasketProvider.addShoppingBasket(product);
-    const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {product:product}, { cssClass: 'popover-shopping-basket'});
+    const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {}, { cssClass: 'popover-shopping-basket'});
     popover.present();
   }
 

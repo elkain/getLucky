@@ -43,7 +43,7 @@ export class BuyPage {
   }
 
   moveToHome() {
-    this.navCtrl.setRoot(TabsPage, {class:"TabsPage"});
+    this.navCtrl.setRoot(TabsPage, {class:"buy"});
   }
 
   goToShoppingBasket() {
@@ -55,7 +55,7 @@ export class BuyPage {
     //this.calOrderInfo();
     this.orderProvider.orderProduct(this.product);
 
-    this.navCtrl.push(OrderPage, { class: "OrderPage" });
+    this.navCtrl.push(OrderPage, { class: "buy" , });
   }
 
   addToShoppingBasket() {
