@@ -32,8 +32,8 @@ export class BuyPage {
     this.product = this.navParams.get("product");
     
     //this.product.salePrice = this.shoppingbasketProvider.calProductPrice(this.product);
-    this.product.totalPrice = this.product.salePrice * this.product.count;
     this.product.count = 1;
+    this.product.totalPrice = this.product.salePrice * this.product.count;
     this.deliveryFee = storageProvider.deliveryFee;
     this.deliveryFreeString = storageProvider.deliveryFreeString;
   }
@@ -51,11 +51,8 @@ export class BuyPage {
   }
 
   goToOrder() {
-
     //this.calOrderInfo();
-    this.orderProvider.orderProduct(this.product);
-
-    this.navCtrl.push(OrderPage, { class: "buy" , });
+    this.navCtrl.push(OrderPage, { class: "buy", product: this.product});
   }
 
   addToShoppingBasket() {

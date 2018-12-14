@@ -17,17 +17,18 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class OrderPage {
 
+  isMember: boolean;
+  
+  selectedDeliveryType: string;
+  showDeliveryInfo: boolean = true;
+  showProductInfo: boolean = true;
+  showPaymentInfo: boolean = true;
+  showPaymentMethodInfo: boolean = true;
+
   basicPlaceStyle = new Object();
   newPlaceStyle = new Object();
-  selectedDeliveryType:string;
-  isMember:boolean;
-  showDeliveryInfo:boolean=true;
-  showProductInfo:boolean=true;
-  showPaymentInfo:boolean=true;
-  showPaymentMethodInfo: boolean = true;
-  paymentMethodColor = {cash:"white", card:"white", bank:"white"};
-  orderInfo = {type:"", ordererInfo:{}, orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, paymentMethod:"", shoppingBasket: [] }; // type : member or nonMember 
-  nonMemberInfo = {ordererName : "", ordererMobile:"", ordererEmail:"", recieverName:"", recieverAddress:"", deliveryTime:"", deliveryMemo:""};
+  paymentMethodColor = { cash: "white", card: "white", bank: "white" };
+  
   ordererMobile1: string;
   ordererMobile2: string;
   ordererMobile3: string;
@@ -38,22 +39,28 @@ export class OrderPage {
   address2: string;
   address3: string;
 
+  orderInfo = {type:"", ordererInfo:{}, orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, paymentMethod:"", orderedProducts: [] }; // type : member or nonMember 
+  nonMemberInfo = {ordererName : "", ordererMobile:"", ordererEmail:"", recieverName:"", recieverAddress:"", deliveryTime:"", deliveryMemo:""};
+  
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public storageProvider:StorageProvider) {
     this.basicPlaceStyle = { 'select-segment': true, 'unselect-segment': false};
     this.newPlaceStyle = { 'select-segment': false, 'unselect-segment': true };
     this.selectedDeliveryType='memberSaved';
     this.isMember = this.storageProvider.isMember;
 
-    this.orderInfo = this.navParams.get("orderInfo");
+    if (navParams.get("class") == "buy") {
+      //this.orderInfo.orderedProducts = this.navParams.get("product");
+      let product;
+      product = navParams.get("product");
+      console.log(product);
+      this.calOrderPrice(product);  
 
-    if(this.isMember == true){
-      this.orderInfo.type="member";
-      this.orderInfo.ordererInfo = this.storageProvider.memberData;
-    }else{
-      this.orderInfo.type="nonMember";
-      this.orderInfo.ordererInfo = this.nonMemberInfo;
+      console.log(this.orderInfo);
+      this.orderInfo.orderedProducts.push(product);
+    } else {
+
     }
-    console.log(this.orderInfo);
   }
 
   ionViewDidLoad() {
@@ -154,5 +161,19 @@ export class OrderPage {
 
   findAddr(){
 
+  }
+
+  calOrderPrice(product) {
+
+    this.orderInfo.orderPrice = product.price * product.count;
+    this.orderInfo.sale = (product.price - product.salePrice) * product.count;
+
+    if ((this.orderInfo.orderPrice - this.orderInfo.sale) >= this.storageProvider.deliveryFreeFee) {
+      this.orderInfo.deliveryFee = 0;
+    } else {
+      this.orderInfo.deliveryFee = this.storageProvider.deliveryFee;
+    }
+
+    this.orderInfo.totalPrice = product.salePrice * product.count + this.orderInfo.deliveryFee;
   }
 }
