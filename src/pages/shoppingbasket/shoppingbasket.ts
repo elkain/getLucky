@@ -35,6 +35,8 @@ export class ShoppingbasketPage {
     this.itemNumber = this.shoppingBasket.orderedProducts.length;
     this.checkedItemNumber = 0;
 
+    this.shoppingBasket.checkedProducts = [];
+
     for (let i = 0; i < this.shoppingBasket.orderedProducts.length; i++){
       this.shoppingBasket.checkedProducts.push(true);
       this.shoppingBasket.orderedProducts[i].count = 1;
@@ -42,7 +44,6 @@ export class ShoppingbasketPage {
     this.shoppingBasket.checkedAllProducts = true;
     this.deliveryFee = storageProvider.deliveryFee;
 
-    console.log(this.shoppingBasket.orderedProducts[0].count);
     this.calOrderPrice();
   }
 
@@ -56,14 +57,8 @@ export class ShoppingbasketPage {
 
   goToOrder(){
     if (this.checkedItemNumber>0){
-      /*this.shoppingBasket.orderedProducts = [];
 
-      for (let i = 0; i < this.itemNumber; i++){
-        if(this.checkedProducts[i]==true){
-          this.shoppingBasket.orderedProducts.push(this.shoppingBasket.orderedProducts[i]);
-        }
-      }*/
-
+      this.shoppingbasketProvider.substituteBasket(this.shoppingBasket);
       this.app.getRootNavs()[0].push(OrderPage, { class: "shoppingbasket"});
     }else{
       let alert = this.alertCtrl.create({
@@ -117,9 +112,13 @@ export class ShoppingbasketPage {
     let orderPrice = 0;
     let sale = 0;
     let checkedItemNumber = 0;
+    let itemNumber = this.shoppingBasket.checkedProducts.length;
 
-    for (let i = 0; i < this.shoppingBasket.checkedProducts.length; i++){
+    console.log(this.shoppingBasket);
+    
+    for (let i = 0; i < itemNumber; i++){
       if (this.shoppingBasket.checkedProducts[i]==true){
+                
         orderPrice += this.shoppingBasket.orderedProducts[i].price * this.shoppingBasket.orderedProducts[i].count;
         
         if (this.shoppingBasket.orderedProducts[i].saleMethod=='fixed'){
@@ -127,7 +126,6 @@ export class ShoppingbasketPage {
         }else{
           sale += this.shoppingBasket.orderedProducts[i].price * this.shoppingBasket.orderedProducts[i].discount / 100 * this.shoppingBasket.orderedProducts[i].count;
         }
-
         checkedItemNumber++;
       }
     }
@@ -148,15 +146,16 @@ export class ShoppingbasketPage {
   }
 
   deleteItem(){
-    for (let i = this.itemNumber - 1; i >=0; i--) {
-      if (this.shoppingBasket.checkedProducts[i] == true) {
-        this.shoppingBasket.orderedProducts.splice(i,1);
-        this.shoppingBasket.checkedProducts.splice(i,1);
 
-        this.itemNumber--;
+    let itemNumber = this.shoppingBasket.orderedProducts.length;
+    for (let i = itemNumber - 1; i >= 0; i--) {
+      if (this.shoppingBasket.checkedProducts[i] == true) {
+        this.shoppingBasket.orderedProducts.splice(i, 1);
+        this.shoppingBasket.checkedProducts.splice(i, 1);
       }
     }
 
     this.calOrderPrice();
+    this.shoppingbasketProvider.substituteBasket(this.shoppingBasket);
   }
 }

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-an
 import { SelectPopoverPage } from '../select-popover/select-popover';
 import { TabsPage } from '../tabs/tabs';
 import { StorageProvider } from '../../providers/storage/storage';
+import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
 /**
  * Generated class for the OrderPage page.
  *
@@ -39,27 +40,50 @@ export class OrderPage {
   address2: string;
   address3: string;
 
-  orderInfo = {type:"", ordererInfo:{}, orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, paymentMethod:"", orderedProducts: [] }; // type : member or nonMember 
-  nonMemberInfo = {ordererName : "", ordererMobile:"", ordererEmail:"", recieverName:"", recieverAddress:"", deliveryTime:"", deliveryMemo:""};
+  orderInfo = {customInfo:{}, orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, paymentMethod:"", orderedProducts: [] }; // type : member or nonMember 
+  nonMemberInfo = {type:"nonMember", ordererName: "", ordererMobile: "", ordererEmail: "", recieverName: "", recieverAddress: "", recieverMobile1:"", deliveryTime:"", deliveryMemo:""};
+  memberInfo = {type:"member", recieverName: "", recieverAddressLists: [], recieverMobile1: "",  deliveryTime: "", deliveryMemo: "" };
   
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public storageProvider:StorageProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, 
+    public storageProvider:StorageProvider, public shoppingbasketProvider:ShoppingbasketProvider) {
+
     this.basicPlaceStyle = { 'select-segment': true, 'unselect-segment': false};
     this.newPlaceStyle = { 'select-segment': false, 'unselect-segment': true };
-    this.selectedDeliveryType='memberSaved';
+    this.selectedDeliveryType = 'memberSaved';
     this.isMember = this.storageProvider.isMember;
 
     if (navParams.get("class") == "buy") {
-      //this.orderInfo.orderedProducts = this.navParams.get("product");
       let product;
       product = navParams.get("product");
-      console.log(product);
-      this.calOrderPrice(product);  
+      
+      this.orderInfo.orderPrice = product.price * product.count;
+      this.orderInfo.sale = (product.price - product.salePrice) * product.count;
+
+      if ((this.orderInfo.orderPrice - this.orderInfo.sale) >= this.storageProvider.deliveryFreeFee) {
+        this.orderInfo.deliveryFee = 0;
+      } else {
+        this.orderInfo.deliveryFee = this.storageProvider.deliveryFee;
+      }
+
+      this.orderInfo.totalPrice = product.salePrice * product.count + this.orderInfo.deliveryFee;
+      this.orderInfo.orderedProducts.push(product);
 
       console.log(this.orderInfo);
-      this.orderInfo.orderedProducts.push(product);
-    } else {
 
+    } else if (navParams.get("class") == "shoppingbasket"){
+      let shoppingbasket = this.shoppingbasketProvider.shoppingBasket;
+
+      this.orderInfo.orderedProducts = shoppingbasket.orderedProducts;
+      this.orderInfo.orderPrice = shoppingbasket.orderPrice;
+      this.orderInfo.sale = shoppingbasket.sale;
+      this.orderInfo.deliveryFee = shoppingbasket.deliveryFee;
+      this.orderInfo.totalPrice = shoppingbasket.totalPrice;
+
+      console.log(this.orderInfo);
+      
+    } else {
+      console.log("link error(orderPage)");
     }
   }
 
@@ -82,7 +106,6 @@ export class OrderPage {
   }
 
   hideDeliveryInfo(){
-    console.log("button click");
     
     if(this.showDeliveryInfo==true){
       this.showDeliveryInfo=false;
@@ -106,7 +129,6 @@ export class OrderPage {
   }
 
   hidePaymentInfo(){
-    console.log("button click", this.showPaymentInfo);
 
     if (this.showPaymentInfo == true) {
       this.showPaymentInfo = false;
@@ -118,7 +140,6 @@ export class OrderPage {
   }
 
   hidePaymentMethodInfo() {
-    console.log("button click", this.showPaymentMethodInfo);
 
     if (this.showPaymentMethodInfo == true) {
       this.showPaymentMethodInfo = false;
@@ -161,19 +182,5 @@ export class OrderPage {
 
   findAddr(){
 
-  }
-
-  calOrderPrice(product) {
-
-    this.orderInfo.orderPrice = product.price * product.count;
-    this.orderInfo.sale = (product.price - product.salePrice) * product.count;
-
-    if ((this.orderInfo.orderPrice - this.orderInfo.sale) >= this.storageProvider.deliveryFreeFee) {
-      this.orderInfo.deliveryFee = 0;
-    } else {
-      this.orderInfo.deliveryFee = this.storageProvider.deliveryFee;
-    }
-
-    this.orderInfo.totalPrice = product.salePrice * product.count + this.orderInfo.deliveryFee;
   }
 }

@@ -56,4 +56,7 @@ export class ShoppingbasketProvider {
     }
   }
 
+  substituteBasket(shoppingBasket){
+    this.shoppingBasket = shoppingBasket;
+  }
 }
