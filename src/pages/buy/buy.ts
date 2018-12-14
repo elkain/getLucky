@@ -31,8 +31,9 @@ export class BuyPage {
 
     this.product = this.navParams.get("product");
     
-    this.product.salePrice = this.shoppingbasketProvider.calProductSalePrice(this.product);
+    //this.product.salePrice = this.shoppingbasketProvider.calProductPrice(this.product);
     this.product.totalPrice = this.product.salePrice * this.product.count;
+    this.product.count = 1;
     this.deliveryFee = storageProvider.deliveryFee;
     this.deliveryFreeString = storageProvider.deliveryFreeString;
   }
@@ -59,7 +60,6 @@ export class BuyPage {
 
   addToShoppingBasket() {
     
-    this.storageProvider.addShoppingBasket(this.product);
     this.shoppingbasketProvider.addShoppingBasket(this.product);
 
     const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {}, { cssClass: 'popover-shopping-basket' });

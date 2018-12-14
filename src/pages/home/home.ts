@@ -3,6 +3,7 @@ import { NavController, Slides, App, PopoverController, NavParams} from 'ionic-a
 import { ProductdetailPage } from '../productdetail/productdetail';
 import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
 import { StorageProvider } from '../../providers/storage/storage';
+import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
 
 @Component({
   selector: 'page-home',
@@ -36,7 +37,9 @@ export class HomePage {
 
   images: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
-  constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams, public storageProvider:StorageProvider) {
+  constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams,
+    public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider) {
+
     this.homeParams = navParams.data;     // category from category page
 
     this.products = [   // sale method : fixed, percent
@@ -51,7 +54,7 @@ export class HomePage {
 
     /* 할인율을 적용하여 가격 측정 */
     for (var i = 0; i < this.products.length; i++) {
-      this.storageProvider.calProductSalePrice(this.products[i]);
+      this.storageProvider.calProductPrice(this.products[i]);
     }
     
     /*for (var i=0; i < this.products.length; i++) {
@@ -132,8 +135,7 @@ export class HomePage {
 
   addToShoppingBasket(product) {
 
-    this.storageProvider.addShoppingBasket(product);
-
+    this.shoppingbasketProvider.addShoppingBasket(product);
     const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {product:product}, { cssClass: 'popover-shopping-basket'});
     popover.present();
   }

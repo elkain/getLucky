@@ -68,7 +68,7 @@ export class StorageProvider {
     ];
   }
 
-  calProductSalePrice(product) {
+  calProductPrice(product) {
     let salePrice: number;
 
     if (product.saleMethod == "fixed") {

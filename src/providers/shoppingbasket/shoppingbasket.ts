@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ShoppingbasketProvider {
 
-  shoppingBasket = { orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, checkedAllProduct: true, checkedProduct: [], orderedProducts:[] };
+  shoppingBasket = { orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, checkedAllProducts: true, checkedProducts: [], orderedProducts:[] };
 
   constructor() {
     console.log('Hello ShoppingbasketProvider Provider');
@@ -23,7 +23,7 @@ export class ShoppingbasketProvider {
 
   }
 
-  calProductSalePrice(product) {
+  calProductPrice(product) {
     let salePrice: number;
 
     if (product.saleMethod == "fixed") {
@@ -38,6 +38,7 @@ export class ShoppingbasketProvider {
     }
 
     product.salePrice = salePrice;
+    product.totalPrice = (product.price - product.salePrice);
     return salePrice;
   }
 
