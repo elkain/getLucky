@@ -48,6 +48,6 @@ export class ProductdetailPage {
   }
 
   goToBuy(){
-    this.navCtrl.push(BuyPage, { class: "BuyPage", product:this.product});
+    this.navCtrl.push(BuyPage, { class: "productdetail", product:this.product});
   }
 }

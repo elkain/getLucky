@@ -156,7 +156,7 @@ export class SignupPage {
       alert.present();
     } else{
       if(this.enterMemberData()==true){
-        this.navCtrl.setRoot(TabsPage, { class: "TabsPage" });
+        this.navCtrl.setRoot(TabsPage, { class: "signup" });
       }
     }
   }
@@ -168,7 +168,7 @@ export class SignupPage {
           text:'확인',
           handler:()=>{
             if (this.enterMemberData() == true) {
-              this.navCtrl.setRoot(TabsPage, { class: "TabsPage" });
+              this.navCtrl.setRoot(TabsPage, { class: "signup" });
             }
           }
         }],

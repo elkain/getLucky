@@ -99,7 +99,7 @@ export class MypagePage {
   }
 
   moveToSignup(){
-    this.app.getRootNavs()[0].push(SignupPage, {class:"SignupPage"});
+    this.app.getRootNavs()[0].push(SignupPage, {class:"mypage"});
   }
 
   findCategoryChange(Category) {
@@ -141,7 +141,7 @@ export class MypagePage {
 
   menuSelected(menu){
     if (menu == "회원정보수정") {
-      this.app.getRootNavs()[0].push(SignupPage, { class: "SignupPage" });
+      this.app.getRootNavs()[0].push(SignupPage, { class: "mypage" });
     }else{
       this.showPageType = menu;
       this.showBackbtn = true;
