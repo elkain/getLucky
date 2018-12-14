@@ -5,7 +5,7 @@
 <ion-content>
     <!-- home navigation segment start-->
     <ion-grid no-margin no-padding class="home-nav-menu">
-        <ion-row *ngIf="homeParams.class==undefined || homeParams.class=='buy'">
+        <ion-row *ngIf="homeParams.class==undefined || homeParams.class=='buy'|| homeParams.class=='shoppingbasket-popover'">
             <ion-col *ngFor="let category of homeCategories">
                 <ion-segment [(ngModel)]="homeCategorySelected">
                     <ion-segment-button [value]="category" (click)="homeCategoryChange(category)">
