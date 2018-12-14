@@ -4,6 +4,8 @@ import { TabsPage} from '../tabs/tabs';
 import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
 import { OrderPage } from '../order/order';
 import { StorageProvider } from '../../providers/storage/storage';
+import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
+import { OrderProvider } from '../../providers/order/order';
 
 /**
  * Generated class for the BuyPage page.
@@ -24,10 +26,12 @@ export class BuyPage {
   deliveryFreeString:string;
   orderInfo = { orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, shoppingBasket: [] };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController, public storageProvider:StorageProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController, 
+    public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider, public orderProvider: OrderProvider) {
+
     this.product = this.navParams.get("product");
     
-    this.product.salePrice = this.storageProvider.calProductSalePrice(this.product);
+    this.product.salePrice = this.shoppingbasketProvider.calProductSalePrice(this.product);
     this.product.totalPrice = this.product.salePrice * this.product.count;
     this.deliveryFee = storageProvider.deliveryFee;
     this.deliveryFreeString = storageProvider.deliveryFreeString;
@@ -47,16 +51,17 @@ export class BuyPage {
 
   goToOrder() {
 
-    this.calOrderInfo();
+    //this.calOrderInfo();
+    this.orderProvider.orderProduct(this.product);
 
-    this.navCtrl.push(OrderPage, { class: "OrderPage" , orderInfo:this.orderInfo });
+    this.navCtrl.push(OrderPage, { class: "OrderPage" });
   }
 
   addToShoppingBasket() {
     
     this.storageProvider.addShoppingBasket(this.product);
 
-    const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, { product: this.product }, { cssClass: 'popover-shopping-basket' });
+    const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, { cssClass: 'popover-shopping-basket' });
     popover.present();
   }
 
@@ -73,7 +78,7 @@ export class BuyPage {
     this.product.totalPrice = this.product.salePrice * this.product.count;
   }
 
-  calOrderInfo(){
+  /*calOrderInfo(){
     this.orderInfo.shoppingBasket=[];
     this.orderInfo.shoppingBasket.push(this.product);
     this.orderInfo.orderPrice = this.product.price * this.product.count;
@@ -88,5 +93,5 @@ export class BuyPage {
     }
 
     this.orderInfo.totalPrice = this.orderInfo.orderPrice - this.orderInfo.sale + this.orderInfo.deliveryFee;
-  }
+  }*/
 }
