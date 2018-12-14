@@ -82,6 +82,8 @@ export class StorageProvider {
       salePrice = 0;
     }
 
+    product.salePrice = salePrice;
+    
     return salePrice;
   }
 

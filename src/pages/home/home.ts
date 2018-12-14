@@ -50,7 +50,11 @@ export class HomePage {
     ]; 
 
     /* 할인율을 적용하여 가격 측정 */
-    for (var i=0; i < this.products.length; i++) {
+    for (var i = 0; i < this.products.length; i++) {
+      this.storageProvider.calProductSalePrice(this.products[i]);
+    }
+    
+    /*for (var i=0; i < this.products.length; i++) {
       this.products[i].count = 1;
       
       if (this.products[i].saleMethod == "fixed") {
@@ -61,7 +65,7 @@ export class HomePage {
         this.products[i].salePrice = this.products[i].price;
 
       }
-    }
+    }*/
   }
 
   ionViewDidEnter() {
