@@ -22,6 +22,9 @@ import { BuyPageModule } from '../pages/buy/buy.module';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StorageProvider } from '../providers/storage/storage';
+import { ShoppingbasketProvider } from '../providers/shoppingbasket/shoppingbasket';
+import { OrderProvider } from '../providers/order/order';
+import { MemberProvider } from '../providers/member/member';
 
 @NgModule({
   declarations: [
@@ -60,7 +63,10 @@ import { StorageProvider } from '../providers/storage/storage';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    StorageProvider
+    StorageProvider,
+    ShoppingbasketProvider,
+    OrderProvider,
+    MemberProvider
   ]
 })
 export class AppModule {}

@@ -12,27 +12,33 @@ export class StorageProvider {
 
   isMember:boolean;
   shopTitle: string = "MARKET LUCKY";
+  
   deliveryFee = 3000;
   deliveryFreeString = "3만원";
   deliveryFreeFee = 30000;
+
   recentSearchItems = new Array();
-  popularSearchItems= new Array() ;
-  memberData: { username: string, password: string, name: string, email: string, mobile: string, address: string, birth: string, sex: string };
-  findMemberData : {username: string, name:string, email:string, mobile:string, type:string, method:string};
+  popularSearchItems= new Array();
+
   bestCategories = new Array();
   saleCategories = new Array();
+  
+  memberData: { username: string, password: string, name: string, email: string, mobile: string, address: string, birth: string, sex: string };
+  findMemberData: { username: string, name: string, email: string, mobile: string, type: string, method: string };
+  deliveryPlaceInfos = [];
+
   shoppingBasket = Array();
   nonMemberOrderInfo = {};
   memberOrderInfo = {};
-  deliveryPlaceInfos = [];
+
+  products = new Array();
+
   mobileOptionLists = ["010", "011", "018"];
   emailOptionLists = ["naver.com", "gmail.com", "daum.net", "outlook.com", "nate.com", "yahoo.com"];
   deliveryTimeLists = ["9:00 ~ 12:00","12::00 ~ 15:00", "15:00 ~ 18:00", "18:00 ~ 21:00"];
   deliveryMemoLists = ["부재시 경비실에 맡겨주세요", "오시기 전에 미리 연락주세요", "빨리 배송해주세요"];
 
   imageURL: string = "./assets/slides/";
-
-  products = new Array();
 
   constructor() {
     console.log('Hello StorageProvider Provider');
@@ -91,5 +97,9 @@ export class StorageProvider {
     if(flag == false){
       this.shoppingBasket.push(item);
     }
+  }
+
+  calDeliveryFee(item){
+    
   }
 }
