@@ -32,11 +32,10 @@ export class OrderDetailPage {
     this.showPaymentInfo = true;
     this.showDeliveryInfo = true;
     
-    let orderInfos = this.orderProvider.orderInfos;
-    this.orderInfo = orderInfos[orderInfos.length-1];
-
+    this.orderInfo = this.orderProvider.orderInfos[this.orderProvider.orderInfos.length-1];
     this.paymentMethod = this.orderInfo.paymentMethod;
-    if (this.orderInfo.paymentMethod == this.paymentMethodCategories.bank){
+    
+    if (this.paymentMethod == this.paymentMethodCategories.bank){
       this.showPaymentbank = true;
     }else{
       this.showPaymentbank = false;
@@ -46,7 +45,6 @@ export class OrderDetailPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrderDetailPage');
   }
-
 
   hideProductInfo() {
     if (this.showProductInfo == true) {

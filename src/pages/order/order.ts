@@ -202,7 +202,18 @@ export class OrderPage {
   }
 
   selectedPaymentMethod(method){
-    this.orderInfo.paymentMethod = method;
+    console.log(method);
+    
+    if(method == 'cash'){
+      this.orderInfo.paymentMethod = '현장결제';
+    }else if(method == "card"){
+      this.orderInfo.paymentMethod = '카드결제';
+    }else if(method == 'bank'){
+      this.orderInfo.paymentMethod = '무통장입금'
+    }else{
+      console.log("error paymentMethod doesn't pick");
+      
+    }
 
     if (this.paymentMethodColor[method] == "#d3d3d3"){
       this.paymentMethodColor[method] = "white";  
