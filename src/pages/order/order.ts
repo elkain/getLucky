@@ -60,6 +60,7 @@ export class OrderPage {
     this.deliveryTimeLists = storageProvider.deliveryTimeLists;
     this.mobileOptionLists = storageProvider.mobileOptionLists;
 
+    this.isMember = this.storageProvider.isMember;
     this.basicPlaceStyle = { 'select-segment': true, 'unselect-segment': false};
     this.newPlaceStyle = { 'select-segment': false, 'unselect-segment': true };
     this.selectedDeliveryType = 'memberSaved';
