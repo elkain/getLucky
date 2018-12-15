@@ -52,7 +52,7 @@
       </div>
       <ion-input class="email-input" [(ngModel)]="email" type="text"></ion-input>
       <span><p>@</p></span>
-      <select class="email-input2" [(ngModel)]="emailOption" (change)="emailOptionChange()">
+      <select class="email-input2" [(ngModel)]="emailOption">
         <option *ngFor="let emailOptionList of storageProvider.emailOptionLists">{{emailOptionList}}</option>
       </select>
     </ion-row>
@@ -76,7 +76,7 @@
     </ion-row>
     <ion-row class="signup-phone">
       <div class="signup-label"></div>
-      <ion-input class="phone-confirm-num" type="number"></ion-input>
+      <ion-input class="phone-confirm-num" [(ngModel)]="mobileCheckNumberConfirm" type="number"></ion-input>
       <button clear class="phone-confirm" (click)="confirmMobile()" ion-button>인증번호 확인</button>
     </ion-row>
     <!-- 주소 입력 -->
@@ -169,7 +169,7 @@
       <span>
         <p>@</p>
       </span>
-      <select class="email-input2" [(ngModel)]="emailOption" (change)="emailOptionChange()">
+      <select class="email-input2" [(ngModel)]="emailOption">
         <option *ngFor="let emailOptionList of storageProvider.emailOptionLists">{{emailOptionList}}</option>
       </select>
     </ion-row>

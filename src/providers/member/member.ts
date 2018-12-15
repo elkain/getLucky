@@ -10,6 +10,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class MemberProvider {
 
+  memberData = { username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
+  
   constructor() {
     console.log('Hello MemberProvider Provider');
   }
