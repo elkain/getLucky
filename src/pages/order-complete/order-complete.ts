@@ -35,7 +35,7 @@ export class OrderCompletePage {
         this.orderCompInfo.paymentMethod += this.bankStatus;
       }
 
-      this.orderCompInfo.paymentCharge = orderInfo.paymentCharge;
+      this.orderCompInfo.paymentCharge = orderInfo.totalPrice;
     }
     
   }
