@@ -19,17 +19,10 @@ export class SelectPopoverPage {
   deliveryAddrs;
   deliveryAddrSelectedColor = "#d3d3d3";
   deliveryAddrUnselectedColor = "#ffffff";
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
-  }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SelectPopoverPage');
-    this.deliveryAddrs = [
-      { title: "기본배송지", address: "서울시 강동구 고덕로 131(암사동, 강동롯데캐슬퍼스트) 123동 1234호" },
-      { title: "사무실", address: "서울시 상암로 11길 24 3층" },
-      { title: "매장", address: "서울시 상암로 11길 18 암사럭키슈퍼" },
-    ];
-
+    this.deliveryAddrs = this.navParams.get("addressLists");
     this.deliveryAddrs[0].select = true;
     this.deliveryAddrs[0].color = this.deliveryAddrSelectedColor;
     this.deliveryAddrSelected = this.deliveryAddrs[0];
@@ -38,6 +31,10 @@ export class SelectPopoverPage {
       this.deliveryAddrs[i].select = false;
       this.deliveryAddrs[i].color = this.deliveryAddrUnselectedColor;
     }
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad SelectPopoverPage');
   }
 
   selectDeliveryAddr(deliveryAddr){
@@ -56,6 +53,7 @@ export class SelectPopoverPage {
   }
 
   confirm(){
-    this.viewCtrl.dismiss();
+    let idx = this.deliveryAddrs.indexOf(this.deliveryAddrSelected);
+    this.viewCtrl.dismiss(idx);
   }
 }
