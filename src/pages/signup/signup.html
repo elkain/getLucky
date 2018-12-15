@@ -21,7 +21,7 @@
       <div class="signup-label">
         <p>아이디*</p>
       </div>
-      <ion-input class="id-input" [(ngModel)]="username" type="text"></ion-input>
+      <ion-input class="id-input" [(ngModel)]="memberData.username" type="text"></ion-input>
       <button class="id-confirm" (click)="checkIDDuplication()" clear ion-button>중복확인</button>
     </ion-row>
     <!-- 비밀번호 입력 -->
@@ -43,7 +43,7 @@
       <div class="signup-label">
         <p>이름*</p>
       </div>
-      <ion-input class="name-input" [(ngModel)]="name" type="text"></ion-input>
+      <ion-input class="name-input" [(ngModel)]="memberData.name" type="text"></ion-input>
     </ion-row>
     <!-- 이메일 입력 -->
     <ion-row class="signup-email">
@@ -115,8 +115,12 @@
       <div class="signup-label">
         <p>성별</p>
       </div>
-      <div class="male" [style.background-color]="male" (click)="selectMale()"><p>남자</p></div>
-      <div class="female" [style.background-color]="female" (click)="selectFemale()"><p>여자</p></div>
+      <div class="male" [style.background-color]="male" (click)="selectMale()">
+        <p>남자</p>
+      </div>
+      <div class="female" [style.background-color]="female" (click)="selectFemale()">
+        <p>여자</p>
+      </div>
     </ion-row>
   </ion-grid>
   <!-- 가입하기 버튼 -->
@@ -130,35 +134,35 @@
       <div class="signup-label">
         <p>아이디*</p>
       </div>
-      <ion-input readonly="true" [(ngModel)]="username" style="background-color:#d3d3d3; margin:0;"  class="id-input" type="text"></ion-input>
+      <ion-input readonly="true" [(ngModel)]="memberData.username" style="background-color:#d3d3d3; margin:0;"  class="id-input" type="text"></ion-input>
     </ion-row>
     <!-- 련재 비밀번호 입력 -->
     <ion-row class="signup-pwd">
       <div class="signup-label">
-        <p>현재 비밀번호</p>
+        <p>현재 비밀번호*</p>
       </div>
-      <ion-input placeholder="현재 비밀번호를 입력해주세요." [(ngModel)]="currentPasssowrd" class="pwd-input" type="password"></ion-input>
+      <ion-input placeholder="현재 비밀번호를 입력해주세요." [(ngModel)]="currentPasssowrd" class="pwd-input" type="currentPasssowrd"></ion-input>
     </ion-row>
     <!-- 새 비밀번호 입력 -->
     <ion-row class="signup-pwd-confirm">
       <div class="signup-label">
-        <p>새 비밀번호</p>
+        <p>새 비밀번호*</p>
       </div>
       <ion-input placeholder="새 비밀번호를 입력해주세요." [(ngModel)]="password" class="pwd-input" type="password"></ion-input>
     </ion-row>
     <!-- 새 비밀번호 입력 -->
     <ion-row class="signup-pwd-confirm">
       <div class="signup-label">
-        <p style="font-size:1.3rem;">새 비밀번호 확인</p>
+        <p style="font-size:1.3rem;">새 비밀번호 확인*</p>
       </div>
-      <ion-input placeholder="새 비밀번호를 한번더 입력해주세요." [(ngModel)]="passwordConfirm" class="pwd-input" type="password"></ion-input>
+      <ion-input placeholder="새 비밀번호를 한번더 입력해주세요." [(ngModel)]="passwordConfirm" class="pwd-input" type="passwordConfirm"></ion-input>
     </ion-row>
     <!-- 이름 입력 -->
     <ion-row class="signup-name">
       <div class="signup-label">
         <p>이름*</p>
       </div>
-      <ion-input [(ngModel)]="name" class="name-input" type="text"></ion-input>
+      <ion-input [(ngModel)]="memberData.name" class="name-input" type="text"></ion-input>
     </ion-row>
     <!-- 이메일 입력 -->
     <ion-row class="signup-email">

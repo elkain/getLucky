@@ -22,23 +22,21 @@ export class SignupPage {
   whiteColor = "#ffffff";
 
   isMember: boolean = false;
-  username:string;
   password: string;
   currentPasssowrd: string;
   passwordConfirm: string;
-  name: string;
   email: string;
   emailOption: string;
-  emailOptionLists =["naver.com", "gmail.com", "daum.net", "outlook.com", "nate.com", "yahoo.com"]; //체크
-  mobile1:number;
-  mobile2: number;
-  mobile3: number;
+ //체크
+  mobile1: string;
+  mobile2: string;
+  mobile3: string;
   address1:string;
   address2: string;
   address3: string;
-  birthYear: number;
-  birthMonth: number;
-  birthDay: number;
+  birthYear: string;
+  birthMonth: string;
+  birthDay: string;
   sex: string;
   male:string;
   female:string;
@@ -47,8 +45,6 @@ export class SignupPage {
   mobileCheckNumber: number = undefined;
   mobileCheckNumberConfirm: number = undefined;
   memberData = { username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
-
-  customerInfo;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, 
     public storageProvider:StorageProvider, public memberProvider:MemberProvider) {
@@ -63,29 +59,23 @@ export class SignupPage {
 
     if (this.isMember==true){
       this.memberData = this.memberProvider.memberData;
-      //this.customerInfo = { username: "chungmin93", name:"이충민" , email:"chungmin93@gmail.com", mobile:"010-3769-4456", birth:"1985-09-03", sex:"male"};
-      /*this.customerInfo = this.storageProvider.memberData;
-      console.log(this.customerInfo);
-      this.username=this.customerInfo.username;
-      this.name=this.customerInfo.name;
-      let emailTemp = this.customerInfo.email.split('@');
+      let emailTemp = this.memberData.email.split('@');
       this.email = emailTemp[0];
       this.emailOption = emailTemp[1];
-      let mobileTemp = this.customerInfo.mobile.split('-');
+      let mobileTemp = this.memberData.mobile.split('-');
       this.mobile1 = mobileTemp[0];
       this.mobile2 = mobileTemp[1];
       this.mobile3 = mobileTemp[2];
-      let birthTemp = this.customerInfo.birth.split('-');
+      let birthTemp = this.memberData.birth.split('-');
       this.birthYear = birthTemp[0];
       this.birthMonth = birthTemp[1];
       this.birthDay = birthTemp[2];
 
-      if(this.customerInfo.sex=="male"){
+      if (this.memberData.sex=="male"){
         this.selectMale();
-      } else if (this.customerInfo.sex == "female"){
+      } else if (this.memberData.sex == "female"){
         this.selectFemale();
-      }*/
-      
+      }
     }else{
       this.male = this.whiteColor;
       this.female = this.whiteColor;
@@ -141,8 +131,6 @@ export class SignupPage {
       alert.present();
 
       this.memberData.mobile = this.trim(this.mobile1) + "-" + this.trim(this.mobile2) + "-" + this.trim(this.mobile3);
-      console.log("mobile : " + this.memberData.mobile);
-
       this.mobileCheck = true;
     } else {
       let alert = this.alertCtrl.create({
@@ -161,13 +149,13 @@ export class SignupPage {
   }
 
   selectMale(){
-    this.sex = "male";
+    this.memberData.sex = "male";
     this.male = this.titleColor;
     this.female = this.whiteColor;
   }
 
   selectFemale(){
-    this.sex = "female";
+    this.memberData.sex = "female";
     this.male = this.whiteColor;
     this.female = this.titleColor;
   }
@@ -183,50 +171,42 @@ export class SignupPage {
   }
 
   presentAlert() {
-    let alert = this.alertCtrl.create({
-      message: '회원정보가 수정되었습니다.',
-      buttons: [{
-          text:'확인',
-          handler:()=>{
-            if ((this.idCheck() && this.pwdCheck() && this.nameCheck() && this.emailChek() && this.mobileInputCheck()) != false) {
-              this.enterMemberData();
-              this.memberProvider.memberData = this.memberData;
-              console.log(this.memberData);
 
-              this.navCtrl.setRoot(TabsPage, { class: "signup" });
+    if ((this.idCheck() && this.pwdCheck() && this.nameCheck() && this.emailChek() && this.mobileInputCheck()) != false){
+      let alert = this.alertCtrl.create({
+        message: '회원정보가 수정되었습니다.',
+        buttons: [{
+            text:'확인',
+            handler:()=>{
+                this.enterMemberData();
+                this.memberProvider.memberData = this.memberData;
+                this.navCtrl.setRoot(TabsPage, { class: "signup" });
             }
-          }
-        }],
-      cssClass:'alert-modify-member'
-    });
-    alert.present();
+          }],
+        cssClass:'alert-modify-member'
+      });
+      alert.present();
+    }
   }
 
   enterMemberData(){
-    console.log("username : " + this.username);
-    console.log("password : " + this.password);
-    console.log("name : " + this.name);
-
     let email = this.email + "@" + this.emailOption;
     email = this.trim(email);
-    console.log("email : " + email);
 
     let address = this.password + " " + this.address2 + " " + this.address3;
     address = this.trim(address);
-    console.log("address : " + address);
 
     let birth = this.birthYear + "-" + this.birthMonth + "-" + this.birthDay;
-    console.log("birth : " + birth);
 
     this.storageProvider.isMember = true;
-    this.memberData.username = this.trim(this.username);
+    this.memberData.username = this.trim(this.memberData.username);
     this.memberData.password = this.trim(this.password);
-    this.memberData.name = this.trim(this.name);
+    this.memberData.name = this.trim(this.memberData.name);
     this.memberData.email = email;
     this.memberData.mobile = this.memberData.mobile;
     this.memberData.address = address;
     this.memberData.birth = birth;
-    this.memberData.sex = this.sex;
+    this.memberData.sex = this.memberData.sex;
   }
 
   trim(str) {
@@ -238,7 +218,7 @@ export class SignupPage {
   }
 
   idCheck(){
-    if (this.username == undefined) {
+    if (this.memberData.username == undefined) {
       let alert = this.alertCtrl.create({
         message: '아이디를 입력하세요.',
         buttons: [{
@@ -251,7 +231,7 @@ export class SignupPage {
       return false;
     } 
     
-    if (this.username.length < 3) {
+    if (this.memberData.username.length < 3) {
       let alert = this.alertCtrl.create({
         message: '아이디는 세글자 이상입력하세요.',
         buttons: [{
@@ -295,7 +275,7 @@ export class SignupPage {
       return false;
     } 
     
-    if (this.username.length < 6) {
+    if (this.password.length < 6) {
 
       let alert = this.alertCtrl.create({
         message: '비밀번호는 6글자 이상입력하세요.',
@@ -355,7 +335,7 @@ export class SignupPage {
   }
 
   nameCheck(){
-    if (this.name == undefined) {
+    if (this.memberData.name == undefined) {
 
       let alert = this.alertCtrl.create({
         message: '이름을 입력하세요.',
