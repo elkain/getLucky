@@ -19,7 +19,7 @@
       <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
     </ion-row>
     <ion-row class="order-comp-msg">
-      <p><span>이충민</span>님의 주문이 완료되었습니다.</p>
+      <p><span>{{orderCompInfo.ordererName}}</span>님의 주문이 완료되었습니다.</p>
       <p>감사합니다.</p>
     </ion-row>
     <ion-row class="order-comp-btn">
@@ -34,23 +34,23 @@
   <ion-list class="order-comp-detail-info">
     <ion-item class="order-comp-pyament-method">
       <p class="order-comp-detail-label">결재방법</p>
-      <p class="order-comp-detail">무통장입급(입금대기중)</p>
+      <p class="order-comp-detail">{{orderCompInfo.paymentMethod}}</p>
     </ion-item>
     <ion-item class="order-comp-detail-price">
       <p class="order-comp-detail-label">결재금액</p>
-      <p class="order-comp-detail">35,000원</p>
+      <p class="order-comp-detail">{{orderCompInfo.paymentCharge}}원</p>
       </ion-item>
     <ion-item class="order-comp-detail-name">
       <p class="order-comp-detail-label">받는분</p>
-      <p class="order-comp-detail">이충민</p>
+      <p class="order-comp-detail">{{orderCompInfo.recieverName}}</p>
       </ion-item>
     <ion-item class="order-comp-detail-addr">
       <p class="order-comp-detail-label">주소</p>
-      <p class="order-comp-detail">서울시 강동구 고덕로 131 (암사동, 강동롯데캐슬퍼스트아파트) 123동 1234호</p>
+      <p class="order-comp-detail">{{orderCompInfo.address}}</p>
     </ion-item>
     <ion-item class="order-comp-detail-phone">
       <p class="order-comp-detail-label">연락처</p>
-      <p class="order-comp-detail">010-1234-5678</p>
+      <p class="order-comp-detail">{{orderCompInfo.mobile}}</p>
     </ion-item>
   </ion-list>
   <!-- 상세 주문 정보 시작 -->
