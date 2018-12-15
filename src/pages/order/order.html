@@ -33,31 +33,32 @@
       </ion-col>
     </ion-row>
     <ion-row *ngIf="showDeliveryInfo==true" class="delivery-detail-basic">
+      <!-- 기존 배송지 시작 -->
       <ion-grid class="delivery-basic-list" *ngIf="selectedDeliveryType=='memberSaved'">
         <ion-row class="delivery-basic-name">
           <div class="name-label"><p>받는 분</p></div>
-          <div class="delivery-name"><p>이충민</p></div>
+          <div class="delivery-name"><p>{{memberInfo.recieverName}}</p></div>
         </ion-row>
         <ion-row class="delivery-basic-place">
-          <!--popover 방식으로 재구현-->
+          <!--popover 방식으로 구현-->
           <div class="place-label">
             <p>배송지 선택</p>
           </div>
           <button class="delivery-place" ion-button clear (click)="presentPopover()">
-            <div class="delivery-text">서울시 강동구 고덕로 131 (암사동, 강동롯데캐슬퍼스트) 123동 1234호</div>
+            <div class="delivery-text">{{memberInfo.recieverAddress}}</div>
             <div class="delivery-icon"><ion-icon name="ios-arrow-down"></ion-icon></div>
           </button>
         </ion-row>
         <ion-row class="delivery-basic-phone">
           <div class="phone-label"><p>연락처</p></div>
-          <div class="delivery-phone"><p>010-1234-5678</p></div>
+          <div class="delivery-phone"><p>{{memberInfo.recieverMobile}}</p></div>
         </ion-row>
         <ion-row class="delivery-basic-time">
           <div class="time-label"><p>배송시간</p></div>
           <div class="arrow-down-icon"></div>
           <select placeholder="선택사항" class="delivery-time">
             <option>선택사항</option>
-            <option *ngFor="let deliveryTime of storageProvider.deliveryTimeLists">{{deliveryTime}}</option>
+            <option *ngFor="let deliveryTime of deliveryTimeLists">{{deliveryTime}}</option>
           </select>
         </ion-row>
         <ion-row class="delivery-basic-memo">
@@ -65,11 +66,14 @@
           <div class="arrow-down-icon"></div>
           <select class="delivery-memo">
             <option>선택사항</option>
-            <option *ngFor="let deliveryMemo of storageProvider.deliveryMemoLists">{{deliveryMemo}}</option>
+            <option *ngFor="let deliveryMemo of deliveryMemoLists">{{deliveryMemo}}</option>
           </select>
         </ion-row>
       </ion-grid>
     </ion-row>
+    <!-- 기존 배송지 끝 -->
+
+    <!-- 새로운 배송지 시작 -->
     <ion-row *ngIf="showDeliveryInfo==true" class="delivery-detail-new">
       <ion-grid class="delivery-new-grid" *ngIf="selectedDeliveryType=='memberNew'">
         <!-- 받는분 입력 -->
@@ -77,7 +81,7 @@
           <div class="name-label">
             <p>받는 분</p>
           </div>
-          <ion-input class="delivery-name" type="text"></ion-input>
+          <ion-input [(ngModel)]="recieverName" class="delivery-name" type="text"></ion-input>
         </ion-row>
         <!-- 주소 입력 -->
         <ion-row class="delivery-new-place">
@@ -85,15 +89,15 @@
             <p>주소</p>
           </div>
           <button clear class="addr-find" ion-button>주소 찾기</button>
-          <ion-input class="delivery-place1" type="text"></ion-input>
+          <ion-input [(ngModel)]="address1" class="delivery-place1" type="text"></ion-input>
         </ion-row>
         <ion-row class="delivery-new-place">
           <div class="place-label"></div>
-          <ion-input class="delivery-place2" type="text"></ion-input>
+          <ion-input [(ngModel)]="address2" class="delivery-place2" type="text"></ion-input>
         </ion-row>
         <ion-row class="delivery-new-place">
           <div class="place-label"></div>
-          <ion-input class="delivery-place2" placeholder="상세 주소를 입력해 주세요" type="text"></ion-input>
+          <ion-input [(ngModel)]="address3" class="delivery-place2" placeholder="상세 주소를 입력해 주세요" type="text"></ion-input>
         </ion-row>
         <!-- 휴대폰 입력 -->
         <ion-row class="delivery-new-phone">
@@ -103,12 +107,12 @@
           <div class="delivery-phone">
             <div class="arrow-down-icon"></div>
             <select [(ngModel)]="recieverMobile1">
-              <option *ngFor="let mobileOptionList of storageProvider.mobileOptionLists">{{mobileOptionList}}</option>
+              <option *ngFor="let mobileOptionList of mobileOptionLists">{{mobileOptionList}}</option>
             </select>
             <span><p>-</p></span>
-            <ion-input class="phone-input" type="tel" maxlength="4"></ion-input>
+            <ion-input [(ngModel)]="recieverMobile2" class="phone-input" type="tel" maxlength="4"></ion-input>
             <span><p>-</p></span>
-            <ion-input class="phone-input" type="tel" maxlength="4"></ion-input>
+            <ion-input [(ngModel)]="recieverMobile3" class="phone-input" type="tel" maxlength="4"></ion-input>
           </div>
         </ion-row>
         <ion-row class="delivery-new-time">
@@ -116,9 +120,9 @@
             <p>배송시간</p>
           </div>
           <div class="arrow-down-icon"></div>
-          <select [(ngModel)]="nonMemberInfo.deliveryTime" class="delivery-time">
+          <select [(ngModel)]="orderInfo.deliveryTime" class="delivery-time">
             <option>선택사항</option>
-            <option *ngFor="let deliveryTime of storageProvider.deliveryTimeLists">{{deliveryTime}}</option>
+            <option *ngFor="let deliveryTime of deliveryTimeLists">{{deliveryTime}}</option>
           </select>
         </ion-row>
         <ion-row class="delivery-new-memo">
@@ -126,13 +130,14 @@
             <p>배송메모</p>
           </div>
           <div class="arrow-down-icon"></div>
-          <select [(ngModel)]="nonMemberInfo.deliveryMemo" class="delivery-memo">
+          <select [(ngModel)]="orderInfo.deliveryMemo" class="delivery-memo">
             <option>선택사항</option>
-            <option *ngFor="let deliveryMemo of storageProvider.deliveryMemoLists">{{deliveryMemo}}</option>
+            <option *ngFor="let deliveryMemo of deliveryMemoLists">{{deliveryMemo}}</option>
           </select>
         </ion-row>
       </ion-grid>
     </ion-row>
+    <!-- 새로운 배송지 끝 -->
   </ion-grid>
   <!-- 배송정보 끝(회원) -->
 
@@ -155,7 +160,7 @@
       <div class="orderer-phone-input">
         <div class="arrow-down-icon"></div>
         <select [(ngModel)]="ordererMobile1">
-          <option *ngFor="let mobileOptionList of storageProvider.mobileOptionLists">{{mobileOptionList}}</option>
+          <option *ngFor="let mobileOptionList of mobileOptionLists">{{mobileOptionList}}</option>
         </select>
         <span>
           <p>-</p>
@@ -218,7 +223,7 @@
       <div class="delivery-phone">
         <div class="arrow-down-icon"></div>
         <select [(ngModel)]="recieverMobile1">
-          <option *ngFor="let mobileOptionList of storageProvider.mobileOptionLists">{{mobileOptionList}}</option>
+          <option *ngFor="let mobileOptionList of mobileOptionLists">{{mobileOptionList}}</option>
         </select>
         <span>
           <p>-</p>
@@ -235,9 +240,9 @@
         <p>배송시간</p>
       </div>
       <div class="arrow-down-icon"></div>
-      <select [(ngModel)]="nonMemberInfo.deliveryTime" class="delivery-time">
+      <select [(ngModel)]="orderInfo.deliveryTime" class="delivery-time">
         <option>선택사항</option>
-        <option *ngFor="let deliveryTime of storageProvider.deliveryTimeLists">{{deliveryTime}}</option>
+        <option *ngFor="let deliveryTime of deliveryTimeLists">{{deliveryTime}}</option>
       </select>
     </ion-row>
     <ion-row class="delivery-new-memo" *ngIf="showDeliveryInfo==true">
@@ -245,9 +250,9 @@
         <p>배송메모</p>
       </div>
       <div class="arrow-down-icon"></div>
-      <select [(ngModel)]="nonMemberInfo.deliveryMemo" class="delivery-memo">
+      <select [(ngModel)]="orderInfo.deliveryMemo" class="delivery-memo">
         <option>선택사항</option>
-        <option *ngFor="let deliveryMemo of storageProvider.deliveryMemoLists">{{deliveryMemo}}</option>
+        <option *ngFor="let deliveryMemo of deliveryMemoLists">{{deliveryMemo}}</option>
       </select>
     </ion-row>
   </ion-grid>
