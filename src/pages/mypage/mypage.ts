@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { SignupPage } from '../signup/signup';
 import { StorageProvider } from '../../providers/storage/storage';
+import { MemberProvider } from '../../providers/member/member';
 
 /**
  * Generated class for the MypagePage page.
@@ -63,15 +64,15 @@ export class MypagePage {
     { type: "매장", addr: "서울시 강동구 상암로 18길 암사럭키슈퍼", receiver: "이충민", phone: "02-441-3545" }
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public storageProvider:StorageProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public storageProvider:StorageProvider, public memberProvider:MemberProvider) {
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
     this.isMember = this.storageProvider.isMember;
     
     for(let i in this.memberData){
-      for (let j in this.storageProvider.memberData){
+      for (let j in this.memberProvider.memberData){
         if(i==j){
-          this.memberData[i] = this.storageProvider.memberData[j];
+          this.memberData[i] = this.memberProvider.memberData[j];
         }
       }
     }
