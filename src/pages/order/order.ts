@@ -47,7 +47,7 @@ export class OrderPage {
   deliveryTimeLists = [];
   mobileOptionLists = [];
 
-  orderInfo = { type: "", customInfo: {}, orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, paymentMethod: "", deliveryTime: "", deliveryMemo: "" , orderedProducts: [] }; // type : member or nonMember 
+  orderInfo = { type: "", customInfo: {}, orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, paymentMethod: "", deliveryTime: "선택사항", deliveryMemo: "선택사항" , orderedProducts: [] }; // type : member or nonMember 
   nonMemberInfo = { ordererName: "", ordererMobile: "", ordererEmail: "", recieverName: "", recieverAddress: "", recieverMobile: ""};
   memberInfo = { recieverName: "", recieverAddress: "", recieverMobile: ""};
   memberAddressLists = [];
@@ -113,6 +113,7 @@ export class OrderPage {
       this.orderInfo.sale = shoppingbasket.sale;
       this.orderInfo.deliveryFee = shoppingbasket.deliveryFee;
       this.orderInfo.totalPrice = shoppingbasket.totalPrice;
+      
     } else {
       console.log("link error(orderPage)");
     }
@@ -189,11 +190,12 @@ export class OrderPage {
   confirmOrder(){
 
     if(this.isMember == true){
-
-    } else if (this.emailCheck(this.nonMemberInfo.ordererEmail)==true){
-      this.enterNonMemeberOrderInfo();
+      this.enterMemberOrderInfo();
       this.orderProvider.addOrderInfo(this.orderInfo);
-      console.log(this.orderInfo);
+      this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
+    } else if (this.emailCheck(this.nonMemberInfo.ordererEmail)==true){
+      this.enterNonMemberOrderInfo();
+      this.orderProvider.addOrderInfo(this.orderInfo);
       this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
     } 
   }
@@ -217,7 +219,6 @@ export class OrderPage {
 
   enterMemberOrderInfo(){
     if(this.selectedDeliveryType == "memberSaved"){
-      this.memberInfo.recieverMobile = this.recieverMobile1 + "-" + this.recieverMobile2 + "-" + this.recieverMobile3;
       this.orderInfo.customInfo = this.memberInfo;
     }else if(this.selectedDeliveryType == "memberNew"){
       this.memberInfo.recieverName = this.recieverName;
@@ -230,7 +231,7 @@ export class OrderPage {
     }
   }
 
-  enterNonMemeberOrderInfo(){
+  enterNonMemberOrderInfo(){
     this.nonMemberInfo.ordererMobile = this.ordererMobile1 + "-" + this.ordererMobile2 + "-" + this.ordererMobile3;
     this.nonMemberInfo.recieverMobile = this.recieverMobile1 + "-" + this.recieverMobile2 + "-" + this.recieverMobile3;
     this.nonMemberInfo.recieverAddress = this.trim(this.address1) + " " + this.trim(this.address2) + " " + this.trim(this.address3);

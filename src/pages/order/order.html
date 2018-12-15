@@ -56,16 +56,16 @@
         <ion-row class="delivery-basic-time">
           <div class="time-label"><p>배송시간</p></div>
           <div class="arrow-down-icon"></div>
-          <select placeholder="선택사항" class="delivery-time">
-            <option>선택사항</option>
+          <select [(ngModel)]="orderInfo.deliveryTime" class="delivery-time">
+            <option disabled hidden>선택사항</option>
             <option *ngFor="let deliveryTime of deliveryTimeLists">{{deliveryTime}}</option>
           </select>
         </ion-row>
         <ion-row class="delivery-basic-memo">
           <div class="memo-label"><p>배송메모</p></div>
           <div class="arrow-down-icon"></div>
-          <select class="delivery-memo">
-            <option>선택사항</option>
+          <select [(ngModel)]="orderInfo.deliveryMemo" class="delivery-memo">
+            <option disabled hidden>선택사항</option>
             <option *ngFor="let deliveryMemo of deliveryMemoLists">{{deliveryMemo}}</option>
           </select>
         </ion-row>
@@ -121,7 +121,7 @@
           </div>
           <div class="arrow-down-icon"></div>
           <select [(ngModel)]="orderInfo.deliveryTime" class="delivery-time">
-            <option>선택사항</option>
+            <option disabled hidden>선택사항</option>
             <option *ngFor="let deliveryTime of deliveryTimeLists">{{deliveryTime}}</option>
           </select>
         </ion-row>
@@ -131,7 +131,7 @@
           </div>
           <div class="arrow-down-icon"></div>
           <select [(ngModel)]="orderInfo.deliveryMemo" class="delivery-memo">
-            <option>선택사항</option>
+            <option disabled hidden>선택사항</option>
             <option *ngFor="let deliveryMemo of deliveryMemoLists">{{deliveryMemo}}</option>
           </select>
         </ion-row>
@@ -241,7 +241,7 @@
       </div>
       <div class="arrow-down-icon"></div>
       <select [(ngModel)]="orderInfo.deliveryTime" class="delivery-time">
-        <option>선택사항</option>
+        <option disabled hidden>선택사항</option>
         <option *ngFor="let deliveryTime of deliveryTimeLists">{{deliveryTime}}</option>
       </select>
     </ion-row>
@@ -251,7 +251,7 @@
       </div>
       <div class="arrow-down-icon"></div>
       <select [(ngModel)]="orderInfo.deliveryMemo" class="delivery-memo">
-        <option>선택사항</option>
+        <option disabled hidden>선택사항</option>
         <option *ngFor="let deliveryMemo of deliveryMemoLists">{{deliveryMemo}}</option>
       </select>
     </ion-row>

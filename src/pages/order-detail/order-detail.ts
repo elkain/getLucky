@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { OrderProvider } from '../../providers/order/order';
 
 /**
  * Generated class for the OrderDetailPage page.
@@ -15,20 +16,27 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class OrderDetailPage {
 
-  showProductInfo;
-  showPaymentInfo;
-  showDeliveryInfo;
-  paymentMethodCategories = {cash:"무통장입금(입금완료)", card: "신용카드"};
-  paymentMethod = this.paymentMethodCategories.card;
   
-  showPaymentbank;
+  showProductInfo:boolean;
+  showPaymentInfo:boolean;
+  showDeliveryInfo:boolean;
+  showPaymentbank: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  paymentMethodCategories = {bank:"무통장입금", card: "신용카드", cash:"현장결재"};
+  paymentMethod: string;
+
+  orderInfo:any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public orderProvider: OrderProvider) {
     this.showProductInfo = true;
     this.showPaymentInfo = true;
     this.showDeliveryInfo = true;
+    
+    let orderInfos = this.orderProvider.orderInfos;
+    this.orderInfo = orderInfos[orderInfos.length-1];
 
-    if (this.paymentMethod == this.paymentMethodCategories.cash){
+    this.paymentMethod = this.orderInfo.paymentMethod;
+    if (this.orderInfo.paymentMethod == this.paymentMethodCategories.bank){
       this.showPaymentbank = true;
     }else{
       this.showPaymentbank = false;
@@ -41,11 +49,8 @@ export class OrderDetailPage {
 
 
   hideProductInfo() {
-    console.log("button click", this.showProductInfo);
-
     if (this.showProductInfo == true) {
       this.showProductInfo = false;
-      
     } else if (this.showProductInfo == false) {
       this.showProductInfo = true;
     } else {
@@ -54,18 +59,16 @@ export class OrderDetailPage {
   }
 
   hidePaymentInfo() {
-    console.log("button click", this.showPaymentInfo);
-
     if (this.showPaymentInfo == true) {
       this.showPaymentInfo = false;
 
-      if (this.paymentMethod == this.paymentMethodCategories.cash){
+      if (this.paymentMethod == this.paymentMethodCategories.bank){
         this.showPaymentbank = false;
       }
     } else if (this.showPaymentInfo == false) {
       this.showPaymentInfo = true;
 
-      if (this.paymentMethod == this.paymentMethodCategories.cash) {
+      if (this.paymentMethod == this.paymentMethodCategories.bank) {
         this.showPaymentbank = true;
       }
     } else {
@@ -75,8 +78,6 @@ export class OrderDetailPage {
 
 
   hideDeliveryInfo() {
-    console.log("button click");
-
     if (this.showDeliveryInfo == true) {
       this.showDeliveryInfo = false;
     } else if (this.showDeliveryInfo == false) {
