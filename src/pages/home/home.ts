@@ -74,7 +74,6 @@ export class HomePage {
   ionViewDidEnter() {
     this.bestCategories = this.storageProvider.bestCategories;
     this.saleCategories = this.storageProvider.saleCategories;
-    console.log(this.homeParams.class);
     
     this.homeCategorySelected = this.homeCategories[0];
     this.bestCategorySelected = this.bestCategories[0];
