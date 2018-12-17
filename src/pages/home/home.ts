@@ -41,7 +41,7 @@ export class HomePage {
     public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider) {
 
     this.homeParams = navParams.data;     // category from category page
-
+   
     this.products = [   // sale method : fixed, percent
       { name: "사과", price: 3000, discount: 2000, saleMethod: "fixed", saleCount: 2, imagePath: this.imageURL + "slide1.png" },
       { name: "배", price: 10000, discount: 10, saleMethod: "percent", saleCount: 4, imagePath: this.imageURL + "slide2.png" },
@@ -78,6 +78,8 @@ export class HomePage {
     this.homeCategorySelected = this.homeCategories[0];
     this.bestCategorySelected = this.bestCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
+    console.log("ionViewDidEnter homePage");
+    console.log(this.homeParams.class);
   }
   
   next() {
