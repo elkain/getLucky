@@ -55,16 +55,14 @@ export class MypagePage {
 
   arrowIconTop = "231px";
 
-  orderedProducts=[
-    { orderedNumber: "20181107123456", productName: "비비고 왕교자 1.05kg 외 3건", productReceiver: "이충민", paymentMethod: "신용카드", price: "35,000원", buyDate: "2018-11-07 17:55", status: "배송완료" },
-    { orderedNumber: "20181108589675", productName: "진라면 멀티팩 외 7건", productReceiver: "이충민", paymentMethod: "현장수령", price: "90,000원", buyDate: "2018-11-08 19:20", status: "배송완료" }
-  ];
-
   orderInfos;
   deliveryDesInfos;         // 배송지 관리
+  homeParams;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public alertCtrl:AlertController, public storageProvider:StorageProvider,
     public memberProvider:MemberProvider, public orderProvider:OrderProvider) {
+
+    this.homeParams = navParams.data;
 
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
@@ -81,15 +79,23 @@ export class MypagePage {
 
     this.orderInfos = this.orderProvider.orderInfos;
     //console.log(this.orderInfos);
-    
+
+   
   }
 
   ionViewDidEnter() {
     if (this.isMember == true){
-      this.showPageType = "mypage";
+      if (this.homeParams.class == "orderDetail") {
+        this.showPageType = "주문내역";
+        console.log(this.showPageType);
+        this.homeParams.class = undefined;
+      }else{
+        this.showPageType = "mypage";
+      }
     }else{
       this.showPageType = "login";
     }
+    
 
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];

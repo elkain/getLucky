@@ -65,8 +65,10 @@ export class TabsPage {
 
   back() {
     if(this.childParam.class == "mypage"){
+      this.childParam.class = "orderDetail";
       this.tabRef.select(3);
     }else{
+      this.childParam.class = undefined;
       this.tabRef.select(5);
     }
     
