@@ -77,8 +77,6 @@ export class OrderPage {
       this.customInfo.recieverName = this.memberAddressLists[0].receiver;
       this.customInfo.recieverAddress = this.memberAddressLists[0].address;
       this.customInfo.recieverMobile = this.memberAddressLists[0].mobile;
-      console.log(this.memberAddressLists);
-      
       this.orderInfo.customInfo = this.customInfo;
     }else{
       this.orderInfo.type = "nonMember";
@@ -211,7 +209,7 @@ export class OrderPage {
   }
 
   selectedPaymentMethod(method){
-    console.log(method);
+    //console.log(method);
     
     if(method == 'cash'){
       this.orderInfo.paymentMethod = '현장결제';

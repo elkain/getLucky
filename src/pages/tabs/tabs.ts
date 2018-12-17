@@ -30,13 +30,14 @@ export class TabsPage {
   selectedTab;
   tabParams;
   showHeader;
-  childParam= {category:{}, homeSegmentCategory:0, class:"TasPage", subCategory:""};
+  childParam= {category:{}, homeSegmentCategory:0, class:"TasPage", subCategory:"" , orderedNumber:""};
 
   constructor(public navCtrl: NavController, public navParams:NavParams, public storageProvider:StorageProvider) {
     this.tabParams = navParams.get("tabIndex");
     this.childParam.category = navParams.get("category");
     this.childParam.subCategory = navParams.get("subCategory");
     this.childParam.homeSegmentCategory = navParams.get("homeSegmentCategory");
+    this.childParam.orderedNumber = navParams.get("orderedNumber");
     this.childParam.class = navParams.get("class");
   }
 

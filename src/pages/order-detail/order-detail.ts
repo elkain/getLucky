@@ -16,7 +16,6 @@ import { OrderProvider } from '../../providers/order/order';
 })
 export class OrderDetailPage {
 
-  
   showProductInfo:boolean;
   showPaymentInfo:boolean;
   showDeliveryInfo:boolean;
@@ -32,7 +31,27 @@ export class OrderDetailPage {
     this.showPaymentInfo = true;
     this.showDeliveryInfo = true;
     
-    this.orderInfo = this.orderProvider.orderInfos[this.orderProvider.orderInfos.length-1];
+    let param = navParams.data;
+    console.log(param);
+    
+    if (param.class == "mypage"){
+      let orderedNumber = navParams.data.orderedNumber;
+      let idx;
+
+      console.log(orderedNumber);
+      
+      for (let i = 0; i < this.orderProvider.orderInfos.length; i++){
+        if (this.orderProvider.orderInfos[i].id == orderedNumber){
+          idx = i;
+          console.log(idx);
+          
+        }
+      }
+      
+      this.orderInfo = this.orderProvider.orderInfos[idx];
+    }else{
+      this.orderInfo = this.orderProvider.orderInfos[this.orderProvider.orderInfos.length - 1];
+    }
     this.paymentMethod = this.orderInfo.paymentMethod;
     
     if (this.paymentMethod == this.paymentMethodCategories.bank){

@@ -4,6 +4,7 @@ import { SignupPage } from '../signup/signup';
 import { StorageProvider } from '../../providers/storage/storage';
 import { MemberProvider } from '../../providers/member/member';
 import { OrderProvider } from '../../providers/order/order';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the MypagePage page.
@@ -191,7 +192,8 @@ export class MypagePage {
   }
 
   goToOrderDetail(orderedNumber) {
-    this.navCtrl.parent.select(6);
+    //this.navCtrl.parent.select(6);
+    this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 6, class: "mypage", orderedNumber: orderedNumber});
   }
 
   confirmInfoFind(){
