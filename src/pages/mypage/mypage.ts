@@ -60,10 +60,11 @@ export class MypagePage {
   ];
 
   orderInfos;
-  deliveryDesInfos;
+  deliveryDesInfos;         // 배송지 관리
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public alertCtrl:AlertController, public storageProvider:StorageProvider,
     public memberProvider:MemberProvider, public orderProvider:OrderProvider) {
+
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
     this.isMember = this.storageProvider.isMember;
@@ -78,7 +79,7 @@ export class MypagePage {
     }
 
     this.orderInfos = this.orderProvider.orderInfos;
-    console.log(this.orderInfos);
+    //console.log(this.orderInfos);
     
   }
 
@@ -91,7 +92,7 @@ export class MypagePage {
 
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
-    this.showBackbtn=false;
+    this.showBackbtn = false;
     this.arrowIconTop = "183px";
     this.findLoginInfoMethod = 'phone';
 
@@ -122,7 +123,7 @@ export class MypagePage {
     this.isMember=true;
     this.storageProvider.isMember = this.isMember;
 
-    /*if (this.memberData.userName == this.username && this.memberData.password == this.password){
+    /*if (this.memberData.username == this.username && this.memberData.password == this.password){
       this.showPageType = "mypage";
     }else{
       let alert = this.alertCtrl.create({
@@ -136,7 +137,7 @@ export class MypagePage {
     }*/
 
     this.showPageType = "mypage";
-    
+    this.autoLoginCheckbox = false;
     console.log("userName : " + this.username);
     console.log("password : " + this.password);
     console.log("autoLoginCheckbox : " + this.autoLoginCheckbox);
@@ -190,8 +191,6 @@ export class MypagePage {
   }
 
   goToOrderDetail(orderedNumber) {
-    console.log(orderedNumber);
-    
     this.navCtrl.parent.select(6);
   }
 

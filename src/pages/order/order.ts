@@ -77,6 +77,7 @@ export class OrderPage {
       this.customInfo.recieverName = this.memberAddressLists[0].receiver;
       this.customInfo.recieverAddress = this.memberAddressLists[0].address;
       this.customInfo.recieverMobile = this.memberAddressLists[0].mobile;
+      console.log(this.memberAddressLists);
       
       this.orderInfo.customInfo = this.customInfo;
     }else{
@@ -185,7 +186,9 @@ export class OrderPage {
   presentPopover() {
     const popover = this.popoverCtrl.create(SelectPopoverPage, { addressLists: this.memberAddressLists}, { cssClass:'delivery-popover'});
     popover.onDidDismiss(idx => {
+      this.customInfo.recieverName = this.memberAddressLists[idx].receiver;
       this.customInfo.recieverAddress = this.memberAddressLists[idx].address;
+      this.customInfo.ordererMobile = this.memberAddressLists[idx].mobile;
     })
     popover.present();
   }

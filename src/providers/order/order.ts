@@ -33,6 +33,7 @@ export class OrderProvider {
     order.id = yy.toString(10) + mm + dd + this.count.toString(10);
     
     order.regTime = dString;
+    order.count = order.orderedProducts.length;
     this.orderInfos.push(order);
   }
 
