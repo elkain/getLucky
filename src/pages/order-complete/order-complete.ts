@@ -23,20 +23,18 @@ export class OrderCompletePage {
 
     let orderInfo = this.orderProvider.orderInfos[this.orderProvider.orderInfos.length - 1];
     console.log(orderInfo);
+    
+    this.orderCompInfo.ordererName = orderInfo.customInfo.ordererName;
+    this.orderCompInfo.recieverName = orderInfo.customInfo.recieverName;
+    this.orderCompInfo.address = orderInfo.customInfo.recieverAddress;
+    this.orderCompInfo.mobile = orderInfo.customInfo.recieverMobile;
+    this.orderCompInfo.paymentMethod = orderInfo.paymentMethod;
 
-    if(orderInfo.type=="member"){
-      this.orderCompInfo.ordererName = orderInfo.customInfo.recieverName;
-      this.orderCompInfo.recieverName = orderInfo.customInfo.recieverName;
-      this.orderCompInfo.address = orderInfo.customInfo.recieverAddress;
-      this.orderCompInfo.mobile = orderInfo.customInfo.recieverMobile;
-      this.orderCompInfo.paymentMethod = orderInfo.paymentMethod;
-
-      if(this.orderCompInfo.paymentMethod == "무통장입금"){
-        this.orderCompInfo.paymentMethod += this.bankStatus;
-      }
-
-      this.orderCompInfo.paymentCharge = orderInfo.totalPrice;
+    if(this.orderCompInfo.paymentMethod == "무통장입금"){
+      this.orderCompInfo.paymentMethod += this.bankStatus;
     }
+
+    this.orderCompInfo.paymentCharge = orderInfo.totalPrice;
     
   }
 

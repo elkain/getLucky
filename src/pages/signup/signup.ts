@@ -213,7 +213,7 @@ export class SignupPage {
     if(str!=undefined){
       return str.replace(/(^\s*)|(\s*$)/gi, "");
     }else{
-      return undefined;
+      return "";
     }
   }
 

@@ -201,7 +201,7 @@ export class OrderPage {
       this.enterMemberOrderInfo();
       this.orderProvider.addOrderInfo(this.orderInfo);
       this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
-    } else if (this.emailCheck(this.customInfo.ordererEmail)==true){
+    } else if (this.emailCheck(this.ordererEmail)==true){
       this.enterNonMemberOrderInfo();
       this.orderProvider.addOrderInfo(this.orderInfo);
       this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
@@ -253,7 +253,8 @@ export class OrderPage {
   enterNonMemberOrderInfo(){
     this.customInfo.ordererName = this.ordererName;
     this.customInfo.ordererMobile = this.ordererMobile1 + "-" + this.ordererMobile2 + "-" + this.ordererMobile3;
-    this.customInfo.ordererEmail = this.trim(this.ordererEmail);
+    this.customInfo.ordererEmail =  this.ordererEmail;
+    this.customInfo.recieverName = this.recieverName;
     this.customInfo.recieverMobile = this.recieverMobile1 + "-" + this.recieverMobile2 + "-" + this.recieverMobile3;
     this.customInfo.recieverAddress = this.trim(this.address1) + " " + this.trim(this.address2) + " " + this.trim(this.address3);
     this.customInfo.recieverAddress = this.trim(this.customInfo.recieverAddress);
@@ -265,13 +266,15 @@ export class OrderPage {
     if(str!=undefined){
       return str.replace(/(^\s*)|(\s*$)/gi, "");
     }else{
-      return;
+      return "";
     }
   }
 
   emailCheck(email){
     let regEmailPattern = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
+    this.ordererEmail = this.trim(this.ordererEmail);
+    
     if(regEmailPattern.test(email)==false){
       let alert = this.alertCtrl.create({
         message: '이메일 주소를 확인해주세요',
