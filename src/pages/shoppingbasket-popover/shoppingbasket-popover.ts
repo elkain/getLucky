@@ -24,7 +24,13 @@ export class ShoppingbasketPopoverPage {
   }
 
   keepShopping() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss().then(()=>{
+      let param = this.navParams.get("class");
+      
+      if(param == "buy"){
+        this.app.getRootNavs()[0].push(TabsPage, { class: "shoppingbasket-popover", tabIndex: 0});
+      }
+    });
   }
 
   confirm() {

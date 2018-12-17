@@ -145,7 +145,7 @@ export class HomePage {
   addToShoppingBasket(product) {
 
     this.shoppingbasketProvider.addShoppingBasket(product);
-    const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {}, { cssClass: 'popover-shopping-basket'});
+    const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {class:"home"}, { cssClass: 'popover-shopping-basket'});
     popover.present();
   }
 
