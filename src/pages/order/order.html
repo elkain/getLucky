@@ -37,7 +37,7 @@
       <ion-grid class="delivery-basic-list" *ngIf="selectedDeliveryType=='memberSaved'">
         <ion-row class="delivery-basic-name">
           <div class="name-label"><p>받는 분</p></div>
-          <div class="delivery-name"><p>{{memberInfo.recieverName}}</p></div>
+          <div class="delivery-name"><p>{{customInfo.recieverName}}</p></div>
         </ion-row>
         <ion-row class="delivery-basic-place">
           <!--popover 방식으로 구현-->
@@ -45,13 +45,13 @@
             <p>배송지 선택</p>
           </div>
           <button class="delivery-place" ion-button clear (click)="presentPopover()">
-            <div class="delivery-text">{{memberInfo.recieverAddress}}</div>
+            <div class="delivery-text">{{customInfo.recieverAddress}}</div>
             <div class="delivery-icon"><ion-icon name="ios-arrow-down"></ion-icon></div>
           </button>
         </ion-row>
         <ion-row class="delivery-basic-phone">
           <div class="phone-label"><p>연락처</p></div>
-          <div class="delivery-phone"><p>{{memberInfo.recieverMobile}}</p></div>
+          <div class="delivery-phone"><p>{{customInfo.recieverMobile}}</p></div>
         </ion-row>
         <ion-row class="delivery-basic-time">
           <div class="time-label"><p>배송시간</p></div>
@@ -151,7 +151,7 @@
       <div class="orderer-name-label">
         <p>받는 분</p>
       </div>
-      <ion-input [(ngModel)]="nonMemberInfo.ordererName" class="orderer-name-input" type="text"></ion-input>
+      <ion-input [(ngModel)]="ordererName" class="orderer-name-input" type="text"></ion-input>
     </ion-row>
     <ion-row class="orderer-phone">
       <div class="orderer-phone-label">
@@ -176,7 +176,7 @@
       <div class="orderer-email-label">
         <p>이메일</p>
       </div>
-      <ion-input [(ngModel)]="nonMemberInfo.ordererEmail" class="orderer-email-input" type="text"></ion-input>
+      <ion-input [(ngModel)]="ordererEmail" class="orderer-email-input" type="text"></ion-input>
     </ion-row>
   </ion-grid>
   <!-- 주문자 정보 시작(비회원)-->
@@ -197,7 +197,7 @@
       <div class="name-label">
         <p>받는 분</p>
       </div>
-      <ion-input [(ngModel)]="nonMemberInfo.recieverName" class="delivery-name" type="text"></ion-input>
+      <ion-input [(ngModel)]="recieverName" class="delivery-name" type="text"></ion-input>
     </ion-row>
     <!-- 주소 입력 -->
     <ion-row class="delivery-new-place" *ngIf="showDeliveryInfo==true">

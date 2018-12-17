@@ -32,7 +32,11 @@ export class OrderPage {
   newPlaceStyle = new Object();
   paymentMethodColor = { cash: "white", card: "white", bank: "white" };
   
-  recieverName : string;
+  ordererName: string;
+  ordererMobile: string;
+  ordererEmail: string;
+  recieverName: string;
+  reciverAddress: string;
   ordererMobile1: string;
   ordererMobile2: string;
   ordererMobile3: string;
@@ -48,8 +52,7 @@ export class OrderPage {
   mobileOptionLists = [];
 
   orderInfo = { type: "", customInfo: {}, orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, paymentMethod: "", deliveryTime: "선택사항", deliveryMemo: "선택사항" , orderedProducts: [] }; // type : member or nonMember 
-  nonMemberInfo = { ordererName: "", ordererMobile: "", ordererEmail: "", recieverName: "", recieverAddress: "", recieverMobile: ""};
-  memberInfo = { recieverName: "", recieverAddress: "", recieverMobile: ""};
+  customInfo = { ordererName: "", ordererMobile: "", ordererEmail: "", recieverName: "", recieverAddress: "", recieverMobile: ""};
   memberAddressLists = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, private alertCtrl:AlertController, 
@@ -67,15 +70,18 @@ export class OrderPage {
     
     if(this.isMember == true){
       this.orderInfo.type = "member";
-      this.memberInfo.recieverName = this.memberProvider.memberData.name;
-      this.memberInfo.recieverMobile = this.memberProvider.memberData.mobile;
+      this.customInfo.ordererName = this.memberProvider.memberData.name;
+      this.customInfo.ordererMobile = this.memberProvider.memberData.mobile;
+      this.customInfo.ordererEmail = this.memberProvider.memberData.email;
       this.memberAddressLists = this.memberProvider.deliveryAddrs;
-      this.memberInfo.recieverAddress = this.memberAddressLists[0].address;
+      this.customInfo.recieverName = this.memberAddressLists[0].receiver;
+      this.customInfo.recieverAddress = this.memberAddressLists[0].address;
+      this.customInfo.recieverMobile = this.memberAddressLists[0].mobile;
       
-      this.orderInfo.customInfo = this.memberInfo;
+      this.orderInfo.customInfo = this.customInfo;
     }else{
       this.orderInfo.type = "nonMember";
-      this.orderInfo.customInfo = this.nonMemberInfo;
+      this.orderInfo.customInfo = this.customInfo;
     }
 
     if (navParams.get("class") == "buy") {
@@ -179,7 +185,7 @@ export class OrderPage {
   presentPopover() {
     const popover = this.popoverCtrl.create(SelectPopoverPage, { addressLists: this.memberAddressLists}, { cssClass:'delivery-popover'});
     popover.onDidDismiss(idx => {
-      this.memberInfo.recieverAddress = this.memberAddressLists[idx].address;
+      this.customInfo.recieverAddress = this.memberAddressLists[idx].address;
     })
     popover.present();
   }
@@ -194,7 +200,7 @@ export class OrderPage {
       this.enterMemberOrderInfo();
       this.orderProvider.addOrderInfo(this.orderInfo);
       this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
-    } else if (this.emailCheck(this.nonMemberInfo.ordererEmail)==true){
+    } else if (this.emailCheck(this.customInfo.ordererEmail)==true){
       this.enterNonMemberOrderInfo();
       this.orderProvider.addOrderInfo(this.orderInfo);
       this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
@@ -231,25 +237,27 @@ export class OrderPage {
 
   enterMemberOrderInfo(){
     if(this.selectedDeliveryType == "memberSaved"){
-      this.orderInfo.customInfo = this.memberInfo;
+      this.orderInfo.customInfo = this.customInfo;
     }else if(this.selectedDeliveryType == "memberNew"){
-      this.memberInfo.recieverName = this.recieverName;
-      this.memberInfo.recieverMobile = this.recieverMobile1 + "-" + this.recieverMobile2 + "-" + this.recieverMobile3;
-      this.memberInfo.recieverAddress = this.trim(this.address1) + " " + this.trim(this.address2) + " " + this.trim(this.address3);
-      this.memberInfo.recieverAddress = this.trim(this.nonMemberInfo.recieverAddress);
-      this.orderInfo.customInfo = this.memberInfo;
+      this.customInfo.recieverName = this.recieverName;
+      this.customInfo.recieverMobile = this.recieverMobile1 + "-" + this.recieverMobile2 + "-" + this.recieverMobile3;
+      this.customInfo.recieverAddress = this.trim(this.address1) + " " + this.trim(this.address2) + " " + this.trim(this.address3);
+      this.customInfo.recieverAddress = this.trim(this.customInfo.recieverAddress);
+      this.orderInfo.customInfo = this.customInfo;
     }else{
       console.log("error selectDeliveryType in enterMemberOrderInfo()");
     }
   }
 
   enterNonMemberOrderInfo(){
-    this.nonMemberInfo.ordererMobile = this.ordererMobile1 + "-" + this.ordererMobile2 + "-" + this.ordererMobile3;
-    this.nonMemberInfo.recieverMobile = this.recieverMobile1 + "-" + this.recieverMobile2 + "-" + this.recieverMobile3;
-    this.nonMemberInfo.recieverAddress = this.trim(this.address1) + " " + this.trim(this.address2) + " " + this.trim(this.address3);
-    this.nonMemberInfo.recieverAddress = this.trim(this.nonMemberInfo.recieverAddress);
+    this.customInfo.ordererName = this.ordererName;
+    this.customInfo.ordererMobile = this.ordererMobile1 + "-" + this.ordererMobile2 + "-" + this.ordererMobile3;
+    this.customInfo.ordererEmail = this.trim(this.ordererEmail);
+    this.customInfo.recieverMobile = this.recieverMobile1 + "-" + this.recieverMobile2 + "-" + this.recieverMobile3;
+    this.customInfo.recieverAddress = this.trim(this.address1) + " " + this.trim(this.address2) + " " + this.trim(this.address3);
+    this.customInfo.recieverAddress = this.trim(this.customInfo.recieverAddress);
 
-    this.orderInfo.customInfo = this.nonMemberInfo;
+    this.orderInfo.customInfo = this.customInfo;
   }
 
   trim(str) {
