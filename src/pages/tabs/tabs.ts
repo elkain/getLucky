@@ -58,13 +58,18 @@ export class TabsPage {
   
   moveToHome(){
     if(this.selectedTab==0){
-      window.location.reload();           // 리로딩이기 때문에 속도적인 측면에서 문제 발생 추후 다른 구현 방식으로 구현 필요
+      this.childParam.homeSegmentCategory = 0; 
     }
     this.tabRef.select(0);
   }
 
   back() {
-    this.tabRef.select(5);
+    if(this.childParam.class == "mypage"){
+      this.tabRef.select(3);
+    }else{
+      this.tabRef.select(5);
+    }
+    
   }
 
   goToShoppingBasket(){
