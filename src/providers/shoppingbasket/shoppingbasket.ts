@@ -20,7 +20,13 @@ export class ShoppingbasketProvider {
   }
 
   completeShopping(){
-
+    let itemNumber = this.shoppingBasket.orderedProducts.length;
+    for (let i = itemNumber - 1; i >= 0; i--) {
+      if (this.shoppingBasket.checkedProducts[i] == true) {
+        this.shoppingBasket.orderedProducts.splice(i, 1);
+        this.shoppingBasket.checkedProducts.splice(i, 1);
+      }
+    }    
   }
 
   calProductPrice(product) {

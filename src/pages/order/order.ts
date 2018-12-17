@@ -200,10 +200,12 @@ export class OrderPage {
     if(this.isMember == true){
       this.enterMemberOrderInfo();
       this.orderProvider.addOrderInfo(this.orderInfo);
+      this.shoppingbasketProvider.completeShopping();
       this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
     } else if (this.emailCheck(this.ordererEmail)==true){
       this.enterNonMemberOrderInfo();
       this.orderProvider.addOrderInfo(this.orderInfo);
+      this.shoppingbasketProvider.completeShopping();
       this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
     } 
   }
