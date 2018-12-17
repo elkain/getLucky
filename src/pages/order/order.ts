@@ -211,8 +211,7 @@ export class OrderPage {
   }
 
   selectedPaymentMethod(method){
-    //console.log(method);
-    
+
     if(method == 'cash'){
       this.orderInfo.paymentMethod = '현장결제';
     }else if(method == "card"){
@@ -221,7 +220,6 @@ export class OrderPage {
       this.orderInfo.paymentMethod = '무통장입금'
     }else{
       console.log("error paymentMethod doesn't pick");
-      
     }
 
     if (this.paymentMethodColor[method] == "#d3d3d3"){

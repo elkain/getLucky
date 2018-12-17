@@ -30,21 +30,15 @@ export class OrderDetailPage {
     this.showProductInfo = true;
     this.showPaymentInfo = true;
     this.showDeliveryInfo = true;
-    
     let param = navParams.data;
-    console.log(param);
-    
+
     if (param.class == "mypage"){
       let orderedNumber = navParams.data.orderedNumber;
       let idx;
-
-      console.log(orderedNumber);
       
       for (let i = 0; i < this.orderProvider.orderInfos.length; i++){
         if (this.orderProvider.orderInfos[i].id == orderedNumber){
           idx = i;
-          console.log(idx);
-          
         }
       }
       

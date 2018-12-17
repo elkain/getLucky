@@ -108,9 +108,6 @@ export class HomePage {
       this.showProductPage = true;
       this.bestScrollHeight = "calc(100% - 88px)";
     }
-
-    console.log(this.showProductPage);
-    
   }
 
   bestCategoryChange(Category) {
@@ -167,7 +164,6 @@ export class HomePage {
   ionSelected() {
   
     if (this.homeParams.homeSegmentCategory == 1) {
-      console.log(this.homeParams);
       this.homeCategorySelected = this.homeCategories[1];
       this.categorySelected=this.homeParams.subCategory;
       this.homeParams.homeSegmentCategory = undefined;

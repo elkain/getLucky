@@ -22,8 +22,6 @@ export class OrderCompletePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public orderProvider : OrderProvider) {
 
     let orderInfo = this.orderProvider.orderInfos[this.orderProvider.orderInfos.length - 1];
-    console.log(orderInfo);
-    
     this.orderCompInfo.ordererName = orderInfo.customInfo.ordererName;
     this.orderCompInfo.recieverName = orderInfo.customInfo.recieverName;
     this.orderCompInfo.address = orderInfo.customInfo.recieverAddress;

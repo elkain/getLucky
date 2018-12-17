@@ -164,7 +164,6 @@ export class SignupPage {
     if ((this.idCheck() && this.pwdCheck() && this.nameCheck() && this.emailChek() && this.mobileInputCheck()) != false) {
       this.enterMemberData();
       this.memberProvider.memberData = this.memberData;
-      console.log(this.memberData);
 
       this.navCtrl.setRoot(TabsPage, { class: "signup" });
     }
