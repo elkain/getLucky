@@ -13,6 +13,7 @@ export class HomePage {
 
   @ViewChild(Slides) slides: Slides;
   imageURL:string = "./assets/slides/";
+  productImageURL:string = "./assets/imgs/"
 
   homeCategories = ["럭키추천", "베스트", "알뜰할인",  "이벤트"];
   homeCategorySelected;
@@ -43,32 +44,19 @@ export class HomePage {
     this.homeParams = navParams.data;     // category from category page
    
     this.products = [   // sale method : fixed, percent
-      { name: "사과", price: 3000, discount: 2000, saleMethod: "fixed", saleCount: 2, imagePath: this.imageURL + "slide1.png" },
-      { name: "배", price: 10000, discount: 10, saleMethod: "percent", saleCount: 4, imagePath: this.imageURL + "slide2.png" },
-      { name: "감", price: 5000, discount: 1500, saleMethod: "fixed", saleCount: 6, imagePath: this.imageURL + "slide3.png" },
-      { name: "야채", price: 2500, discount: 5, saleMethod: "percent", saleCount: 8, imagePath: this.imageURL + "slide1.png" },
-      { name: "빼빼로", price: 4000, discount: 1000, saleMethod: "fixed", saleCount: 1, imagePath: this.imageURL + "slide2.png" },
-      { name: "초콜릿", price: 7000, discount: 8, saleMethod: "percent", saleCount: 0, imagePath: this.imageURL + "slide3.png" },
-      { name: "요구르트", price: 500, discount: 0, saleMethod: "none", saleCount: 12, imagePath: this.imageURL + "slide1.png" },
+      { name: "사과", price: 3000, discount: 2000, saleMethod: "fixed", saleCount: 2, imagePath: this.productImageURL + "사과.jpg" },
+      { name: "배", price: 10000, discount: 10, saleMethod: "percent", saleCount: 4, imagePath: this.productImageURL + "배.jpg" },
+      { name: "감", price: 5000, discount: 1500, saleMethod: "fixed", saleCount: 6, imagePath: this.productImageURL + "감귤.jpg" },
+      { name: "야채", price: 2500, discount: 5, saleMethod: "percent", saleCount: 8, imagePath: this.productImageURL + "오이.jpg" },
+      { name: "빼빼로", price: 4000, discount: 1000, saleMethod: "fixed", saleCount: 1, imagePath: this.productImageURL + "빼빼로.jpg" },
+      { name: "초콜릿", price: 7000, discount: 8, saleMethod: "percent", saleCount: 0, imagePath: this.productImageURL + "초콜렛.jpg" },
+      { name: "요구르트", price: 500, discount: 0, saleMethod: "none", saleCount: 12, imagePath: this.productImageURL + "요구르트.jpg" },
     ]; 
 
     /* 할인율을 적용하여 가격 측정 */
     for (var i = 0; i < this.products.length; i++) {
       this.storageProvider.calProductPrice(this.products[i]);
     }
-    
-    /*for (var i=0; i < this.products.length; i++) {
-      this.products[i].count = 1;
-      
-      if (this.products[i].saleMethod == "fixed") {
-        this.products[i].salePrice = this.products[i].price - this.products[i].discount;
-      } else if (this.products[i].saleMethod == "percent") {
-        this.products[i].salePrice = this.products[i].price * (100 - this.products[i].discount)/100;
-      } else {
-        this.products[i].salePrice = this.products[i].price;
-
-      }
-    }*/
   }
 
   ionViewDidEnter() {
