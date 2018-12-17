@@ -14,7 +14,7 @@
   <div class="order-detail-head"> <p class="order-detail-title">주문 내역 상세 </p></div>
   <ion-scroll scrollY="true">
     <!-- 상품 정보 시작-->
-    <ion-list class="product-info">
+    <ion-list class="product-info" style="margin-bottom:0px">
       <ion-item class="product-info-head">
         <label class="product-info-label">1. 주문 정보</label>
         <button (click)="hideProductInfo()" class="info-icon" item-end clear ion-button icon-only>
@@ -23,7 +23,7 @@
         </button>
       </ion-item>
     </ion-list>
-    <ion-list class="product-info" *ngIf="showProductInfo==true">
+    <ion-list class="product-info" style="margin-top:0px" *ngIf="showProductInfo==true">
       <ion-item class="order-id">
         <label class="order-id-label">주문번호</label>
         <p item-end class="order-id-num">{{orderInfo.id}}</p>
