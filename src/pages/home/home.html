@@ -80,7 +80,7 @@
     <ion-scroll scrollY="true" class="best-scroll" [style.height]="bestScrollHeight" *ngIf="homeCategorySelected==homeCategories[1] || homeCategorySelected==homeCategories[2]">
         <div left class="best-sort-option">
             <select [(ngModel)]="productSortOptionSelected" (change)="productsOptionChange()">
-                <option [value]="productSortOption" *ngFor="let productSortOption of productSortOptions">{{productSortOption}}</option>
+                <option *ngFor="let productSortOption of productSortOptions">{{productSortOption}}</option>
             </select>
         </div>
 
