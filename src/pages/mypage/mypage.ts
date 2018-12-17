@@ -43,7 +43,7 @@ export class MypagePage {
   mobile1;
   mobile2;
   mobile3;
-  memberData = {userName:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", classs:0, totalPurchase:0};
+  memberData = {username:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", classs:0, totalPurchase:0};
 
   findCategories = ["아이디 찾기", "비밀번호 찾기"];
   findCategorySelected;
@@ -78,9 +78,6 @@ export class MypagePage {
     }
 
     this.orderInfos = this.orderProvider.orderInfos;
-    //console.log(this.orderInfos);
-
-   
   }
 
   ionViewDidEnter() {
@@ -130,7 +127,7 @@ export class MypagePage {
     this.isMember=true;
     this.storageProvider.isMember = this.isMember;
 
-    /*if (this.memberData.username == this.username && this.memberData.password == this.password){
+    if (this.memberData.username == this.username && this.memberData.password == this.password){
       this.showPageType = "mypage";
     }else{
       let alert = this.alertCtrl.create({
@@ -141,7 +138,7 @@ export class MypagePage {
         cssClass: 'alert-modify-member'
       });
       alert.present();
-    }*/
+    }
 
     this.showPageType = "mypage";
     this.autoLoginCheckbox = false;
@@ -198,7 +195,6 @@ export class MypagePage {
   }
 
   goToOrderDetail(orderedNumber) {
-    //this.navCtrl.parent.select(6);
     this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 6, class: "mypage", orderedNumber: orderedNumber});
   }
 
