@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 export class OrderProvider {
 
   orderInfos = [];
+  orderInfo;
   count:number = 100000;
 
   constructor() {
@@ -34,11 +35,9 @@ export class OrderProvider {
     
     order.regTime = dString;
     order.count = order.orderedProducts.length;
-    this.orderInfos.push(order);
-  }
 
-  randomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+    // 장바구니 삭제 시 주문관련 데이터가 사라지지 않도록 직접적으로 주문정보를 복사
+    this.orderInfo = JSON.parse(JSON.stringify(order));
+    this.orderInfos.push(this.orderInfo);
   }
-
 }
