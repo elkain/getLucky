@@ -193,12 +193,12 @@
         </span>
         <ion-input class="phone-input" [(ngModel)]="mobile3" type="tel" maxlength="4"></ion-input>
       </div>
-      <button clear class="phone-confirm" ion-button>다른번호 인증</button>
+      <button clear class="phone-confirm" (click)="recieveMobileConfirm()" ion-button>다른번호 인증</button>
     </ion-row>
     <ion-row class="signup-phone">
       <div class="signup-label"></div>
-      <ion-input class="phone-confirm-num" type="number"></ion-input>
-      <button clear class="phone-confirm" ion-button>인증번호 확인</button>
+      <ion-input class="phone-confirm-num" [(ngModel)]="mobileCheckNumberConfirm" type="number"></ion-input>
+      <button clear class="phone-confirm" (click)="confirmMobile()" ion-button>인증번호 확인</button>
     </ion-row>
     <!-- 생년월일 입력 -->
     <ion-row class="signup-birth">

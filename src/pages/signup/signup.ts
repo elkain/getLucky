@@ -175,7 +175,7 @@ export class SignupPage {
 
   // 회원 정보 수정 버튼
   presentAlert() {
-    if ((this.pwdCheck() && this.nameCheck() && this.emailChek() && this.mobileInputCheck() && this.birthCheck()) != false){
+    if ((this.modifyPwdCheck() && this.nameCheck() && this.emailChek() && this.modifyMobileNumber() && this.birthCheck()) != false){
       let alert = this.alertCtrl.create({
         message: '회원정보가 수정되었습니다.',
         buttons: [{
@@ -200,11 +200,12 @@ export class SignupPage {
 
     let birth = this.birthYear + "-" + this.birthMonth + "-" + this.birthDay;
 
-    this.memberData.password = CryptoJS.SHA256(this.trim(this.password) + "Markis").toString(CryptoJS.enc.Hex);
-    console.log(this.memberData.password);
+    if(this.password != undefined){
+      this.memberData.password = CryptoJS.SHA256(this.trim(this.password) + "Markis").toString(CryptoJS.enc.Hex);
+      console.log(this.memberData.password);
+    }
     
     this.memberData.email = email;
-    this.memberData.mobile = this.memberData.mobile;
     this.memberData.address = address;
     this.memberData.birth = birth;
     this.memberData.sex = this.memberData.sex;
@@ -281,6 +282,8 @@ export class SignupPage {
   }
 
   pwdCheck(){
+
+    
     if (this.password == undefined) {
 
       let alert = this.alertCtrl.create({
@@ -338,6 +341,60 @@ export class SignupPage {
     } 
     
     return true;
+  }
+
+  modifyPwdCheck(){
+    if (this.currentPasssowrd == undefined) {
+      let alert = this.alertCtrl.create({
+        message: '현재 비밀번호를 입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+
+    if (this.currentPasssowrd.length < 6) {
+
+      let alert = this.alertCtrl.create({
+        message: '비밀번호는 6글자 이상입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+
+    let currentPasssowrd = CryptoJS.SHA256(this.trim(this.currentPasssowrd) + "Markis").toString(CryptoJS.enc.Hex);
+
+    console.log("this.password : " + this.password);
+    console.log("this.memberData.password : " + this.memberData.password);
+    console.log("currentPasssowrd : " + currentPasssowrd);
+
+    if (this.memberData.password != currentPasssowrd) {
+      let alert = this.alertCtrl.create({
+        message: '현재 비밀번호가 틀렸습니다.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+    
+    if(this.password == undefined){
+      return true;
+    }else{
+      return this.pwdCheck();
+    }
   }
 
   nameCheck(){
@@ -458,9 +515,19 @@ export class SignupPage {
     return true;
   }
 
+  modifyMobileNumber(){
+    let mobile = this.mobile1 + "-" + this.mobile2 + "-" + this.mobile3;
+
+    if (mobile != this.memberData.mobile){
+      return this.mobileInputCheck();
+    }
+
+    return true;
+  }
+
   birthCheck(){
-    let yearPattern = /^[0-9]{4}/;
-    let pattern = /^[0 - 9]{1,2}$/;
+    let yearPattern = /^[0-9]{4}$/;
+    let pattern = /^[0-9]{1,2}$/;
 
     if (this.birthYear == undefined && this.birthMonth == undefined && this.birthDay == undefined){
       return true;
