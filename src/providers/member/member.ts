@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+//import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import * as CryptoJS from 'crypto-js';
 /*
   Generated class for the MemberProvider provider.
 
@@ -15,6 +15,10 @@ export class MemberProvider {
 
   constructor() {
     this.memberData = { username: "hee2358", password: "rhkrthdus1", name: "이철", email: "hee2358@naver.com", mobile: "010-5269-8621", address: "서울시 강동구 명일동 현대아파트", birth: "1986-12-13", sex: "male" };
+    if (this.memberData.password == "rhkrthdus1"){
+      this.memberData.password = CryptoJS.SHA256(this.memberData.password + "Markis").toString(CryptoJS.enc.Hex);
+    }
+    
     this.deliveryAddrs = [
       { type: "기본주소", address: "서울시 강동구 고덕로 131 (암사동, 강동롯데캐슬퍼스트아파트) 123동 1234호", receiver: "이충민", mobile: "010-1234-5678" },
       { type: "사무실", address: "서울시 강동구 성암로 11길 24 3층", receiver: "이충민", mobile: "010-1234-5678" },

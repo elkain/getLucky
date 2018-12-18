@@ -6,6 +6,7 @@ import { MemberProvider } from '../../providers/member/member';
 import { OrderProvider } from '../../providers/order/order';
 import { TabsPage } from '../tabs/tabs';
 import { OrderPage } from '../order/order';
+import * as CryptoJS from 'crypto-js';
 /**
  * Generated class for the MypagePage page.
  *
@@ -215,12 +216,11 @@ export class MypagePage {
   }
 
   login(){
-    this.isMember=true;
-    this.storageProvider.isMember = this.isMember;
 
+    let password = CryptoJS.SHA256(this.trim(this.password) + "Markis").toString(CryptoJS.enc.Hex);
     if (this.idCheck() == false || this.pwdCheck() == false) {
       
-    } else if (this.memberData.username != this.username || this.memberData.password != this.password) {
+    } else if (this.memberData.username != this.username || this.memberData.password != password) {
       let alert = this.alertCtrl.create({
         message: '아이디/비번이 틀립니다.',
         buttons: [{
@@ -230,6 +230,8 @@ export class MypagePage {
       });
       alert.present();
     } else{
+      this.isMember = true;
+      this.storageProvider.isMember = this.isMember;
       this.showPageType = "mypage";
     } 
     
