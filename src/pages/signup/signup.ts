@@ -4,6 +4,7 @@ import { TabsPage } from '../tabs/tabs';
 import { StorageProvider } from '../../providers/storage/storage';
 import { MemberProvider } from '../../providers/member/member';
 import { OrderPage } from '../order/order';
+import * as CryptoJS from 'crypto-js';
 
 /**
  * Generated class for the SignupPage page.
@@ -96,7 +97,6 @@ export class SignupPage {
   }
 
   recieveMobileConfirm(){
-    
     this.mobileCheckNumber = 123456;
 
     let alert = this.alertCtrl.create({
@@ -175,8 +175,7 @@ export class SignupPage {
 
   // 회원 정보 수정 버튼
   presentAlert() {
-
-    if ((this.idCheck() && this.pwdCheck() && this.nameCheck() && this.emailChek() && this.mobileInputCheck() && this.birthCheck()) != false){
+    if ((this.pwdCheck() && this.nameCheck() && this.emailChek() && this.mobileInputCheck() && this.birthCheck()) != false){
       let alert = this.alertCtrl.create({
         message: '회원정보가 수정되었습니다.',
         buttons: [{
@@ -201,8 +200,8 @@ export class SignupPage {
 
     let birth = this.birthYear + "-" + this.birthMonth + "-" + this.birthDay;
 
-    let password = this.trim(this.password);
-    this.memberData.password = password;
+    this.memberData.password = CryptoJS.SHA256(this.trim(this.password) + "Markis").toString(CryptoJS.enc.Hex);
+    console.log(this.memberData.password);
     
     this.memberData.email = email;
     this.memberData.mobile = this.memberData.mobile;
@@ -356,9 +355,7 @@ export class SignupPage {
   }
 
   nameCheck(){
-
     if (this.memberData.name == undefined) {
-
       let alert = this.alertCtrl.create({
         message: '이름을 입력하세요.',
         buttons: [{
