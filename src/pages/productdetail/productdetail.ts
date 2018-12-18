@@ -40,7 +40,7 @@ export class ProductdetailPage {
   }
 
   moveToHome(){
-    this.navCtrl.setRoot(TabsPage);
+    this.navCtrl.setRoot(TabsPage, {class:undefined});
   }
 
   goToShoppingBasket() {

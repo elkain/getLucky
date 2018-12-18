@@ -233,5 +233,7 @@ export class MypagePage {
     this.storageProvider.findMemberData.method = this.findLoginInfoMethod;
     this.storageProvider.findMemberData.type = this.findCategorySelected;
   }
+
+  
 }
 

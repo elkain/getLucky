@@ -192,7 +192,7 @@ export class OrderPage {
   }
 
    moveToHome() {
-    this.navCtrl.setRoot(TabsPage);
+    this.navCtrl.setRoot(TabsPage, {class:undefined});
   }
 
   confirmOrder(){

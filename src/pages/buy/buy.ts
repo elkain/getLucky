@@ -31,8 +31,6 @@ export class BuyPage {
     public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider, public orderProvider: OrderProvider) {
 
     this.product = this.navParams.get("product");
-    
-    //this.product.salePrice = this.shoppingbasketProvider.calProductPrice(this.product);
     this.isMember = this.storageProvider.isMember;
     this.product.count = 1;
     this.product.totalPrice = this.product.salePrice * this.product.count;
@@ -45,7 +43,7 @@ export class BuyPage {
   }
 
   moveToHome() {
-    this.navCtrl.setRoot(TabsPage, {class:"buy"});
+    this.navCtrl.setRoot(TabsPage, { class: undefined });
   }
 
   goToShoppingBasket() {
@@ -60,11 +58,9 @@ export class BuyPage {
     }else{
       this.navCtrl.push(TabsPage, { class: "buy", tabIndex: 3});
     }
-    
   }
 
   addToShoppingBasket() {
-    
     this.shoppingbasketProvider.addShoppingBasket(this.product);
 
     const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {class:"buy"}, { cssClass: 'popover-shopping-basket' });
