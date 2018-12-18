@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic
 import { OrderPage } from '../order/order';
 import { StorageProvider } from '../../providers/storage/storage';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the ShoppingbasketPage page.
@@ -18,6 +19,7 @@ import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingb
 })
 export class ShoppingbasketPage {
 
+  isMember:boolean;
   totalNumber:number;
   //checkedProducts = Array();
   //checkedAllProducts:boolean;
@@ -31,6 +33,7 @@ export class ShoppingbasketPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, private alertCtrl:AlertController , 
     public storageProvider: StorageProvider, public shoppingbasketProvider:ShoppingbasketProvider) {
 
+    this.isMember = this.storageProvider.isMember;
     this.shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
     this.itemNumber = this.shoppingBasket.orderedProducts.length;
     this.checkedItemNumber = 0;
@@ -59,7 +62,12 @@ export class ShoppingbasketPage {
     if (this.checkedItemNumber>0){
 
       this.shoppingbasketProvider.substituteBasket(this.shoppingBasket);
-      this.app.getRootNavs()[0].push(OrderPage, { class: "shoppingbasket"});
+
+      if (this.isMember == true) {
+        this.app.getRootNavs()[0].push(OrderPage, { class: "shoppingbasket" });
+      } else {
+        this.app.getRootNavs()[0].push(TabsPage, { class: "shoppingbasket", tabIndex: 3 });
+      }
     }else{
       let alert = this.alertCtrl.create({
         message: '선택된 상품이 없습니다..',

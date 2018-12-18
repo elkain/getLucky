@@ -21,6 +21,7 @@ import { OrderProvider } from '../../providers/order/order';
 })
 export class BuyPage {
 
+  isMember;
   product:any;
   deliveryFee:number;
   deliveryFreeString:string;
@@ -32,6 +33,7 @@ export class BuyPage {
     this.product = this.navParams.get("product");
     
     //this.product.salePrice = this.shoppingbasketProvider.calProductPrice(this.product);
+    this.isMember = this.storageProvider.isMember;
     this.product.count = 1;
     this.product.totalPrice = this.product.salePrice * this.product.count;
     this.deliveryFee = storageProvider.deliveryFee;
@@ -51,8 +53,14 @@ export class BuyPage {
   }
 
   goToOrder() {
-    //this.calOrderInfo();
-    this.navCtrl.push(OrderPage, { class: "buy", product: this.product});
+    this.orderProvider.orderedProduct = this.product;
+
+    if(this.isMember == true){
+      this.navCtrl.push(OrderPage, { class: "buy"});
+    }else{
+      this.navCtrl.push(TabsPage, { class: "buy", tabIndex: 3});
+    }
+    
   }
 
   addToShoppingBasket() {
@@ -75,21 +83,4 @@ export class BuyPage {
 
     this.product.totalPrice = this.product.salePrice * this.product.count;
   }
-
-  /*calOrderInfo(){
-    this.orderInfo.shoppingBasket=[];
-    this.orderInfo.shoppingBasket.push(this.product);
-    this.orderInfo.orderPrice = this.product.price * this.product.count;
-    this.orderInfo.sale = (this.product.price - this.product.salePrice) * this.product.count;
-
-    if ((this.orderInfo.orderPrice - this.orderInfo.sale) >= this.storageProvider.deliveryFreeFee) {
-      this.orderInfo.deliveryFee = 0;
-    } else if (this.orderInfo.orderPrice == 0) {
-      this.orderInfo.deliveryFee = 0;
-    } else {
-      this.orderInfo.deliveryFee = this.storageProvider.deliveryFee;
-    }
-
-    this.orderInfo.totalPrice = this.orderInfo.orderPrice - this.orderInfo.sale + this.orderInfo.deliveryFee;
-  }*/
 }

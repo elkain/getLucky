@@ -70,31 +70,28 @@
     <!-- 비회원 탭 시작 -->
     <!-- 주문자 명 주문 번호 입력 -->
     <ion-list class="nonlogin-input-area" *ngIf="loginTabsSelected=='비회원'">
-      <ion-item class="order-name-input">
+      <ion-item class="order-name-input"  *ngIf="nonMemberBuy == false">
         <ion-input type="text" [placeholder]="orderNamePlaceHolder" [(ngModel)]="orderName"></ion-input>
       </ion-item>
-      <ion-item class="order-number-input">
+      <ion-item class="order-number-input" *ngIf="nonMemberBuy == false">
         <ion-input type="text" [placeholder]="orderNumberPlaceHolder" [(ngModel)]="orderNumber"></ion-input>
       </ion-item>
     </ion-list>
 
     <!-- 주문자 확인 버튼 -->
     <ion-grid class="login-button-area" *ngIf="loginTabsSelected=='비회원'">
-      <ion-row class="login-button">
+      <ion-row class="login-button" *ngIf="nonMemberBuy == false">
         <button full ion-button>주문확인</button>
+      </ion-row>
+      <!-- 비회원 주문시 보여지는 페이지 (조건 미추가)-->
+      <ion-row class="login-button" *ngIf="nonMemberBuy == true">
+        <button full (click)="goToOrder()" ion-button>비회원구매</button>
+      </ion-row>
+      <ion-row class="register-button" *ngIf="nonMemberBuy == true">
+        <button full (click)="moveToSignup()" ion-button>회원가입</button>
       </ion-row>
     </ion-grid>
     <!-- 비회원 탭 종료 -->
-
-    <!-- 비회원 주문시 보여지는 페이지 (조건 미추가)-->
-    <ion-grid class="login-button-area" *ngIf="false">
-      <ion-row class="login-button">
-        <button full ion-button>비회원구매</button>
-      </ion-row>
-      <ion-row class="register-button">
-        <button full ion-button>회원가입</button>
-      </ion-row>
-    </ion-grid>
   </div>
   <!-- 로그인 페이지 끝 -->
 

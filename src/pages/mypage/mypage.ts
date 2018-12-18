@@ -5,7 +5,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import { MemberProvider } from '../../providers/member/member';
 import { OrderProvider } from '../../providers/order/order';
 import { TabsPage } from '../tabs/tabs';
-
+import { OrderPage } from '../order/order';
 /**
  * Generated class for the MypagePage page.
  *
@@ -48,6 +48,8 @@ export class MypagePage {
   findCategories = ["아이디 찾기", "비밀번호 찾기"];
   findCategorySelected;
   findLoginInfoMethod;
+  nonMemberBuy;
+  prevPage;
 
   showPageType : string;
   showBackbtn: boolean;
@@ -66,6 +68,7 @@ export class MypagePage {
 
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
+    this.nonMemberBuy = false;
     this.isMember = this.storageProvider.isMember;
     this.deliveryDesInfos = this.memberProvider.deliveryAddrs;
 
@@ -90,11 +93,20 @@ export class MypagePage {
         this.showPageType = "mypage";
       }
     }else{
+      console.log(this.homeParams.class);
+      
+      if (this.homeParams.class == "buy" || this.homeParams.class == "shoppingbasket"){
+        this.loginTabsSelected = this.loginTabs[1];
+        this.nonMemberBuy = true;
+        this.prevPage = this.homeParams.class;
+        this.homeParams.class = undefined;
+      }else{
+        this.loginTabsSelected = this.loginTabs[0];
+        this.nonMemberBuy = false;
+      }
       this.showPageType = "login";
     }
     
-
-    this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
     this.showBackbtn = false;
     this.arrowIconTop = "183px";
@@ -109,7 +121,7 @@ export class MypagePage {
   }
 
   moveToSignup(){
-    this.app.getRootNavs()[0].push(SignupPage, {class:"mypage"});
+    this.app.getRootNavs()[0].push(SignupPage, {class:"mypage", prevPage:this.prevPage});
   }
 
   findCategoryChange(Category) {
@@ -196,6 +208,12 @@ export class MypagePage {
 
   goToOrderDetail(orderedNumber) {
     this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 6, class: "mypage", orderedNumber: orderedNumber});
+  }
+
+  goToOrder() {
+    this.app.getRootNavs()[0].setRoot(OrderPage, { class: this.prevPage}).then(()=>{
+      this.prevPage = undefined;
+    });
   }
 
   confirmInfoFind(){

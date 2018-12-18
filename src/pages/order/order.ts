@@ -85,7 +85,7 @@ export class OrderPage {
 
     if (navParams.get("class") == "buy") {
       let product;
-      product = navParams.get("product");
+      product = this.orderProvider.orderedProduct;
       
       this.orderInfo.orderPrice = product.price * product.count;
       this.orderInfo.sale = (product.price - product.salePrice) * product.count;

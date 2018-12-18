@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { TabsPage } from '../tabs/tabs';
 import { StorageProvider } from '../../providers/storage/storage';
 import { MemberProvider } from '../../providers/member/member';
+import { OrderPage } from '../order/order';
 
 /**
  * Generated class for the SignupPage page.
@@ -162,10 +163,17 @@ export class SignupPage {
     if ((this.idCheck() && this.pwdCheck() && this.nameCheck() && this.emailChek() && this.mobileInputCheck() && this.birthCheck()) != false) {
       this.enterMemberData();
       this.memberProvider.memberData = this.memberData;
-      this.navCtrl.setRoot(TabsPage, { class: "signup" });
+
+      let prevPage = this.navParams.get("prevPage");
+      if(prevPage == "buy" || prevPage == "shoppingbasket"){
+        this.navCtrl.push(OrderPage, { class: "buy" });
+      }else{
+        this.navCtrl.setRoot(TabsPage, { class: "signup" });
+      }
     }
   }
 
+  // 회원 정보 수정 버튼
   presentAlert() {
 
     if ((this.idCheck() && this.pwdCheck() && this.nameCheck() && this.emailChek() && this.mobileInputCheck() && this.birthCheck()) != false){
@@ -438,7 +446,7 @@ export class SignupPage {
     let middlePattern = /^[0 - 9]{ 3, 4}$/;
     let lastPatern = /^[0 - 9]{4}$/;
 
-    if (firstPattern.test(this.mobile1) || middlePattern.test(this.mobile2) || lastPatern.test(this.mobile3)) {
+    if (firstPattern.test(this.mobile1) == false && middlePattern.test(this.mobile2) == false && lastPatern.test(this.mobile3) == false) {
       let alert = this.alertCtrl.create({
         message: '적합한 휴대폰 번호가 아닙니다.',
         buttons: [{

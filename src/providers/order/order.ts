@@ -11,10 +11,12 @@ export class OrderProvider {
 
   orderInfos = [];
   orderInfo;
+  orderedProduct;
   count:number = 100000;
 
   constructor() {
     console.log('Hello OrderProvider Provider');
+    this.orderedProduct = {};
   }
 
   addOrderInfo(order){
