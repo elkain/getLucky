@@ -337,20 +337,6 @@ export class SignupPage {
       return false;
     } 
     
-    if (this.password.length < 6) {
-
-      let alert = this.alertCtrl.create({
-        message: '비밀번호는 6글자 이상어야합니다.',
-        buttons: [{
-          text: '확인',
-        }],
-        cssClass: 'alert-modify-member'
-      });
-      alert.present();
-
-      return false;
-    }
-
     return true;
   }
 

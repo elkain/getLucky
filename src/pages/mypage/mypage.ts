@@ -71,6 +71,7 @@ export class MypagePage {
     this.nonMemberBuy = false;
     this.isMember = this.storageProvider.isMember;
     this.deliveryDesInfos = this.memberProvider.deliveryAddrs;
+    this.autoLoginCheckbox = false;
 
     for(let i in this.memberData){
       for (let j in this.memberProvider.memberData){
@@ -135,13 +136,91 @@ export class MypagePage {
     }
   }
 
+  idCheck(){
+    if (this.username == undefined) {
+      let alert = this.alertCtrl.create({
+        message: '아이디를 입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+
+    this.username = this.trim(this.username);
+
+    if (this.username.length < 3) {
+      let alert = this.alertCtrl.create({
+        message: '아이디는 세글자 이상입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+
+    let pattern = /^[^_][a-zA-Z0-9_]+$/;
+
+    if (pattern.test(this.username) == false) {
+      let alert = this.alertCtrl.create({
+        message: '정확한 아이디형식을 입력하세요',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+    return true;
+  }
+
+  pwdCheck(){
+    if (this.password == undefined) {
+
+      let alert = this.alertCtrl.create({
+        message: '비밀번호를 입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+
+    if (this.password.length < 6) {
+
+      let alert = this.alertCtrl.create({
+        message: '비밀번호는 6글자 이상입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+    
+    return true;
+  }
+
   login(){
     this.isMember=true;
     this.storageProvider.isMember = this.isMember;
 
-    if (this.memberData.username == this.username && this.memberData.password == this.password){
-      this.showPageType = "mypage";
-    }else{
+    if (this.idCheck() == false || this.pwdCheck() == false) {
+      
+    } else if (this.memberData.username != this.username || this.memberData.password != this.password) {
       let alert = this.alertCtrl.create({
         message: '아이디/비번이 틀립니다.',
         buttons: [{
@@ -150,10 +229,10 @@ export class MypagePage {
         cssClass: 'alert-modify-member'
       });
       alert.present();
-    }
-
-    this.showPageType = "mypage";
-    this.autoLoginCheckbox = false;
+    } else{
+      this.showPageType = "mypage";
+    } 
+    
     console.log("userName : " + this.username);
     console.log("password : " + this.password);
     console.log("autoLoginCheckbox : " + this.autoLoginCheckbox);
@@ -234,6 +313,12 @@ export class MypagePage {
     this.storageProvider.findMemberData.type = this.findCategorySelected;
   }
 
-  
+  trim(str) {
+    if (str != undefined) {
+      return str.replace(/(^\s*)|(\s*$)/gi, "");
+    } else {
+      return "";
+    }
+  }
 }
 
