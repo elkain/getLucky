@@ -540,6 +540,24 @@ page-mypage {
         }
     }
 
+    .order-history-none{
+        width: calc(100% - 16px);
+        height: 438px;
+        margin:16px 8px 8px;
+        background-color:$white-background-color;
+
+        display: flex;
+        align-items: center;
+
+        p{
+            width: 100%;
+            text-align: center;
+            font-size: $large-font-size;
+            font-weight: bold;
+            color: $default-font-color;
+        }
+    }
+
     .order-history-list{
         width: calc(100% - 16px);
         margin:16px 8px 8px;
