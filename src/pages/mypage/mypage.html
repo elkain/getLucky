@@ -189,7 +189,7 @@
     <p class="order-history-head-label">주문내역</p>
   </div>
   <ion-scroll scrollY="true" *ngIf="showPageType=='주문내역'">
-    <div class="order-history-none">
+    <div class="order-history-none" *ngIf="orderInfos[0] == undefined">
       <p>상품 주문 내역이 없습니다.</p>
     </div>
     <ion-list class="order-history-list" *ngFor="let order of orderInfos">
