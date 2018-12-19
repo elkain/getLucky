@@ -36,7 +36,7 @@ export class OrderPage {
   ordererMobile: string;
   ordererEmail: string;
   recieverName: string;
-  reciverAddress: string;
+  recieverAddress: string;
   ordererMobile1: string;
   ordererMobile2: string;
   ordererMobile3: string;
@@ -199,15 +199,18 @@ export class OrderPage {
 
     if(this.isMember == true){
       this.enterMemberOrderInfo();
-      this.orderProvider.addOrderInfo(this.orderInfo);
-      this.shoppingbasketProvider.completeShopping();
-      this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
-    } else if (this.emailCheck(this.ordererEmail)==true){
+    } else{
       this.enterNonMemberOrderInfo();
+    }
+    console.log(this.orderInfo);
+    
+    if (this.nameCheck(this.customInfo.ordererName) && this.mobileCheck(this.customInfo.ordererMobile) && this.emailCheck(this.customInfo.ordererEmail) && 
+    this.nameCheck(this.customInfo.recieverName) && this.addrCheck(this.customInfo.recieverAddress) && this.mobileCheck(this.customInfo.recieverMobile) && this.paymentMethodCheck(this.orderInfo.paymentMethod) == true) {
+      
       this.orderProvider.addOrderInfo(this.orderInfo);
       this.shoppingbasketProvider.completeShopping();
       this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
-    } 
+    }
   }
 
   selectedPaymentMethod(method){
@@ -241,9 +244,25 @@ export class OrderPage {
       this.orderInfo.customInfo = this.customInfo;
     }else if(this.selectedDeliveryType == "memberNew"){
       this.customInfo.recieverName = this.recieverName;
-      this.customInfo.recieverMobile = this.recieverMobile1 + "-" + this.recieverMobile2 + "-" + this.recieverMobile3;
-      this.customInfo.recieverAddress = this.trim(this.address1) + " " + this.trim(this.address2) + " " + this.trim(this.address3);
-      this.customInfo.recieverAddress = this.trim(this.customInfo.recieverAddress);
+
+      if (this.recieverMobile1 == undefined || this.recieverMobile2 == undefined || this.recieverMobile3 == undefined || 
+        this.recieverMobile1 == "" || this.recieverMobile2 == "" || this.recieverMobile3 == "") {
+
+        this.customInfo.recieverMobile = undefined;
+      } else {
+        this.customInfo.recieverMobile = this.recieverMobile1 + "-" + this.recieverMobile2 + "-" + this.recieverMobile3;
+      }
+
+      let address1 = this.trim(this.address1);
+      console.log(address1);
+      
+      if (address1 == "" || address1 == undefined) {
+        this.customInfo.recieverAddress = undefined;
+      } else {
+        this.customInfo.recieverAddress = address1 + " " + this.trim(this.address2) + " " + this.trim(this.address3);
+        this.customInfo.recieverAddress = this.trim(this.customInfo.recieverAddress);
+      }
+
       this.orderInfo.customInfo = this.customInfo;
     }else{
       console.log("error selectDeliveryType in enterMemberOrderInfo()");
@@ -252,12 +271,29 @@ export class OrderPage {
 
   enterNonMemberOrderInfo(){
     this.customInfo.ordererName = this.ordererName;
-    this.customInfo.ordererMobile = this.ordererMobile1 + "-" + this.ordererMobile2 + "-" + this.ordererMobile3;
+    if(this.ordererMobile1 == undefined || this.ordererMobile2 == undefined || this.ordererMobile3 == undefined){
+      this.customInfo.ordererMobile = undefined;
+    }else{
+      this.customInfo.ordererMobile = this.ordererMobile1 + "-" + this.ordererMobile2 + "-" + this.ordererMobile3;  
+    }
+    
     this.customInfo.ordererEmail =  this.ordererEmail;
     this.customInfo.recieverName = this.recieverName;
-    this.customInfo.recieverMobile = this.recieverMobile1 + "-" + this.recieverMobile2 + "-" + this.recieverMobile3;
-    this.customInfo.recieverAddress = this.trim(this.address1) + " " + this.trim(this.address2) + " " + this.trim(this.address3);
-    this.customInfo.recieverAddress = this.trim(this.customInfo.recieverAddress);
+    
+    if (this.recieverMobile1 == undefined || this.recieverMobile2 == undefined || this.recieverMobile3 == undefined) {
+      this.customInfo.recieverMobile = undefined;
+    } else {
+      this.customInfo.recieverMobile = this.recieverMobile1 + "-" + this.recieverMobile2 + "-" + this.recieverMobile3;
+    }
+
+    let address1 = this.trim(this.address1);
+    console.log(address1);
+    if(address1 == "" || address1 == undefined){
+      this.customInfo.recieverAddress = undefined;
+    }else{
+      this.customInfo.recieverAddress = address1 + " " + this.trim(this.address2) + " " + this.trim(this.address3);
+      this.customInfo.recieverAddress = this.trim(this.customInfo.recieverAddress);
+    }
 
     this.orderInfo.customInfo = this.customInfo;
   }
@@ -270,10 +306,113 @@ export class OrderPage {
     }
   }
 
-  emailCheck(email){
-    let regEmailPattern = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+  nameCheck(name){
+    if (name == undefined) {
+      let alert = this.alertCtrl.create({
+        message: '이름을 입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
 
-    this.ordererEmail = this.trim(this.ordererEmail);
+      return false;
+    }
+
+    let pattern = /^[가-힣a-zA-Z]+$/;
+    name = this.trim(name);
+
+    if (pattern.test(name) == false) {
+      let alert = this.alertCtrl.create({
+        message: '정확한 이름을 입력하세요',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+
+    return true;
+  }
+
+  addrCheck(addr){
+    if(addr == undefined){
+      let alert = this.alertCtrl.create({
+        message: '배송지를 입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+
+    let pattern = /^[가-힣a-zA-Z][.]+$/;
+
+    if ((addr.length < 4) && (pattern.test(addr) == false)){
+      let alert = this.alertCtrl.create({
+        message: '정확한 배송지를 입력하세요',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+
+    return true;
+  }
+  
+  mobileCheck(mobile){
+    if (mobile == undefined) {
+      let alert = this.alertCtrl.create({
+        message: '휴대폰을 입력하세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+
+    let pattern = /^(010|011|016|017|018|019)-[0-9]{3,4}-[0-9]{4}$/;
+  
+    if (pattern.test(mobile) == false) {
+      let alert = this.alertCtrl.create({
+        message: '적합한 휴대폰 번호가 아닙니다.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+
+    return true;
+  }
+
+  emailCheck(email){
+    email = this.trim(email);
+
+    console.log("email : " + email);
+    
+    if (email == "" || email == undefined) {
+      return true;
+    }
+
+    let regEmailPattern = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     
     if(regEmailPattern.test(email)==false){
       let alert = this.alertCtrl.create({
@@ -286,8 +425,27 @@ export class OrderPage {
       alert.present();
 
       return false;
-    }else{
-      return true;
     }
+    
+    return true;
+  }
+
+  paymentMethodCheck(paymentMethod){
+    console.log(paymentMethod);
+    
+    if (!(paymentMethod == "현장결제" || paymentMethod == "카드결제" || paymentMethod == "무통장입금")){
+      let alert = this.alertCtrl.create({
+        message: '결제수단을 클릭해주세요',
+        buttons: [{
+          text: '확인'
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+
+      return false;
+    }
+
+    return true;
   }
 }
