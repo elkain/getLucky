@@ -93,6 +93,8 @@ export class HomePage {
       this.showProductPage = true;
       this.bestScrollHeight = "calc(100% - 88px)";
     }
+
+    this.showProducts = this.sortProductsByCategory(this.products, this.bestCategorySelected);
   }
 
   bestCategoryChange(Category) {
@@ -118,9 +120,12 @@ export class HomePage {
     if(category == "전체"){
       return products;
     }
-    
+
+    console.log(products);
     for (let i = 0; i < this.products.length; i++) {
-      if (products.category == category) {
+      if (products[i].category == category) {
+        
+        
         showProducts.push(products[i]);
       }
     }

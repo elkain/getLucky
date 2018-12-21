@@ -47,7 +47,8 @@ export class StorageProvider {
     this.memberData = { username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
     this.findMemberData= { username: "", name: "", email: "", mobile: "", type: "", method: "" };
 
-    this.bestCategories = ["전체", "정육", "청과", "쌀잡곡", "계란", "유제품", "조미료", "과자류", "커피/음료"];
+    //this.bestCategories = ["전체", "정육", "청과", "쌀잡곡", "계란", "유제품", "조미료", "과자류", "커피/음료"];
+    this.bestCategories = ["전체", "청과", "유제품","과자류"];
     this.saleCategories = ["전체", "정육", "쌀잡곡", "계란", "유제품", "조미료", "과자류", "커피/음료"];
 
     this.products = [
