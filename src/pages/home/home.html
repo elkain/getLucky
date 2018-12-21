@@ -30,7 +30,7 @@
     <!-- recommand page start -->
     <ion-scroll scrollY="true" class="home-scroll" *ngIf="homeCategorySelected==homeCategories[0]"> 
         <ion-slides pager="true" class="home-slide" >
-            <ion-slide class="home-slide-child" *ngFor="let image of images" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
+            <ion-slide class="home-slide-child" *ngFor="let image of slideImages" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
                 <button type="submit" float-left ion-button outline clear color="black" class="btnPrev" (click)="prev()">  
                     <ion-icon name="ios-arrow-back"></ion-icon>
                 </button>

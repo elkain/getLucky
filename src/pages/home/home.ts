@@ -36,7 +36,7 @@ export class HomePage {
   showProductPage:boolean;
   bestScrollHeight = "calc(100% - 88px)";
 
-  images: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
+  slideImages: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
   constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams,
     public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider) {
