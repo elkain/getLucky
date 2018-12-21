@@ -65,6 +65,7 @@ export class HomePage {
     
     this.homeCategorySelected = this.homeCategories[0];
     this.bestCategorySelected = this.bestCategories[0];
+    this.saleCategorySelected = this.saleCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
     this.productsSort("판매인기순");
   }
@@ -88,6 +89,9 @@ export class HomePage {
   homeCategoryChange(Category) {
     let idx = this.homeCategories.indexOf(Category);
     this.homeCategorySelected = this.homeCategories[idx];
+    this.bestCategorySelected = this.bestCategories[0];
+    this.saleCategorySelected = this.saleCategories[0];
+    this.productSortOptionSelected = this.productSortOptions[0];
 
     if (this.homeCategorySelected == this.homeCategories[3] ){
       this.showProductPage=false;
