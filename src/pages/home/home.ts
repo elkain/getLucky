@@ -176,4 +176,53 @@ export class HomePage {
     }
   }
   
+  homeSwipeCategory(event){
+    let idx = this.homeCategories.indexOf(this.homeCategorySelected);
+
+    if (event.direction == 4) { // DIRECTION_RIGHT =4 
+      if (idx >= 1) {
+        this.homeCategoryChange(this.homeCategories[idx - 1])
+      }
+    } else if (event.direction == 2) { // DRIECTION_LEFT = 2
+      if (idx < this.homeCategories.length - 1) {
+        this.homeCategoryChange(this.homeCategories[idx + 1]);
+      }
+    }
+  }
+
+  swipeSubcategory(event){
+    if(this.homeCategorySelected == this.homeCategories[1]){
+      let idx = this.bestCategories.indexOf(this.bestCategorySelected);
+
+      if (event.direction == 4) { // DIRECTION_RIGHT =4 
+        if (idx >= 1) {
+          this.bestCategoryChange(this.bestCategories[idx - 1]);
+        } else {
+          this.homeCategoryChange(this.homeCategories[0]);
+        }
+      } else if (event.direction == 2) { // DRIECTION_LEFT = 2
+        if (idx < this.bestCategories.length - 1) {
+          this.bestCategoryChange(this.bestCategories[idx + 1]);
+        } else {
+          this.homeCategoryChange(this.homeCategories[2]);
+        }
+      }
+    }else if (this.homeCategorySelected == this.homeCategories[2]) {
+      let idx = this.saleCategories.indexOf(this.saleCategorySelected);
+
+      if (event.direction == 4) { // DIRECTION_RIGHT =4 
+        if (idx >= 1) {
+          this.saleCategoryChange(this.saleCategories[idx - 1]);
+        } else {
+          this.homeCategoryChange(this.homeCategories[1]);
+        }
+      } else if (event.direction == 2) { // DRIECTION_LEFT = 2
+        if (idx < this.saleCategories.length - 1) {
+          this.saleCategoryChange(this.saleCategories[idx + 1]);
+        } else {
+          this.homeCategoryChange(this.homeCategories[3]);
+        }
+      }
+    }
+  }
 }
