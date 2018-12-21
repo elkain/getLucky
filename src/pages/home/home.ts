@@ -32,6 +32,7 @@ export class HomePage {
   events = [this.imageURL + "slide1.png", this.imageURL + "slide2.png", this.imageURL + "slide3.png"];
   homeParams;
   products;
+  showProducts;
 
   showProductPage:boolean;
   bestScrollHeight = "calc(100% - 88px)";
@@ -43,15 +44,7 @@ export class HomePage {
 
     this.homeParams = navParams.data;     // category from category page
    
-    this.products = [   // sale method : fixed, percent
-      { name: "사과", price: 3000, discount: 2000, saleMethod: "fixed", saleCount: 2, imagePath: this.productImageURL + "사과.jpg" },
-      { name: "배", price: 10000, discount: 10, saleMethod: "percent", saleCount: 4, imagePath: this.productImageURL + "배.jpg" },
-      { name: "감", price: 5000, discount: 1500, saleMethod: "fixed", saleCount: 6, imagePath: this.productImageURL + "감귤.jpg" },
-      { name: "야채", price: 2500, discount: 5, saleMethod: "percent", saleCount: 8, imagePath: this.productImageURL + "오이.jpg" },
-      { name: "빼빼로", price: 4000, discount: 1000, saleMethod: "fixed", saleCount: 1, imagePath: this.productImageURL + "빼빼로.jpg" },
-      { name: "초콜릿", price: 7000, discount: 8, saleMethod: "percent", saleCount: 0, imagePath: this.productImageURL + "초콜렛.jpg" },
-      { name: "요구르트", price: 500, discount: 0, saleMethod: "none", saleCount: 12, imagePath: this.productImageURL + "요구르트.jpg" },
-    ]; 
+    this.products = this.storageProvider.products;
 
     /* 할인율을 적용하여 가격 측정 */
     for (var i = 0; i < this.products.length; i++) {
@@ -105,6 +98,8 @@ export class HomePage {
   bestCategoryChange(Category) {
     let idx = this.bestCategories.indexOf(Category);
     this.bestCategorySelected = this.bestCategories[idx];
+
+    this.showProducts = this.sortProductsByCategory(this.products, this.bestCategorySelected);
   }
 
   saleCategoryChange(Category) {
@@ -112,12 +107,25 @@ export class HomePage {
     this.saleCategorySelected = this.saleCategories[idx];
   }
 
-
   categoryChange(Category) {
     let idx = this.homeParams.category.subCategories.indexOf(Category);
     this.bestCategorySelected = this.homeParams.category.subCategories[idx];
   }
 
+  sortProductsByCategory(products, category){
+    let showProducts = [];
+    
+    if(category == "전체"){
+      return products;
+    }
+    
+    for (let i = 0; i < this.products.length; i++) {
+      if (products.category == category) {
+        showProducts.push(products[i]);
+      }
+    }
+    return showProducts;
+  }
   
   productsOptionChange(){
     if(this.products.length >1){
