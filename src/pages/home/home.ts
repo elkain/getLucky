@@ -43,7 +43,7 @@ export class HomePage {
     public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider) {
 
     this.homeParams = navParams.data;     // category from category page
-   
+
     this.products = this.storageProvider.products;
 
     /* 할인율을 적용하여 가격 측정 */
@@ -121,7 +121,6 @@ export class HomePage {
       return products;
     }
 
-    console.log(products);
     for (let i = 0; i < this.products.length; i++) {
       if (products[i].category == category) {
         
