@@ -282,8 +282,6 @@ export class SignupPage {
   }
 
   pwdCheck(){
-
-    
     if (this.password == undefined) {
 
       let alert = this.alertCtrl.create({
