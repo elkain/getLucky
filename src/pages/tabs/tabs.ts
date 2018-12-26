@@ -27,9 +27,9 @@ export class TabsPage {
   
   @ViewChild('myTabs') tabRef: Tabs;
 
-  selectedTab;
-  tabParams;
-  showHeader;
+  selectedTab:number;
+  tabParams:number;
+  showHeader:boolean;
   childParam= {category:{}, homeSegmentCategory:0, class:"TasPage", subCategory:"" , orderedNumber:""};
 
   constructor(public navCtrl: NavController, public navParams:NavParams, public storageProvider:StorageProvider) {
@@ -44,10 +44,6 @@ export class TabsPage {
   public onTabsChange() {
     this.selectedTab = this.tabRef.getSelected().index;
 
-    if(this.tabParams == undefined){
-      this.childParam.class=undefined;
-    }
-    
     if (this.selectedTab == 2 || this.selectedTab == 4 || this.selectedTab == 3){
       this.showHeader = false;
     }else{

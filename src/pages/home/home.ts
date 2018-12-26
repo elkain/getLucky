@@ -42,7 +42,8 @@ export class HomePage {
   constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams,
     public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider) {
 
-    this.homeParams = navParams.data;     // category from category page
+    // category from category page
+    this.homeParams = navParams.data;     
 
     this.products = this.storageProvider.products;
 
@@ -61,6 +62,12 @@ export class HomePage {
     this.saleCategorySelected = this.saleCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
     this.productsSort("판매인기순");
+  }
+
+  ionViewDidLeave(){
+    if(this.homeParams.class == "category"){
+      this.homeParams.class = undefined;
+    }
   }
   
   next() {
