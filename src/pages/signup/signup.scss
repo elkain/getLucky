@@ -123,8 +123,14 @@ page-signup {
 
         /* 이메일 입력 */
         .signup-email{
+
+            .signup-label{
+                height: 100%;
+            }
+
             span{
                 width:16px;
+                height: 100%;
                 display: flex;
                 align-items: center;
 
@@ -133,9 +139,14 @@ page-signup {
                     font-size:$large-font-size;
                 }
             }
-            
+
+            .email-input{
+                height: 100%;
+            }
+
             .email-input2{
                 width:100px;
+                height: 100%;
                 border:1px solid $border-color;
                 -webkit-appearance:none; 
                 -moz-appearance:none;
@@ -218,8 +229,13 @@ page-signup {
         .signup-birth{
             margin-bottom: 2px;
 
+            .signup-label{
+                height: 100%;
+            }
+
             .year, .month, .day{
 
+                height: 100%;
                 input{
                     padding: 0;
                     text-align: center;
@@ -240,6 +256,7 @@ page-signup {
 
             span{
                 width: 16px;
+                height: 100%;
                 display: flex;
                 align-items: center;
 
