@@ -18,6 +18,7 @@ import { OrderDetailPageModule } from '../pages/order-detail/order-detail.module
 import { SignupCompletePageModule } from '../pages/signup-complete/signup-complete.module';
 import { ShoppingbasketPopoverPageModule } from '../pages/shoppingbasket-popover/shoppingbasket-popover.module';
 import { BuyPageModule } from '../pages/buy/buy.module';
+import { HttpModule } from '@angular/http';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -25,6 +26,7 @@ import { StorageProvider } from '../providers/storage/storage';
 import { ShoppingbasketProvider } from '../providers/shoppingbasket/shoppingbasket';
 import { OrderProvider } from '../providers/order/order';
 import { MemberProvider } from '../providers/member/member';
+import { ServerProvider } from '../providers/server/server';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { MemberProvider } from '../providers/member/member';
     SignupCompletePageModule,
     ShoppingbasketPopoverPageModule,
     BuyPageModule,
+    HttpModule,
     IonicModule.forRoot(MyApp,{
       mode:'md',
       scrollPadding: false,
@@ -66,7 +69,8 @@ import { MemberProvider } from '../providers/member/member';
     StorageProvider,
     ShoppingbasketProvider,
     OrderProvider,
-    MemberProvider
+    MemberProvider,
+    ServerProvider
   ]
 })
 export class AppModule {}

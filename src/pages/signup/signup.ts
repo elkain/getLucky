@@ -5,6 +5,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import { MemberProvider } from '../../providers/member/member';
 import { OrderPage } from '../order/order';
 import * as CryptoJS from 'crypto-js';
+import { ServerProvider } from '../../providers/server/server';
 
 /**
  * Generated class for the SignupPage page.
@@ -48,7 +49,7 @@ export class SignupPage {
   memberData = { username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, 
-    public storageProvider:StorageProvider, public memberProvider:MemberProvider) {
+    public storageProvider:StorageProvider, public memberProvider:MemberProvider, public serverProvider:ServerProvider) {
     
     this.male = this.whiteColor;
     this.female = this.whiteColor;
@@ -72,9 +73,9 @@ export class SignupPage {
       this.birthMonth = birthTemp[1];
       this.birthDay = birthTemp[2];
 
-      if (this.memberData.sex=="male"){
+      if (this.memberData.sex=="m"){
         this.selectMale();
-      } else if (this.memberData.sex == "female"){
+      } else if (this.memberData.sex == "f"){
         this.selectFemale();
       }
     }else{
@@ -84,16 +85,29 @@ export class SignupPage {
   }
 
   checkIDDuplication(){
-    this.checkID = true;
 
-    let alert = this.alertCtrl.create({
-      message: '아이디 중복을 체크했습니다.',
-      buttons: [{
-        text: '확인',
-      }],
-      cssClass: 'alert-modify-member'
+    this.serverProvider.checkIDDuplication(this.memberData.username).then((res:any)=>{
+      if(res=="none"){
+        this.checkID = true;
+        let alert = this.alertCtrl.create({
+          message: '아이디 생성 가능합니다.',
+          buttons: [{
+            text: '확인',
+          }],
+          cssClass: 'alert-modify-member'
+        });
+        alert.present();
+      }
+    }, (err)=>{
+        let alert = this.alertCtrl.create({
+          message: '중복된 아이디 입니다.',
+          buttons: [{
+            text: '확인',
+          }],
+          cssClass: 'alert-modify-member'
+        });
+        alert.present();
     });
-    alert.present();
   }
 
   recieveMobileConfirm(){
@@ -148,13 +162,13 @@ export class SignupPage {
   }
 
   selectMale(){
-    this.memberData.sex = "male";
+    this.memberData.sex = "m";
     this.male = this.titleColor;
     this.female = this.whiteColor;
   }
 
   selectFemale(){
-    this.memberData.sex = "female";
+    this.memberData.sex = "f";
     this.male = this.whiteColor;
     this.female = this.titleColor;
   }
@@ -162,14 +176,20 @@ export class SignupPage {
   signupCompBtn(){
     if ((this.idCheck() && this.pwdCheck() && this.nameCheck() && this.emailChek() && this.mobileInputCheck() && this.birthCheck()) != false) {
       this.enterMemberData();
-      this.memberProvider.memberData = this.memberData;
-
-      let prevPage = this.navParams.get("prevPage");
-      if(prevPage == "buy" || prevPage == "shoppingbasket"){
-        this.navCtrl.push(OrderPage, { class: "buy" });
-      }else{
-        this.navCtrl.setRoot(TabsPage, { class: "signup" });
-      }
+      
+      this.serverProvider.signup(this.memberData).then((res:any)=>{
+        if(res == "success"){
+          this.memberProvider.memberData = this.memberData;
+          let prevPage = this.navParams.get("prevPage");
+          if (prevPage == "buy" || prevPage == "shoppingbasket") {
+            this.navCtrl.push(OrderPage, { class: "buy" });
+          } else {
+            this.navCtrl.setRoot(TabsPage, { class: "signup" });
+          }
+        }
+      },(err)=>{
+        console.log("signup failed");
+      });
     }
   }
 
@@ -195,7 +215,11 @@ export class SignupPage {
   enterMemberData(){
     let email = this.email + "@" + this.emailOption;
 
-    let address = this.password + " " + this.address2 + " " + this.address3;
+    this.address1 = this.trim(this.address1);
+    this.address2 = this.trim(this.address2);
+    this.address3 = this.trim(this.address3);
+
+    let address = this.address1 + " " + this.address2 + " " + this.address3;
     address = this.trim(address);
 
     let birth = this.birthYear + "-" + this.birthMonth + "-" + this.birthDay;

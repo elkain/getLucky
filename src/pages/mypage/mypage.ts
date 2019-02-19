@@ -7,6 +7,7 @@ import { OrderProvider } from '../../providers/order/order';
 import { TabsPage } from '../tabs/tabs';
 import { OrderPage } from '../order/order';
 import * as CryptoJS from 'crypto-js';
+import { ServerProvider } from '../../providers/server/server';
 /**
  * Generated class for the MypagePage page.
  *
@@ -63,7 +64,7 @@ export class MypagePage {
   homeParams;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public alertCtrl:AlertController, public storageProvider:StorageProvider,
-    public memberProvider:MemberProvider, public orderProvider:OrderProvider) {
+    public memberProvider:MemberProvider, public orderProvider:OrderProvider, public serverProvider:ServerProvider) {
 
     this.homeParams = navParams.data;
 
@@ -218,6 +219,11 @@ export class MypagePage {
   login(){
 
     let password = CryptoJS.SHA256(this.trim(this.password) + "Markis").toString(CryptoJS.enc.Hex);
+    // 서버를 통한 아이디 비번 체크 입력할 부분
+    this.serverProvider.login(this.memberData.username, this.memberData.password).then((res:any)=>{
+      
+    });
+
     if (this.idCheck() == false || this.pwdCheck() == false) {
       
     } else if (this.memberData.username != this.username || this.memberData.password != password) {
