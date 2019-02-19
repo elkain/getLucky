@@ -60,7 +60,6 @@ export class MypagePage {
   arrowIconTop = "231px";
 
   orderInfos;
-  deliveryDesInfos;         // 배송지 관리
   homeParams;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public alertCtrl:AlertController, public storageProvider:StorageProvider,
@@ -72,7 +71,6 @@ export class MypagePage {
     this.findCategorySelected = this.findCategories[0];
     this.nonMemberBuy = false;
     this.isMember = this.memberProvider.isMember;
-    this.deliveryDesInfos = this.memberProvider.deliveryAddrs;
     this.autoLoginCheckbox = false;
 
     for(let i in this.memberData){
@@ -229,7 +227,7 @@ export class MypagePage {
         if(res == "success"){
           this.showPageType = "mypage";
           this.isMember = true;
-          
+
           for (let i in this.memberData) {
             for (let j in this.memberProvider.memberData) {
               if (i == j) {

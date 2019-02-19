@@ -68,11 +68,12 @@ export class ServerProvider {
 
   modify(memberData){
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "member/signup.php", memberData).subscribe(data => {
+      this.http.post(this.serverAddr + "member/modify.php", memberData).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("signup Success");
+          this.memberProvider.memberData = memberData;
           resolve("success");
         }
         else {
@@ -104,6 +105,8 @@ export class ServerProvider {
           this.memberProvider.memberData.email = result.email;
           this.memberProvider.memberData.sex = result.memberSex;
           this.memberProvider.memberData.UID = result.memberUID;
+
+          this.memberProvider.deliveryAddrs = result.address;
           resolve("success");
         }
         else {

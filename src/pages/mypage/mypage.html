@@ -173,7 +173,7 @@
       <ion-item-divider class="mypage-status">
         <h2><b>{{memberData.name}}님</b></h2>
         <p>마이 럭키에 오신 것을 환영합니다.</p>
-        <p>현재 회원등급 <span>{{memberData.classs}}등급</span>/구매누적 총액 <span>{{memberData.totalPurchase}}}</span>원 입니다.</p>
+        <p>현재 회원등급 <span>{{memberData.classs}}등급</span>/구매누적 총액 <span>{{memberData.totalPurchase}}</span>원 입니다.</p>
       </ion-item-divider>
       <button class="mypage-menu" ion-item *ngFor="let menu of mypageMenus" (click)="menuSelected(menu)">
         <p class="mypage-menu-label">{{ menu }}</p>
@@ -237,9 +237,9 @@
     <div class="delivery-des-button">
       <button item-end ion-button clear>배송지 추가</button>
     </div>
-    <ion-list class="delivery-des-list" *ngFor="let deliveryDesInfo of deliveryDesInfos">
+    <ion-list class="delivery-des-list" *ngFor="let deliveryDesInfo of this.memberProvider.deliveryAddrs">
       <ion-item-divider class="delivery-des-list-head">
-        <p class="delivery-des-list-label">{{deliveryDesInfo.type}}</p>
+        <p class="delivery-des-list-label">{{deliveryDesInfo.addressName}}</p>
         <button class="delivery-des-edit-btn" ion-button item-end clear>수정</button>
         <button class="delivery-des-del-btn" ion-button item-end clear>삭제</button>
       </ion-item-divider>

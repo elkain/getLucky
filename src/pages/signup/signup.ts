@@ -197,20 +197,24 @@ export class SignupPage {
   // 회원 정보 수정 버튼
   presentAlert() {
     if ((this.modifyPwdCheck() && this.nameCheck() && this.emailChek() && this.modifyMobileNumber() && this.birthCheck()) != false){
-      let alert = this.alertCtrl.create({
-        message: '회원정보가 수정되었습니다.',
-        buttons: [{
-            text:'확인',
-            handler:()=>{
-                this.enterMemberData();
-                this.memberProvider.memberData = this.memberData;
-                this.memberProvider.isMember = true;
+      this.enterMemberData();
+      this.serverProvider.modify(this.memberData).then((res:any)=>{
+        if(res == "success"){
+          let alert = this.alertCtrl.create({
+            message: '회원정보가 수정되었습니다.',
+            buttons: [{
+              text: '확인',
+              handler: () => {
                 this.navCtrl.setRoot(TabsPage, { class: "signup" });
-            }
-          }],
-        cssClass:'alert-modify-member'
+              }
+            }],
+            cssClass: 'alert-modify-member'
+          });
+          alert.present();  
+        }
+      }, (err)=>{
+        console.log("fail to modify");
       });
-      alert.present();
     }
   }
 
