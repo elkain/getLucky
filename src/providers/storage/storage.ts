@@ -69,7 +69,9 @@ export class StorageProvider {
       { productId: "101", category: "야채", subCategory: "고구마/감자", name: "고구마", price: 2500, discount: 5, saleMethod: "percent", saleCount: 8, imagePath: this.productImageURL + "고구마.jpg" },
       { productId: "201", category: "과자류", subCategory: "제과", name: "빼빼로", price: 4000, discount: 1000, saleMethod: "fixed", saleCount: 1, imagePath: this.productImageURL + "빼빼로.jpg" },
       { productId: "202", category: "과자류", subCategory: "초콜릿", name: "초콜릿", price: 7000, discount: 8, saleMethod: "percent", saleCount: 0, imagePath: this.productImageURL + "초콜렛.jpg" },
-      { productId: "301", category: "유제품", subCategory: "요거트/요구르트", name: "요구르트", price: 500, discount: 0, saleMethod: "none", saleCount: 12, imagePath: this.productImageURL + "요구르트.jpg" }
+      { productId: "301", category: "유제품", subCategory: "요거트/요구르트", name: "요구르트", price: 500, discount: 0, saleMethod: "none", saleCount: 12, imagePath: this.productImageURL + "요구르트.jpg" },
+      { productId: "303", category: "유제품", subCategory: "요거트/요구르트", name: "휴지", price: 500, discount: 0, saleMethod: "none", saleCount: 12, imagePath: this.productImageURL + "휴지.jpg" },
+      { productId: "304", category: "유제품", subCategory: "요거트/요구르트", name: "각 휴지", price: 500, discount: 0, saleMethod: "none", saleCount: 12, imagePath: this.productImageURL + "각휴지.jpg" }
     ];
   }
 
