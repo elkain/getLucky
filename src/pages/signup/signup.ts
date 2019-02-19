@@ -180,6 +180,7 @@ export class SignupPage {
       this.serverProvider.signup(this.memberData).then((res:any)=>{
         if(res == "success"){
           this.memberProvider.memberData = this.memberData;
+          this.memberProvider.isMember = true;
           let prevPage = this.navParams.get("prevPage");
           if (prevPage == "buy" || prevPage == "shoppingbasket") {
             this.navCtrl.push(OrderPage, { class: "buy" });
@@ -203,6 +204,7 @@ export class SignupPage {
             handler:()=>{
                 this.enterMemberData();
                 this.memberProvider.memberData = this.memberData;
+                this.memberProvider.isMember = true;
                 this.navCtrl.setRoot(TabsPage, { class: "signup" });
             }
           }],
@@ -232,8 +234,6 @@ export class SignupPage {
     this.memberData.email = email;
     this.memberData.address = address;
     this.memberData.birth = birth;
-
-    this.memberProvider.isMember = true;
   }
 
   trim(str) {
