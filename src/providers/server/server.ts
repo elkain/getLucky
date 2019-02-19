@@ -100,6 +100,8 @@ export class ServerProvider {
           this.memberProvider.memberData.password = password;
           this.memberProvider.memberData.birth = result.memberBirth;
           this.memberProvider.memberData.name = result.memberName;
+          this.memberProvider.memberData.mobile = result.mobile;
+          this.memberProvider.memberData.email = result.email;
           this.memberProvider.memberData.sex = result.memberSex;
           this.memberProvider.memberData.UID = result.memberUID;
           resolve("success");
