@@ -45,7 +45,7 @@ export class MypagePage {
   mobile1;
   mobile2;
   mobile3;
-  memberData = {username:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", classs:0, totalPurchase:0};
+  memberData = {UID:"", username:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", classs:0, totalPurchase:0};
 
   findCategories = ["아이디 찾기", "비밀번호 찾기"];
   findCategorySelected;
@@ -71,7 +71,7 @@ export class MypagePage {
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
     this.nonMemberBuy = false;
-    this.isMember = this.storageProvider.isMember;
+    this.isMember = this.memberProvider.isMember;
     this.deliveryDesInfos = this.memberProvider.deliveryAddrs;
     this.autoLoginCheckbox = false;
 
@@ -219,31 +219,38 @@ export class MypagePage {
   login(){
 
     let password = CryptoJS.SHA256(this.trim(this.password) + "Markis").toString(CryptoJS.enc.Hex);
-    // 서버를 통한 아이디 비번 체크 입력할 부분
-    this.serverProvider.login(this.memberData.username, this.memberData.password).then((res:any)=>{
-      
-    });
 
     if (this.idCheck() == false || this.pwdCheck() == false) {
       
-    } else if (this.memberData.username != this.username || this.memberData.password != password) {
-      let alert = this.alertCtrl.create({
-        message: '아이디/비번이 틀립니다.',
-        buttons: [{
-          text: '확인',
-        }],
-        cssClass: 'alert-modify-member'
+    } else {
+      this.serverProvider.login(this.username, password).then((res: any) => {
+        console.log(res);
+
+        if(res == "success"){
+          this.showPageType = "mypage";
+          this.isMember = true;
+          
+          for (let i in this.memberData) {
+            for (let j in this.memberProvider.memberData) {
+              if (i == j) {
+                this.memberData[i] = this.memberProvider.memberData[j];
+              }
+            }
+          }
+        }
+      },(err)=>{
+          let alert = this.alertCtrl.create({
+            message: '아이디/비번이 틀립니다.',
+            buttons: [{
+              text: '확인',
+            }],
+            cssClass: 'alert-modify-member'
+          });
+          alert.present();
       });
-      alert.present();
-    } else{
-      this.isMember = true;
-      this.storageProvider.isMember = this.isMember;
-      this.showPageType = "mypage";
-    } 
-    
-    console.log("userName : " + this.username);
-    console.log("password : " + this.password);
-    console.log("autoLoginCheckbox : " + this.autoLoginCheckbox);
+    }
+
+    this.password = undefined;
   }
 
   changeIdPwdFind(type){

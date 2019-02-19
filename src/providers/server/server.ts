@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { StorageProvider } from '../storage/storage';
 import { Platform } from 'ionic-angular';
 import { Http } from '@angular/http';
+import { MemberProvider } from '../member/member';
 
 // ip 218.145.181.49 //
 /*
@@ -18,7 +19,7 @@ export class ServerProvider {
   username: string;
   password: string;
 
-  constructor(public http: Http, private platform: Platform, private storageProvider: StorageProvider) {
+  constructor(public http: Http, private platform: Platform, private storageProvider: StorageProvider, private memberProvider:MemberProvider) {
     console.log('Hello ServerProvider Provider');
   }
 
@@ -84,4 +85,32 @@ export class ServerProvider {
     })    
   }
 
+  login(memberID, password){
+    let body = {memberID, password};
+
+    return new Promise((resolve, reject) => {
+      this.http.post(this.serverAddr + "member/login.php", body).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log("login success");
+
+          this.memberProvider.isMember = true;
+          this.memberProvider.memberData.username = memberID;
+          this.memberProvider.memberData.password = password;
+          this.memberProvider.memberData.birth = result.memberBirth;
+          this.memberProvider.memberData.name = result.memberName;
+          this.memberProvider.memberData.sex = result.memberSex;
+          this.memberProvider.memberData.UID = result.memberUID;
+          resolve("success");
+        }
+        else {
+          console.log("dismatch ID and password");
+          reject("failed");
+        }
+      }, err => {
+        console.log(err);
+      });
+    })    
+  }
 }

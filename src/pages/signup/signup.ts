@@ -46,14 +46,14 @@ export class SignupPage {
   mobileCheck:boolean = false;
   mobileCheckNumber: number = undefined;
   mobileCheckNumberConfirm: number = undefined;
-  memberData = { username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
+  memberData = { UID: "", username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, 
     public storageProvider:StorageProvider, public memberProvider:MemberProvider, public serverProvider:ServerProvider) {
     
     this.male = this.whiteColor;
     this.female = this.whiteColor;
-    this.isMember = this.storageProvider.isMember;
+    this.isMember = this.memberProvider.isMember;
   }
 
   ionViewDidLoad() {
@@ -234,7 +234,7 @@ export class SignupPage {
     this.memberData.birth = birth;
     this.memberData.sex = this.memberData.sex;
 
-    this.storageProvider.isMember = true;
+    this.memberProvider.isMember = true;
   }
 
   trim(str) {

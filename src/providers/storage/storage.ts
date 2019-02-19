@@ -23,7 +23,6 @@ export class StorageProvider {
   bestCategories = new Array();
   saleCategories = new Array();
   
-  memberData: { username: string, password: string, name: string, email: string, mobile: string, address: string, birth: string, sex: string };
   findMemberData: { username: string, name: string, email: string, mobile: string, type: string, method: string };
   deliveryPlaceInfos = [];
 
@@ -44,7 +43,6 @@ export class StorageProvider {
     console.log('Hello StorageProvider Provider');
     this.isMember = false;
     this.popularSearchItems = ["가", "나", "다"];
-    this.memberData = { username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
     this.findMemberData= { username: "", name: "", email: "", mobile: "", type: "", method: "" };
 
     //this.bestCategories = ["전체", "정육", "청과", "쌀잡곡", "계란", "유제품", "조미료", "과자류", "커피/음료"];
