@@ -232,7 +232,6 @@ export class SignupPage {
     this.memberData.email = email;
     this.memberData.address = address;
     this.memberData.birth = birth;
-    this.memberData.sex = this.memberData.sex;
 
     this.memberProvider.isMember = true;
   }
