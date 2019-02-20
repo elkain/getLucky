@@ -794,3 +794,53 @@ page-mypage {
     }
     /* 배송지관리 끝 */
 }
+
+/* 비밀번호 찾기 확인 alert */
+.alert-find-memberPwd{
+
+    .alert-wrapper{
+        width:300px;
+        max-width: 300px;
+        height: 140px;
+
+        .alert-head{
+            padding:0;
+        }
+
+        .alert-message{
+            width:280px;
+            margin:10px;
+            height: 60px;
+            padding: 0;
+            color:$default-font-color;
+            font-size: $nav-font-size;
+            font-weight: bold;
+            text-align: center;
+            padding:6px;
+        }
+
+        .alert-button-group{
+            padding:0;
+            -webkit-box-pack: center;
+            justify-content: center;
+            -webkit-justify-content:center;
+        }
+
+        .alert-button{
+            background-color: $default-btn-color;
+            color:$white-btn-color;
+            width: 100px;
+            height: 40px;
+            border-radius: 5px;
+            margin: 0;
+
+            .button-inner{
+                text-align: center;
+                display: block;
+                font-size:$btn-font-size;
+                font-weight: bold;
+            }
+        }
+    }
+}
+

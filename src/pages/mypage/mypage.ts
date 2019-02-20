@@ -46,6 +46,7 @@ export class MypagePage {
   mobile2;
   mobile3;
   memberData = {UID:"", username:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", classs:0, totalPurchase:0};
+  findMemberData = { username: "", name: "", email: "", mobile: "", type: "", method: "" };
 
   findCategories = ["아이디 찾기", "비밀번호 찾기"];
   findCategorySelected;
@@ -318,12 +319,56 @@ export class MypagePage {
     console.log(this.findLoginInfoMethod);
     console.log(this.findCategorySelected);
 
-    this.storageProvider.findMemberData.name = this.name;
-    this.storageProvider.findMemberData.username = this.username;
-    this.storageProvider.findMemberData.email = this.email;
-    this.storageProvider.findMemberData.mobile = mobile;
-    this.storageProvider.findMemberData.method = this.findLoginInfoMethod;
-    this.storageProvider.findMemberData.type = this.findCategorySelected;
+    this.findMemberData.name = this.name;
+    this.findMemberData.username = this.username;
+    this.findMemberData.email = this.email;
+    this.findMemberData.mobile = mobile;
+    this.findMemberData.method = this.findLoginInfoMethod;
+    this.findMemberData.type = this.findCategorySelected;
+
+    this.serverProvider.findMemberData(this.findMemberData).then((res:any)=>{
+      let result = res;
+      if(result.result == "success"){
+        if (this.findMemberData.type == "아이디 찾기") {
+          let alert = this.alertCtrl.create({
+            message: '아이디는 ' + result.memberID + ' 입니다.',
+            buttons: [{
+              text: '확인',
+              handler: () => {
+                this.showPageType = "login";
+              }
+            }],
+            cssClass: 'alert-modify-member'
+          });
+          alert.present();
+        } else if (this.findMemberData.type == "비밀번호 찾기") {
+          console.log(result.password);
+          let alert = this.alertCtrl.create({
+            message: '새로 설정된 비밀번호는 ' + result.password + ' 입니다.',
+            buttons: [{
+              text: '확인',
+              handler: () => {
+                this.showPageType = "login";
+              }
+            }],
+            cssClass: 'alert-find-memberPwd'
+          });
+          alert.present();
+        }
+      }else{
+        let alert = this.alertCtrl.create({
+          message: '아이디/비밀번호를 찾을 수 없습니다.',
+          buttons: [{
+            text: '확인',
+          }],
+          cssClass: 'alert-modify-member'
+        });
+        alert.present();
+      }
+    }, (err)=>{
+      console.log("서버 통신 실패");
+              
+    });
   }
 
   trim(str) {

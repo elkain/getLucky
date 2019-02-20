@@ -116,6 +116,25 @@ export class ServerProvider {
       }, err => {
         console.log(err);
       });
-    })    
+    });    
+  }
+
+  findMemberData(findMemberData){
+    return new Promise((resolve, reject) => {
+      this.http.post(this.serverAddr + "member/findMemberData.php", findMemberData).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log("find success");
+          resolve(result);
+        }
+        else {
+          console.log("find access failed");
+          reject("failed");
+        }
+      }, err => {
+        console.log(err);
+      });
+    });
   }
 }

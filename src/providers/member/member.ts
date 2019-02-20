@@ -12,6 +12,7 @@ export class MemberProvider {
 
   memberData = { UID:"", username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
   deliveryAddrs = [];
+  findMemberData = { username: "", name: "", email: "", mobile: "", type: "", method: "" };
   isMember=false;
 
   constructor() {
