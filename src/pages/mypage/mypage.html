@@ -147,7 +147,7 @@
           <span>
             <p>-</p>
           </span>
-          <ion-input class="login-find-phone-input" [(ngModel)]="mobile2" type="tel" maxlength="4"></ion-input>
+          <ion-input class="login-find-phone-input" [(ngModel)]="mobile3" type="tel" maxlength="4"></ion-input>
         </div>
       </ion-row>
       <ion-row class="login-find-email" *ngIf="findLoginInfoMethod=='email'">
@@ -234,26 +234,54 @@
     <p class="delivery-des-head-label">배송지관리</p>
   </div>
   <ion-scroll scrollY="true" *ngIf="showPageType=='배송지관리'">
-    <div class="delivery-des-button">
-      <button item-end ion-button clear>배송지 추가</button>
+    <div class="delivery-des-button" *ngIf="deliveryAddressEnter==false">
+      <button (click)="addDeliveryAddr()" item-end ion-button clear>배송지 추가</button>
     </div>
-    <ion-list class="delivery-des-list" *ngFor="let deliveryDesInfo of this.memberProvider.deliveryAddrs">
-      <ion-item-divider class="delivery-des-list-head">
+
+    <div class="delivery-add-des">
+      <ion-item-divider class="delivery-des-list-head" *ngIf="deliveryAddressEnter==true">
+        <ion-input type="text" [placeholder]="'배송지이름'" [(ngModel)]="enterMemberAddress.addressName"></ion-input>
+        <button class="delivery-des-content" class="delivery-des-edit-btn" (click)="compAddDeliveryAddr()" ion-button item-end clear>완료</button>
+        <button class="delivery-des-content" class="delivery-des-edit-btn" (click)="cancelAddDeliverAddr()" ion-button item-end clear>취소</button>
+      </ion-item-divider>
+      <ion-item class="delivery-des-addr" *ngIf="deliveryAddressEnter==true">
+        <ion-label class="delivery-des-label">주소</ion-label>
+        <ion-input class="delivery-des-addr-content" type="text" [(ngModel)]="enterMemberAddress.address"></ion-input>
+      </ion-item>
+      <ion-item class="delivery-des" *ngIf="deliveryAddressEnter==true">
+        <ion-label class="delivery-des-label">받는분</ion-label>
+        <ion-input class="delivery-des-content" type="text" [(ngModel)]="enterMemberAddress.receiver"></ion-input>
+      </ion-item>
+      <ion-item class="delivery-des" *ngIf="deliveryAddressEnter==true">
+        <ion-label class="delivery-des-label">연락처</ion-label>
+        <ion-input class="delivery-des-content" type="text" [(ngModel)]="enterMemberAddress.mobile"></ion-input>
+      </ion-item>
+    </div>
+    <ion-list class="delivery-des-list" *ngFor="let deliveryDesInfo of this.deliveryAddrs; let i = index">
+      <ion-item-divider class="delivery-des-list-head" *ngIf = "deliveryAddressMode[i]=='출력'">
         <p class="delivery-des-list-label">{{deliveryDesInfo.addressName}}</p>
-        <button class="delivery-des-edit-btn" ion-button item-end clear>수정</button>
-        <button class="delivery-des-del-btn" ion-button item-end clear>삭제</button>
+        <button class="delivery-des-edit-btn" (click)="modifyDeliveryAddr(i)" ion-button item-end clear>수정</button>
+        <button class="delivery-des-del-btn" (click)="DelDeliveryAddr(i)" ion-button item-end clear>삭제</button>
+      </ion-item-divider>
+      <ion-item-divider class="delivery-des-list-head" *ngIf="deliveryAddressMode[i]=='수정'">
+        <ion-input type="text" [(ngModel)]="deliveryDesInfo.addressName"></ion-input>
+        <button class="delivery-des-edit-btn" (click)="compModifyAddr(i, deliveryDesInfo)" ion-button item-end clear>완료</button>
+        <button class="delivery-des-del-btn" (click)="cancelModifyAddr(i)" ion-button item-end clear>취소</button>
       </ion-item-divider>
       <ion-item class="delivery-des-addr">
-        <p class="delivery-des-label">주소</p>
-        <p class="delivery-des-addr-content">{{deliveryDesInfo.address}}</p>
+        <ion-label class="delivery-des-label">주소</ion-label>
+        <ion-label class="delivery-des-addr-content" *ngIf = "deliveryAddressMode[i]=='출력'">{{deliveryDesInfo.address}}</ion-label>
+        <ion-input class="delivery-des-addr-content" type="text" [(ngModel)]="deliveryDesInfo.address" *ngIf = "deliveryAddressMode[i]=='수정'"></ion-input>
       </ion-item>
       <ion-item class="delivery-des">
-        <p class="delivery-des-label">받는분</p>
-        <p class="delivery-des-content">{{deliveryDesInfo.receiver}}</p>
+        <ion-label class="delivery-des-label" >받는분</ion-label>
+        <ion-label class="delivery-des-content" *ngIf = "deliveryAddressMode[i]=='출력'">{{deliveryDesInfo.receiver}} </ion-label>
+        <ion-input class="delivery-des-content" type="text" [(ngModel)]="deliveryDesInfo.receiver" *ngIf="deliveryAddressMode[i]=='수정'"></ion-input>
       </ion-item>
       <ion-item class="delivery-des">
-        <p class="delivery-des-label">연락처</p>
-        <p class="delivery-des-content">{{deliveryDesInfo.mobile}}</p>
+        <ion-label class="delivery-des-label">연락처</ion-label>
+        <ion-label class="delivery-des-content" *ngIf = "deliveryAddressMode[i]=='출력'">{{deliveryDesInfo.mobile}}</ion-label>
+        <ion-input class="delivery-des-content" type="text" [(ngModel)]="deliveryDesInfo.mobile" *ngIf="deliveryAddressMode[i]=='수정'"></ion-input>
       </ion-item>
     </ion-list>
   </ion-scroll>

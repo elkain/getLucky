@@ -47,6 +47,8 @@ export class MypagePage {
   mobile3;
   memberData = {UID:"", username:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", classs:0, totalPurchase:0};
   findMemberData = { username: "", name: "", email: "", mobile: "", type: "", method: "" };
+  enterMemberAddress = {addressName:"", address:"", receiver:"", mobile:""};
+  deliveryAddrs = [];
 
   findCategories = ["아이디 찾기", "비밀번호 찾기"];
   findCategorySelected;
@@ -57,6 +59,8 @@ export class MypagePage {
   showPageType : string;
   showBackbtn: boolean;
   mypageMenus = ["주문내역", "1:1 문의", "공지사항", "회원정보수정", "배송지관리"];
+  deliveryAddressMode = []; // "수정", "출력"
+  deliveryAddressEnter = false;
 
   arrowIconTop = "231px";
 
@@ -73,6 +77,7 @@ export class MypagePage {
     this.nonMemberBuy = false;
     this.isMember = this.memberProvider.isMember;
     this.autoLoginCheckbox = false;
+    this.deliveryAddressEnter = false;
 
     for(let i in this.memberData){
       for (let j in this.memberProvider.memberData){
@@ -113,6 +118,7 @@ export class MypagePage {
     this.showBackbtn = false;
     this.arrowIconTop = "183px";
     this.findLoginInfoMethod = 'phone';
+    this.deliveryAddressEnter = false;
 
     console.log('ionViewDidLoad MypagePage' + this.showPageType);
   }
@@ -273,6 +279,13 @@ export class MypagePage {
       this.app.getRootNavs()[0].push(SignupPage, { class: "mypage" });
     }else{
       this.showPageType = menu;
+      if (this.showPageType == "배송지관리"){
+        this.deliveryAddrs = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs));
+        
+        for(let i in this.memberProvider.deliveryAddrs){
+          this.deliveryAddressMode[i] ="출력";
+        }
+      }
       this.showBackbtn = true;
     }
   }
@@ -288,6 +301,7 @@ export class MypagePage {
   back() {
     this.showPageType = "mypage";
     this.showBackbtn = false;
+    this.deliveryAddressEnter = false;
   }
 
   ionSelected(){
@@ -376,6 +390,58 @@ export class MypagePage {
       return str.replace(/(^\s*)|(\s*$)/gi, "");
     } else {
       return "";
+    }
+  }
+
+  addDeliveryAddr(){
+    this.deliveryAddressEnter = true;
+  }
+
+  compAddDeliveryAddr() {
+    if(this.enterMemberAddress.addressName != "" && this.enterMemberAddress.address != "" && this.enterMemberAddress.mobile !="" && this.enterMemberAddress.receiver != ""){
+      
+      this.deliveryAddressEnter = false;
+    }else{
+      let alert = this.alertCtrl.create({
+        message: '배송지 정보를 모두 채워주세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    }
+  }
+
+  cancelAddDeliverAddr(){
+    this.deliveryAddressEnter = false;
+  }
+
+  modifyDeliveryAddr(index){
+    this.deliveryAddressMode[index] = "수정";
+  }
+
+  DelDeliveryAddr(index){
+
+  }
+
+  cancelModifyAddr(index){
+    this.deliveryAddrs[index] = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs[index]));
+    this.deliveryAddressMode[index] = "출력";
+  }
+
+  compModifyAddr(index, addr){
+    if (addr.addressName != "" && addr.address != "" && addr.mobile != "" && addr.receiver != ""){
+      this.deliveryAddressMode[index] = "출력";
+    }else{
+      let alert = this.alertCtrl.create({
+        message: '배송지 정보를 모두 채워주세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
     }
   }
 }

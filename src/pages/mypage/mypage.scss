@@ -682,114 +682,127 @@ page-mypage {
         }
     }
 
+    .delivery-add-des{
+        width:calc(100% - 16px);
+        height: auto;
+        margin:8px 8px 8px;
+    }
+
     .delivery-des-list{
         width:calc(100% - 16px);
         height: auto;
         margin:0 8px 8px;
+    }
 
+    /* 배송지 종류 정보 (수정, 삭제) */
+    .delivery-des-list-head{
+        width:100%;
+        height: 31px;
+        border: 0;
+        margin-bottom: 2px;
+        padding:0;
+        
+        .delivery-des-list-label{
+            font-size:$nav-font-size;
+            color:$black-font-color;
+            padding-left: 8px;
+            font-weight: bold;
+        }
 
-        /* 배송지 종류 정보 (수정, 삭제) */
-        .delivery-des-list-head{
-            width:100%;
-            height: 31px;
-            border: 0;
-            margin-bottom: 2px;
+        .delivery-des-edit-btn, .delivery-des-del-btn{
+            width:60px;
+            height: 28px;
+            margin:0;
             padding:0;
-            
-            .delivery-des-list-label{
-                font-size:$nav-font-size;
-                color:$black-font-color;
-                padding-left: 8px;
-                font-weight: bold;
-            }
+            margin-left:4px;
+            background-color: gray;
+            color:$white-font-color;
+            font-size:$default-font-size;
+            font-weight: bold;
+        }
+    }
 
-            .delivery-des-edit-btn, .delivery-des-del-btn{
-                width:60px;
-                height: 28px;
+    /* 배송지 주소 */
+    .delivery-des-addr{
+        width:100%;
+        height:48px;
+        padding-left:0px;
+        
+        .item-inner{
+            padding:0;
+            border:none;
+
+            .label{
                 margin:0;
-                padding:0;
-                margin-left:4px;
-                background-color: gray;
-                color:$white-font-color;
-                font-size:$default-font-size;
-                font-weight: bold;
+                height:48px;
             }
         }
 
-        /* 배송지 주소 */
-        .delivery-des-addr{
-            width:100%;
-            height:48px;
-            padding-left:0px;
-            
-            .item-inner{
-                padding:0;
-                border:none;
+        .delivery-des-label{
+            padding-left:8px;
+            padding-top:4px;
+            float:left;
+            width:100px;
+            max-width: 100px;
+            font-weight: bold;
+            color:$black-font-color;
+            font-size: $label-font-size;
+        }
 
-                .label{
-                    margin:0;
-                    height:48px;
-                }
-            }
+        .delivery-des-addr-content{
+            float:left;
+            height: 48px;
+            padding-top:4px;
+            width: calc(100% - 100px);
+            letter-spacing: -1px;
+            font-size: $default-font-size;
+            white-space: normal;
+            word-break: keep-all;
 
-            .delivery-des-label{
-                padding-left:8px;
-                padding-top:4px;
-                float:left;
-                width:100px;
-                font-weight: bold;
-                color:$black-font-color;
-                font-size: $label-font-size;
-            }
-
-            .delivery-des-addr-content{
-                float:left;
-                height: 48px;
-                padding-top:4px;
-                width: calc(100% - 100px);
-                letter-spacing: -1px;
-                font-size: $default-font-size;
+            .text-input{
+                margin:0;
                 white-space: normal;
                 word-break: keep-all;
             }
         }
+    }
 
-        .delivery-des{
+    .delivery-des{
+        height: 31px;
+        min-height: 31px;
+        width:100%;
+        padding-left:0px;
+
+        .item-inner{
+            padding:0;
+            border:none;
+
+            .label{
+                margin:0;
+                height:31px;
+            }
+        }
+
+        .delivery-des-label{
+            padding-left:8px;
+            float:left;
+            display:flex;
+            align-items: center;
+            width:100px;
+            max-width: 100px;
             height: 31px;
-            min-height: 31px;
-            width:100%;
-            padding-left:0px;
+            font-weight: bold;
+            color:$black-font-color;
+            font-size: $label-font-size;
+        }
 
-            .item-inner{
-                padding:0;
-                border:none;
-
-                .label{
-                    margin:0;
-                    height:31px;
-                }
-            }
-
-            .delivery-des-label{
-                padding-left:8px;
-                float:left;
-                display:flex;
-                align-items: center;
-                width:100px;
-                height: 31px;
-                font-weight: bold;
-                color:$black-font-color;
-                font-size: $label-font-size;
-            }
-
-            .delivery-des-content{
-                display:flex;
-                align-items: center;
-                float:left;
-                height: 31px;
-                font-size: $default-font-size;
-                width:calc(100% - 100px);
-            }
+        .delivery-des-content{
+            display:flex;
+            align-items: center;
+            float:left;
+            height: 31px;
+            font-size: $default-font-size;
+            width:calc(100% - 100px);
         }
     }
     /* 배송지관리 끝 */
