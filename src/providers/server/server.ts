@@ -44,7 +44,7 @@ export class ServerProvider {
       }, err => {
         console.log(err);
       });
-    })    
+    });    
   }
 
   checkIDDuplication(memberID){
@@ -63,7 +63,7 @@ export class ServerProvider {
       }, err => {
         console.log(err);
       });
-    })    
+    });    
   }
 
   modify(memberData){
@@ -83,7 +83,7 @@ export class ServerProvider {
       }, err => {
         console.log(err);
       });
-    })    
+    });   
   }
 
   login(memberID, password){
@@ -130,6 +130,27 @@ export class ServerProvider {
         }
         else {
           console.log("find access failed");
+          reject("failed");
+        }
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
+  alterDeliveryAddr(deliveryAddrs, type){
+    deliveryAddrs['type']=type;
+    return new Promise((resolve, reject) => {
+      this.http.post(this.serverAddr + "member/alterDeliverAddr.php", deliveryAddrs).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log("alter address success");
+          this.memberProvider.deliveryAddrs = result.address;
+          resolve("success");
+        }
+        else {
+          console.log("alter address failed");
           reject("failed");
         }
       }, err => {
