@@ -17,7 +17,6 @@ import { TabsPage } from '../tabs/tabs';
 export class CategoryPage {
 
   productAllCategories;
-  categoryFont = new Array();
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
   }
@@ -54,12 +53,6 @@ export class CategoryPage {
 
     for (let i = 0; i < this.productAllCategories.length; i++){
       this.productAllCategories[i].selected = false;
-      /*if(this.productAllCategories[i].category.length > 5){
-        this.categoryFont[i] = '1.4rem';
-      }else{
-        this.categoryFont[i] = '1.8rem';
-      }*/
-      this.categoryFont[i] = '1.8rem';
     }
   }
 
