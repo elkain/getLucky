@@ -13,7 +13,7 @@
     <ion-grid class="category-grid" *ngFor="let category of productAllCategories; let i=index">
         <ion-row class="category-row" *ngIf="i%4==0">
           <ion-col col-3 class="category-col" *ngFor="let sliceCategory of productAllCategories.slice(i, i+4)">
-            <button ion-button (click)="categorySelect(sliceCategory)">{{sliceCategory.category}}</button>
+            <button ion-button [style.font-size]="categoryFont[i]" (click)="categorySelect(sliceCategory)">{{sliceCategory.category}}</button>
           </ion-col>
         </ion-row>
         <ion-row class="category-sub-row" *ngIf="category.selected==true">

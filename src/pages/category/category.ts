@@ -17,6 +17,7 @@ import { TabsPage } from '../tabs/tabs';
 export class CategoryPage {
 
   productAllCategories;
+  categoryFont = new Array();
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App) {
   }
@@ -25,34 +26,40 @@ export class CategoryPage {
     console.log('ionViewDidLoad CategoryPage');
 
     this.productAllCategories = [
-      { category: "정육", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "청과", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "쌀잡곡", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "채소", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "계란", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "야채", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "정육·계란", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "과일·견과", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "쌀·잡곡", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
       { category: "유제품", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "냉장냉동", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "라면류", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "통조림류", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "김", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "해조류", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "조미료", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "장류", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "생수", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "커피/음료", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "과자류", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "시리얼류", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "빵류", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "휴지", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "주방용품", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "구강용품", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "바디용품", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "세제류", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
-      { category: "잡화류", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] }
+      { category: "과자·빵", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "면류", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "햄·어묵·맛살", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "커피·차·음료", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "통조림", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "장류·소스·조미료", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "즉석식품", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "냉동간식", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "식용유·참기름", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "김·해조류", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "김치·젓갈·장아찌", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "건어물", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "화장지·위생용품", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "헤어·바디용품", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "구강·면도용품", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "세탁·청소·욕실", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "주방·일회용품", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] },
+      { category: "유아동", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] }
+      //{ category: "잡화류", subCategories: ["전체", "소고기(한우)", "돼지고기", "닭고기"] }
     ];
 
     for (let i = 0; i < this.productAllCategories.length; i++){
       this.productAllCategories[i].selected = false;
+      /*if(this.productAllCategories[i].category.length > 5){
+        this.categoryFont[i] = '1.4rem';
+      }else{
+        this.categoryFont[i] = '1.8rem';
+      }*/
+      this.categoryFont[i] = '1.8rem';
     }
   }
 
