@@ -261,7 +261,7 @@
       <ion-item-divider class="delivery-des-list-head" *ngIf = "deliveryAddressMode[i]=='출력'">
         <p class="delivery-des-list-label">{{deliveryDesInfo.addressName}}</p>
         <button class="delivery-des-edit-btn" (click)="modifyDeliveryAddr(i)" ion-button item-end clear>수정</button>
-        <button class="delivery-des-del-btn" (click)="DelDeliveryAddr(i)" ion-button item-end clear>삭제</button>
+        <button class="delivery-des-del-btn" (click)="DelDeliveryAddr(deliveryDesInfo)" ion-button item-end clear>삭제</button>
       </ion-item-divider>
       <ion-item-divider class="delivery-des-list-head" *ngIf="deliveryAddressMode[i]=='수정'">
         <ion-input type="text" [(ngModel)]="deliveryDesInfo.addressName"></ion-input>

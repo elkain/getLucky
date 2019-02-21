@@ -47,7 +47,7 @@ export class MypagePage {
   mobile3;
   memberData = {UID:"", username:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", classs:0, totalPurchase:0};
   findMemberData = { username: "", name: "", email: "", mobile: "", type: "", method: "" };
-  enterMemberAddress = {addressName:"", address:"", receiver:"", mobile:""};
+  enterMemberAddress = { memberUID:"", addressName:"", address:"", receiver:"", mobile:""};
   deliveryAddrs = [];
 
   findCategories = ["아이디 찾기", "비밀번호 찾기"];
@@ -399,8 +399,14 @@ export class MypagePage {
 
   compAddDeliveryAddr() {
     if(this.enterMemberAddress.addressName != "" && this.enterMemberAddress.address != "" && this.enterMemberAddress.mobile !="" && this.enterMemberAddress.receiver != ""){
-      
-      this.deliveryAddressEnter = false;
+      this.enterMemberAddress.memberUID = this.memberData.UID;
+      this.serverProvider.alterDeliveryAddr(this.enterMemberAddress, "add").then((res:any)=>{
+        console.log(res);
+        this.deliveryAddrs = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs));
+        this.deliveryAddressEnter = false;  
+      },(err)=>{
+        console.log(err);
+      });
     }else{
       let alert = this.alertCtrl.create({
         message: '배송지 정보를 모두 채워주세요.',
@@ -421,8 +427,13 @@ export class MypagePage {
     this.deliveryAddressMode[index] = "수정";
   }
 
-  DelDeliveryAddr(index){
-
+  DelDeliveryAddr(addr){
+    this.serverProvider.alterDeliveryAddr(addr, "del").then((res: any) => {
+      console.log(res);
+      this.deliveryAddrs = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs));
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   cancelModifyAddr(index){
@@ -432,7 +443,14 @@ export class MypagePage {
 
   compModifyAddr(index, addr){
     if (addr.addressName != "" && addr.address != "" && addr.mobile != "" && addr.receiver != ""){
-      this.deliveryAddressMode[index] = "출력";
+      this.serverProvider.alterDeliveryAddr(addr, "modify").then((res: any) => {
+        console.log(res);
+        this.deliveryAddressMode[index] = "출력";
+        this.deliveryAddrs = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs));
+      }, (err) => {
+          console.log(err);
+      });
+      
     }else{
       let alert = this.alertCtrl.create({
         message: '배송지 정보를 모두 채워주세요.',
