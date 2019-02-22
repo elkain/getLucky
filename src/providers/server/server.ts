@@ -28,6 +28,25 @@ export class ServerProvider {
     
   }
 
+  loadCategory(){
+    return new Promise((resolve, reject) => {
+      this.http.get(this.serverAddr + "category/loadCategory.php").subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log("categoryload Success");
+          resolve(result.data);
+        }
+        else {
+          console.log("category load fail");
+          reject("fail");
+        }
+      }, err => {
+        console.log(err);
+      });
+    });    
+  }
+
   signup(memberData){
     return new Promise((resolve, reject)=>{
       this.http.post(this.serverAddr + "member/signup.php", memberData).subscribe(data => {
