@@ -24,7 +24,7 @@ export class ServerProvider {
   }
 
   getProductData(){
-    //상품 정보를 가져옴
+    //상품 정보를 가져옴   
     
   }
 
@@ -35,7 +35,8 @@ export class ServerProvider {
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("categoryload Success");
-          resolve(result.data);
+          let categoryResult = this.categoryRearrange(result.data);
+          resolve(categoryResult);
         }
         else {
           console.log("category load fail");
@@ -176,5 +177,41 @@ export class ServerProvider {
         console.log(err);
       });
     });
+  }
+
+  categoryRearrange(data){
+    let classCategory = null;
+    let subCategory = { subCategoryCode: "", subCategoryName:""};
+    let subCategories = [];
+    let categoryData = { generalCategoryName: "", generalCategoryCode: "", category: "", categoryCode: "", subCategories: []};
+    let categoryDatas = [];
+
+    for(let i=0; i<data.length; i++){
+
+      if(classCategory != data[i]['classCategoryName']){
+        classCategory = data[i]['classCategoryName'];
+
+        if(i!=0){
+          categoryData.subCategories = JSON.parse(JSON.stringify(subCategories));
+          subCategories.length = 0;
+          categoryDatas.push(JSON.parse(JSON.stringify(categoryData)));
+        }
+
+        categoryData.generalCategoryName = data[i]['generalCategoryName'];
+        categoryData.generalCategoryCode = data[i]['generalCategoryCode'];
+        categoryData.category = classCategory;
+        categoryData.categoryCode = data[i]['classCategoryCode'];
+      }
+      subCategory.subCategoryCode = data[i]['categoryCode'];
+      subCategory.subCategoryName = data[i]['categoryName'];
+      subCategories.push(JSON.parse(JSON.stringify(subCategory)));
+      
+      if(i == (data.length - 1)){
+        categoryData.subCategories = JSON.parse(JSON.stringify(subCategories));
+        categoryDatas.push(JSON.parse(JSON.stringify(categoryData)));
+      }
+    }
+
+    return categoryDatas;
   }
 }
