@@ -46,7 +46,7 @@ export class StorageProvider {
     this.bestCategories = ["전체", "청과", "유제품","과자류"];
     this.saleCategories = ["전체", "정육", "쌀잡곡", "계란", "유제품", "조미료", "과자류", "커피/음료"];
 
-    this.products = [
+    /*this.products = [
       { productId: "1", category: "청과", subCategory: "사과/배", name: "사과", price: 3000, discount: 1000, saleMethod: "fixed", saleCount: 2, imagePath: this.productImageURL + "사과.jpg" },
       { productId: "2", category: "청과", subCategory: "사과/배", name: "배", price: 10000, discount: 10, saleMethod: "percent", saleCount: 4, imagePath: this.productImageURL + "배.jpg" },
       { productId: "3", category: "청과", subCategory: "감/꽂감", name: "감귤", price: 5000, discount: 1500, saleMethod: "fixed", saleCount: 8, imagePath: this.productImageURL + "감귤.jpg" },
@@ -67,26 +67,7 @@ export class StorageProvider {
       { productId: "301", category: "유제품", subCategory: "요거트/요구르트", name: "요구르트", price: 500, discount: 0, saleMethod: "none", saleCount: 12, imagePath: this.productImageURL + "요구르트.jpg" },
       { productId: "303", category: "유제품", subCategory: "요거트/요구르트", name: "휴지", price: 500, discount: 0, saleMethod: "none", saleCount: 12, imagePath: this.productImageURL + "휴지.jpg" },
       { productId: "304", category: "유제품", subCategory: "요거트/요구르트", name: "각 휴지", price: 500, discount: 0, saleMethod: "none", saleCount: 12, imagePath: this.productImageURL + "각휴지.jpg" }
-    ];
-  }
-
-  calProductPrice(product) {
-    let salePrice: number;
-
-    if (product.saleMethod == "fixed") {
-      salePrice = (product.price - product.discount);
-    } else if (product.saleMethod == "percent") {
-      salePrice = (product.price * ((100 - product.discount) / 100));
-    } else if (product.saleMethod == "none") {
-      salePrice = product.price;
-    } else {
-      console.log("error calProductTotalPrice saleMethod dismatched", product.saleMethod);
-      salePrice = 0;
-    }
-
-    product.salePrice = salePrice;
-    
-    return salePrice;
+    ];*/
   }
 
   addShoppingBasket(item){

@@ -19,13 +19,30 @@ export class ServerProvider {
   username: string;
   password: string;
 
-  constructor(public http: Http, private platform: Platform, private storageProvider: StorageProvider, private memberProvider:MemberProvider) {
+  constructor(public http: Http,  private storageProvider: StorageProvider, private memberProvider:MemberProvider) {
     console.log('Hello ServerProvider Provider');
+    
   }
 
   getProductData(){
-    //상품 정보를 가져옴   
-    
+    //상품 정보를 가져옴
+    return new Promise((resolve, reject) => {
+      this.http.get(this.serverAddr + "product/loadAllProduct.php").subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log("product load Success");
+          let products = this.productRearrange(result);
+          resolve(products);
+        }
+        else {
+          console.log("product load fail");
+          reject("fail");
+        }
+      }, err => {
+        console.log(err);
+      });
+    });    
   }
 
   loadCategory(){
@@ -213,5 +230,26 @@ export class ServerProvider {
     }
 
     return categoryDatas;
+  }
+
+  productRearrange(data){
+    let products = [];
+    let imagePaths = [];
+    let j = 0;
+    let path = "./assets/imgs/";
+    for(let i = 0; i<data['product'].length; i++){
+      while (j < data['imagePath'].length && data['product'][i].productCode == data['imagePath'][j].productCode){
+        data['imagePath'][j].imagePath = path + data['imagePath'][j].imagePath;
+        imagePaths.push(JSON.parse(JSON.stringify(data['imagePath'][j])));
+        j++;
+      }
+
+      let product = data['product'][i];
+      product['imagePath'] = imagePaths;
+      products.push(JSON.parse(JSON.stringify(product)));
+      imagePaths.length = 0;
+    }
+
+    return products;
   }
 }

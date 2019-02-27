@@ -45,10 +45,10 @@
             <ion-row *ngFor="let product of products">
                 <button ion-button no-border (click)="itemSelected(product)">
                     <ion-col>
-                        <img src="{{product.imagePath}}">
+                        <img src="{{product.imagePath[0].imagePath}}">
                     </ion-col>
                     <ion-col>
-                        <h2>{{product.name}}</h2>
+                        <h2>{{product.productName}}</h2>
                         <p><del>{{product.price}}</del></p>
                         <p>{{product.salePrice}}</p>
                     </ion-col>
@@ -91,7 +91,7 @@
                 <ion-col col-6 *ngFor="let product of showProducts">
                     <ion-card class="best-product">
                         <button clear class="best-product-img" ion-button (click)="itemSelected(product)">
-                            <img src="{{product.imagePath}}" />
+                            <img src="{{product.imagePath[0].imagePath}}" />
                         </button>
                         <ion-card-content>
                             <ion-card-title>

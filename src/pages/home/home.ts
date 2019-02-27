@@ -4,6 +4,7 @@ import { ProductdetailPage } from '../productdetail/productdetail';
 import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
 import { StorageProvider } from '../../providers/storage/storage';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
+import { ServerProvider } from '../../providers/server/server';
 
 @Component({
   selector: 'page-home',
@@ -31,7 +32,7 @@ export class HomePage {
 
   events = [this.imageURL + "slide1.png", this.imageURL + "slide2.png", this.imageURL + "slide3.png"];
   homeParams;
-  products;
+  products = [];
   showProducts;
 
   showProductPage:boolean;
@@ -40,19 +41,32 @@ export class HomePage {
   slideImages: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
   constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams,
-    public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider) {
-
+    public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider, public serverProvider:ServerProvider) {
+    
     // category from category page
-    this.homeParams = navParams.data;     
-    this.products = this.storageProvider.products;
-
-    /* 할인율을 적용하여 가격 측정 */
-    for (var i = 0; i < this.products.length; i++) {
-      this.storageProvider.calProductPrice(this.products[i]);
-    }
+    this.homeParams = navParams.data;
+    //this.products = this.storageProvider.products;
+    /*this.serverProvider.getProductData().then((res: any) => {
+      this.storageProvider.products = JSON.parse(JSON.stringify(res));
+      this.products = this.storageProvider.products;
+      //console.log(res);
+    }, (err) => {
+      console.log(err);
+    });
+    
+    console.log("this.product : " +this.products);*/
   }
 
   ionViewDidEnter() {
+
+    this.serverProvider.getProductData().then((res: any) => {
+      this.storageProvider.products = res;
+      this.products = this.storageProvider.products;
+      //console.log(res);
+    }, (err) => {
+      console.log(err);
+    });
+
     this.bestCategories = this.storageProvider.bestCategories;
     this.saleCategories = this.storageProvider.saleCategories;
     
@@ -146,18 +160,19 @@ export class HomePage {
   // 정렬 함수
   //productSortOptions = ["판매인기순", "높은가격순", "낮은가격순"];
   productsSort(option){
+    console.log("this.products :"+this.products);
     
     if(option == "판매인기순"){
       this.products.sort((a,b) => {
-        return a.saleCount > b.saleCount ? -1 : a.saleCount > b.saleCount ? 1 : 0;
+        return a.soldStock > b.soldStock ? -1 : a.soldStock > b.soldStock ? 1 : 0;
       });
     } else if (option == "높은가격순"){
       this.products.sort((a, b) => {
-        return a.salePrice > b.salePrice ? -1 : a.salePrice > b.salePrice ? 1 : 0;
+        return a.soldStock > b.soldStock ? -1 : a.soldStock > b.soldStock ? 1 : 0;
       });
     } else if (option == "낮은가격순"){
       this.products.sort((a, b) => {
-        return a.salePrice < b.salePrice ? -1 : a.salePrice < b.salePrice ? 1 : 0;
+        return a.soldStock < b.soldStock ? -1 : a.soldStock < b.soldStock ? 1 : 0;
       });
     }else{
       return this.products;
