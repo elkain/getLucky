@@ -126,12 +126,7 @@ export class ShoppingbasketPage {
       if (this.shoppingBasket.checkedProducts[i]==true){
                 
         orderPrice += this.shoppingBasket.orderedProducts[i].price * this.shoppingBasket.orderedProducts[i].count;
-        
-        if (this.shoppingBasket.orderedProducts[i].saleMethod=='fixed'){
-          sale += this.shoppingBasket.orderedProducts[i].discount * this.shoppingBasket.orderedProducts[i].count;
-        }else{
-          sale += this.shoppingBasket.orderedProducts[i].price * this.shoppingBasket.orderedProducts[i].discount / 100 * this.shoppingBasket.orderedProducts[i].count;
-        }
+        sale += this.shoppingBasket.orderedProducts[i].sale * this.shoppingBasket.orderedProducts[i].count;
         checkedItemNumber++;
       }
     }
@@ -152,7 +147,6 @@ export class ShoppingbasketPage {
   }
 
   deleteItem(){
-
     let itemNumber = this.shoppingBasket.orderedProducts.length;
     for (let i = itemNumber - 1; i >= 0; i--) {
       if (this.shoppingBasket.checkedProducts[i] == true) {

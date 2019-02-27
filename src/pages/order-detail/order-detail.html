@@ -29,8 +29,8 @@
         <p item-end class="order-id-num">{{orderInfo.id}}</p>
       </ion-item>
       <ion-item class="product-detail-item" *ngFor="let product of orderInfo.orderedProducts">
-        <img class="thumbnail-img" src="{{product.imagePath}}">
-        <p class="product-info-name"><b>상품명 : {{product.name}}</b></p>
+        <img class="thumbnail-img" src="{{product.imagePath[0].imagePath}}">
+        <p class="product-info-name"><b>상품명 : {{product.productName}}</b></p>
         <p class="product-info-compo">구성/용량</p>
         <p class="product-info-count"><b>수량 : {{product.count}}</b></p>
         <p class="product-info-price"><b>혜택가 : {{product.salePrice}}</b></p>

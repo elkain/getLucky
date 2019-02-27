@@ -43,8 +43,8 @@ export class StorageProvider {
     this.popularSearchItems = ["가", "나", "다"];
 
     //this.bestCategories = ["전체", "정육", "청과", "쌀잡곡", "계란", "유제품", "조미료", "과자류", "커피/음료"];
-    this.bestCategories = ["전체", "청과", "유제품","과자류"];
-    this.saleCategories = ["전체", "정육", "쌀잡곡", "계란", "유제품", "조미료", "과자류", "커피/음료"];
+    this.bestCategories = [{ categoryName: "전체" }, { categoryName: "과일·견과", categoryCode: "103" }, { categoryName: "유제품", categoryCode: "201" }, { categoryName: "과자·빵", categoryCode: "202" }];
+    this.saleCategories = [{ categoryName: "전체" }, { categoryName: "과일·견과", categoryCode: "103" }, { categoryName: "유제품", categoryCode: "201" }, { categoryName: "과자·빵", categoryCode: "202" }];
 
     /*this.products = [
       { productId: "1", category: "청과", subCategory: "사과/배", name: "사과", price: 3000, discount: 1000, saleMethod: "fixed", saleCount: 2, imagePath: this.productImageURL + "사과.jpg" },

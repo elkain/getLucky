@@ -26,10 +26,10 @@
   <ion-scroll scollY="true" class="product-detail-scroll">
     <ion-list class="product-detail-list">
       <ion-item class="product-detail-img">
-        <img src="{{product.imagePath}}">
+        <img src="{{product.imagePath[0].imagePath}}">
       </ion-item>
       <ion-item class="product-detail-name">
-        {{product.name}}
+        {{product.pname}}
       </ion-item>
       <ion-item class="product-detail-price">
         {{product.price}} <del>{{product.salePrice}}</del>

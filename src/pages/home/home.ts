@@ -59,9 +59,9 @@ export class HomePage {
 
   ionViewDidEnter() {
 
-    this.serverProvider.getProductData().then((res: any) => {
+    this.serverProvider.getAllProductData().then((res: any) => {
       this.storageProvider.products = res;
-      this.products = this.storageProvider.products;
+      this.products = JSON.parse(JSON.stringify(this.storageProvider.products));
       //console.log(res);
     }, (err) => {
       console.log(err);
@@ -74,7 +74,6 @@ export class HomePage {
     this.bestCategorySelected = this.bestCategories[0];
     this.saleCategorySelected = this.saleCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
-    this.productsSort("판매인기순");
   }
 
   ionViewDidLeave(){
@@ -101,10 +100,15 @@ export class HomePage {
 
   homeCategoryChange(Category) {
     let idx = this.homeCategories.indexOf(Category);
+    this.products = JSON.parse(JSON.stringify(this.storageProvider.products));
     this.homeCategorySelected = this.homeCategories[idx];
     this.bestCategorySelected = this.bestCategories[0];
     this.saleCategorySelected = this.saleCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
+
+    if(this.homeCategorySelected != this.homeCategories[0]){
+      this.productsSort("판매인기순");
+    }
 
     if (this.homeCategorySelected == this.homeCategories[3] ){
       this.showProductPage=false;
@@ -137,14 +141,12 @@ export class HomePage {
   sortProductsByCategory(products, category){
     let showProducts = [];
     
-    if(category == "전체"){
+    if(category.categoryName == "전체"){
       return products;
     }
 
     for (let i = 0; i < this.products.length; i++) {
-      if (products[i].category == category) {
-        
-        
+      if (products[i].classCategoryCode == category.categoryCode) {
         showProducts.push(products[i]);
       }
     }
@@ -160,19 +162,17 @@ export class HomePage {
   // 정렬 함수
   //productSortOptions = ["판매인기순", "높은가격순", "낮은가격순"];
   productsSort(option){
-    console.log("this.products :"+this.products);
-    
     if(option == "판매인기순"){
       this.products.sort((a,b) => {
         return a.soldStock > b.soldStock ? -1 : a.soldStock > b.soldStock ? 1 : 0;
       });
     } else if (option == "높은가격순"){
       this.products.sort((a, b) => {
-        return a.soldStock > b.soldStock ? -1 : a.soldStock > b.soldStock ? 1 : 0;
+        return a.salePrice > b.salePrice ? -1 : a.salePrice > b.salePrice ? 1 : 0;
       });
     } else if (option == "낮은가격순"){
       this.products.sort((a, b) => {
-        return a.soldStock < b.soldStock ? -1 : a.soldStock < b.soldStock ? 1 : 0;
+        return a.salePrice < b.salePrice ? -1 : a.salePrice < b.salePrice ? 1 : 0;
       });
     }else{
       return this.products;

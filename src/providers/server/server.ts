@@ -24,7 +24,7 @@ export class ServerProvider {
     
   }
 
-  getProductData(){
+  getAllProductData(){
     //상품 정보를 가져옴
     return new Promise((resolve, reject) => {
       this.http.get(this.serverAddr + "product/loadAllProduct.php").subscribe(data => {
@@ -43,6 +43,27 @@ export class ServerProvider {
         console.log(err);
       });
     });    
+  }
+
+  getCategoryProductData(categoryCode){
+    //특정 카테고리 상품 정보를 가져옴
+    return new Promise((resolve, reject) => {
+      this.http.post(this.serverAddr + "product/loadCategoryProduct.php", categoryCode).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log("product load Success");
+          let products = this.productRearrange(result);
+          resolve(products);
+        }
+        else {
+          console.log("product load fail");
+          reject("fail");
+        }
+      }, err => {
+        console.log(err);
+      });
+    }); 
   }
 
   loadCategory(){
