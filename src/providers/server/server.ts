@@ -154,7 +154,7 @@ export class ServerProvider {
         if (result.status == "success") {
           console.log("login success");
 
-          this.memberProvider.isMember = true;
+          this.storageProvider.isMember = true;
           this.memberProvider.memberData.username = memberID;
           this.memberProvider.memberData.password = password;
           this.memberProvider.memberData.birth = result.memberBirth;
@@ -273,4 +273,6 @@ export class ServerProvider {
 
     return products;
   }
+
+  
 }

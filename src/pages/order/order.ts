@@ -58,7 +58,6 @@ export class OrderPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, private alertCtrl:AlertController, 
     public storageProvider:StorageProvider, public shoppingbasketProvider:ShoppingbasketProvider, public orderProvider:OrderProvider, public memberProvider:MemberProvider) {
 
-    this.isMember = storageProvider.isMember;
     this.deliveryMemoLists = storageProvider.deliveryMemoLists;
     this.deliveryTimeLists = storageProvider.deliveryTimeLists;
     this.mobileOptionLists = storageProvider.mobileOptionLists;

@@ -75,7 +75,7 @@ export class MypagePage {
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
     this.nonMemberBuy = false;
-    this.isMember = this.memberProvider.isMember;
+    this.isMember = this.storageProvider.isMember;
     this.autoLoginCheckbox = false;
     this.deliveryAddressEnter = false;
 

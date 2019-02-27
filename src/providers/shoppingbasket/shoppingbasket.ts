@@ -52,7 +52,7 @@ export class ShoppingbasketProvider {
     let flag = false;
 
     for (let i = 0; i < this.shoppingBasket.orderedProducts.length; i++) {
-      if (item.name == this.shoppingBasket.orderedProducts[i].name) {
+      if (item.productName == this.shoppingBasket.orderedProducts[i].productName) {
         flag = true;
       }
     }
