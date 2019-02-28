@@ -180,8 +180,16 @@ export class HomePage {
   }
 
   addToShoppingBasket(product) {
+    let flag = this.shoppingbasketProvider.isProductInShoppingbasket(product);
 
-    this.shoppingbasketProvider.addShoppingBasket(product);
+    if (flag != true){
+      if (this.storageProvider.isMember == true) {
+        this.serverProvider.addShoppingbasket(product);
+      }else{
+        this.shoppingbasketProvider.addShoppingBasket(product);
+      }
+    }
+    
     const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {class:"home"}, { cssClass: 'popover-shopping-basket'});
     popover.present();
   }

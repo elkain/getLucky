@@ -6,6 +6,7 @@ import { OrderPage } from '../order/order';
 import { StorageProvider } from '../../providers/storage/storage';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
 import { OrderProvider } from '../../providers/order/order';
+import { ServerProvider } from '../../providers/server/server';
 
 /**
  * Generated class for the BuyPage page.
@@ -28,7 +29,7 @@ export class BuyPage {
   orderInfo = { orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, shoppingBasket: [] };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController, 
-    public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider, public orderProvider: OrderProvider) {
+    public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider, public orderProvider: OrderProvider, public serverProvider:ServerProvider) {
 
     this.product = this.navParams.get("product");
     this.isMember = this.storageProvider.isMember;
@@ -61,8 +62,16 @@ export class BuyPage {
   }
 
   addToShoppingBasket() {
-    this.shoppingbasketProvider.addShoppingBasket(this.product);
+    let flag = this.shoppingbasketProvider.isProductInShoppingbasket(this.product);
 
+    if (flag != true) {
+      if (this.storageProvider.isMember == true) {
+        this.serverProvider.addShoppingbasket(this.product);
+      } else {
+        this.shoppingbasketProvider.addShoppingBasket(this.product);
+      }
+    }
+    
     const popover = this.popoverCtrl.create(ShoppingbasketPopoverPage, {class:"buy"}, { cssClass: 'popover-shopping-basket' });
     popover.present();
   }

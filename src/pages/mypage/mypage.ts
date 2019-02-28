@@ -242,6 +242,13 @@ export class MypagePage {
               }
             }
           }
+
+          this.serverProvider.loadShoppingbasket().then((res: any) => {
+            console.log(res);
+          }, (err) => {
+            console.log(err);
+
+          });
         }
       },(err)=>{
           let alert = this.alertCtrl.create({

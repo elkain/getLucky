@@ -53,7 +53,7 @@ export class SignupPage {
     
     this.male = this.whiteColor;
     this.female = this.whiteColor;
-    this.isMember = this.memberProvider.isMember;
+    this.isMember = this.storageProvider.isMember;
   }
 
   ionViewDidLoad() {
@@ -180,7 +180,7 @@ export class SignupPage {
       this.serverProvider.signup(this.memberData).then((res:any)=>{
         if(res == "success"){
           this.memberProvider.memberData = this.memberData;
-          this.memberProvider.isMember = true;
+          this.storageProvider.isMember = true;
           let prevPage = this.navParams.get("prevPage");
           if (prevPage == "buy" || prevPage == "shoppingbasket") {
             this.navCtrl.push(OrderPage, { class: "buy" });

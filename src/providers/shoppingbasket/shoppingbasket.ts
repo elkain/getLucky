@@ -15,8 +15,17 @@ export class ShoppingbasketProvider {
     console.log('Hello ShoppingbasketProvider Provider');
   }
 
-  delShoppingBasket(item){
+  delShoppingBasket(){
+    let itemNumber = this.shoppingBasket.orderedProducts.length;
 
+    for (let i = itemNumber - 1; i >= 0; i--) {
+      if (this.shoppingBasket.checkedProducts[i] == true) {
+        this.shoppingBasket.orderedProducts.splice(i, 1);
+        this.shoppingBasket.checkedProducts.splice(i, 1);
+      }
+    }
+
+    return this.shoppingBasket.orderedProducts.length;
   }
 
   completeShopping(){
@@ -48,18 +57,21 @@ export class ShoppingbasketProvider {
     return salePrice;
   }
 
-  addShoppingBasket(item) {
+  isProductInShoppingbasket(item){
     let flag = false;
 
     for (let i = 0; i < this.shoppingBasket.orderedProducts.length; i++) {
-      if (item.productName == this.shoppingBasket.orderedProducts[i].productName) {
+      if (item.productCode == this.shoppingBasket.orderedProducts[i].productCode) {
         flag = true;
       }
     }
 
-    if (flag == false) {
-      this.shoppingBasket.orderedProducts.push(item);
-    }
+    return flag;
+  }
+
+  addShoppingBasket(item) {
+    //this.shoppingBasket.checkedProducts[this.shoppingBasket.orderedProducts.length] = true;
+    this.shoppingBasket.orderedProducts.push(item);
   }
 
   substituteBasket(shoppingBasket){

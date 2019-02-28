@@ -4,6 +4,7 @@ import { OrderPage } from '../order/order';
 import { StorageProvider } from '../../providers/storage/storage';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
 import { TabsPage } from '../tabs/tabs';
+import { ServerProvider } from '../../providers/server/server';
 
 /**
  * Generated class for the ShoppingbasketPage page.
@@ -31,26 +32,38 @@ export class ShoppingbasketPage {
   //orderInfo = {orderPrice:0, sale:0, deliveryFee:0, totalPrice:0, shoppingBasket:[]};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, private alertCtrl:AlertController , 
-    public storageProvider: StorageProvider, public shoppingbasketProvider:ShoppingbasketProvider) {
+    public storageProvider: StorageProvider, public shoppingbasketProvider:ShoppingbasketProvider, public serverProvider:ServerProvider) {
 
     this.isMember = this.storageProvider.isMember;
     this.shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
     this.itemNumber = this.shoppingBasket.orderedProducts.length;
-    this.checkedItemNumber = 0;
 
-    this.shoppingBasket.checkedProducts = [];
-
-    for (let i = 0; i < this.shoppingBasket.orderedProducts.length; i++){
-      this.shoppingBasket.checkedProducts.push(true);
-      this.shoppingBasket.orderedProducts[i].count = 1;
+    for(let i=0; i<this.itemNumber; i++){
+      this.shoppingBasket.checkedProducts[i] = true;
     }
-    this.shoppingBasket.checkedAllProducts = true;
+
+    this.checkedItemNumber = 0;
+    
     this.deliveryFee = storageProvider.deliveryFee;
 
     this.calOrderPrice();
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
+    if(this.storageProvider.isMember==true){
+      this.serverProvider.loadShoppingbasket().then((res: any) => {
+        this.shoppingBasket = res;
+        this.itemNumber = this.shoppingBasket.orderedProducts.length;
+        console.log(res);
+      }, (err) => {
+        console.log(err);
+
+      });
+    }else{
+      this.shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
+      this.itemNumber = this.shoppingBasket.orderedProducts.length;
+    }
+
     console.log('ionViewDidLoad ShoppingbasketPage');
   }
 
@@ -147,16 +160,31 @@ export class ShoppingbasketPage {
   }
 
   deleteItem(){
-    let itemNumber = this.shoppingBasket.orderedProducts.length;
-    for (let i = itemNumber - 1; i >= 0; i--) {
-      if (this.shoppingBasket.checkedProducts[i] == true) {
-        this.shoppingBasket.orderedProducts.splice(i, 1);
-        this.shoppingBasket.checkedProducts.splice(i, 1);
-        this.itemNumber--;
+    if(this.isMember == true){
+      let delProducts = [];
+      let orderedProducts = this.shoppingBasket.orderedProducts;
+
+      for(let i=0; i<orderedProducts.length; i++){
+        if(this.shoppingBasket.checkedProducts[i] == true){
+          delProducts.push(orderedProducts[i]);
+        }
       }
+
+      this.serverProvider.delShoppingbasket(delProducts).then((res:any)=>{
+        this.serverProvider.loadShoppingbasket().then((res: any) => {
+          this.shoppingBasket = res;
+          this.itemNumber = this.shoppingBasket.orderedProducts.length;
+          console.log(res);
+        }, (err) => {
+          console.log(err);
+
+        });
+      }, (err)=>{
+        console.log("err");
+      });
+    }else{
+      this.itemNumber = this.shoppingbasketProvider.delShoppingBasket();
     }
-    
     this.calOrderPrice();
-    this.shoppingbasketProvider.substituteBasket(this.shoppingBasket);
   }
 }

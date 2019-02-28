@@ -3,6 +3,7 @@ import { StorageProvider } from '../storage/storage';
 import { Platform } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { MemberProvider } from '../member/member';
+import { ShoppingbasketProvider } from '../shoppingbasket/shoppingbasket';
 
 // ip 218.145.181.49 //
 /*
@@ -19,7 +20,7 @@ export class ServerProvider {
   username: string;
   password: string;
 
-  constructor(public http: Http,  private storageProvider: StorageProvider, private memberProvider:MemberProvider) {
+  constructor(public http: Http, private storageProvider: StorageProvider, private memberProvider: MemberProvider, private shoppingbasketProvider:ShoppingbasketProvider) {
     console.log('Hello ServerProvider Provider');
     
   }
@@ -217,6 +218,81 @@ export class ServerProvider {
     });
   }
 
+  addShoppingbasket(product){
+    let body = {memberUID : this.memberProvider.memberData.UID, productCode:product.productCode, priceID:product.priceID, productStockID:product.productStockID};
+    
+    this.http.post(this.serverAddr + "member/addShoppingbasket.php", body).subscribe(data => {
+      console.log(data);
+      let result = JSON.parse(data["_body"]);
+      if (result.status == "success") {
+        console.log("add shoppingbasket success");
+      }
+      else {
+        console.log("add shoppingbasket failed");
+      }
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  delShoppingbasket(product){
+    let delProducts = [];
+    
+    for(let i = 0; i<product.length; i++){
+      delProducts.push({ productCode: product[i].productCode, priceID: product[i].priceID, productStockID: product[i].productStockID });
+    }
+
+    let body = {memberUID: this.memberProvider.memberData.UID, products:delProducts};
+
+    return new Promise((resolve, reject) => {
+      this.http.post(this.serverAddr + "member/delShoppingbasket.php", body).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log("del shoppingbasket success");
+          resolve("success");
+        }
+        else {
+          console.log("del shoppingbasket failed");
+          reject("failed");
+        }
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
+  loadShoppingbasket(){
+    let memberUID = this.memberProvider.memberData.UID;
+    return new Promise((resolve, reject) => {
+      this.http.post(this.serverAddr + "member/loadShoppingbasket.php", memberUID).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log("load shoppingbasket success");
+          let products = this.productRearrange(result);
+          let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
+          shoppingBasket.orderedProducts = products;
+          shoppingBasket.checkedProducts = [];
+
+          for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
+            shoppingBasket.checkedProducts.push(true);
+            shoppingBasket.orderedProducts[i].count = 1;
+          }
+          shoppingBasket.checkedAllProducts = true;
+          
+          resolve(shoppingBasket);
+        }
+        else {
+          console.log("load shoppingbasket failed");
+          reject("failed");
+        }
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
   categoryRearrange(data){
     let classCategory = null;
     let subCategory = { subCategoryCode: "", subCategoryName:""};
@@ -273,6 +349,4 @@ export class ServerProvider {
 
     return products;
   }
-
-  
 }
