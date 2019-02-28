@@ -220,11 +220,21 @@ export class ServerProvider {
 
   addShoppingbasket(product){
     let body = {memberUID : this.memberProvider.memberData.UID, productCode:product.productCode, priceID:product.priceID, productStockID:product.productStockID};
-    
+
     this.http.post(this.serverAddr + "member/addShoppingbasket.php", body).subscribe(data => {
       console.log(data);
       let result = JSON.parse(data["_body"]);
       if (result.status == "success") {
+        let products = this.productRearrange(result);
+        let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
+        shoppingBasket.orderedProducts = products;
+        shoppingBasket.checkedProducts = [];
+
+        for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
+          shoppingBasket.checkedProducts.push(true);
+          shoppingBasket.orderedProducts[i].count = 1;
+        }
+        shoppingBasket.checkedAllProducts = true;
         console.log("add shoppingbasket success");
       }
       else {
@@ -250,6 +260,15 @@ export class ServerProvider {
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("del shoppingbasket success");
+          let products = this.productRearrange(result);
+          let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
+          shoppingBasket.orderedProducts = products;
+          shoppingBasket.checkedProducts = [];
+
+          for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
+            shoppingBasket.checkedProducts.push(false);
+            shoppingBasket.orderedProducts[i].count = 1;
+          }
           resolve("success");
         }
         else {
@@ -281,7 +300,7 @@ export class ServerProvider {
           }
           shoppingBasket.checkedAllProducts = true;
           
-          resolve(shoppingBasket);
+          resolve("success");
         }
         else {
           console.log("load shoppingbasket failed");

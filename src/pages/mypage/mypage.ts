@@ -243,12 +243,7 @@ export class MypagePage {
             }
           }
 
-          this.serverProvider.loadShoppingbasket().then((res: any) => {
-            console.log(res);
-          }, (err) => {
-            console.log(err);
-
-          });
+          this.serverProvider.loadShoppingbasket();
         }
       },(err)=>{
           let alert = this.alertCtrl.create({

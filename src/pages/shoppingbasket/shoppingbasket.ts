@@ -53,20 +53,10 @@ export class ShoppingbasketPage {
   }
 
   ionViewWillEnter() {
-    if(this.storageProvider.isMember==true){
-      this.serverProvider.loadShoppingbasket().then((res: any) => {
-        this.shoppingBasket = res;
-        this.itemNumber = this.shoppingBasket.orderedProducts.length;
-        console.log(res);
-      }, (err) => {
-        console.log(err);
-
-      });
-    }else{
-      this.shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
-      this.itemNumber = this.shoppingBasket.orderedProducts.length;
-    }
-
+    this.isMember = this.storageProvider.isMember;
+    this.shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
+    this.itemNumber = this.shoppingBasket.orderedProducts.length;
+    this.calOrderPrice();
     console.log('ionViewDidLoad ShoppingbasketPage');
   }
 
@@ -174,20 +164,15 @@ export class ShoppingbasketPage {
       }
 
       this.serverProvider.delShoppingbasket(delProducts).then((res:any)=>{
-        this.serverProvider.loadShoppingbasket().then((res: any) => {
-          this.shoppingBasket = res;
-          this.itemNumber = this.shoppingBasket.orderedProducts.length;
-          console.log(res);
-        }, (err) => {
-          console.log(err);
-
-        });
+        this.itemNumber = this.shoppingBasket.orderedProducts.length;  
+        this.calOrderPrice();
       }, (err)=>{
         console.log("err");
       });
     }else{
       this.itemNumber = this.shoppingbasketProvider.delShoppingBasket();
+      this.calOrderPrice();
     }
-    this.calOrderPrice();
+    
   }
 }
