@@ -40,6 +40,9 @@ export class ShoppingbasketPage {
 
     for(let i=0; i<this.itemNumber; i++){
       this.shoppingBasket.checkedProducts[i] = true;
+      if (this.shoppingBasket.orderedProducts[i]['count'] == undefined || this.shoppingBasket.orderedProducts[i]['count'] == null){
+        this.shoppingBasket.orderedProducts[i]['count'] = 1;
+      }
     }
 
     this.checkedItemNumber = 0;
