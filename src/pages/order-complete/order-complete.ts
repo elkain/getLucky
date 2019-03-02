@@ -16,16 +16,16 @@ import { OrderProvider } from '../../providers/order/order';
 })
 export class OrderCompletePage {
 
-  orderCompInfo = { ordererName: "", recieverName:"", address:"", mobile:"", paymentMethod:"", paymentCharge:0};
+  orderCompInfo = { ordererName: "", receiverName:"", address:"", mobile:"", paymentMethod:"", paymentCharge:0};
   bankStatus = "(입금대기중)";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public orderProvider : OrderProvider) {
 
     let orderInfo = this.orderProvider.orderInfos[this.orderProvider.orderInfos.length - 1];
     this.orderCompInfo.ordererName = orderInfo.customInfo.ordererName;
-    this.orderCompInfo.recieverName = orderInfo.customInfo.recieverName;
-    this.orderCompInfo.address = orderInfo.customInfo.recieverAddress;
-    this.orderCompInfo.mobile = orderInfo.customInfo.recieverMobile;
+    this.orderCompInfo.receiverName = orderInfo.customInfo.receiverName;
+    this.orderCompInfo.address = orderInfo.customInfo.receiverAddress;
+    this.orderCompInfo.mobile = orderInfo.customInfo.receiverMobile;
     this.orderCompInfo.paymentMethod = orderInfo.paymentMethod;
 
     if(this.orderCompInfo.paymentMethod == "무통장입금"){
