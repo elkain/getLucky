@@ -312,6 +312,25 @@ export class ServerProvider {
     });
   }
 
+  orderProducts(orderInfo){
+    return new Promise((resolve, reject) => {
+      this.http.post(this.serverAddr + "order/orderProducts.php", orderInfo).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log("signup Success");
+          resolve("success");
+        }
+        else {
+          console.log("Fail signup");
+          reject("fail");
+        }
+      }, err => {
+        console.log(err);
+      });
+    }); 
+  }
+
   categoryRearrange(data){
     let classCategory = null;
     let subCategory = { subCategoryCode: "", subCategoryName:""};

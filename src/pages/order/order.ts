@@ -6,6 +6,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
 import { OrderProvider } from '../../providers/order/order';
 import { MemberProvider } from '../../providers/member/member';
+import { ServerProvider } from '../../providers/server/server';
 /**
  * Generated class for the OrderPage page.
  *
@@ -32,19 +33,32 @@ export class OrderPage {
   newPlaceStyle = new Object();
   paymentMethodColor = { cash: "white", card: "white", bank: "white" };
   
-  ordererName: string;
-  ordererMobile: string;
+  /*ordererName: string;
   ordererEmail: string;
-  recieverName: string;
-  recieverAddress: string;
-  ordererMobile1: string;
+  receiverName: string;
+  receiverAddress: string;*/
+  ordererName = "이철";
+  ordererMobile: string;
+  ordererEmail = "hee861213@naver.com"
+  receiverName = "이혁";
+  receiverAddress: string;
+  /*ordererMobile1: string;
   ordererMobile2: string;
-  ordererMobile3: string;
-  recieverMobile1: string;
-  recieverMobile2: string;
-  recieverMobile3: string;
-  address1: string;
+  ordererMobile3: string;*/
+  ordererMobile1 = "010";
+  ordererMobile2 = "8924";
+  ordererMobile3 = "7278";
+  /*receiverMobile1: string;
+  receiverMobile2: string;
+  receiverMobile3: string;*/
+  receiverMobile1 =  "010";
+  receiverMobile2 = "5269";
+  receiverMobile3 = "8621";
+  /*address1: string;
   address2: string;
+  address3: string;*/
+  address1 = "서울시 강동구 명일동";
+  address2 = "현대아파트 15동 702호";
   address3: string;
 
   deliveryMemoLists = [];
@@ -52,11 +66,12 @@ export class OrderPage {
   mobileOptionLists = [];
 
   orderInfo = { type: "", customInfo: {}, orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, paymentMethod: "", deliveryTime: "선택사항", deliveryMemo: "선택사항" , orderedProducts: [] }; // type : member or nonMember 
-  customInfo = { ordererName: "", ordererMobile: "", ordererEmail: "", recieverName: "", recieverAddress: "", recieverMobile: ""};
+  customInfo = { ordererName: "", ordererMobile: "", ordererEmail: "", receiverName: "이혁", receiverAddress: "", receiverMobile: ""};
   memberAddressLists = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, private alertCtrl:AlertController, 
-    public storageProvider:StorageProvider, public shoppingbasketProvider:ShoppingbasketProvider, public orderProvider:OrderProvider, public memberProvider:MemberProvider) {
+    public storageProvider:StorageProvider, public shoppingbasketProvider:ShoppingbasketProvider, public orderProvider:OrderProvider, public memberProvider:MemberProvider,
+    public serverProvider:ServerProvider) {
 
     this.deliveryMemoLists = storageProvider.deliveryMemoLists;
     this.deliveryTimeLists = storageProvider.deliveryTimeLists;
@@ -73,9 +88,9 @@ export class OrderPage {
       this.customInfo.ordererMobile = this.memberProvider.memberData.mobile;
       this.customInfo.ordererEmail = this.memberProvider.memberData.email;
       this.memberAddressLists = this.memberProvider.deliveryAddrs;
-      this.customInfo.recieverName = this.memberAddressLists[0].receiver;
-      this.customInfo.recieverAddress = this.memberAddressLists[0].address;
-      this.customInfo.recieverMobile = this.memberAddressLists[0].mobile;
+      this.customInfo.receiverName = this.memberAddressLists[0].receiver;
+      this.customInfo.receiverAddress = this.memberAddressLists[0].address;
+      this.customInfo.receiverMobile = this.memberAddressLists[0].mobile;
       this.orderInfo.customInfo = this.customInfo;
     }else{
       this.orderInfo.type = "nonMember";
@@ -125,6 +140,8 @@ export class OrderPage {
   }
 
   ionViewDidLoad() {
+    this.orderInfo.deliveryMemo = this.deliveryMemoLists[1];
+    this.orderInfo.deliveryTime = this.deliveryTimeLists[1];
     console.log('ionViewDidLoad OrderPage');
   }
 
@@ -183,8 +200,8 @@ export class OrderPage {
   presentPopover() {
     const popover = this.popoverCtrl.create(SelectPopoverPage, { addressLists: this.memberAddressLists}, { cssClass:'delivery-popover'});
     popover.onDidDismiss(idx => {
-      this.customInfo.recieverName = this.memberAddressLists[idx].receiver;
-      this.customInfo.recieverAddress = this.memberAddressLists[idx].address;
+      this.customInfo.receiverName = this.memberAddressLists[idx].receiver;
+      this.customInfo.receiverAddress = this.memberAddressLists[idx].address;
       this.customInfo.ordererMobile = this.memberAddressLists[idx].mobile;
     })
     popover.present();
@@ -204,11 +221,22 @@ export class OrderPage {
     console.log(this.orderInfo);
     
     if (this.nameCheck(this.customInfo.ordererName) && this.mobileCheck(this.customInfo.ordererMobile) && this.emailCheck(this.customInfo.ordererEmail) && 
-    this.nameCheck(this.customInfo.recieverName) && this.addrCheck(this.customInfo.recieverAddress) && this.mobileCheck(this.customInfo.recieverMobile) && this.paymentMethodCheck(this.orderInfo.paymentMethod) == true) {
+    this.nameCheck(this.customInfo.receiverName) && this.addrCheck(this.customInfo.receiverAddress) && this.mobileCheck(this.customInfo.receiverMobile) && this.paymentMethodCheck(this.orderInfo.paymentMethod) == true) {
       
-      this.orderProvider.addOrderInfo(this.orderInfo);
-      this.shoppingbasketProvider.completeShopping();
-      this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
+      this.serverProvider.orderProducts(this.orderInfo).then((res:any)=>{
+        if(res == "success"){
+          this.orderProvider.addOrderInfo(this.orderInfo);
+          this.shoppingbasketProvider.completeShopping();
+          this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
+        }
+        console.log(res);
+        
+      },(err)=>{
+        console.log(err);
+        
+      });
+
+     
     }
   }
 
@@ -242,24 +270,24 @@ export class OrderPage {
     if(this.selectedDeliveryType == "memberSaved"){
       this.orderInfo.customInfo = this.customInfo;
     }else if(this.selectedDeliveryType == "memberNew"){
-      this.customInfo.recieverName = this.recieverName;
+      this.customInfo.receiverName = this.receiverName;
 
-      if (this.recieverMobile1 == undefined || this.recieverMobile2 == undefined || this.recieverMobile3 == undefined || 
-        this.recieverMobile1 == "" || this.recieverMobile2 == "" || this.recieverMobile3 == "") {
+      if (this.receiverMobile1 == undefined || this.receiverMobile2 == undefined || this.receiverMobile3 == undefined || 
+        this.receiverMobile1 == "" || this.receiverMobile2 == "" || this.receiverMobile3 == "") {
 
-        this.customInfo.recieverMobile = undefined;
+        this.customInfo.receiverMobile = undefined;
       } else {
-        this.customInfo.recieverMobile = this.recieverMobile1 + "-" + this.recieverMobile2 + "-" + this.recieverMobile3;
+        this.customInfo.receiverMobile = this.receiverMobile1 + "-" + this.receiverMobile2 + "-" + this.receiverMobile3;
       }
 
       let address1 = this.trim(this.address1);
       console.log(address1);
       
       if (address1 == "" || address1 == undefined) {
-        this.customInfo.recieverAddress = undefined;
+        this.customInfo.receiverAddress = undefined;
       } else {
-        this.customInfo.recieverAddress = address1 + " " + this.trim(this.address2) + " " + this.trim(this.address3);
-        this.customInfo.recieverAddress = this.trim(this.customInfo.recieverAddress);
+        this.customInfo.receiverAddress = address1 + " " + this.trim(this.address2) + " " + this.trim(this.address3);
+        this.customInfo.receiverAddress = this.trim(this.customInfo.receiverAddress);
       }
 
       this.orderInfo.customInfo = this.customInfo;
@@ -277,21 +305,21 @@ export class OrderPage {
     }
     
     this.customInfo.ordererEmail =  this.ordererEmail;
-    this.customInfo.recieverName = this.recieverName;
+    this.customInfo.receiverName = this.receiverName;
     
-    if (this.recieverMobile1 == undefined || this.recieverMobile2 == undefined || this.recieverMobile3 == undefined) {
-      this.customInfo.recieverMobile = undefined;
+    if (this.receiverMobile1 == undefined || this.receiverMobile2 == undefined || this.receiverMobile3 == undefined) {
+      this.customInfo.receiverMobile = undefined;
     } else {
-      this.customInfo.recieverMobile = this.recieverMobile1 + "-" + this.recieverMobile2 + "-" + this.recieverMobile3;
+      this.customInfo.receiverMobile = this.receiverMobile1 + "-" + this.receiverMobile2 + "-" + this.receiverMobile3;
     }
 
     let address1 = this.trim(this.address1);
     console.log(address1);
     if(address1 == "" || address1 == undefined){
-      this.customInfo.recieverAddress = undefined;
+      this.customInfo.receiverAddress = undefined;
     }else{
-      this.customInfo.recieverAddress = address1 + " " + this.trim(this.address2) + " " + this.trim(this.address3);
-      this.customInfo.recieverAddress = this.trim(this.customInfo.recieverAddress);
+      this.customInfo.receiverAddress = address1 + " " + this.trim(this.address2) + " " + this.trim(this.address3);
+      this.customInfo.receiverAddress = this.trim(this.customInfo.receiverAddress);
     }
 
     this.orderInfo.customInfo = this.customInfo;
