@@ -26,17 +26,17 @@
     <ion-list class="product-info" style="margin-top:0px" *ngIf="showProductInfo==true">
       <ion-item class="order-id">
         <label class="order-id-label">주문번호</label>
-        <p item-end class="order-id-num">{{orderInfo.id}}</p>
+        <p item-end class="order-id-num">{{orderInfo.orderID}}</p>
       </ion-item>
       <ion-item class="product-detail-item" *ngFor="let product of orderInfo.orderedProducts">
-        <img class="thumbnail-img" src="{{product.imagePath[0].imagePath}}">
+        <img class="thumbnail-img" src="{{product.imagePath}}">
         <p class="product-info-name"><b>상품명 : {{product.productName}}</b></p>
         <p class="product-info-compo">구성/용량</p>
-        <p class="product-info-count"><b>수량 : {{product.count}}</b></p>
+        <p class="product-info-count"><b>수량 : {{product.soldProductCount}}</b></p>
         <p class="product-info-price"><b>혜택가 : {{product.salePrice}}</b></p>
       </ion-item>
       <ion-item class="order-status">
-        <label class="order-status-label">{{orderInfo.status}}</label>
+        <label class="order-status-label">{{orderInfo.orderStatus}}</label>
         <button ion-button item-end clear class="order-cancel">취소신청</button>
       </ion-item>
     </ion-list>
@@ -53,7 +53,7 @@
       </ion-item>
       <ion-item class="payment-info-item" *ngIf="showPaymentInfo==true">
         <label class="payment-info-label">결재방법</label>
-        <p item-end class="product-price">{{paymentMethod}}</p>
+        <p item-end class="product-price">{{orderInfo.paymentMethod}}</p>
       </ion-item>
       <ion-item class="payment-info-item" *ngIf="showPaymentInfo==true">
         <label class="payment-info-label">결재금액</label>
@@ -65,7 +65,7 @@
       </ion-item>
       <ion-item class="payment-info-item" *ngIf="showPaymentInfo==true">
         <label class="payment-info-label">결재일시</label>
-        <p item-end class="product-price">{{orderInfo.regTime}}</p>
+        <p item-end class="product-price">{{orderInfo.regDate}}</p>
       </ion-item>
     </ion-list>
     <!-- 결재 정보 끝 -->

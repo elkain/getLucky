@@ -65,6 +65,7 @@ export class OrderPage {
   deliveryTimeLists = [];
   mobileOptionLists = [];
 
+  prevPage = "";
   orderInfo = { type: "", customInfo: {}, orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, paymentMethod: "", deliveryTime: "선택사항", deliveryMemo: "선택사항" , orderedProducts: [] }; // type : member or nonMember 
   customInfo = { ordererName: "", ordererMobile: "", ordererEmail: "", receiverName: "이혁", receiverAddress: "", receiverMobile: ""};
   memberAddressLists = [];
@@ -97,7 +98,9 @@ export class OrderPage {
       this.orderInfo.customInfo = this.customInfo;
     }
 
-    if (navParams.get("class") == "buy") {
+    this.prevPage = navParams.get("class");
+
+    if (this.prevPage == "buy") {
       let product;
       product = this.orderProvider.orderedProduct;
       
@@ -112,8 +115,8 @@ export class OrderPage {
 
       this.orderInfo.totalPrice = product.salePrice * product.count + this.orderInfo.deliveryFee;
       this.orderInfo.orderedProducts.push(product);
-
-    } else if (navParams.get("class") == "shoppingbasket"){
+      
+    } else if (this.prevPage == "shoppingbasket"){
       let shoppingbasket = this.shoppingbasketProvider.shoppingBasket;
       let productsCount = shoppingbasket.orderedProducts.length;
 
@@ -223,10 +226,15 @@ export class OrderPage {
     if (this.nameCheck(this.customInfo.ordererName) && this.mobileCheck(this.customInfo.ordererMobile) && this.emailCheck(this.customInfo.ordererEmail) && 
     this.nameCheck(this.customInfo.receiverName) && this.addrCheck(this.customInfo.receiverAddress) && this.mobileCheck(this.customInfo.receiverMobile) && this.paymentMethodCheck(this.orderInfo.paymentMethod) == true) {
       
-      this.serverProvider.orderProducts(this.orderInfo).then((res:any)=>{
+      this.serverProvider.orderProducts(this.orderInfo, this.prevPage).then((res:any)=>{
         if(res == "success"){
-          this.orderProvider.addOrderInfo(this.orderInfo);
-          this.shoppingbasketProvider.completeShopping();
+          if(this.isMember != true){
+            //this.orderProvider.addOrderInfo(this.orderInfo);
+            if (this.prevPage == "shoppingbasket") {
+              this.shoppingbasketProvider.completeShopping();
+            }
+          }
+          
           this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
         }
         console.log(res);

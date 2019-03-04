@@ -68,7 +68,7 @@ export class ShoppingbasketPage {
     if (this.checkedItemNumber>0){
 
       this.shoppingbasketProvider.substituteBasket(this.shoppingBasket);
-
+      
       if (this.isMember == true) {
         this.app.getRootNavs()[0].push(OrderPage, { class: "shoppingbasket" });
       } else {

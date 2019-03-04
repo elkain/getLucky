@@ -242,8 +242,6 @@ export class MypagePage {
               }
             }
           }
-
-          this.serverProvider.loadShoppingbasket();
         }
       },(err)=>{
           let alert = this.alertCtrl.create({
@@ -287,6 +285,8 @@ export class MypagePage {
         for(let i in this.memberProvider.deliveryAddrs){
           this.deliveryAddressMode[i] ="출력";
         }
+      }else if(menu == "주문내역"){
+        this.orderInfos = this.orderProvider.orderInfos;
       }
       this.showBackbtn = true;
     }
@@ -316,7 +316,14 @@ export class MypagePage {
   }
 
   goToOrderDetail(orderedNumber) {
-    this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 6, class: "mypage", orderedNumber: orderedNumber});
+    this.serverProvider.loadOrderDetail(orderedNumber).then((res:any)=>{
+      if(res == "success"){
+        this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 6, class: "mypage", orderedNumber: orderedNumber });
+      }
+    },(err)=>{
+      console.log(err);
+      
+    });
   }
 
   goToOrder() {

@@ -195,19 +195,19 @@
     <ion-list class="order-history-list" *ngFor="let order of orderInfos">
       <ion-item-divider class="order-history-list-head">
         <p class="order-number-label"><b>주문번호</b></p>
-        <p class="order-number">{{order.id}}</p>
-        <button (click)="goToOrderDetail(order.id)" ion-button item-end clear class="order-detail-btn">
+        <p class="order-number">{{order.orderID}}</p>
+        <button (click)="goToOrderDetail(order.orderID)" ion-button item-end clear class="order-detail-btn">
           <p>상세보기</p>
           <ion-icon name="ios-arrow-forward"></ion-icon>
         </button>
       </ion-item-divider>
       <ion-item class="order-history">
         <p class="order-history-label">상품명</p>
-        <p class="order-history-content">{{order.orderedProducts[0].productName}} <span *ngIf="order.count>1"> 외 {{order.count}}건 </span></p>
+        <p class="order-history-content">{{order.orderName}} <span *ngIf="order.count>1"> 외 {{order.count}}건 </span></p>
       </ion-item>
       <ion-item class="order-history">
         <p class="order-history-label">받는 분</p>
-        <p class="order-history-content">{{order.customInfo.recieverName}}</p>
+        <p class="order-history-content">{{order.customInfo.receiverName}}</p>
       </ion-item>
       <ion-item class="order-history">
         <p class="order-history-label">결제방법</p>
@@ -219,11 +219,11 @@
       </ion-item>
       <ion-item class="order-history">
         <p class="order-history-label">결제일시</p>
-        <p class="order-history-content">{{order.regTime}}</p>
+        <p class="order-history-content">{{order.regDate}}</p>
       </ion-item>
       <ion-item class="order-history">
         <p class="order-history-label">주문상태</p>
-        <p class="order-history-content">{{order.status}}</p>
+        <p class="order-history-content">{{order.orderStatus}}</p>
       </ion-item>
     </ion-list>
   </ion-scroll>

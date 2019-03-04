@@ -4,6 +4,7 @@ import { Platform } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { MemberProvider } from '../member/member';
 import { ShoppingbasketProvider } from '../shoppingbasket/shoppingbasket';
+import { OrderProvider } from '../order/order';
 
 // ip 218.145.181.49 //
 /*
@@ -20,7 +21,8 @@ export class ServerProvider {
   username: string;
   password: string;
 
-  constructor(public http: Http, private storageProvider: StorageProvider, private memberProvider: MemberProvider, private shoppingbasketProvider:ShoppingbasketProvider) {
+  constructor(public http: Http, private storageProvider: StorageProvider, private memberProvider: MemberProvider, private shoppingbasketProvider:ShoppingbasketProvider,
+    public orderProvivder:OrderProvider) {
     console.log('Hello ServerProvider Provider');
     
   }
@@ -154,7 +156,8 @@ export class ServerProvider {
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("login success");
-
+          
+          // 회원정보 로드
           this.storageProvider.isMember = true;
           this.memberProvider.memberData.username = memberID;
           this.memberProvider.memberData.password = password;
@@ -166,6 +169,25 @@ export class ServerProvider {
           this.memberProvider.memberData.UID = result.memberUID;
 
           this.memberProvider.deliveryAddrs = result.address;
+
+          // 장바구니 정보 로드
+          let products = this.productRearrange(result.shoppingbasket);
+          let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
+          shoppingBasket.orderedProducts = products;
+          shoppingBasket.checkedProducts = [];
+
+          for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
+            shoppingBasket.checkedProducts.push(true);
+            shoppingBasket.orderedProducts[i].count = 1;
+          }
+          shoppingBasket.checkedAllProducts = true;
+
+          // 주문 정보 로드
+          if(result.orderInfos != undefined){
+            this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
+          }else{
+            this.orderProvivder.orderInfos = [];
+          }
           resolve("success");
         }
         else {
@@ -312,13 +334,61 @@ export class ServerProvider {
     });
   }
 
-  orderProducts(orderInfo){
+  orderProducts(orderInfo, prevPage){
+    let memberUID = this.memberProvider.memberData.UID;
+    let body = {memberUID, prevPage, orderInfo};
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "order/orderProducts.php", orderInfo).subscribe(data => {
+      this.http.post(this.serverAddr + "order/orderProducts.php", body).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("signup Success");
+          this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfo);
+          if(this.storageProvider.isMember == true){
+            if(prevPage == "shoppingbasket"){
+              let products = this.productRearrange(result.shoppingbasket);
+              let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
+              shoppingBasket.orderedProducts = products;
+              shoppingBasket.checkedProducts = [];
+
+              for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
+                shoppingBasket.checkedProducts.push(true);
+                shoppingBasket.orderedProducts[i].count = 1;
+              }
+              shoppingBasket.checkedAllProducts = true;
+            }
+          }
+          resolve("success");
+        } 
+        else {
+          console.log("Fail signup");
+          reject("fail");
+        }
+      }, err => {
+        console.log(err);
+      });
+    }); 
+  }
+
+  loadOrderDetail(orderID){
+    return new Promise((resolve, reject) => {
+      this.http.post(this.serverAddr + "order/loadOrderProductDetail.php", orderID).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log(" Success");
+          let orderInfos = this.orderProvivder.orderInfos;
+          for (let i = 0; i < orderInfos.length; i++){
+            if (orderInfos[i].orderID == orderID){
+              let path = "./assets/imgs/";
+              
+              orderInfos[i].orderedProducts = result['orderedProducts'];
+
+              for(let j = 0; j < orderInfos[i].orderedProducts.length; j++){
+                orderInfos[i].orderedProducts[j].imagePath = path + orderInfos[i].orderedProducts[j].imagePath;
+              }
+            }
+          }
           resolve("success");
         }
         else {
@@ -372,6 +442,7 @@ export class ServerProvider {
     let imagePaths = [];
     let j = 0;
     let path = "./assets/imgs/";
+
     for(let i = 0; i<data['product'].length; i++){
       while (j < data['imagePath'].length && data['product'][i].productCode == data['imagePath'][j].productCode){
         data['imagePath'][j].imagePath = path + data['imagePath'][j].imagePath;
@@ -386,5 +457,27 @@ export class ServerProvider {
     }
 
     return products;
+  }
+
+  orderInfoRearrange(data) {
+    let orderInfos = [];
+    let memberInfo = this.memberProvider.memberData;
+    
+    for (let i = 0; i < data.length; i++){
+
+      let customInfo = {
+        ordererName: memberInfo.name, ordererMobile: memberInfo.mobile, ordererEmail: memberInfo.email, receiverName: data[i].receiverName, 
+        receiverAddress: data[i].receiverAddress, receiverMobile: data[i].receiverMobile };
+      
+      let orderInfo = {
+        type: "member", customInfo: customInfo, orderPrice: data[i].orderPrice, orderName: data[i].orderName, sale: data[i].totalSale, 
+        regDate: data[i].orderDate.date.substr(0, 19), orderID: data[i].orderID, deliveryFee: data[i].deliveryFee, count: data[i].orderCount, 
+        totalPrice: data[i].totalPrice, paymentMethod: data[i].paymentMethod, orderStatus: data[i].orderStatus, deliveryTime: data[i].deliveryTime, 
+        deliveryMemo: data[i].orderMemo, orderedProducts: [], 
+      };
+
+      orderInfos.push(JSON.parse(JSON.stringify(orderInfo)));
+    }
+    return orderInfos;
   }
 }

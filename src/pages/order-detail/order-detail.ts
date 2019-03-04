@@ -37,7 +37,7 @@ export class OrderDetailPage {
       let idx;
       
       for (let i = 0; i < this.orderProvider.orderInfos.length; i++){
-        if (this.orderProvider.orderInfos[i].id == orderedNumber){
+        if (this.orderProvider.orderInfos[i].orderID == orderedNumber){
           idx = i;
         }
       }

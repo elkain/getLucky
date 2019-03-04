@@ -21,7 +21,7 @@ export class OrderProvider {
 
   addOrderInfo(order){
 
-    this.count++;
+/*    this.count++;
     order.status = "배송준비중";
 
     var d = new Date();
@@ -36,7 +36,7 @@ export class OrderProvider {
     order.id = yy.toString(10) + mm + dd + this.count.toString(10);
     
     order.regTime = dString;
-    order.count = order.orderedProducts.length;
+    order.count = order.orderedProducts.length;*/
 
     // 장바구니 삭제 시 주문관련 데이터가 사라지지 않도록 직접적으로 주문정보를 복사
     this.orderInfo = JSON.parse(JSON.stringify(order));
