@@ -70,8 +70,10 @@ export class ShoppingbasketProvider {
   }
 
   addShoppingBasket(item) {
+    item.count = 1;
     //this.shoppingBasket.checkedProducts[this.shoppingBasket.orderedProducts.length] = true;
     this.shoppingBasket.orderedProducts.push(item);
+    this.shoppingBasket.checkedProducts.push(true);
   }
 
   substituteBasket(shoppingBasket){
