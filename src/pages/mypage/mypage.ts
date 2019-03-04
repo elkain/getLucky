@@ -232,7 +232,13 @@ export class MypagePage {
         console.log(res);
 
         if(res == "success"){
-          this.showPageType = "mypage";
+          if (this.nonMemberBuy != true){
+            this.showPageType = "mypage";  
+          }else{
+            this.app.getRootNavs()[0].setRoot(OrderPage, { class: this.prevPage }).then(() => {
+              this.prevPage = undefined;
+            });
+          }
           this.isMember = true;
 
           for (let i in this.memberData) {
