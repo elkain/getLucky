@@ -342,7 +342,7 @@ export class ServerProvider {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
-          console.log("signup Success");
+          console.log("order Success");
           this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfo);
           if(this.storageProvider.isMember == true){
             if(prevPage == "shoppingbasket"){
@@ -359,9 +359,24 @@ export class ServerProvider {
             }
           }
           resolve("success");
-        } 
+        } else if(result.status == "invalid"){
+          console.log("order Invalid");
+          if (prevPage == "shoppingbasket") {
+            let products = this.productRearrange(result.shoppingbasket);
+            let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
+            shoppingBasket.orderedProducts = products;
+            shoppingBasket.checkedProducts = [];
+
+            for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
+              shoppingBasket.checkedProducts.push(true);
+              shoppingBasket.orderedProducts[i].count = 1;
+            }
+            shoppingBasket.checkedAllProducts = true;
+          }
+          resolve("invalid");
+        }
         else {
-          console.log("Fail signup");
+          console.log("Fail order");
           reject("fail");
         }
       }, err => {

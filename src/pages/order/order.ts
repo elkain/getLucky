@@ -236,15 +236,24 @@ export class OrderPage {
           }
           
           this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
+        }else if(res=="invalid"){
+          let alert = this.alertCtrl.create({
+            message: '부정확한 상품입니다.',
+            buttons: [{
+              text: '확인',
+              handler: () => {
+                this.navCtrl.setRoot(TabsPage, { class: "order", tabIndex: 0 });
+              }
+            }],
+            cssClass: 'alert-modify-member'
+          });
+          alert.present();
         }
         console.log(res);
         
       },(err)=>{
         console.log(err);
-        
       });
-
-     
     }
   }
 
