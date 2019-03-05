@@ -171,16 +171,7 @@ export class ServerProvider {
           this.memberProvider.deliveryAddrs = result.address;
 
           // 장바구니 정보 로드
-          let products = this.productRearrange(result.shoppingbasket);
-          let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
-          shoppingBasket.orderedProducts = products;
-          shoppingBasket.checkedProducts = [];
-
-          for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
-            shoppingBasket.checkedProducts.push(true);
-            shoppingBasket.orderedProducts[i].count = 1;
-          }
-          shoppingBasket.checkedAllProducts = true;
+          this.updateShoppingbasket(result);
 
           // 주문 정보 로드
           if(result.orderInfos != undefined){
@@ -247,16 +238,7 @@ export class ServerProvider {
       console.log(data);
       let result = JSON.parse(data["_body"]);
       if (result.status == "success") {
-        let products = this.productRearrange(result);
-        let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
-        shoppingBasket.orderedProducts = products;
-        shoppingBasket.checkedProducts = [];
-
-        for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
-          shoppingBasket.checkedProducts.push(true);
-          shoppingBasket.orderedProducts[i].count = 1;
-        }
-        shoppingBasket.checkedAllProducts = true;
+        this.updateShoppingbasket(result);
         console.log("add shoppingbasket success");
       }
       else {
@@ -282,15 +264,7 @@ export class ServerProvider {
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("del shoppingbasket success");
-          let products = this.productRearrange(result);
-          let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
-          shoppingBasket.orderedProducts = products;
-          shoppingBasket.checkedProducts = [];
-
-          for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
-            shoppingBasket.checkedProducts.push(false);
-            shoppingBasket.orderedProducts[i].count = 1;
-          }
+          this.updateShoppingbasket(result);
           resolve("success");
         }
         else {
@@ -311,17 +285,7 @@ export class ServerProvider {
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("load shoppingbasket success");
-          let products = this.productRearrange(result);
-          let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
-          shoppingBasket.orderedProducts = products;
-          shoppingBasket.checkedProducts = [];
-
-          for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
-            shoppingBasket.checkedProducts.push(true);
-            shoppingBasket.orderedProducts[i].count = 1;
-          }
-          shoppingBasket.checkedAllProducts = true;
-          
+          this.updateShoppingbasket(result);
           resolve("success");
         }
         else {
@@ -344,34 +308,16 @@ export class ServerProvider {
         if (result.status == "success") {
           console.log("order Success");
           this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfo);
-          if(this.storageProvider.isMember == true){
-            if(prevPage == "shoppingbasket"){
-              let products = this.productRearrange(result.shoppingbasket);
-              let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
-              shoppingBasket.orderedProducts = products;
-              shoppingBasket.checkedProducts = [];
-
-              for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
-                shoppingBasket.checkedProducts.push(true);
-                shoppingBasket.orderedProducts[i].count = 1;
-              }
-              shoppingBasket.checkedAllProducts = true;
-            }
+          if (this.storageProvider.isMember == true && prevPage == "shoppingbasket"){
+            this.updateShoppingbasket(result);
           }
           resolve("success");
         } else if(result.status == "invalid"){
           console.log("order Invalid");
-          if (prevPage == "shoppingbasket") {
-            let products = this.productRearrange(result.shoppingbasket);
-            let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
-            shoppingBasket.orderedProducts = products;
-            shoppingBasket.checkedProducts = [];
-
-            for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
-              shoppingBasket.checkedProducts.push(true);
-              shoppingBasket.orderedProducts[i].count = 1;
-            }
-            shoppingBasket.checkedAllProducts = true;
+          if (this.storageProvider.isMember == true && prevPage == "shoppingbasket") {
+            this.updateShoppingbasket(result);
+          } else if (this.storageProvider.isMember == false){
+            this.shoppingbasketProvider.completeShopping();
           }
           resolve("invalid");
         }
@@ -494,5 +440,18 @@ export class ServerProvider {
       orderInfos.push(JSON.parse(JSON.stringify(orderInfo)));
     }
     return orderInfos;
+  }
+
+  updateShoppingbasket(result){
+    let products = this.productRearrange(result.shoppingbasket);
+    let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
+    shoppingBasket.orderedProducts = products;
+    shoppingBasket.checkedProducts = [];
+
+    for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
+      shoppingBasket.checkedProducts.push(true);
+      shoppingBasket.orderedProducts[i].count = 1;
+    }
+    shoppingBasket.checkedAllProducts = true;
   }
 }
