@@ -56,8 +56,8 @@ export class ServerProvider {
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("product load Success");
-          let products = this.productRearrange(result);
-          resolve(products);
+          this.storageProvider.products = this.productRearrange(result);
+          resolve("success");
         }
         else {
           console.log("product load fail");
@@ -404,6 +404,8 @@ export class ServerProvider {
           subCategories.length = 0;
           categoryDatas.push(JSON.parse(JSON.stringify(categoryData)));
         }
+        subCategory.subCategoryName = "전체";
+        subCategories.push(JSON.parse(JSON.stringify(subCategory)));
 
         categoryData.generalCategoryName = data[i]['generalCategoryName'];
         categoryData.generalCategoryCode = data[i]['generalCategoryCode'];

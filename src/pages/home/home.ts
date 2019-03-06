@@ -42,35 +42,27 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams,
     public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider, public serverProvider:ServerProvider) {
-    
-    // category from category page
     this.homeParams = navParams.data;
-    //this.products = this.storageProvider.products;
-    /*this.serverProvider.getProductData().then((res: any) => {
-      this.storageProvider.products = JSON.parse(JSON.stringify(res));
-      this.products = this.storageProvider.products;
-      //console.log(res);
-    }, (err) => {
-      console.log(err);
-    });
-    
-    console.log("this.product : " +this.products);*/
   }
 
   ionViewDidEnter() {
 
-    this.serverProvider.getAllProductData().then((res: any) => {
-      this.storageProvider.products = res;
+    if(this.homeParams.class == "category"){
       this.products = JSON.parse(JSON.stringify(this.storageProvider.products));
-      //console.log(res);
-    }, (err) => {
-      console.log(err);
-    });
+    }else{
+      this.serverProvider.getAllProductData().then((res: any) => {
+        this.storageProvider.products = res;
+        this.products = JSON.parse(JSON.stringify(this.storageProvider.products));
+        //console.log(res);
+      }, (err) => {
+        console.log(err);
+      });
+    }
 
+    this.homeCategorySelected = this.homeCategories[0];
     this.bestCategories = this.storageProvider.bestCategories;
     this.saleCategories = this.storageProvider.saleCategories;
     
-    this.homeCategorySelected = this.homeCategories[0];
     this.bestCategorySelected = this.bestCategories[0];
     this.saleCategorySelected = this.saleCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
@@ -107,7 +99,15 @@ export class HomePage {
     this.productSortOptionSelected = this.productSortOptions[0];
 
     if(this.homeCategorySelected != this.homeCategories[0]){
-      this.productsSort("판매인기순");
+      this.productsSort("판매인기순", this.products);
+    }else{
+      this.serverProvider.getAllProductData().then((res: any) => {
+        this.storageProvider.products = res;
+        this.products = JSON.parse(JSON.stringify(this.storageProvider.products));
+        //console.log(res);
+      }, (err) => {
+        console.log(err);
+      });
     }
 
     if (this.homeCategorySelected == this.homeCategories[3] ){
@@ -124,58 +124,71 @@ export class HomePage {
   bestCategoryChange(Category) {
     let idx = this.bestCategories.indexOf(Category);
     this.bestCategorySelected = this.bestCategories[idx];
-
     this.showProducts = this.sortProductsByCategory(this.products, this.bestCategorySelected);
+    this.productsSort(this.productSortOptionSelected, this.showProducts);
   }
 
   saleCategoryChange(Category) {
     let idx = this.saleCategories.indexOf(Category);
     this.saleCategorySelected = this.saleCategories[idx];
+    this.showProducts = this.sortProductsByCategory(this.products, this.saleCategorySelected);
+    this.productsSort(this.productSortOptionSelected, this.showProducts);
   }
 
   categoryChange(Category) {
     let idx = this.homeParams.category.subCategories.indexOf(Category);
-    this.bestCategorySelected = this.homeParams.category.subCategories[idx];
+    this.categorySelected = this.homeParams.category.subCategories[idx];
+    this.showProducts = this.sortProductsByCategory(this.products, this.categorySelected);
+    this.productsSort(this.productSortOptionSelected, this.showProducts);
   }
 
   sortProductsByCategory(products, category){
     let showProducts = [];
     
-    if(category.categoryName == "전체"){
+    if(category.subCategoryName == "전체"){
       return products;
     }
 
-    for (let i = 0; i < this.products.length; i++) {
-      if (products[i].classCategoryCode == category.categoryCode) {
-        showProducts.push(products[i]);
-      }
+    if(this.homeParams.class == "category"){
+      for (let i = 0; i < this.products.length; i++) {
+        if (products[i].categoryCode == category.subCategoryCode) {
+          showProducts.push(products[i]);
+        }
+      }  
+    }else{
+      for (let i = 0; i < this.products.length; i++) {
+        if (products[i].classCategoryCode == category.subCategoryCode) {
+          showProducts.push(products[i]);
+        }
+      }  
     }
+    
     return showProducts;
   }
   
   productsOptionChange(){
     if(this.products.length >1){
-      this.productsSort(this.productSortOptionSelected);
+      this.productsSort(this.productSortOptionSelected, this.showProducts);
     }
   }
 
   // 정렬 함수
   //productSortOptions = ["판매인기순", "높은가격순", "낮은가격순"];
-  productsSort(option){
+  productsSort(option, products){
     if(option == "판매인기순"){
-      this.products.sort((a,b) => {
+      products.sort((a,b) => {
         return a.soldStock > b.soldStock ? -1 : a.soldStock > b.soldStock ? 1 : 0;
       });
     } else if (option == "높은가격순"){
-      this.products.sort((a, b) => {
+      products.sort((a, b) => {
         return a.salePrice > b.salePrice ? -1 : a.salePrice > b.salePrice ? 1 : 0;
       });
     } else if (option == "낮은가격순"){
-      this.products.sort((a, b) => {
+      products.sort((a, b) => {
         return a.salePrice < b.salePrice ? -1 : a.salePrice < b.salePrice ? 1 : 0;
       });
     }else{
-      return this.products;
+      return products;
     }
   }
 
@@ -215,6 +228,20 @@ export class HomePage {
       this.showProductPage = true;
       this.bestScrollHeight = "calc(100% - 88px)";
     }
+
+    if(this.homeParams.class == "category"){
+      this.showProducts = this.sortProductsByCategory(this.products, this.categorySelected);
+    } else if (this.homeParams.class == "search"){
+      
+    }else{
+      this.serverProvider.getAllProductData().then((res: any) => {
+        this.storageProvider.products = res;
+        this.products = JSON.parse(JSON.stringify(this.storageProvider.products));
+        //console.log(res);
+      }, (err) => {
+        console.log(err);
+      });
+    }
   }
   
   homeSwipeCategory(event){
@@ -232,7 +259,22 @@ export class HomePage {
   }
 
   swipeSubcategory(event){
-    if(this.homeCategorySelected == this.homeCategories[1]){
+    if (this.homeParams.class == "category"){
+
+      let categories = this.homeParams.category.subCategories;
+      let idx = categories.indexOf(this.categorySelected);
+
+      if (event.direction == 4) { // DIRECTION_RIGHT =4 
+        if (idx >= 1) {
+          this.categoryChange(categories[idx - 1]);
+        } 
+      } else if (event.direction == 2) { // DRIECTION_LEFT = 2
+        if (idx < categories.length - 1) {
+          this.categoryChange(categories[idx + 1]);
+        } 
+      }
+    }
+    else if(this.homeCategorySelected == this.homeCategories[1]){
       let idx = this.bestCategories.indexOf(this.bestCategorySelected);
 
       if (event.direction == 4) { // DIRECTION_RIGHT =4 
@@ -266,4 +308,9 @@ export class HomePage {
       }
     }
   }
+
+  /*onopen() {
+    var url = "http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2128174157";
+    window.open(url, "bizCommPop", "width=750, height=700;");
+  }*/
 }

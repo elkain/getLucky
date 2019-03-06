@@ -53,6 +53,11 @@ export class CategoryPage {
   }
 
   moveToCategory(category, subCategory){
-    this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "category", homeSegmentCategory: 1, category: category, subCategory: subCategory});
+    this.serverProvider.getCategoryProductData(category).then((res: any) => {
+      if(res == "success")  {
+        this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "category", homeSegmentCategory: 1, category: category, subCategory: subCategory });
+      }
+    });
+    
   }
 }
