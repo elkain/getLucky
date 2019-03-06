@@ -37,7 +37,7 @@
       </ion-item>
       <ion-item class="order-status">
         <label class="order-status-label">{{orderInfo.orderStatus}}</label>
-        <button ion-button item-end clear class="order-cancel">취소신청</button>
+        <button ion-button item-end clear (click)="cancelOrder(orderInfo)" class="order-cancel">취소신청</button>
       </ion-item>
     </ion-list>
     <!-- 상품 정보 끝 -->

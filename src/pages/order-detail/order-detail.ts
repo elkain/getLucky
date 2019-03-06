@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { OrderProvider } from '../../providers/order/order';
+import { ServerProvider } from '../../providers/server/server';
 
 /**
  * Generated class for the OrderDetailPage page.
@@ -26,7 +27,8 @@ export class OrderDetailPage {
 
   orderInfo:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public orderProvider: OrderProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public orderProvider: OrderProvider, public serverProvider:ServerProvider,
+    public alertCtrl:AlertController) {
     this.showProductInfo = true;
     this.showPaymentInfo = true;
     this.showDeliveryInfo = true;
@@ -96,5 +98,33 @@ export class OrderDetailPage {
     } else {
       console.log("ShowDeliveryInfo error");
     }
+  }
+
+  cancelOrder(orderInfo){
+    this.serverProvider.cancelOrder(orderInfo).then((res:any)=>{
+      console.log(res);
+      if(res == "success"){
+        let alert = this.alertCtrl.create({
+          message: '주문이 취소 되었습니다.',
+          buttons: [{
+            text: '확인',
+          }],
+          cssClass: 'alert-modify-member'
+        });
+        alert.present();
+      }else if(res=="invalid"){
+        let alert = this.alertCtrl.create({
+          message: '주문을 취소할수 없습니다.',
+          buttons: [{
+            text: '확인',
+          }],
+          cssClass: 'alert-modify-member'
+        });
+        alert.present();
+      }
+    },(err)=>{
+      console.log(err);
+      
+    });
   }
 }

@@ -353,7 +353,32 @@ export class ServerProvider {
           resolve("success");
         }
         else {
-          console.log("Fail signup");
+          console.log("Fail load order detail");
+          reject("fail");
+        }
+      }, err => {
+        console.log(err);
+      });
+    }); 
+  }
+
+  cancelOrder(orderInfo){
+    orderInfo['memberUID'] = this.memberProvider.memberData.UID;
+    return new Promise((resolve, reject) => {
+      this.http.post(this.serverAddr + "order/cancelOrder.php", orderInfo).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log(" Success");
+          if (result.orderInfos != undefined) {
+            this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
+          } else {
+            this.orderProvivder.orderInfos = [];
+          }
+          resolve("success");
+        }
+        else {
+          console.log("Fail cancelOrder");
           reject("fail");
         }
       }, err => {
