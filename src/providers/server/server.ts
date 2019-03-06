@@ -341,7 +341,7 @@ export class ServerProvider {
           let orderInfos = this.orderProvivder.orderInfos;
           for (let i = 0; i < orderInfos.length; i++){
             if (orderInfos[i].orderID == orderID){
-              let path = "./assets/imgs/";
+              let path = "http://218.145.181.49/ionic/images/";
               
               orderInfos[i].orderedProducts = result['orderedProducts'];
 
@@ -429,7 +429,7 @@ export class ServerProvider {
     let products = [];
     let imagePaths = [];
     let j = 0;
-    let path = "./assets/imgs/";
+    let path = "http://218.145.181.49/ionic/images/";
 
     for(let i = 0; i<data['product'].length; i++){
       while (j < data['imagePath'].length && data['product'][i].productCode == data['imagePath'][j].productCode){
