@@ -107,7 +107,7 @@ export class OrderDetailPage {
       console.log(res);
       if(res == "success"){
         let alert = this.alertCtrl.create({
-          message: '주문이 취소 되었습니다.',
+          message: '주문 취소가 접수되었습니다.',
           buttons: [{
             text: '확인',
             handler:()=>{
@@ -119,7 +119,7 @@ export class OrderDetailPage {
         alert.present();
       }else if(res=="invalid"){
         let alert = this.alertCtrl.create({
-          message: '주문을 취소할수 없습니다.',
+          message: '주문 취소를 접수할 수 없습니다.',
           buttons: [{
             text: '확인',
           }],

@@ -25,7 +25,6 @@ export class BuyPage {
   product:any;
   deliveryFee:number;
   deliveryFreeString:string;
-  orderedProduct;
   orderInfo = { orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, shoppingBasket: [] };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController, 
@@ -33,7 +32,6 @@ export class BuyPage {
 
     this.product = this.navParams.get("product");
     this.isMember = this.serverProvider.isMember;
-    this.orderedProduct = this.orderProvider.orderedProduct;
     this.product.count = 1;
     this.product.totalPrice = this.product.salePrice * this.product.count;
     this.deliveryFee = orderProvider.deliveryFee;
@@ -53,7 +51,7 @@ export class BuyPage {
   }
 
   goToOrder() {
-    this.orderedProduct = this.product;
+    this.orderProvider.orderedProduct = this.product;
 
     if(this.isMember == true){
       this.navCtrl.push(OrderPage, { class: "buy"});

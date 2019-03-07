@@ -112,7 +112,7 @@ export class ServerProvider {
 
   signup(memberData){
     return new Promise((resolve, reject)=>{
-      this.http.post(this.serverAddr + "member/signup.php", memberData).subscribe(data => {
+      this.http.post(this.serverAddr + "signup/signup.php", memberData).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
@@ -131,7 +131,7 @@ export class ServerProvider {
 
   checkIDDuplication(memberID){
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "member/checkIDDuplication.php", memberID).subscribe(data => {
+      this.http.post(this.serverAddr + "signup/checkIDDuplication.php", memberID).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "none") {
@@ -340,10 +340,23 @@ export class ServerProvider {
   }
 
   orderProducts(orderInfo, prevPage){
-    let memberUID = this.memberProvider.memberData.UID;
-    let body = {memberUID, prevPage, orderInfo};
+    let addr = "";
+    let body;
+    if (this.isMember == true){
+      let memberUID = this.memberProvider.memberData.UID;
+      body = { memberUID, orderInfo };
+      if (prevPage == "shoppingbasket") {
+        addr = "member/order/orderProductsShoppingbasket.php";
+      }else{
+        addr = "member/order/orderProducts.php";
+      }
+    }else {
+      body = { orderInfo };
+      addr = "nonMember/order/orderProducts.php";
+    }
+    
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "order/orderProducts.php", body).subscribe(data => {
+      this.http.post(this.serverAddr + addr, body).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
@@ -416,9 +429,17 @@ export class ServerProvider {
   }
 
   cancelOrder(orderInfo){
-    orderInfo['memberUID'] = this.memberProvider.memberData.UID;
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "order/cancelOrder.php", orderInfo).subscribe(data => {
+
+      let addr = "";
+      if (this.isMember == true) {
+        orderInfo['memberUID'] = this.memberProvider.memberData.UID;
+        addr = "member/order/cancelOrder.php";
+      } else {
+        addr = "nonMember/order/cancelOrder.php";
+      }
+      
+      this.http.post(this.serverAddr + addr, orderInfo).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {

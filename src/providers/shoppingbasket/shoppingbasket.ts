@@ -75,6 +75,4 @@ export class ShoppingbasketProvider {
     this.shoppingBasket.orderedProducts.push(item);
     this.shoppingBasket.checkedProducts.push(true);
   }
-
-  
 }
