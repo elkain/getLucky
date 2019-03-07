@@ -44,7 +44,7 @@
       <ion-row class="basket-product">
         <ion-checkbox color="white" item-top mode="md" [(ngModel)]="shoppingBasket.checkedProducts[i]" (ionChange)="updateProductCheck(i)"></ion-checkbox>
         <div class="basket-product-img">
-          <img src="{{product.imagePath[0].imagePath}}">
+          <img src="{{product.imagePath}}">
         </div>
         <div class="basket-product-content">
           <div style="height:calc(100% - 35px);">

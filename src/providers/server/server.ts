@@ -20,6 +20,12 @@ export class ServerProvider {
 
   username: string;
   password: string;
+  productAllCategories;
+
+  mobileOptionLists = ["010", "011", "018"];
+  emailOptionLists = ["naver.com", "gmail.com", "daum.net", "outlook.com", "nate.com", "yahoo.com"];
+  deliveryTimeLists = ["9:00 ~ 12:00", "12::00 ~ 15:00", "15:00 ~ 18:00", "18:00 ~ 21:00"];
+  deliveryMemoLists = ["부재시 경비실에 맡겨주세요", "오시기 전에 미리 연락주세요", "빨리 배송해주세요"];
 
   constructor(public http: Http, private storageProvider: StorageProvider, private memberProvider: MemberProvider, private shoppingbasketProvider:ShoppingbasketProvider,
     public orderProvivder:OrderProvider) {
@@ -35,8 +41,13 @@ export class ServerProvider {
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("product load Success");
-          let products = this.productRearrange(result);
-          resolve(products);
+          if (result == null) {
+            this.storageProvider.products = [];
+            resolve("noItem");
+          }else{
+            let products = this.productRearrange(result.product);
+            resolve(products);
+          }
         }
         else {
           console.log("product load fail");
@@ -54,14 +65,12 @@ export class ServerProvider {
       this.http.post(this.serverAddr + "product/loadCategoryProduct.php", categoryCode).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
-        if (result.status == "success") {
-          console.log("product load Success");
-          this.storageProvider.products = this.productRearrange(result);
+        if(result == null){
+          this.storageProvider.products = [];
+          resolve("noItem");
+        }else{
+          this.storageProvider.products = this.productRearrange(result.product);
           resolve("success");
-        }
-        else {
-          console.log("product load fail");
-          reject("fail");
         }
       }, err => {
         console.log(err);
@@ -341,7 +350,8 @@ export class ServerProvider {
           let orderInfos = this.orderProvivder.orderInfos;
           for (let i = 0; i < orderInfos.length; i++){
             if (orderInfos[i].orderID == orderID){
-              let path = "http://218.145.181.49/ionic/images/";
+              //let path = "http://218.145.181.49/ionic/images/";
+              let path = "./assets/imgs/";
               
               orderInfos[i].orderedProducts = result['orderedProducts'];
 
@@ -376,6 +386,33 @@ export class ServerProvider {
             this.orderProvivder.orderInfos = [];
           }
           resolve("success");
+        }
+        else {
+          console.log("Fail cancelOrder");
+          reject("fail");
+        }
+      }, err => {
+        console.log(err);
+      });
+    }); 
+  }
+
+  searchItem(searchWord){
+    let memberUID = this.memberProvider.memberData.UID;
+    let body = {memberUID , searchWord};
+
+    return new Promise((resolve, reject) => {
+      this.http.post(this.serverAddr + "search/search.php", body).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log(" Success");
+          if(result['product'] != undefined){
+            let products = this.productRearrange(result.product);
+            resolve(products);
+          }else{
+            resolve("noItem");
+          }
         }
         else {
           console.log("Fail cancelOrder");
@@ -426,12 +463,16 @@ export class ServerProvider {
   }
 
   productRearrange(data){
-    let products = [];
-    let imagePaths = [];
-    let j = 0;
-    let path = "http://218.145.181.49/ionic/images/";
 
-    for(let i = 0; i<data['product'].length; i++){
+    let path = "http://218.145.181.49/ionic/images/";
+    //let path = "./assets/imgs/";
+
+    for (let i = 0; i < data.length; i++) {
+      data[i].imagePath = path + data[i].imagePath;
+      data[i].endDate = data[i].endDate.date;
+      data[i].startDate = data[i].startDate.date;
+    }
+    /*for(let i = 0; i<data['product'].length; i++){
       while (j < data['imagePath'].length && data['product'][i].productCode == data['imagePath'][j].productCode){
         data['imagePath'][j].imagePath = path + data['imagePath'][j].imagePath;
         imagePaths.push(JSON.parse(JSON.stringify(data['imagePath'][j])));
@@ -442,9 +483,9 @@ export class ServerProvider {
       product['imagePath'] = imagePaths;
       products.push(JSON.parse(JSON.stringify(product)));
       imagePaths.length = 0;
-    }
+    }*/
 
-    return products;
+    return data;
   }
 
   orderInfoRearrange(data) {

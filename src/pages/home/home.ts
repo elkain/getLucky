@@ -45,15 +45,14 @@ export class HomePage {
     this.homeParams = navParams.data;
   }
 
-  ionViewDidEnter() {
+  ionViewCanEnter() {
 
-    if(this.homeParams.class == "category"){
+    if (this.homeParams.class == "category" || this.homeParams.class == "search"){
       this.products = JSON.parse(JSON.stringify(this.storageProvider.products));
     }else{
       this.serverProvider.getAllProductData().then((res: any) => {
         this.storageProvider.products = res;
         this.products = JSON.parse(JSON.stringify(this.storageProvider.products));
-        //console.log(res);
       }, (err) => {
         console.log(err);
       });
@@ -149,7 +148,7 @@ export class HomePage {
       return products;
     }
 
-    if(this.homeParams.class == "category"){
+    if (this.homeParams.class == "category"){
       for (let i = 0; i < this.products.length; i++) {
         if (products[i].categoryCode == category.subCategoryCode) {
           showProducts.push(products[i]);
@@ -232,7 +231,7 @@ export class HomePage {
     if(this.homeParams.class == "category"){
       this.showProducts = this.sortProductsByCategory(this.products, this.categorySelected);
     } else if (this.homeParams.class == "search"){
-      
+      this.showProducts = this.products;
     }else{
       this.serverProvider.getAllProductData().then((res: any) => {
         this.storageProvider.products = res;
