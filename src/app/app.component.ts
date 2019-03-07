@@ -15,16 +15,6 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.serverProvider.loadCategory().then((res: any) => {
-        this.serverProvider.productAllCategories = res;
-        for (let i = 0; i < this.serverProvider.productAllCategories.length; i++) {
-          this.serverProvider.productAllCategories[i].selected = false;
-        }
-        console.log("category load");
-      }, (err) => {
-        console.log(err);
-      });
-
       statusBar.styleDefault();
       statusBar.styleBlackOpaque()
       splashScreen.hide();

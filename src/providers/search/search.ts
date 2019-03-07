@@ -12,9 +12,7 @@ export class SearchProvider {
   recentSearchItems = new Array();
   popularSearchItems = new Array();
 
-
   constructor() {
-    this.popularSearchItems = ["가", "나", "다"];
     console.log('Hello SearchProvider Provider');
   }
 

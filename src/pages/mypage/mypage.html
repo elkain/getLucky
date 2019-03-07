@@ -171,9 +171,9 @@
     <!-- 메이페이지 메뉴 시작 -->
     <ion-list class="mypage-menu-list">
       <ion-item-divider class="mypage-status">
-        <h2><b>{{memberData.name}}님</b></h2>
+        <h2><b>{{memberData.name}}님</b></h2> 
         <p>마이 럭키에 오신 것을 환영합니다.</p>
-        <p>현재 회원등급 <span>{{memberData.classs}}등급</span>/구매누적 총액 <span>{{memberData.totalPurchase}}</span>원 입니다.</p>
+        <p>현재 회원 <span>{{memberData.level}}등급</span>/구매누적 총액 <span>{{memberData.totalPurchase}}</span>원 입니다.</p>
       </ion-item-divider>
       <button class="mypage-menu" ion-item *ngFor="let menu of mypageMenus" (click)="menuSelected(menu)">
         <p class="mypage-menu-label">{{ menu }}</p>

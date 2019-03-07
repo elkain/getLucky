@@ -42,7 +42,7 @@
         </ion-slides>
     
         <ion-grid class="home-product-list" (swipe)="homeSwipeCategory($event)">
-            <ion-row *ngFor="let product of products">
+            <ion-row *ngFor="let product of showProducts">
                 <button ion-button no-border (click)="itemSelected(product)">
                     <ion-col>
                         <img src="{{product.imagePath}}">

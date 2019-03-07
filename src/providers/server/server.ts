@@ -4,6 +4,7 @@ import { Http } from '@angular/http';
 import { MemberProvider } from '../member/member';
 import { ShoppingbasketProvider } from '../shoppingbasket/shoppingbasket';
 import { OrderProvider } from '../order/order';
+import { SearchProvider } from '../search/search';
 
 // ip 218.145.181.49 //
 /*
@@ -23,7 +24,7 @@ export class ServerProvider {
   username: string;
   password: string;
   isMember: boolean;
-
+  dataLoad = false;
   productAllCategories;
 
   bestCategories = new Array();
@@ -31,6 +32,9 @@ export class ServerProvider {
   deliveryPlaceInfos = [];
 
   products = new Array();
+  homeProducts = new Array();
+  categoryProducts = new Array();
+  searchProducts = new Array();
 
   mobileOptionLists = ["010", "011", "018"];
   emailOptionLists = ["naver.com", "gmail.com", "daum.net", "outlook.com", "nate.com", "yahoo.com"];
@@ -38,11 +42,46 @@ export class ServerProvider {
   deliveryMemoLists = ["부재시 경비실에 맡겨주세요", "오시기 전에 미리 연락주세요", "빨리 배송해주세요"];
 
   constructor(public http: Http, private memberProvider: MemberProvider, private shoppingbasketProvider:ShoppingbasketProvider,
-    public orderProvivder:OrderProvider) {
+    public orderProvivder:OrderProvider, public searchProvider:SearchProvider) {
     console.log('Hello ServerProvider Provider');
     this.isMember = false;
     this.bestCategories = [{ subCategoryName: "전체" }, { subCategoryName: "과일·견과", subCategoryCode: "103" }, { subCategoryName: "유제품", subCategoryCode: "201" }, { subCategoryName: "과자·빵", subCategoryCode: "202" }];
     this.saleCategories = [{ subCategoryName: "전체" }, { subCategoryName: "과일·견과", subCategoryCode: "103" }, { subCategoryName: "유제품", subCategoryCode: "201" }, { subCategoryName: "과자·빵", subCategoryCode: "202" }];
+  }
+
+  init(){
+    return new Promise((resolve, reject) => {
+      this.http.get(this.serverAddr + "init.php").subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          if (result.product == null) {
+            this.homeProducts = [];
+          } else {
+            this.homeProducts = this.productRearrange(result.product);
+          }
+          console.log("product load Success");
+          
+          this.productAllCategories = this.categoryRearrange(result.category);
+          for (let i = 0; i < this.productAllCategories.length; i++) {
+            this.productAllCategories[i].selected = false;
+          }
+          console.log("categoryload Success");
+
+          if(result.searchWord != undefined){
+            this.searchProvider.popularSearchItems = result.searchWord;
+          }
+
+          resolve("success");
+        }
+        else {
+          console.log("product load fail");
+          reject("fail");
+        }
+      }, err => {
+        console.log(err);
+      });
+    });    
   }
 
   getAllProductData(){
@@ -78,10 +117,10 @@ export class ServerProvider {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if(result.product == undefined){
-          this.products = [];
+          this.categoryProducts = [];
           resolve("noItem");
         }else{
-          this.products = this.productRearrange(result.product);
+          this.categoryProducts = this.productRearrange(result.product);
           resolve("success");
         }
       }, err => {
@@ -97,8 +136,11 @@ export class ServerProvider {
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("categoryload Success");
-          let categoryResult = this.categoryRearrange(result.data);
-          resolve(categoryResult);
+          this.productAllCategories = this.categoryRearrange(result.category);
+          for (let i = 0; i < this.productAllCategories.length; i++) {
+            this.productAllCategories[i].selected = false;
+          }
+          resolve("success");
         }
         else {
           console.log("category load fail");
@@ -203,6 +245,13 @@ export class ServerProvider {
             this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
           }else{
             this.orderProvivder.orderInfos = [];
+          }
+
+          // 최근 검색 기록 로드
+          if(result.recentSearch != undefined){
+            this.searchProvider.recentSearchItems = result.recentSearch;
+          }else{
+            this.searchProvider.recentSearchItems = [];
           }
           resolve("success");
         }
@@ -472,10 +521,10 @@ export class ServerProvider {
         if (result.status == "success") {
           console.log(" Success");
           if(result['product'] != undefined){
-            this.products = this.productRearrange(result.product);
+            this.searchProducts = this.productRearrange(result.product);
             resolve("success");
           }else{
-            this.products = [];
+            this.searchProducts = [];
             resolve("noItem");
           }
         }

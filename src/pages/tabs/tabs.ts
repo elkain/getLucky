@@ -8,6 +8,7 @@ import { ShoppingbasketPage } from '../shoppingbasket/shoppingbasket';
 import { OrderDetailPage } from '../order-detail/order-detail';
 import { OrderCompletePage } from '../order-complete/order-complete';
 import { SignupCompletePage } from '../signup-complete/signup-complete';
+import { ServerProvider } from '../../providers/server/server';
 
 @Component({
   selector: 'page-tabs',
@@ -33,7 +34,7 @@ export class TabsPage {
 
   childParam= {category:{}, homeSegmentCategory:0, class:"TasPage", subCategory:"" , orderedNumber:""};
 
-  constructor(public navCtrl: NavController, public navParams:NavParams) {
+  constructor(public navCtrl: NavController, public navParams:NavParams, private serverProvider:ServerProvider) {
     this.tabParams = navParams.get("tabIndex");
     this.childParam.category = navParams.get("category");
     this.childParam.subCategory = navParams.get("subCategory");

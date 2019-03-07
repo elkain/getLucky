@@ -45,8 +45,8 @@ export class MypagePage {
   mobile1;
   mobile2;
   mobile3;
-  //memberData = {UID:"", username:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", classs:0, totalPurchase:0};
-  memberData = {};
+  memberData = {UID:"", username:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", level:0, totalPurchase:0};
+  //memberData = {};
   findMemberData = { username: "", name: "", email: "", mobile: "", type: "", method: "" };
   enterMemberAddress = { memberUID:"", addressName:"", address:"", receiver:"", mobile:""};
   deliveryAddrs = [];
@@ -83,14 +83,14 @@ export class MypagePage {
     this.deliveryAddressEnter = false;
     this.mobileOptionLists = this.serverProvider.mobileOptionLists;
 
-    this.memberData = this.memberProvider.memberData;
-    /*for(let i in this.memberData){
+    //this.memberData = this.memberProvider.memberData;
+    for(let i in this.memberData){
       for (let j in this.memberProvider.memberData){
         if(i==j){
           this.memberData[i] = this.memberProvider.memberData[j];
         }
       }
-    }*/
+    }
 
     this.orderInfos = this.orderProvider.orderInfos;
   }
@@ -246,13 +246,13 @@ export class MypagePage {
           }
           this.isMember = true;
 
-          /*for (let i in this.memberData) {
+          for (let i in this.memberData) {
             for (let j in this.memberProvider.memberData) {
               if (i == j) {
                 this.memberData[i] = this.memberProvider.memberData[j];
               }
             }
-          }*/
+          }
         }
       },(err)=>{
           let alert = this.alertCtrl.create({

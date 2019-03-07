@@ -1,5 +1,5 @@
 import { Component, ViewChild} from '@angular/core';
-import { NavController, Slides, App, PopoverController, NavParams} from 'ionic-angular';
+import { NavController, Slides, App, PopoverController, NavParams, Platform} from 'ionic-angular';
 import { ProductdetailPage } from '../productdetail/productdetail';
 import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
@@ -41,23 +41,30 @@ export class HomePage {
   slideImages: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
   constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams,
-    public shoppingbasketProvider: ShoppingbasketProvider, public serverProvider:ServerProvider) {
+    public shoppingbasketProvider: ShoppingbasketProvider, public serverProvider:ServerProvider, private platform:Platform) {
     this.homeParams = navParams.data;
-  }
-
-  ionViewCanEnter() {
-    this.serverProducts = this.serverProvider.products;
-
-    if (this.homeParams.class == "category" || this.homeParams.class == "search"){
-      this.products = JSON.parse(JSON.stringify(this.serverProducts));
-    }else{
-      this.serverProvider.getAllProductData().then((res: any) => {
-        if(res == "success"){
-          this.products = JSON.parse(JSON.stringify(this.serverProvider.products));
+    
+    if(this.serverProvider.dataLoad == false){
+      this.serverProvider.init().then((res: any) => {
+        if (res == "success") {
+          this.serverProvider.dataLoad = true;
+          this.showProducts = this.serverProvider.homeProducts;
         }
+        console.log(res);
       }, (err) => {
         console.log(err);
       });
+    }
+    console.log(this.showProducts);
+  }
+
+  ionViewDidEnter() {
+    if (this.homeParams.class == "category"){
+      this.showProducts = this.serverProvider.categoryProducts;
+    } else if (this.homeParams.class == "search"){
+      this.showProducts = this.serverProvider.searchProducts;
+    }else{
+      this.showProducts = this.serverProvider.homeProducts;
     }
 
     this.homeCategorySelected = this.homeCategories[0];
@@ -70,7 +77,7 @@ export class HomePage {
   }
 
   ionViewDidLeave(){
-    if(this.homeParams.class == "category"){
+    if (this.homeParams.class == "category" || this.homeParams.class == "search"){
       this.homeParams.class = undefined;
     }
   }
@@ -93,23 +100,16 @@ export class HomePage {
 
   homeCategoryChange(Category) {
     let idx = this.homeCategories.indexOf(Category);
-    this.products = JSON.parse(JSON.stringify(this.serverProducts));
+    this.showProducts = this.serverProvider.homeProducts;
     this.homeCategorySelected = this.homeCategories[idx];
     this.bestCategorySelected = this.bestCategories[0];
     this.saleCategorySelected = this.saleCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
 
     if(this.homeCategorySelected != this.homeCategories[0]){
-      this.productsSort("판매인기순", this.products);
+      this.productsSort("판매인기순", this.showProducts);
     }else{
-      this.serverProvider.getAllProductData().then((res: any) => {
-        if(res == 'success'){
-          this.products = JSON.parse(JSON.stringify(this.serverProducts));
-        }
-        //console.log(res);
-      }, (err) => {
-        console.log(err);
-      });
+      this.showProducts = this.serverProvider.homeProducts;
     }
 
     if (this.homeCategorySelected == this.homeCategories[3] ){
@@ -120,27 +120,27 @@ export class HomePage {
       this.bestScrollHeight = "calc(100% - 88px)";
     }
 
-    this.showProducts = this.sortProductsByCategory(this.products, this.bestCategorySelected);
+    this.showProducts = this.sortProductsByCategory(this.serverProvider.homeProducts, this.bestCategorySelected);
   }
 
   bestCategoryChange(Category) {
     let idx = this.bestCategories.indexOf(Category);
     this.bestCategorySelected = this.bestCategories[idx];
-    this.showProducts = this.sortProductsByCategory(this.products, this.bestCategorySelected);
+    this.showProducts = this.sortProductsByCategory(this.serverProvider.homeProducts, this.bestCategorySelected);
     this.productsSort(this.productSortOptionSelected, this.showProducts);
   }
 
   saleCategoryChange(Category) {
     let idx = this.saleCategories.indexOf(Category);
     this.saleCategorySelected = this.saleCategories[idx];
-    this.showProducts = this.sortProductsByCategory(this.products, this.saleCategorySelected);
+    this.showProducts = this.sortProductsByCategory(this.serverProvider.homeProducts, this.saleCategorySelected);
     this.productsSort(this.productSortOptionSelected, this.showProducts);
   }
 
   categoryChange(Category) {
     let idx = this.homeParams.category.subCategories.indexOf(Category);
     this.categorySelected = this.homeParams.category.subCategories[idx];
-    this.showProducts = this.sortProductsByCategory(this.products, this.categorySelected);
+    this.showProducts = this.sortProductsByCategory(this.serverProvider.categoryProducts, this.categorySelected);
     this.productsSort(this.productSortOptionSelected, this.showProducts);
   }
 
@@ -152,13 +152,13 @@ export class HomePage {
     }
 
     if (this.homeParams.class == "category"){
-      for (let i = 0; i < this.products.length; i++) {
+      for (let i = 0; i < products.length; i++) {
         if (products[i].categoryCode == category.subCategoryCode) {
           showProducts.push(products[i]);
         }
       }  
     }else{
-      for (let i = 0; i < this.products.length; i++) {
+      for (let i = 0; i < products.length; i++) {
         if (products[i].classCategoryCode == category.subCategoryCode) {
           showProducts.push(products[i]);
         }
@@ -169,7 +169,7 @@ export class HomePage {
   }
   
   productsOptionChange(){
-    if(this.products.length >1){
+    if(this.showProducts.length >1){
       this.productsSort(this.productSortOptionSelected, this.showProducts);
     }
   }
@@ -210,7 +210,6 @@ export class HomePage {
   }
 
   ionSelected() {
-  
     if (this.homeParams.homeSegmentCategory == 1) {
       this.homeCategorySelected = this.homeCategories[1];
       this.categorySelected=this.homeParams.subCategory;
@@ -232,18 +231,11 @@ export class HomePage {
     }
 
     if(this.homeParams.class == "category"){
-      this.showProducts = this.sortProductsByCategory(this.products, this.categorySelected);
+      this.showProducts = this.sortProductsByCategory(this.serverProvider.categoryProducts, this.categorySelected);
     } else if (this.homeParams.class == "search"){
-      this.showProducts = this.products;
+      this.showProducts = this.serverProvider.searchProducts;
     }else{
-      this.serverProvider.getAllProductData().then((res: any) => {
-        if(res == "success"){
-          this.products = JSON.parse(JSON.stringify(this.serverProvider.products));
-        }
-        //console.log(res);
-      }, (err) => {
-        console.log(err);
-      });
+      this.showProducts = this.serverProvider.homeProducts;
     }
   }
   
