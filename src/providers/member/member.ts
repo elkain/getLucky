@@ -9,13 +9,15 @@ import * as CryptoJS from 'crypto-js';
 */
 @Injectable()
 export class MemberProvider {
-
+  
+  nonMemberOrderInfo = {};
   memberData = { UID:"", username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
   deliveryAddrs = [];
   findMemberData = { username: "", name: "", email: "", mobile: "", type: "", method: "" };
+  memberOrderInfo = {};
 
   constructor() {
     console.log('Hello MemberProvider Provider');
+    
   }
-
 }

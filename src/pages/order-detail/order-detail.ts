@@ -26,6 +26,7 @@ export class OrderDetailPage {
   paymentMethod: string;
 
   orderInfo:any;
+  orderInfos = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public orderProvider: OrderProvider, public serverProvider:ServerProvider,
     public alertCtrl:AlertController) {
@@ -33,20 +34,21 @@ export class OrderDetailPage {
     this.showPaymentInfo = true;
     this.showDeliveryInfo = true;
     let param = navParams.data;
+    this.orderInfos = this.orderProvider.orderInfos
 
     if (param.class == "mypage"){
       let orderedNumber = navParams.data.orderedNumber;
       let idx;
       
-      for (let i = 0; i < this.orderProvider.orderInfos.length; i++){
-        if (this.orderProvider.orderInfos[i].orderID == orderedNumber){
+      for (let i = 0; i < this.orderInfos.length; i++){
+        if (this.orderInfos[i].orderID == orderedNumber){
           idx = i;
         }
       }
       
-      this.orderInfo = this.orderProvider.orderInfos[idx];
+      this.orderInfo = this.orderInfos[idx];
     }else{
-      this.orderInfo = this.orderProvider.orderInfos[this.orderProvider.orderInfos.length - 1];
+      this.orderInfo = this.orderInfos[this.orderProvider.orderInfos.length - 1];
     }
     this.paymentMethod = this.orderInfo.paymentMethod;
     
@@ -108,6 +110,9 @@ export class OrderDetailPage {
           message: '주문이 취소 되었습니다.',
           buttons: [{
             text: '확인',
+            handler:()=>{
+              this.navCtrl.parent.select(0);
+            }
           }],
           cssClass: 'alert-modify-member'
         });

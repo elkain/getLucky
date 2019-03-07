@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-an
 import { TabsPage} from '../tabs/tabs';
 import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
 import { OrderPage } from '../order/order';
-import { StorageProvider } from '../../providers/storage/storage';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
 import { OrderProvider } from '../../providers/order/order';
 import { ServerProvider } from '../../providers/server/server';
@@ -26,17 +25,19 @@ export class BuyPage {
   product:any;
   deliveryFee:number;
   deliveryFreeString:string;
+  orderedProduct;
   orderInfo = { orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, shoppingBasket: [] };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController, 
-    public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider, public orderProvider: OrderProvider, public serverProvider:ServerProvider) {
+     public shoppingbasketProvider: ShoppingbasketProvider, public orderProvider: OrderProvider, public serverProvider:ServerProvider) {
 
     this.product = this.navParams.get("product");
-    this.isMember = this.storageProvider.isMember;
+    this.isMember = this.serverProvider.isMember;
+    this.orderedProduct = this.orderProvider.orderedProduct;
     this.product.count = 1;
     this.product.totalPrice = this.product.salePrice * this.product.count;
-    this.deliveryFee = storageProvider.deliveryFee;
-    this.deliveryFreeString = storageProvider.deliveryFreeString;
+    this.deliveryFee = orderProvider.deliveryFee;
+    this.deliveryFreeString = orderProvider.deliveryFreeString;
   }
 
   ionViewDidLoad() {
@@ -52,7 +53,7 @@ export class BuyPage {
   }
 
   goToOrder() {
-    this.orderProvider.orderedProduct = this.product;
+    this.orderedProduct = this.product;
 
     if(this.isMember == true){
       this.navCtrl.push(OrderPage, { class: "buy"});
@@ -65,7 +66,7 @@ export class BuyPage {
     let flag = this.shoppingbasketProvider.isProductInShoppingbasket(this.product);
 
     if (flag != true) {
-      if (this.storageProvider.isMember == true) {
+      if (this.isMember == true) {
         this.serverProvider.addShoppingbasket(this.product);
       } else {
         this.shoppingbasketProvider.addShoppingBasket(this.product);

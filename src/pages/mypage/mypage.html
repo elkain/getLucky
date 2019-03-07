@@ -12,7 +12,7 @@
       </button>
     </ion-buttons>
     <ion-title class="market-title">
-      <button ion-buttion class="title-home-button" (click)="moveToHome()"><b>{{storageProvider.shopTitle}}</b></button>
+      <button ion-buttion class="title-home-button" (click)="moveToHome()"><b>{{shopTitle}}</b></button>
     </ion-title>
     <ion-buttons end *ngIf="showPageType!='배송지관리'">
       <button class="home-cart" (click)="goToShoppingBasket()">
@@ -138,7 +138,7 @@
         <div class="login-find-phone-input">
           <div class="arrow-down-icon" [style.top]="arrowIconTop"></div>
           <select [(ngModel)]="mobile1">
-            <option *ngFor="let mobileOptionList of storageProvider.mobileOptionLists">{{mobileOptionList}}</option>
+            <option *ngFor="let mobileOptionList of mobileOptionLists">{{mobileOptionList}}</option>
           </select>
           <span>
             <p>-</p>

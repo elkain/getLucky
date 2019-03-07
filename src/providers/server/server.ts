@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { StorageProvider } from '../storage/storage';
 import { Platform } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { MemberProvider } from '../member/member';
@@ -17,20 +16,33 @@ import { OrderProvider } from '../order/order';
 export class ServerProvider {
 
   serverAddr: string = "http://218.145.181.49/ionic/";
+  productImageURL: string = this.serverAddr +"images/";
+  //productImageURL: string = "./assets/imgs/";
+  shopTitle: string = "MARKET LUCKY";
 
   username: string;
   password: string;
+  isMember: boolean;
+
   productAllCategories;
+
+  bestCategories = new Array();
+  saleCategories = new Array();
+  deliveryPlaceInfos = [];
+
+  products = new Array();
 
   mobileOptionLists = ["010", "011", "018"];
   emailOptionLists = ["naver.com", "gmail.com", "daum.net", "outlook.com", "nate.com", "yahoo.com"];
   deliveryTimeLists = ["9:00 ~ 12:00", "12::00 ~ 15:00", "15:00 ~ 18:00", "18:00 ~ 21:00"];
   deliveryMemoLists = ["부재시 경비실에 맡겨주세요", "오시기 전에 미리 연락주세요", "빨리 배송해주세요"];
 
-  constructor(public http: Http, private storageProvider: StorageProvider, private memberProvider: MemberProvider, private shoppingbasketProvider:ShoppingbasketProvider,
+  constructor(public http: Http, private memberProvider: MemberProvider, private shoppingbasketProvider:ShoppingbasketProvider,
     public orderProvivder:OrderProvider) {
     console.log('Hello ServerProvider Provider');
-    
+    this.isMember = false;
+    this.bestCategories = [{ subCategoryName: "전체" }, { subCategoryName: "과일·견과", subCategoryCode: "103" }, { subCategoryName: "유제품", subCategoryCode: "201" }, { subCategoryName: "과자·빵", subCategoryCode: "202" }];
+    this.saleCategories = [{ subCategoryName: "전체" }, { subCategoryName: "과일·견과", subCategoryCode: "103" }, { subCategoryName: "유제품", subCategoryCode: "201" }, { subCategoryName: "과자·빵", subCategoryCode: "202" }];
   }
 
   getAllProductData(){
@@ -42,11 +54,11 @@ export class ServerProvider {
         if (result.status == "success") {
           console.log("product load Success");
           if (result == null) {
-            this.storageProvider.products = [];
+            this.products = [];
             resolve("noItem");
           }else{
-            let products = this.productRearrange(result.product);
-            resolve(products);
+            this.products = this.productRearrange(result.product);
+            resolve("success");
           }
         }
         else {
@@ -65,11 +77,11 @@ export class ServerProvider {
       this.http.post(this.serverAddr + "product/loadCategoryProduct.php", categoryCode).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
-        if(result == null){
-          this.storageProvider.products = [];
+        if(result.product == undefined){
+          this.products = [];
           resolve("noItem");
         }else{
-          this.storageProvider.products = this.productRearrange(result.product);
+          this.products = this.productRearrange(result.product);
           resolve("success");
         }
       }, err => {
@@ -167,7 +179,7 @@ export class ServerProvider {
           console.log("login success");
           
           // 회원정보 로드
-          this.storageProvider.isMember = true;
+          this.isMember = true;
           this.memberProvider.memberData.username = memberID;
           this.memberProvider.memberData.password = password;
           this.memberProvider.memberData.birth = result.memberBirth;
@@ -180,10 +192,14 @@ export class ServerProvider {
           this.memberProvider.deliveryAddrs = result.address;
 
           // 장바구니 정보 로드
-          this.updateShoppingbasket(result);
+          if(result.shoppingbasket.length != 0){
+            this.updateShoppingbasket(result);
+          }else{
+            this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+          }
 
           // 주문 정보 로드
-          if(result.orderInfos != undefined){
+          if(result.orderInfos.length != 0){
             this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
           }else{
             this.orderProvivder.orderInfos = [];
@@ -247,7 +263,12 @@ export class ServerProvider {
       console.log(data);
       let result = JSON.parse(data["_body"]);
       if (result.status == "success") {
-        this.updateShoppingbasket(result);
+        if (result.shoppingbasket.length != 0) {
+          this.updateShoppingbasket(result);
+        }else{
+          this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+        }
+        
         console.log("add shoppingbasket success");
       }
       else {
@@ -273,7 +294,13 @@ export class ServerProvider {
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("del shoppingbasket success");
-          this.updateShoppingbasket(result);
+          // 장바구니 정보 로드
+          if (result.shoppingbasket.length != 0) {
+            this.updateShoppingbasket(result);
+          } else {
+            this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+            this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
+          }
           resolve("success");
         }
         else {
@@ -294,7 +321,12 @@ export class ServerProvider {
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("load shoppingbasket success");
-          this.updateShoppingbasket(result);
+          // 장바구니 정보 로드
+          if (result.shoppingbasket.length != 0) {
+            this.updateShoppingbasket(result);
+          } else {
+            this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+          }
           resolve("success");
         }
         else {
@@ -317,15 +349,25 @@ export class ServerProvider {
         if (result.status == "success") {
           console.log("order Success");
           this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfo);
-          if (this.storageProvider.isMember == true && prevPage == "shoppingbasket"){
-            this.updateShoppingbasket(result);
+          if (this.isMember == true && prevPage == "shoppingbasket"){
+            // 장바구니 정보 로드
+            if (result.shoppingbasket.length != 0) {
+              this.updateShoppingbasket(result);
+            } else {
+              this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+            }
           }
           resolve("success");
         } else if(result.status == "invalid"){
           console.log("order Invalid");
-          if (this.storageProvider.isMember == true && prevPage == "shoppingbasket") {
-            this.updateShoppingbasket(result);
-          } else if (this.storageProvider.isMember == false){
+          if (this.isMember == true && prevPage == "shoppingbasket") {
+            // 장바구니 정보 로드
+            if (result.shoppingbasket.length != 0) {
+              this.updateShoppingbasket(result);
+            } else {
+              this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+            }
+          } else if (this.isMember == false){
             this.shoppingbasketProvider.completeShopping();
           }
           resolve("invalid");
@@ -351,7 +393,8 @@ export class ServerProvider {
           for (let i = 0; i < orderInfos.length; i++){
             if (orderInfos[i].orderID == orderID){
               //let path = "http://218.145.181.49/ionic/images/";
-              let path = "./assets/imgs/";
+              //let path = "./assets/imgs/";
+              let path = this.productImageURL;
               
               orderInfos[i].orderedProducts = result['orderedProducts'];
 
@@ -408,9 +451,10 @@ export class ServerProvider {
         if (result.status == "success") {
           console.log(" Success");
           if(result['product'] != undefined){
-            let products = this.productRearrange(result.product);
-            resolve(products);
+            this.products = this.productRearrange(result.product);
+            resolve("success");
           }else{
+            this.products = [];
             resolve("noItem");
           }
         }
@@ -464,8 +508,9 @@ export class ServerProvider {
 
   productRearrange(data){
 
-    let path = "http://218.145.181.49/ionic/images/";
+    //let path = "http://218.145.181.49/ionic/images/";
     //let path = "./assets/imgs/";
+    let path = this.productImageURL;
 
     for (let i = 0; i < data.length; i++) {
       data[i].imagePath = path + data[i].imagePath;
@@ -501,7 +546,7 @@ export class ServerProvider {
       let orderInfo = {
         type: "member", customInfo: customInfo, orderPrice: data[i].orderPrice, orderName: data[i].orderName, sale: data[i].totalSale, 
         regDate: data[i].orderDate.date.substr(0, 19), orderID: data[i].orderID, deliveryFee: data[i].deliveryFee, count: data[i].orderCount, 
-        totalPrice: data[i].totalPrice, paymentMethod: data[i].paymentMethod, orderStatus: data[i].orderStatus, deliveryTime: data[i].deliveryTime, 
+        totalPrice: data[i].totalPrice, paymentMethod: data[i].paymentMethod, paymentID:data[i].paymentID, orderStatus: data[i].orderStatus, deliveryTime: data[i].deliveryTime, 
         deliveryMemo: data[i].orderMemo, orderedProducts: [], 
       };
 
@@ -522,4 +567,18 @@ export class ServerProvider {
     }
     shoppingBasket.checkedAllProducts = true;
   }
+
+  /*addShoppingBasket(item) {
+    let flag = false;
+
+    for (let i = 0; i < this.shoppingBasket.length; i++) {
+      if (item.name == this.shoppingBasket[i].name) {
+        flag = true;
+      }
+    }
+
+    if (flag == false) {
+      this.shoppingBasket.push(item);
+    }
+  }*/
 }

@@ -2,7 +2,6 @@ import { Component, ViewChild} from '@angular/core';
 import { NavController, Slides, App, PopoverController, NavParams} from 'ionic-angular';
 import { ProductdetailPage } from '../productdetail/productdetail';
 import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
-import { StorageProvider } from '../../providers/storage/storage';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
 import { ServerProvider } from '../../providers/server/server';
 
@@ -33,6 +32,7 @@ export class HomePage {
   events = [this.imageURL + "slide1.png", this.imageURL + "slide2.png", this.imageURL + "slide3.png"];
   homeParams;
   products = [];
+  serverProducts = [];
   showProducts;
 
   showProductPage:boolean;
@@ -41,26 +41,28 @@ export class HomePage {
   slideImages: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
   constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams,
-    public storageProvider: StorageProvider, public shoppingbasketProvider: ShoppingbasketProvider, public serverProvider:ServerProvider) {
+    public shoppingbasketProvider: ShoppingbasketProvider, public serverProvider:ServerProvider) {
     this.homeParams = navParams.data;
   }
 
   ionViewCanEnter() {
+    this.serverProducts = this.serverProvider.products;
 
     if (this.homeParams.class == "category" || this.homeParams.class == "search"){
-      this.products = JSON.parse(JSON.stringify(this.storageProvider.products));
+      this.products = JSON.parse(JSON.stringify(this.serverProducts));
     }else{
       this.serverProvider.getAllProductData().then((res: any) => {
-        this.storageProvider.products = res;
-        this.products = JSON.parse(JSON.stringify(this.storageProvider.products));
+        if(res == "success"){
+          this.products = JSON.parse(JSON.stringify(this.serverProvider.products));
+        }
       }, (err) => {
         console.log(err);
       });
     }
 
     this.homeCategorySelected = this.homeCategories[0];
-    this.bestCategories = this.storageProvider.bestCategories;
-    this.saleCategories = this.storageProvider.saleCategories;
+    this.bestCategories = this.serverProvider.bestCategories;
+    this.saleCategories = this.serverProvider.saleCategories;
     
     this.bestCategorySelected = this.bestCategories[0];
     this.saleCategorySelected = this.saleCategories[0];
@@ -91,7 +93,7 @@ export class HomePage {
 
   homeCategoryChange(Category) {
     let idx = this.homeCategories.indexOf(Category);
-    this.products = JSON.parse(JSON.stringify(this.storageProvider.products));
+    this.products = JSON.parse(JSON.stringify(this.serverProducts));
     this.homeCategorySelected = this.homeCategories[idx];
     this.bestCategorySelected = this.bestCategories[0];
     this.saleCategorySelected = this.saleCategories[0];
@@ -101,8 +103,9 @@ export class HomePage {
       this.productsSort("판매인기순", this.products);
     }else{
       this.serverProvider.getAllProductData().then((res: any) => {
-        this.storageProvider.products = res;
-        this.products = JSON.parse(JSON.stringify(this.storageProvider.products));
+        if(res == 'success'){
+          this.products = JSON.parse(JSON.stringify(this.serverProducts));
+        }
         //console.log(res);
       }, (err) => {
         console.log(err);
@@ -195,7 +198,7 @@ export class HomePage {
     let flag = this.shoppingbasketProvider.isProductInShoppingbasket(product);
 
     if (flag != true){
-      if (this.storageProvider.isMember == true) {
+      if (this.serverProvider.isMember == true) {
         this.serverProvider.addShoppingbasket(product);
       }else{
         this.shoppingbasketProvider.addShoppingBasket(product);
@@ -234,8 +237,9 @@ export class HomePage {
       this.showProducts = this.products;
     }else{
       this.serverProvider.getAllProductData().then((res: any) => {
-        this.storageProvider.products = res;
-        this.products = JSON.parse(JSON.stringify(this.storageProvider.products));
+        if(res == "success"){
+          this.products = JSON.parse(JSON.stringify(this.serverProvider.products));
+        }
         //console.log(res);
       }, (err) => {
         console.log(err);

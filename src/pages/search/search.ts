@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { StorageProvider } from '../../providers/storage/storage';
 import { ServerProvider } from '../../providers/server/server';
+import { SearchProvider } from '../../providers/search/search';
 
 /**
  * Generated class for the SearchPage page.
@@ -23,11 +23,12 @@ export class SearchPage {
   seacrhTabSelected;
   popularSearchItems;
   searchTabs = ['최근검색어', '인기검색어'];
+  products;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public storageProvider:StorageProvider, public serverProvider:ServerProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, private searchProvider:SearchProvider, public serverProvider:ServerProvider) {
     this.seacrhTabSelected = this.searchTabs[0];
-    this.popularSearchItems = this.storageProvider.popularSearchItems;
-    this.recentSearchItems = this.storageProvider.recentSearchItems;
+    this.popularSearchItems = this.searchProvider.popularSearchItems;
+    this.recentSearchItems = this.searchProvider.recentSearchItems;
   }
 
   ionViewDidLoad() {
@@ -41,13 +42,11 @@ export class SearchPage {
   }
 
   findProducts(){
-    this.storageProvider.recentSearchItems.push(this.searchInput);
+    this.searchProvider.recentSearchItems.push(this.searchInput);
     this.serverProvider.searchItem(this.searchInput).then((res:any)=>{
       if(res == "noItem"){
-        this.storageProvider.products = [];
         this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "search", homeSegmentCategory: 1, category: this.searchInput });
       }else{
-        this.storageProvider.products = res;
         this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "search", homeSegmentCategory: 1, category: this.searchInput });
       }
     }, (err)=>{
@@ -60,7 +59,6 @@ export class SearchPage {
     console.dir(index);
     
     this.recentSearchItems.splice(index,1);
-    this.storageProvider.recentSearchItems = this.recentSearchItems;
   }
 
   selectSearchItem(item){

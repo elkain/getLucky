@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs'
 import { BuyPage } from '../buy/buy';
-import { StorageProvider } from '../../providers/storage/storage';
+import { OrderProvider } from '../../providers/order/order';
 
 /**
  * Generated class for the ProductdetailPage page.
@@ -24,10 +24,10 @@ export class ProductdetailPage {
   deliveryFee:number;
   deliveryFreeString:string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public storageProvider:StorageProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public orderProvider:OrderProvider) {
     this.product = this.navParams.get("product");
-    this.deliveryFee = this.storageProvider.deliveryFee;
-    this.deliveryFreeString = this.storageProvider.deliveryFreeString;
+    this.deliveryFee = this.orderProvider.deliveryFee;
+    this.deliveryFreeString = this.orderProvider.deliveryFreeString;
   }
 
   ionViewDidLoad() {

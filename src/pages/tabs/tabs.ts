@@ -8,7 +8,6 @@ import { ShoppingbasketPage } from '../shoppingbasket/shoppingbasket';
 import { OrderDetailPage } from '../order-detail/order-detail';
 import { OrderCompletePage } from '../order-complete/order-complete';
 import { SignupCompletePage } from '../signup-complete/signup-complete';
-import { StorageProvider } from '../../providers/storage/storage';
 
 @Component({
   selector: 'page-tabs',
@@ -30,9 +29,11 @@ export class TabsPage {
   selectedTab:number;
   tabParams:number;
   showHeader:boolean;
+  shopTitle = "MARKET LUCKY";
+
   childParam= {category:{}, homeSegmentCategory:0, class:"TasPage", subCategory:"" , orderedNumber:""};
 
-  constructor(public navCtrl: NavController, public navParams:NavParams, public storageProvider:StorageProvider) {
+  constructor(public navCtrl: NavController, public navParams:NavParams) {
     this.tabParams = navParams.get("tabIndex");
     this.childParam.category = navParams.get("category");
     this.childParam.subCategory = navParams.get("subCategory");

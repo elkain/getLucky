@@ -13,6 +13,9 @@ export class OrderProvider {
   orderInfo;
   orderedProduct;
   count:number = 100000;
+  deliveryFee = 3000;
+  deliveryFreeString = "3만원";
+  deliveryFreeFee = 30000;
 
   constructor() {
     console.log('Hello OrderProvider Provider');

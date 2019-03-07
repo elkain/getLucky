@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController, AlertController } from 'ionic-angular';
 import { SelectPopoverPage } from '../select-popover/select-popover';
 import { TabsPage } from '../tabs/tabs';
-import { StorageProvider } from '../../providers/storage/storage';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
 import { OrderProvider } from '../../providers/order/order';
 import { MemberProvider } from '../../providers/member/member';
@@ -21,6 +20,7 @@ import { ServerProvider } from '../../providers/server/server';
 })
 export class OrderPage {
 
+  shopTitle : string;
   isMember: boolean;
   
   selectedDeliveryType: string;
@@ -66,19 +66,23 @@ export class OrderPage {
   mobileOptionLists = [];
 
   prevPage = "";
-  orderInfo = { type: "", customInfo: {}, orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, paymentMethod: "", deliveryTime: "선택사항", deliveryMemo: "선택사항" , orderedProducts: [] }; // type : member or nonMember 
+  orderInfo = { type: "", customInfo: {}, orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, paymentMethod: "", paymentID:"", 
+  deliveryTime: "선택사항", deliveryMemo: "선택사항" , orderedProducts: [] }; // type : member or nonMember 
+  //orderInfo;
   customInfo = { ordererName: "", ordererMobile: "", ordererEmail: "", receiverName: "이혁", receiverAddress: "", receiverMobile: ""};
   memberAddressLists = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, private alertCtrl:AlertController, 
-    public storageProvider:StorageProvider, public shoppingbasketProvider:ShoppingbasketProvider, public orderProvider:OrderProvider, public memberProvider:MemberProvider,
+    public shoppingbasketProvider:ShoppingbasketProvider, public orderProvider:OrderProvider, public memberProvider:MemberProvider,
     public serverProvider:ServerProvider) {
 
-    this.deliveryMemoLists = storageProvider.deliveryMemoLists;
-    this.deliveryTimeLists = storageProvider.deliveryTimeLists;
-    this.mobileOptionLists = storageProvider.mobileOptionLists;
+    this.shopTitle = this.serverProvider.shopTitle;
 
-    this.isMember = this.storageProvider.isMember;
+    this.deliveryMemoLists = serverProvider.deliveryMemoLists;
+    this.deliveryTimeLists = serverProvider.deliveryTimeLists;
+    this.mobileOptionLists = serverProvider.mobileOptionLists;
+
+    this.isMember = this.serverProvider.isMember;
     this.basicPlaceStyle = { 'select-segment': true, 'unselect-segment': false};
     this.newPlaceStyle = { 'select-segment': false, 'unselect-segment': true };
     this.selectedDeliveryType = 'memberSaved';
@@ -107,10 +111,10 @@ export class OrderPage {
       this.orderInfo.orderPrice = product.price * product.count;
       this.orderInfo.sale = (product.price - product.salePrice) * product.count;
 
-      if ((this.orderInfo.orderPrice - this.orderInfo.sale) >= this.storageProvider.deliveryFreeFee) {
+      if ((this.orderInfo.orderPrice - this.orderInfo.sale) >= this.orderProvider.deliveryFreeFee) {
         this.orderInfo.deliveryFee = 0;
       } else {
-        this.orderInfo.deliveryFee = this.storageProvider.deliveryFee;
+        this.orderInfo.deliveryFee = this.orderProvider.deliveryFee;
       }
 
       this.orderInfo.totalPrice = product.salePrice * product.count + this.orderInfo.deliveryFee;

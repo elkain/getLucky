@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic-angular';
 import { SignupPage } from '../signup/signup';
-import { StorageProvider } from '../../providers/storage/storage';
 import { MemberProvider } from '../../providers/member/member';
 import { OrderProvider } from '../../providers/order/order';
 import { TabsPage } from '../tabs/tabs';
@@ -23,6 +22,7 @@ import { ServerProvider } from '../../providers/server/server';
 export class MypagePage {
 
   isMember: boolean;
+  shopTitle:string;
 
   loginTabs = ["회원", "비회원"];
   loginTabsSelected;
@@ -45,7 +45,8 @@ export class MypagePage {
   mobile1;
   mobile2;
   mobile3;
-  memberData = {UID:"", username:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", classs:0, totalPurchase:0};
+  //memberData = {UID:"", username:"", password:"", name: "", email:"", mobile:"", address:"", birth:"", sex:"", classs:0, totalPurchase:0};
+  memberData = {};
   findMemberData = { username: "", name: "", email: "", mobile: "", type: "", method: "" };
   enterMemberAddress = { memberUID:"", addressName:"", address:"", receiver:"", mobile:""};
   deliveryAddrs = [];
@@ -61,31 +62,35 @@ export class MypagePage {
   mypageMenus = ["주문내역", "1:1 문의", "공지사항", "회원정보수정", "배송지관리"];
   deliveryAddressMode = []; // "수정", "출력"
   deliveryAddressEnter = false;
-
+  mobileOptionLists = [];
   arrowIconTop = "231px";
 
   orderInfos;
   homeParams;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public alertCtrl:AlertController, public storageProvider:StorageProvider,
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public alertCtrl:AlertController, 
     public memberProvider:MemberProvider, public orderProvider:OrderProvider, public serverProvider:ServerProvider) {
 
     this.homeParams = navParams.data;
+    this.shopTitle = this.serverProvider.shopTitle;
+
 
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
     this.nonMemberBuy = false;
-    this.isMember = this.storageProvider.isMember;
+    this.isMember = this.serverProvider.isMember;
     this.autoLoginCheckbox = false;
     this.deliveryAddressEnter = false;
+    this.mobileOptionLists = this.serverProvider.mobileOptionLists;
 
-    for(let i in this.memberData){
+    this.memberData = this.memberProvider.memberData;
+    /*for(let i in this.memberData){
       for (let j in this.memberProvider.memberData){
         if(i==j){
           this.memberData[i] = this.memberProvider.memberData[j];
         }
       }
-    }
+    }*/
 
     this.orderInfos = this.orderProvider.orderInfos;
   }
@@ -241,13 +246,13 @@ export class MypagePage {
           }
           this.isMember = true;
 
-          for (let i in this.memberData) {
+          /*for (let i in this.memberData) {
             for (let j in this.memberProvider.memberData) {
               if (i == j) {
                 this.memberData[i] = this.memberProvider.memberData[j];
               }
             }
-          }
+          }*/
         }
       },(err)=>{
           let alert = this.alertCtrl.create({
@@ -414,7 +419,7 @@ export class MypagePage {
 
   compAddDeliveryAddr() {
     if(this.enterMemberAddress.addressName != "" && this.enterMemberAddress.address != "" && this.enterMemberAddress.mobile !="" && this.enterMemberAddress.receiver != ""){
-      this.enterMemberAddress.memberUID = this.memberData.UID;
+      this.enterMemberAddress.memberUID = this.memberData['UID'];
       this.serverProvider.alterDeliveryAddr(this.enterMemberAddress, "add").then((res:any)=>{
         console.log(res);
         this.deliveryAddrs = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs));

@@ -22,11 +22,11 @@ import { HttpModule } from '@angular/http';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { StorageProvider } from '../providers/storage/storage';
 import { ShoppingbasketProvider } from '../providers/shoppingbasket/shoppingbasket';
 import { OrderProvider } from '../providers/order/order';
 import { MemberProvider } from '../providers/member/member';
 import { ServerProvider } from '../providers/server/server';
+import { SearchProvider } from '../providers/search/search';
 
 @NgModule({
   declarations: [
@@ -66,11 +66,11 @@ import { ServerProvider } from '../providers/server/server';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    StorageProvider,
     ShoppingbasketProvider,
     OrderProvider,
     MemberProvider,
-    ServerProvider
+    ServerProvider,
+    SearchProvider
   ]
 })
 export class AppModule {}

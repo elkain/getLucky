@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 export class ShoppingbasketProvider {
 
   shoppingBasket = { orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, checkedAllProducts: true, checkedProducts: [], orderedProducts:[] };
-
+  
   constructor() {
     console.log('Hello ShoppingbasketProvider Provider');
   }
@@ -75,4 +75,6 @@ export class ShoppingbasketProvider {
     this.shoppingBasket.orderedProducts.push(item);
     this.shoppingBasket.checkedProducts.push(true);
   }
+
+  
 }

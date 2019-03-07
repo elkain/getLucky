@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { StorageProvider } from '../../providers/storage/storage';
 import { MemberProvider } from '../../providers/member/member';
 import { OrderPage } from '../order/order';
 import * as CryptoJS from 'crypto-js';
@@ -47,13 +46,14 @@ export class SignupPage {
   mobileCheckNumber: number = undefined;
   mobileCheckNumberConfirm: number = undefined;
   memberData = { UID: "", username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
+  emailOptionLists = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, 
-    public storageProvider:StorageProvider, public memberProvider:MemberProvider, public serverProvider:ServerProvider) {
-    
+    public memberProvider:MemberProvider, public serverProvider:ServerProvider) {
     this.male = this.whiteColor;
     this.female = this.whiteColor;
-    this.isMember = this.storageProvider.isMember;
+    this.isMember = this.serverProvider.isMember;
+    this.emailOptionLists = this.serverProvider.mobileOptionLists;
   }
 
   ionViewDidLoad() {
@@ -180,7 +180,7 @@ export class SignupPage {
       this.serverProvider.signup(this.memberData).then((res:any)=>{
         if(res == "success"){
           this.memberProvider.memberData = this.memberData;
-          this.storageProvider.isMember = true;
+          this.serverProvider.isMember = true;
           let prevPage = this.navParams.get("prevPage");
           if (prevPage == "buy" || prevPage == "shoppingbasket") {
             this.navCtrl.push(OrderPage, { class: "buy" });

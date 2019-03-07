@@ -1,10 +1,10 @@
 import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic-angular';
 import { OrderPage } from '../order/order';
-import { StorageProvider } from '../../providers/storage/storage';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
 import { TabsPage } from '../tabs/tabs';
 import { ServerProvider } from '../../providers/server/server';
+import { OrderProvider } from '../../providers/order/order';
 
 /**
  * Generated class for the ShoppingbasketPage page.
@@ -32,9 +32,9 @@ export class ShoppingbasketPage {
   //orderInfo = {orderPrice:0, sale:0, deliveryFee:0, totalPrice:0, shoppingBasket:[]};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, private alertCtrl:AlertController , 
-    public storageProvider: StorageProvider, public shoppingbasketProvider:ShoppingbasketProvider, public serverProvider:ServerProvider) {
+    public shoppingbasketProvider:ShoppingbasketProvider, public serverProvider:ServerProvider, public orderProvider:OrderProvider) {
 
-    this.isMember = this.storageProvider.isMember;
+    this.isMember = this.serverProvider.isMember;
     this.shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
     this.itemNumber = this.shoppingBasket.orderedProducts.length;
 
@@ -47,13 +47,13 @@ export class ShoppingbasketPage {
 
     this.checkedItemNumber = 0;
     
-    this.deliveryFee = storageProvider.deliveryFee;
+    this.deliveryFee = orderProvider.deliveryFee;
 
     this.calOrderPrice();
   }
 
   ionViewWillEnter() {
-    this.isMember = this.storageProvider.isMember;
+    this.isMember = this.serverProvider.isMember;
     this.shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
     this.itemNumber = this.shoppingBasket.orderedProducts.length;
     this.calOrderPrice();
@@ -138,12 +138,12 @@ export class ShoppingbasketPage {
     this.shoppingBasket.sale = sale;
     this.checkedItemNumber = checkedItemNumber;
 
-    if ((orderPrice - sale) >= this.storageProvider.deliveryFreeFee) {
+    if ((orderPrice - sale) >= this.orderProvider.deliveryFreeFee) {
       this.shoppingBasket.deliveryFee = 0;
     } else if (this.shoppingBasket.orderPrice == 0){
       this.shoppingBasket.deliveryFee = 0;
     }else{
-      this.shoppingBasket.deliveryFee = this.storageProvider.deliveryFee;
+      this.shoppingBasket.deliveryFee = this.orderProvider.deliveryFee;
     }
 
     this.shoppingBasket.totalPrice = this.shoppingBasket.orderPrice - this.shoppingBasket.sale + this.shoppingBasket.deliveryFee
@@ -161,7 +161,7 @@ export class ShoppingbasketPage {
       }
 
       this.serverProvider.delShoppingbasket(delProducts).then((res:any)=>{
-        this.itemNumber = this.shoppingBasket.orderedProducts.length;  
+        this.itemNumber = orderedProducts.length;  
         this.calOrderPrice();
       }, (err)=>{
         console.log("err");
