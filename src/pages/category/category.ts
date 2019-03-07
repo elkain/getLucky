@@ -20,22 +20,11 @@ export class CategoryPage {
   productAllCategories = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public serverProvider:ServerProvider) {
-    this.serverProvider.loadCategory().then((res: any) => {
-      this.productAllCategories = res;
-      for (let i = 0; i < this.productAllCategories.length; i++) {
-        this.productAllCategories[i].selected = false;
-      }
-      console.log("category load");
-
-    }, (err) => {
-      console.log(err);
-
-    });
-
   }
 
-  ionViewDidLoad() {
+  ionViewCanEnter() {
     console.log('ionViewDidLoad CategoryPage');
+    this.productAllCategories = this.serverProvider.productAllCategories;
   }
 
   categorySelect(category){
@@ -54,9 +43,7 @@ export class CategoryPage {
 
   moveToCategory(category, subCategory){
     this.serverProvider.getCategoryProductData(category).then((res: any) => {
-      if(res == "success")  {
-        this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "category", homeSegmentCategory: 1, category: category, subCategory: subCategory });
-      }
+      this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "category", homeSegmentCategory: 1, category: category, subCategory: subCategory });
     });
     
   }
