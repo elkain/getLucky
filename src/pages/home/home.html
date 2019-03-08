@@ -52,6 +52,10 @@
 </ion-header>
 
 <ion-content [style.margin-top]="contentMargin">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
     <!-- recommand page start -->
     <ion-scroll scrollY="true" class="home-scroll" *ngIf="homeCategorySelected==homeCategories[0]" > 
         <ion-slides pager="true" class="home-slide" >

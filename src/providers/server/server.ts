@@ -450,6 +450,30 @@ export class ServerProvider {
     }); 
   }
 
+  loadOrderInfo(){
+    let memberUID = this.memberProvider.memberData.UID;
+    return new Promise((resolve, reject) => {
+      this.http.post(this.serverAddr + "member/order/loadOrderInfo.php", memberUID).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log(" Success");
+          this.orderProvivder.orderInfos = [];
+          if (result.orderInfos.length != 0) {
+            this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
+          }
+          resolve("success");
+        }
+        else {
+          console.log("Fail load order detail");
+          reject("fail");
+        }
+      }, err => {
+        console.log(err);
+      });
+    }); 
+  }
+
   loadOrderDetail(orderID, name){
     let body:any;
     let path:string;

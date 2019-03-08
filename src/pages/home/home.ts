@@ -1,9 +1,10 @@
 import { Component, ViewChild} from '@angular/core';
-import { NavController, Slides, App, PopoverController, NavParams, Platform} from 'ionic-angular';
+import { NavController, Slides, App, PopoverController, NavParams, Platform, Refresher} from 'ionic-angular';
 import { ProductdetailPage } from '../productdetail/productdetail';
 import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
 import { ServerProvider } from '../../providers/server/server';
+import { SearchProvider } from '../../providers/search/search';
 
 @Component({
   selector: 'page-home',
@@ -45,7 +46,7 @@ export class HomePage {
   slideImages: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
   constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams,
-    public shoppingbasketProvider: ShoppingbasketProvider, public serverProvider:ServerProvider, private platform:Platform) {
+    public shoppingbasketProvider: ShoppingbasketProvider, public serverProvider:ServerProvider, private platform:Platform, public searchProvider:SearchProvider) {
     this.homeParams = navParams.data;
     
     if(this.serverProvider.dataLoad == false){
@@ -69,6 +70,7 @@ export class HomePage {
       this.contentMargin = "38px";
       this.showProducts = this.serverProvider.categoryProducts;
     } else if (this.homeParams.class == "search"){
+      this.headerHeight = "98px";
       this.showProducts = this.serverProvider.searchProducts;
     }else{
       this.showProducts = this.serverProvider.homeProducts;
@@ -242,7 +244,7 @@ export class HomePage {
 
     if (this.homeParams.class == "search") {
       this.showProductPage = false;
-      this.bestScrollHeight = "calc(100% - 48px)";
+      this.bestScrollHeight = "calc(100%)";
     } else {
       this.showProductPage = true;
       this.bestScrollHeight = "calc(100% - 88px)";
@@ -325,16 +327,46 @@ export class HomePage {
     }
   }
 
-  moveToHome() {
-    this.navCtrl.parent.select(0);
-  }
+  doRefresh(event) {
+    console.log('Begin async operation');
+    if (this.homeParams.class == "category"){
+      this.serverProvider.getCategoryProductData(this.homeParams.category).then((res:any)=>{
+        if(res == "success"){
+          this.showProducts = this.serverProvider.categoryProducts;
+          this.categoryChange(this.categorySelected);
+          this.productsSort(this.productSortOptionSelected, this.showProducts);
+        }
+        event.complete();
+      });
+    } else if (this.homeParams.class == "search"){
+      let searchItems = this.searchProvider.recentSearchItems;
+      let searchWord = searchItems[searchItems.length - 1];
+      this.serverProvider.searchItem(searchWord.searchWord).then((res: any) => {
+        event.complete();
+      }, (err) => {
+        console.log(err);
 
-  goToShoppingBasket() {
-    this.navCtrl.parent.select(4);
+      });
+    } else{
+      this.serverProvider.init().then((res: any) => {
+        if (res == "success") {
+          this.showProducts = this.serverProvider.homeProducts;
+          this.homeCategoryChange(this.homeCategorySelected);
+          if(this.homeCategorySelected == "베스트"){
+            console.log(this.bestCategorySelected);
+            this.sortProductsByCategory(this.showProducts, this.bestCategorySelected);
+            this.productsSort(this.productSortOptionSelected, this.showProducts);
+          }else if(this.homeCategorySelected == "알뜰할인"){
+            this.sortProductsByCategory(this.showProducts, this.saleCategorySelected);
+            this.productsSort(this.productSortOptionSelected, this.showProducts);
+          }
+          
+          event.complete();
+        }
+        console.log(res);
+      }, (err) => {
+        console.log(err);
+      });
+    }
   }
-
-  /*onopen() {
-    var url = "http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2128174157";
-    window.open(url, "bizCommPop", "width=750, height=700;");
-  }*/
 }

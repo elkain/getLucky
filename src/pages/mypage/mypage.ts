@@ -68,6 +68,9 @@ export class MypagePage {
   orderInfos;
   homeParams;
 
+  headerSize = "50px";
+  contentMargin = "0";
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public alertCtrl:AlertController, 
     public memberProvider:MemberProvider, public orderProvider:OrderProvider, public serverProvider:ServerProvider) {
 
@@ -99,9 +102,13 @@ export class MypagePage {
     if (this.isMember == true){
       if (this.homeParams.class == "orderDetail") {
         this.showPageType = "주문내역";
+        this.contentMargin = "48px";
+        this.headerSize = "48px";
         console.log(this.showPageType);
         this.homeParams.class = undefined;
       }else{
+        this.contentMargin = "48px";
+        this.headerSize = "50px";
         this.showPageType = "mypage";
       }
     }else{
@@ -290,6 +297,8 @@ export class MypagePage {
       this.app.getRootNavs()[0].push(SignupPage, { class: "mypage" });
     }else{
       this.showPageType = menu;
+      this.headerSize = "98px";
+      this.contentMargin = "0";
       if (this.showPageType == "배송지관리"){
         this.deliveryAddrs = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs));
         
@@ -297,6 +306,8 @@ export class MypagePage {
           this.deliveryAddressMode[i] ="출력";
         }
       }else if(menu == "주문내역"){
+        this.headerSize = "98px";
+        this.contentMargin = "48px";
         this.orderInfos = this.orderProvider.orderInfos;
       }
       this.showBackbtn = true;
@@ -502,6 +513,20 @@ export class MypagePage {
     }, (err) => {
       console.log(err);
 
+    });
+  }
+
+  doRefresh(event) {
+    console.log('Begin async operation');
+    
+    this.serverProvider.loadOrderInfo().then((res: any) => {
+      if (res == "success") {
+        this.orderInfos = this.orderProvider.orderInfos;
+        event.complete();
+      }
+      console.log(res);
+    }, (err) => {
+      console.log(err);
     });
   }
 }
