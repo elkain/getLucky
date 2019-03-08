@@ -11,6 +11,8 @@ import { ServerProvider } from '../../providers/server/server';
 })
 export class HomePage {
 
+  shopTitle = "MARKET LUCKY";
+  
   @ViewChild(Slides) slides: Slides;
   imageURL:string = "./assets/slides/";
   productImageURL:string = "./assets/imgs/"
@@ -37,6 +39,8 @@ export class HomePage {
 
   showProductPage:boolean;
   bestScrollHeight = "calc(100% - 88px)";
+  headerHeight = "98px";
+  contentMargin = "0";
 
   slideImages: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
@@ -60,6 +64,9 @@ export class HomePage {
 
   ionViewDidEnter() {
     if (this.homeParams.class == "category"){
+      this.bestScrollHeight = "calc(100% - 38px)";
+      this.headerHeight = "98px";
+      this.contentMargin = "38px";
       this.showProducts = this.serverProvider.categoryProducts;
     } else if (this.homeParams.class == "search"){
       this.showProducts = this.serverProvider.searchProducts;
@@ -74,6 +81,8 @@ export class HomePage {
     this.bestCategorySelected = this.bestCategories[0];
     this.saleCategorySelected = this.saleCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
+    this.headerHeight = "98px";
+    this.contentMargin = "0";
   }
 
   ionViewDidLeave(){
@@ -107,17 +116,24 @@ export class HomePage {
     this.productSortOptionSelected = this.productSortOptions[0];
 
     if(this.homeCategorySelected != this.homeCategories[0]){
+      this.headerHeight = "136px";
+      this.contentMargin = "38px";
       this.productsSort("판매인기순", this.showProducts);
     }else{
+      this.contentMargin = "0px";
+      this.headerHeight = "98px";
       this.showProducts = this.serverProvider.homeProducts;
     }
 
     if (this.homeCategorySelected == this.homeCategories[3] ){
       this.showProductPage=false;
-      this.bestScrollHeight = "calc(100% - 48px)";
+      this.contentMargin = "0px";
+      this.headerHeight = "98px";
+      //this.bestScrollHeight = "calc(100% - 48px)";
+      this.bestScrollHeight = "100%";
     }else{
       this.showProductPage = true;
-      this.bestScrollHeight = "calc(100% - 88px)";
+      this.bestScrollHeight = "calc(100% - 38px)";
     }
 
     this.showProducts = this.sortProductsByCategory(this.serverProvider.homeProducts, this.bestCategorySelected);
@@ -217,6 +233,8 @@ export class HomePage {
     } else {
       this.homeCategorySelected = this.homeCategories[0];
       this.homeParams.class = undefined;
+      this.headerHeight = "98px";
+      this.contentMargin = "0";
     }
 
     this.bestCategorySelected = this.bestCategories[0];
@@ -231,6 +249,9 @@ export class HomePage {
     }
 
     if(this.homeParams.class == "category"){
+      this.bestScrollHeight = "calc(100% - 38px)";
+      this.headerHeight = "98px";
+      this.contentMargin = "38px";
       this.showProducts = this.sortProductsByCategory(this.serverProvider.categoryProducts, this.categorySelected);
     } else if (this.homeParams.class == "search"){
       this.showProducts = this.serverProvider.searchProducts;
@@ -302,6 +323,14 @@ export class HomePage {
         }
       }
     }
+  }
+
+  moveToHome() {
+    this.navCtrl.parent.select(0);
+  }
+
+  goToShoppingBasket() {
+    this.navCtrl.parent.select(4);
   }
 
   /*onopen() {

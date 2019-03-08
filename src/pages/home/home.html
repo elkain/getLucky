@@ -1,11 +1,11 @@
-<ion-header no-shadow no-border>
-
-</ion-header>
-
-<ion-content>
+<ion-header class="home-header" [style.height]="headerHeight" no-border no-shadow>
+    <ion-toolbar no-border no-padding no-shadow>
+        
+    </ion-toolbar>
     <!-- home navigation segment start-->
     <ion-grid no-margin no-padding class="home-nav-menu">
-        <ion-row *ngIf="homeParams.class==undefined || homeParams.class=='buy'|| homeParams.class=='shoppingbasket-popover' || homeParams.class=='signup' || homeParams.class=='mypage'">
+        <ion-row
+            *ngIf="homeParams.class==undefined || homeParams.class=='buy'|| homeParams.class=='shoppingbasket-popover' || homeParams.class=='signup' || homeParams.class=='mypage'">
             <ion-col *ngFor="let category of homeCategories">
                 <ion-segment [(ngModel)]="homeCategorySelected">
                     <ion-segment-button [value]="category" (click)="homeCategoryChange(category)">
@@ -27,8 +27,32 @@
     </ion-grid>
     <!-- home navigation segment end -->
 
-    <!-- recommand page start -->
+    <!-- best page & sale page start -->
+    <!-- 슬라이드가 현대 모바일 상에서는 구현되지만 web 에서는 구현 안됨 추가로 구현이 필요 -->
+    <div class="best-nav-menu" *ngIf="showProductPage==true">
+        <ion-segment [(ngModel)]="categorySelected" *ngIf="homeParams.class=='category'">
+            <ion-segment-button [value]="category" (click)="categoryChange(category)"
+                *ngFor="let category of homeParams.category.subCategories">
+                {{category.subCategoryName}}
+            </ion-segment-button>
+        </ion-segment>
+        <ion-segment [(ngModel)]="bestCategorySelected" *ngIf="homeCategorySelected==homeCategories[1] && homeParams.class!='category'">
+            <ion-segment-button [value]="category" (click)="bestCategoryChange(category)"
+                *ngFor="let category of bestCategories">
+                {{category.subCategoryName}}
+            </ion-segment-button>
+        </ion-segment>
+        <ion-segment [(ngModel)]="saleCategorySelected" *ngIf="homeCategorySelected==homeCategories[2] && homeParams.class!='category'">
+            <ion-segment-button [value]="category" (click)="saleCategoryChange(category)"
+                *ngFor="let category of saleCategories">
+                {{category.subCategoryName}}
+            </ion-segment-button>
+        </ion-segment>
+    </div>
+</ion-header>
 
+<ion-content [style.margin-top]="contentMargin">
+    <!-- recommand page start -->
     <ion-scroll scrollY="true" class="home-scroll" *ngIf="homeCategorySelected==homeCategories[0]" > 
         <ion-slides pager="true" class="home-slide" >
             <ion-slide class="home-slide-child" *ngFor="let image of slideImages" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
@@ -56,29 +80,7 @@
             </ion-row>
         </ion-grid>
     </ion-scroll>
-    
     <!-- recommand page end -->
-
-    <!-- best page & sale page start -->
-    <!-- 슬라이드가 현대 모바일 상에서는 구현되지만 web 에서는 구현 안됨 추가로 구현이 필요 -->
-    <div class="best-nav-menu" *ngIf="showProductPage==true"  >
-        <ion-segment [(ngModel)]="categorySelected" *ngIf="homeParams.class=='category'">
-            <ion-segment-button [value]="category" (click)="categoryChange(category)" *ngFor="let category of homeParams.category.subCategories">
-                {{category.subCategoryName}}
-            </ion-segment-button>
-        </ion-segment>
-        <ion-segment [(ngModel)]="bestCategorySelected" *ngIf="homeCategorySelected==homeCategories[1]">
-            <ion-segment-button [value]="category" (click)="bestCategoryChange(category)" *ngFor="let category of bestCategories">
-                {{category.subCategoryName}}
-            </ion-segment-button>
-        </ion-segment>
-        <ion-segment [(ngModel)]="saleCategorySelected" *ngIf="homeCategorySelected==homeCategories[2]">
-            <ion-segment-button [value]="category" (click)="saleCategoryChange(category)" *ngFor="let category of saleCategories">
-                {{category.subCategoryName}}
-            </ion-segment-button>
-        </ion-segment>
-    </div>
-
     <ion-scroll scrollY="true" class="best-scroll" [style.height]="bestScrollHeight" *ngIf="homeCategorySelected==homeCategories[1] || homeCategorySelected==homeCategories[2]">
         <div left class="best-sort-option">
             <select [(ngModel)]="productSortOptionSelected" (change)="productsOptionChange()">
