@@ -32,7 +32,9 @@ export class SearchPage {
   }
 
   ionViewDidLoad() {
-    
+    this.seacrhTabSelected = this.searchTabs[0];
+    this.popularSearchItems = this.searchProvider.popularSearchItems;
+    this.recentSearchItems = this.searchProvider.recentSearchItems;
     console.log('ionViewDidLoad SearchPage');
   }
 
@@ -42,23 +44,31 @@ export class SearchPage {
   }
 
   findProducts(){
-    this.searchProvider.recentSearchItems.push(this.searchInput);
+    
     this.serverProvider.searchItem(this.searchInput).then((res:any)=>{
-      if(res == "noItem"){
-        this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "search", homeSegmentCategory: 1, category: this.searchInput });
-      }else{
-        this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "search", homeSegmentCategory: 1, category: this.searchInput });
+      if(this.serverProvider.isMember != true){
+        let searchInput = { searchWord: this.searchInput, searchID: 0 }
+        this.searchProvider.recentSearchItems.push(searchInput);
       }
+      this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "search", homeSegmentCategory: 1, category: this.searchInput });
     }, (err)=>{
       console.log(err);
       
     });
   }
 
-  deleteRecentSearchItem(index){
-    console.dir(index);
+  undisplayRecentSearchItem(index){
     
-    this.recentSearchItems.splice(index,1);
+    if(this.serverProvider.isMember == true){
+      this.serverProvider.undisplayRecentSearchItem(this.recentSearchItems[index].searchID).then((res:any)=>{
+        if(res == "success"){
+          this.recentSearchItems = this.searchProvider.recentSearchItems;
+        }
+        console.log(res);
+      });
+    }else{
+      this.recentSearchItems.splice(index, 1);
+    }
   }
 
   selectSearchItem(item){

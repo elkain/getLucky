@@ -25,18 +25,18 @@
   </ion-grid>
 
   <ion-list class="recent-search-list" *ngIf="seacrhTabSelected=='최근검색어'">
-    <ion-item-divider (click)="selectSearchItem(recentSearchItem)" *ngFor="let recentSearchItem of recentSearchItems; let i = index">
-      <button class="recent-list-name" disabled="true" clear ion-button>
-        {{ recentSearchItem }}
+    <ion-item-divider  *ngFor="let recentSearchItem of recentSearchItems; let i = index">
+      <button class="recent-list-name" (click)="selectSearchItem(recentSearchItem)" disabled="true" clear ion-button>
+        {{ recentSearchItem.searchWord }}
       </button>
-      <button class="recent-list-icon" (click)="deleteRecentSearchItem(i)" item-end clear ion-button><ion-icon name="md-close" item-end></ion-icon></button>
+      <button class="recent-list-icon" (click)="undisplayRecentSearchItem(i)" item-end clear ion-button><ion-icon name="md-close" item-end></ion-icon></button>
     </ion-item-divider>
   </ion-list>
 
   <ion-list class="popular-search-list" *ngIf="seacrhTabSelected=='인기검색어'">
     <ion-item-divider (click)="selectSearchItem(popularSearchItem)" *ngFor="let popularSearchItem of popularSearchItems; let i = index">
-      <span class="popular-list-number" item-start><p><b>{{i}}</b></p></span>
-      <span class="popular-list-name"><p>{{ popularSearchItem }}</p></span>
+      <span class="popular-list-number" item-start *ngIf="i < 20;"><p><b>{{i+1}}</b></p></span>
+      <span class="popular-list-name" *ngIf="i < 20;"><p>{{ popularSearchItem }}</p></span>
     </ion-item-divider>
   </ion-list>
 </ion-content>

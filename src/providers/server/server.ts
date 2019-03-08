@@ -243,17 +243,14 @@ export class ServerProvider {
           }
 
           // 주문 정보 로드
+          this.orderProvivder.orderInfos = [];
           if(result.orderInfos.length != 0){
             this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
-          }else{
-            this.orderProvivder.orderInfos = [];
           }
 
           // 최근 검색 기록 로드
           if(result.recentSearch != undefined){
             this.searchProvider.recentSearchItems = result.recentSearch;
-          }else{
-            this.searchProvider.recentSearchItems = [];
           }
           resolve("success");
         }
@@ -543,34 +540,6 @@ export class ServerProvider {
     }); 
   }
 
-  searchItem(searchWord){
-    let memberUID = this.memberProvider.memberData.UID;
-    let body = {memberUID , searchWord};
-
-    return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "search/search.php", body).subscribe(data => {
-        console.log(data);
-        let result = JSON.parse(data["_body"]);
-        if (result.status == "success") {
-          console.log(" Success");
-          if(result['product'] != undefined){
-            this.searchProducts = this.productRearrange(result.product);
-            resolve("success");
-          }else{
-            this.searchProducts = [];
-            resolve("noItem");
-          }
-        }
-        else {
-          console.log("Fail cancelOrder");
-          reject("fail");
-        }
-      }, err => {
-        console.log(err);
-      });
-    }); 
-  }
-
   categoryRearrange(data){
     let classCategory = null;
     let subCategory = { subCategoryCode: "", subCategoryName:""};
@@ -693,26 +662,70 @@ export class ServerProvider {
     }
   }*/
 
-  undisplayRecentSearchItem(){
+  searchItem(searchWord) {
+    let memberUID:string;
+    let body : Object;
+    let addr : string;
+    if(this.isMember == true){
+      addr = "member/search.php";
+      memberUID = this.memberProvider.memberData.UID;
+      body = { memberUID, searchWord };
+    }else{
+      addr = "nonMember/search.php";
+      body = { searchWord };
+    }
+
     return new Promise((resolve, reject) => {
-      let addr = "";
-      this.http.post(this.serverAddr + addr, orderInfo).subscribe(data => {
+      this.http.post(this.serverAddr + addr, body).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log(" Success");
-          if (result.orderInfos != undefined) {
-            this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
+          // 최근 검색 기록 로드
+          if(this.isMember == true){
+            if (result.recentSearch != undefined) {
+              this.searchProvider.recentSearchItems = result.recentSearch;
+            }else {
+              this.searchProvider.recentSearchItems = [];
+            }
+          }
+
+          if (result['product'] != undefined) {
+            this.searchProducts = this.productRearrange(result.product);
           } else {
-            this.orderProvivder.orderInfos = [];
+            this.searchProducts = [];
+            resolve("noItem");
           }
           resolve("success");
-        } else if (result.status == "invalid") {
-          resolve("invalid");
-        } else if (result.status == "processing") {
-          resolve("processing");
         }
         else {
+          console.log("Fail cancelOrder");
+          reject("fail");
+        }
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
+  undisplayRecentSearchItem(searchID){
+    let memberUID = this.memberProvider.memberData.UID;
+    let body = {memberUID, searchID}
+    return new Promise((resolve, reject) => {
+      let addr = "search/undisplayRecentSearchItem.php";
+      this.http.post(this.serverAddr + addr, body).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log(" Success");
+          // 최근 검색 기록 로드
+          if (result.recentSearch != undefined) {
+            this.searchProvider.recentSearchItems = result.recentSearch;
+          } else {
+            this.searchProvider.recentSearchItems = [];
+          }
+          resolve("success");
+        } else {
           console.log("Fail cancelOrder");
           reject("fail");
         }
