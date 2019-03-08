@@ -161,7 +161,7 @@ export class ShoppingbasketPage {
       }
 
       this.serverProvider.delShoppingbasket(delProducts).then((res:any)=>{
-        this.itemNumber = orderedProducts.length;  
+        this.itemNumber = this.shoppingBasket.orderedProducts.length;  
         this.calOrderPrice();
       }, (err)=>{
         console.log("err");

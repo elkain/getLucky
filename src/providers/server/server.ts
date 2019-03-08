@@ -238,6 +238,8 @@ export class ServerProvider {
             this.updateShoppingbasket(result);
           }else{
             this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+            this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
+            this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
           }
 
           // 주문 정보 로드
@@ -316,6 +318,8 @@ export class ServerProvider {
           this.updateShoppingbasket(result);
         }else{
           this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+          this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
+          this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
         }
         
         console.log("add shoppingbasket success");
@@ -349,6 +353,7 @@ export class ServerProvider {
           } else {
             this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
             this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
+            this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
           }
           resolve("success");
         }
@@ -375,6 +380,8 @@ export class ServerProvider {
             this.updateShoppingbasket(result);
           } else {
             this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+            this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
+            this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
           }
           resolve("success");
         }
@@ -417,6 +424,8 @@ export class ServerProvider {
               this.updateShoppingbasket(result);
             } else {
               this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+              this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
+              this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
             }
           }
           resolve("success");
@@ -444,28 +453,48 @@ export class ServerProvider {
     }); 
   }
 
-  loadOrderDetail(orderID){
+  loadOrderDetail(orderID, name){
+    let body:any;
+    let path:string;
+    if (name == null){
+      body = orderID
+      path = "member/order/loadOrderProductDetail.php";
+    }else{
+      body = { orderID, name }
+      path = "nonMember/order/loadOrderProductDetail.php";
+    }
+    
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "order/loadOrderProductDetail.php", orderID).subscribe(data => {
+      this.http.post(this.serverAddr + path, body).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log(" Success");
-          let orderInfos = this.orderProvivder.orderInfos;
-          for (let i = 0; i < orderInfos.length; i++){
-            if (orderInfos[i].orderID == orderID){
-              //let path = "http://218.145.181.49/ionic/images/";
-              //let path = "./assets/imgs/";
-              let path = this.productImageURL;
-              
-              orderInfos[i].orderedProducts = result['orderedProducts'];
+          if(result.orderedProducts != undefined){
+            let orderInfos;
+            if(name != null){
+              this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfo);
+            }
 
-              for(let j = 0; j < orderInfos[i].orderedProducts.length; j++){
-                orderInfos[i].orderedProducts[j].imagePath = path + orderInfos[i].orderedProducts[j].imagePath;
+            orderInfos = this.orderProvivder.orderInfos;
+            
+            for (let i = 0; i < orderInfos.length; i++) {
+              if (orderInfos[i].orderID == orderID) {
+                //let path = "http://218.145.181.49/ionic/images/";
+                //let path = "./assets/imgs/";
+                let path = this.productImageURL;
+
+                orderInfos[i].orderedProducts = result['orderedProducts'];
+
+                for (let j = 0; j < orderInfos[i].orderedProducts.length; j++) {
+                  orderInfos[i].orderedProducts[j].imagePath = path + orderInfos[i].orderedProducts[j].imagePath;
+                }
               }
             }
+            resolve("success");
+          }else{
+            resolve("noItem");
           }
-          resolve("success");
         }
         else {
           console.log("Fail load order detail");
@@ -499,8 +528,12 @@ export class ServerProvider {
             this.orderProvivder.orderInfos = [];
           }
           resolve("success");
+        }else if(result.status == "invalid"){
+          resolve("invalid");
+        } else if (result.status == "processing"){
+          resolve("processing");
         }
-        else {
+        else{
           console.log("Fail cancelOrder");
           reject("fail");
         }
@@ -608,10 +641,18 @@ export class ServerProvider {
     let memberInfo = this.memberProvider.memberData;
     
     for (let i = 0; i < data.length; i++){
-
-      let customInfo = {
-        ordererName: memberInfo.name, ordererMobile: memberInfo.mobile, ordererEmail: memberInfo.email, receiverName: data[i].receiverName, 
-        receiverAddress: data[i].receiverAddress, receiverMobile: data[i].receiverMobile };
+      let customInfo;
+      if(data[i].nonMemberID == undefined){
+        customInfo = {
+          ordererName: memberInfo.name, ordererMobile: memberInfo.mobile, ordererEmail: memberInfo.email, receiverName: data[i].receiverName,
+          receiverAddress: data[i].receiverAddress, receiverMobile: data[i].receiverMobile
+        };
+      }else{
+        customInfo = {
+          ordererName: data[i].customName, ordererMobile: data[i].customMobile, ordererEmail: data[i].customEmail, receiverName: data[i].receiverName,
+          receiverAddress: data[i].receiverAddress, receiverMobile: data[i].receiverMobile
+        };
+      }
       
       let orderInfo = {
         type: "member", customInfo: customInfo, orderPrice: data[i].orderPrice, orderName: data[i].orderName, sale: data[i].totalSale, 
@@ -651,4 +692,33 @@ export class ServerProvider {
       this.shoppingBasket.push(item);
     }
   }*/
+
+  undisplayRecentSearchItem(){
+    return new Promise((resolve, reject) => {
+      let addr = "";
+      this.http.post(this.serverAddr + addr, orderInfo).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.status == "success") {
+          console.log(" Success");
+          if (result.orderInfos != undefined) {
+            this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
+          } else {
+            this.orderProvivder.orderInfos = [];
+          }
+          resolve("success");
+        } else if (result.status == "invalid") {
+          resolve("invalid");
+        } else if (result.status == "processing") {
+          resolve("processing");
+        }
+        else {
+          console.log("Fail cancelOrder");
+          reject("fail");
+        }
+      }, err => {
+        console.log(err);
+      });
+    }); 
+  }
 }
