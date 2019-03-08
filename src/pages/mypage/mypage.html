@@ -81,7 +81,7 @@
     <!-- 주문자 확인 버튼 -->
     <ion-grid class="login-button-area" *ngIf="loginTabsSelected=='비회원'">
       <ion-row class="login-button" *ngIf="nonMemberBuy == false">
-        <button full ion-button>주문확인</button>
+        <button (click)="nonMemberOrderDetail()" full ion-button>주문확인</button>
       </ion-row>
       <!-- 비회원 주문시 보여지는 페이지 (조건 미추가)-->
       <ion-row class="login-button" *ngIf="nonMemberBuy == true">

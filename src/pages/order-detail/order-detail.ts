@@ -117,9 +117,18 @@ export class OrderDetailPage {
           cssClass: 'alert-modify-member'
         });
         alert.present();
-      }else if(res=="invalid"){
+      }else if(res == "processing"){
         let alert = this.alertCtrl.create({
-          message: '주문 취소를 접수할 수 없습니다.',
+          message: '주문취소 중입니다.',
+          buttons: [{
+            text: '확인',
+          }],
+          cssClass: 'alert-modify-member'
+        });
+        alert.present();
+      }else if (res == "invalid") {
+        let alert = this.alertCtrl.create({
+          message: '주문을 취소할수 없습니다.',
           buttons: [{
             text: '확인',
           }],

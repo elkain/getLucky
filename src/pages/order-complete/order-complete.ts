@@ -43,7 +43,7 @@ export class OrderCompletePage {
   }
 
   goToOrderDetail(){
-    this.serverProvider.loadOrderDetail(this.orderCompInfo.orderID).then((res: any) => {
+    this.serverProvider.loadOrderDetail(this.orderCompInfo.orderID, null).then((res: any) => {
       if (res == "success") {
         this.navCtrl.parent.select(6);
       }

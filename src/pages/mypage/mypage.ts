@@ -327,7 +327,7 @@ export class MypagePage {
   }
 
   goToOrderDetail(orderedNumber) {
-    this.serverProvider.loadOrderDetail(orderedNumber).then((res:any)=>{
+    this.serverProvider.loadOrderDetail(orderedNumber, null).then((res:any)=>{
       if(res == "success"){
         this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 6, class: "mypage", orderedNumber: orderedNumber });
       }
@@ -481,6 +481,28 @@ export class MypagePage {
       });
       alert.present();
     }
+  }
+
+  nonMemberOrderDetail(){
+    this.serverProvider.loadOrderDetail(this.orderNumber, this.orderName).then((res: any) => {
+      if (res == "success") {
+        this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 6, class: "mypage", orderedNumber: this.orderNumber });
+      }else if(res == "noItem"){
+        let alert = this.alertCtrl.create({
+          message: '검색된 상품이 없습니다.',
+          buttons: [{
+            text: '확인',
+          }],
+          cssClass: 'alert-modify-member'
+        });
+        alert.present();
+      }else{
+        console.log("nonMember order Detail error");
+      }
+    }, (err) => {
+      console.log(err);
+
+    });
   }
 }
 
