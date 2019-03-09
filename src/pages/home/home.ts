@@ -1,5 +1,5 @@
 import { Component, ViewChild} from '@angular/core';
-import { NavController, Slides, App, PopoverController, NavParams, Platform, Refresher} from 'ionic-angular';
+import { NavController, Slides, App, PopoverController, NavParams, Platform, Content} from 'ionic-angular';
 import { ProductdetailPage } from '../productdetail/productdetail';
 import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
@@ -15,6 +15,7 @@ export class HomePage {
   shopTitle = "MARKET LUCKY";
   
   @ViewChild(Slides) slides: Slides;
+  @ViewChild(Content) content: Content;
   imageURL:string = "./assets/slides/";
   productImageURL:string = "./assets/imgs/"
 
@@ -42,6 +43,7 @@ export class HomePage {
   bestScrollHeight = "calc(100% - 88px)";
   headerHeight = "98px";
   contentMargin = "0";
+  scrollAmount;
 
   slideImages: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
@@ -104,6 +106,8 @@ export class HomePage {
   itemSelected(item){
     this.app.getRootNavs()[0].push(ProductdetailPage, {class:"home", product:item});
   }
+
+  
 
   slideItemSelect(){
     
@@ -368,5 +372,23 @@ export class HomePage {
         console.log(err);
       });
     }
+  }
+
+  scrollStart(events){
+    let location;
+    console.log(events);
+    
+    /*events.getScrollElement().subscribe(data=>{
+      console.log(data);
+      location = data;
+      
+    });*/
+    //events.complete();
+  }
+
+  loadData(event) {
+    console.log('Begin async operation');
+    event.disable('false');
+    event.complete();
   }
 }

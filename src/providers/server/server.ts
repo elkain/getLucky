@@ -84,10 +84,10 @@ export class ServerProvider {
     });    
   }
 
-  getAllProductData(){
+  getAllProductData(offset = 20){
     //상품 정보를 가져옴
     return new Promise((resolve, reject) => {
-      this.http.get(this.serverAddr + "product/loadAllProduct.php").subscribe(data => {
+      this.http.post(this.serverAddr + "product/loadAllProduct.php", offset).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
@@ -110,10 +110,11 @@ export class ServerProvider {
     });    
   }
 
-  getCategoryProductData(categoryCode){
+  getCategoryProductData(categoryCode, offset = 20){
     //특정 카테고리 상품 정보를 가져옴
+    let body = {categoryCode, offset}
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "product/loadCategoryProduct.php", categoryCode).subscribe(data => {
+      this.http.post(this.serverAddr + "product/loadCategoryProduct.php", body).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if(result.product == undefined){
@@ -686,17 +687,17 @@ export class ServerProvider {
     }
   }*/
 
-  searchItem(searchWord) {
+  searchItem(searchWord, offset = 20) {
     let memberUID:string;
     let body : Object;
     let addr : string;
     if(this.isMember == true){
       addr = "member/search.php";
       memberUID = this.memberProvider.memberData.UID;
-      body = { memberUID, searchWord };
+      body = { memberUID, searchWord, offset };
     }else{
       addr = "nonMember/search.php";
-      body = { searchWord };
+      body = { searchWord, offset };
     }
 
     return new Promise((resolve, reject) => {

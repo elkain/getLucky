@@ -25,9 +25,9 @@
   </div>
 </ion-header>
 
-<ion-content [style.margin-top]="contentMargin">
-  <ion-refresher *ngIf="showPageType=='주문내역'" slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
+<ion-content  [style.margin-top]="contentMargin">
+  <ion-refresher style="height:0" pullMin = 200 *ngIf="showPageType=='주문내역'" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <!--<ion-refresher-content></ion-refresher-content>-->
   </ion-refresher>
   <!-- 로그인 페이지 시작 -->
   <div *ngIf="showPageType=='login'">
