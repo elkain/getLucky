@@ -43,14 +43,14 @@ export class HomePage {
   bestScrollHeight = "calc(100% - 88px)";
   headerHeight = "98px";
   contentMargin = "0";
-  scrollAmount;
+  offset = 0;
 
   slideImages: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
   constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams,
     public shoppingbasketProvider: ShoppingbasketProvider, public serverProvider:ServerProvider, private platform:Platform, public searchProvider:SearchProvider) {
     this.homeParams = navParams.data;
-    
+    this.offset = 0;
     if(this.serverProvider.dataLoad == false){
       this.serverProvider.init().then((res: any) => {
         if (res == "success") {
@@ -106,8 +106,6 @@ export class HomePage {
   itemSelected(item){
     this.app.getRootNavs()[0].push(ProductdetailPage, {class:"home", product:item});
   }
-
-  
 
   slideItemSelect(){
     
@@ -332,6 +330,7 @@ export class HomePage {
   }
 
   doRefresh(event) {
+    this.offset = 0;
     console.log('Begin async operation');
     if (this.homeParams.class == "category"){
       this.serverProvider.getCategoryProductData(this.homeParams.category).then((res:any)=>{
@@ -374,21 +373,47 @@ export class HomePage {
     }
   }
 
-  scrollStart(events){
-    let location;
-    console.log(events);
-    
-    /*events.getScrollElement().subscribe(data=>{
-      console.log(data);
-      location = data;
-      
-    });*/
-    //events.complete();
-  }
-
   loadData(event) {
+    this.offset += 20;
     console.log('Begin async operation');
-    event.disable('false');
-    event.complete();
+    if (this.homeParams.class == "category") {
+      this.serverProvider.getCategoryProductData(this.homeParams.category, this.offset).then((res: any) => {
+        if (res == "success") {
+          this.showProducts = this.serverProvider.categoryProducts;
+          this.categoryChange(this.categorySelected);
+          this.productsSort(this.productSortOptionSelected, this.showProducts);
+        }
+        event.complete();
+      });
+    } else if (this.homeParams.class == "search") {
+      let searchItems = this.searchProvider.recentSearchItems;
+      let searchWord = searchItems[searchItems.length - 1];
+      this.serverProvider.searchItem(searchWord.searchWord, this.offset).then((res: any) => {
+        event.complete();
+      }, (err) => {
+        console.log(err);
+
+      });
+    } else {
+      this.serverProvider.getAllProductData(this.offset).then((res: any) => {
+        if (res == "success") {
+          this.showProducts = this.serverProvider.homeProducts;
+          this.homeCategoryChange(this.homeCategorySelected);
+          if (this.homeCategorySelected == "베스트") {
+            console.log(this.bestCategorySelected);
+            this.sortProductsByCategory(this.showProducts, this.bestCategorySelected);
+            this.productsSort(this.productSortOptionSelected, this.showProducts);
+          } else if (this.homeCategorySelected == "알뜰할인") {
+            this.sortProductsByCategory(this.showProducts, this.saleCategorySelected);
+            this.productsSort(this.productSortOptionSelected, this.showProducts);
+          }
+        }
+        event.complete();
+        console.log(res);
+      }, (err) => {
+        console.log(err);
+      });
+    }
+    
   }
 }

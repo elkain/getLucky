@@ -84,16 +84,15 @@ export class ServerProvider {
     });    
   }
 
-  getAllProductData(offset = 20){
+  getAllProductData(offset = 0){
     //상품 정보를 가져옴
     return new Promise((resolve, reject) => {
       this.http.post(this.serverAddr + "product/loadAllProduct.php", offset).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
-        if (result.status == "success") {
+        if (result.status == "success" && result != undefined) {
           console.log("product load Success");
-          if (result == null) {
-            this.products = [];
+          if (result.product == undefined || result.product == null) {
             resolve("noItem");
           }else{
             this.products = this.productRearrange(result.product);
@@ -110,7 +109,7 @@ export class ServerProvider {
     });    
   }
 
-  getCategoryProductData(categoryCode, offset = 20){
+  getCategoryProductData(categoryCode, offset = 0){
     //특정 카테고리 상품 정보를 가져옴
     let body = {categoryCode, offset}
     return new Promise((resolve, reject) => {
@@ -451,17 +450,27 @@ export class ServerProvider {
     }); 
   }
 
-  loadOrderInfo(){
+  loadOrderInfo(offset = 0){
     let memberUID = this.memberProvider.memberData.UID;
+    let body = { offset, memberUID}
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "member/order/loadOrderInfo.php", memberUID).subscribe(data => {
+      this.http.post(this.serverAddr + "member/order/loadOrderInfo.php", body).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log(" Success");
-          this.orderProvivder.orderInfos = [];
-          if (result.orderInfos.length != 0) {
-            this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
+          if(offset > 0){
+            if (result.orderInfos.length != 0) {
+              let orderInfos = this.orderInfoRearrange(result.orderInfos);
+              for(let i = 0; i<orderInfos.length; i++){
+                this.orderProvivder.orderInfos.push(orderInfos[i]);
+              }
+            }
+          }else{
+            this.orderProvivder.orderInfos = [];
+            if (result.orderInfos.length != 0) {
+              this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
+            }
           }
           resolve("success");
         }
@@ -687,7 +696,7 @@ export class ServerProvider {
     }
   }*/
 
-  searchItem(searchWord, offset = 20) {
+  searchItem(searchWord, offset = 0) {
     let memberUID:string;
     let body : Object;
     let addr : string;

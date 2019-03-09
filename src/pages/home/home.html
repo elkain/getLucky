@@ -51,8 +51,8 @@
     </div>
 </ion-header>
 
-<ion-content has-bouncing overflow-scroll = "true" scrollEvents="true" (ionScroll)="scrollStart($event)" [style.margin-top]="contentMargin">
-    <ion-refresher enabled = 'true' style="height: 0;" pullMin = "200" slot="fixed" (ionRefresh)="doRefresh($event)">
+<ion-content [style.margin-top]="contentMargin">
+    <ion-refresher style="height: 0;" pullMin = "200" slot="fixed" (ionRefresh)="doRefresh($event)">
         <!--<ion-refresher-content></ion-refresher-content>-->
     </ion-refresher>
 
@@ -128,7 +128,7 @@
     </ion-scroll>
     <!-- event page end -->
 
-    <ion-infinite-scroll [enabled]="true" threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
         <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>

@@ -67,6 +67,7 @@ export class MypagePage {
 
   orderInfos;
   homeParams;
+  offset=0;
 
   headerSize = "50px";
   contentMargin = "0";
@@ -76,7 +77,7 @@ export class MypagePage {
 
     this.homeParams = navParams.data;
     this.shopTitle = this.serverProvider.shopTitle;
-
+    this.offset = 0;
 
     this.loginTabsSelected = this.loginTabs[0];
     this.findCategorySelected = this.findCategories[0];
@@ -99,6 +100,7 @@ export class MypagePage {
   }
 
   ionViewDidEnter() {
+    this.offset = 0;
     if (this.isMember == true){
       if (this.homeParams.class == "orderDetail") {
         this.showPageType = "주문내역";
@@ -518,8 +520,21 @@ export class MypagePage {
 
   doRefresh(event) {
     console.log('Begin async operation');
-    
+    this.offset = 0;
     this.serverProvider.loadOrderInfo().then((res: any) => {
+      if (res == "success") {
+        this.orderInfos = this.orderProvider.orderInfos;
+        event.complete();
+      }
+      console.log(res);
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  loadData(event){
+    this.offset += 20;
+    this.serverProvider.loadOrderInfo(this.offset).then((res: any) => {
       if (res == "success") {
         this.orderInfos = this.orderProvider.orderInfos;
         event.complete();
