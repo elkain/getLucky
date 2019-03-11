@@ -52,9 +52,9 @@
 </ion-header>
 
 <ion-content [style.margin-top]="contentMargin">
-    <ion-refresher style="height: 0;" pullMin = "200" slot="fixed" (ionRefresh)="doRefresh($event)">
-        <!--<ion-refresher-content></ion-refresher-content>-->
-    </ion-refresher>
+    <!-- <ion-refresher style="height: 0;" pullMin = "200" slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher> -->
 
     <!-- recommand page start -->
     <ion-scroll scrollY="true" class="home-scroll" *ngIf="homeCategorySelected==homeCategories[0]" > 
@@ -128,8 +128,8 @@
     </ion-scroll>
     <!-- event page end -->
 
-    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <!--<ion-infinite-scroll enabled= 'false' threshold="100px" (ionInfinite)="loadData($event)">
         <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
         </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+    </ion-infinite-scroll>-->
 </ion-content>

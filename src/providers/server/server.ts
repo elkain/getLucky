@@ -95,7 +95,14 @@ export class ServerProvider {
           if (result.product == undefined || result.product == null) {
             resolve("noItem");
           }else{
-            this.products = this.productRearrange(result.product);
+            if(offset > 0){
+              let products = this.productRearrange(result.product);              
+              for(let i = 0; i<products.length; i++){
+                this.products.push(products[i]);
+              }
+            }else{
+              this.products = this.productRearrange(result.product);
+            }
             resolve("success");
           }
         }
@@ -116,7 +123,13 @@ export class ServerProvider {
       this.http.post(this.serverAddr + "product/loadCategoryProduct.php", body).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
-        if(result.product == undefined){
+        if (offset > 0 && result.product != undefined){
+          let products = this.productRearrange(result.product);
+          for (let i = 0; i < products.length; i++) {
+            this.products.push(products[i]);
+          }
+          resolve("success");
+        } else if(result.product == undefined){
           this.categoryProducts = [];
           resolve("noItem");
         }else{
@@ -715,22 +728,32 @@ export class ServerProvider {
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log(" Success");
-          // 최근 검색 기록 로드
-          if(this.isMember == true){
-            if (result.recentSearch != undefined) {
-              this.searchProvider.recentSearchItems = result.recentSearch;
-            }else {
-              this.searchProvider.recentSearchItems = [];
+          if(offset == 0){
+            // 최근 검색 기록 로드
+            if (this.isMember == true) {
+              if (result.recentSearch != undefined) {
+                this.searchProvider.recentSearchItems = result.recentSearch;
+              } else {
+                this.searchProvider.recentSearchItems = [];
+              }
             }
-          }
 
-          if (result['product'] != undefined) {
-            this.searchProducts = this.productRearrange(result.product);
-          } else {
-            this.searchProducts = [];
-            resolve("noItem");
+            if (result['product'] != undefined) {
+              this.searchProducts = this.productRearrange(result.product);
+            } else {
+              this.searchProducts = [];
+              resolve("noItem");
+            }
+            resolve("success");
+          }else{
+            if (result['product'] != undefined) {
+              let searchProduct = this.productRearrange(result.product);
+              for (let i = 0; i < searchProduct.length; i++){
+                this.searchProducts.push(searchProduct[i]);
+              }
+            }
+            resolve("success");
           }
-          resolve("success");
         }
         else {
           console.log("Fail cancelOrder");

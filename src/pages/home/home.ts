@@ -371,6 +371,7 @@ export class HomePage {
         console.log(err);
       });
     }
+    event.disable = true;
   }
 
   loadData(event) {
@@ -415,5 +416,10 @@ export class HomePage {
       });
     }
     
+    if(this.offset <= 20){
+      event.enable(true);
+    }else{
+      event.enable(false);
+    }
   }
 }

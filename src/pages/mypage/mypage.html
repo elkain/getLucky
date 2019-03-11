@@ -26,9 +26,9 @@
 </ion-header>
 
 <ion-content  [style.margin-top]="contentMargin">
-  <ion-refresher style="height:0" pullMin = 200 *ngIf="showPageType=='주문내역'" slot="fixed" (ionRefresh)="doRefresh($event)">
-    <!--<ion-refresher-content></ion-refresher-content>-->
-  </ion-refresher>
+  <!--<ion-refresher style="height:0" pullMin = 200 *ngIf="showPageType=='주문내역'" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>-->
   <!-- 로그인 페이지 시작 -->
   <div *ngIf="showPageType=='login'">
     <!-- 상단 회원 비회원 선택 탭 -->
@@ -290,8 +290,8 @@
     </ion-list>
   </ion-scroll>
   <!-- 배송지 관리 끝 -->
-  <ion-infinite-scroll *ngIf="showPageType=='주문내역'" threshold="100px" (ionInfinite)="loadData($event)">
+  <!-- <ion-infinite-scroll enabled = 'false' *ngIf="showPageType=='주문내역'" threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  </ion-infinite-scroll>-->
 </ion-content>

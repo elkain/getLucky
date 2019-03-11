@@ -109,7 +109,7 @@ export class MypagePage {
         console.log(this.showPageType);
         this.homeParams.class = undefined;
       }else{
-        this.contentMargin = "48px";
+        this.contentMargin = "0";
         this.headerSize = "50px";
         this.showPageType = "mypage";
       }
@@ -299,7 +299,7 @@ export class MypagePage {
       this.app.getRootNavs()[0].push(SignupPage, { class: "mypage" });
     }else{
       this.showPageType = menu;
-      this.headerSize = "98px";
+      this.headerSize = "50px";
       this.contentMargin = "0";
       if (this.showPageType == "배송지관리"){
         this.deliveryAddrs = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs));
@@ -326,6 +326,8 @@ export class MypagePage {
 
   back() {
     this.showPageType = "mypage";
+    this.headerSize = "50px";
+    this.contentMargin = "0px";
     this.showBackbtn = false;
     this.deliveryAddressEnter = false;
   }
@@ -530,6 +532,8 @@ export class MypagePage {
     }, (err) => {
       console.log(err);
     });
+
+    event.disable = true;
   }
 
   loadData(event){
