@@ -53,7 +53,8 @@ export class SignupPage {
     this.male = this.whiteColor;
     this.female = this.whiteColor;
     this.isMember = this.serverProvider.isMember;
-    this.emailOptionLists = this.serverProvider.mobileOptionLists;
+    this.emailOptionLists = this.serverProvider.emailOptionLists;
+    this.emailOption = this.emailOptionLists[0];
   }
 
   ionViewDidLoad() {
