@@ -633,8 +633,14 @@ export class ServerProvider {
 
     for (let i = 0; i < data.length; i++) {
       data[i].imagePath = path + data[i].imagePath;
-      data[i].endDate = data[i].endDate.date;
-      data[i].startDate = data[i].startDate.date;
+      if (data[i].endDate != null){
+        data[i].endDate = data[i].endDate.date;
+      }
+      
+      if (data[i].startDate != null){
+        data[i].startDate = data[i].startDate.date;
+      }
+      
     }
     /*for(let i = 0; i<data['product'].length; i++){
       while (j < data['imagePath'].length && data['product'][i].productCode == data['imagePath'][j].productCode){
