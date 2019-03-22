@@ -109,7 +109,7 @@ export class OrderPage {
       product = this.orderProvider.orderedProduct;
       
       this.orderInfo.orderPrice = product.price * product.count;
-      this.orderInfo.sale = (product.price - product.salePrice) * product.count;
+      this.orderInfo.sale = product.sale * product.count;
 
       if ((this.orderInfo.orderPrice - this.orderInfo.sale) >= this.orderProvider.deliveryFreeFee) {
         this.orderInfo.deliveryFee = 0;
@@ -117,7 +117,7 @@ export class OrderPage {
         this.orderInfo.deliveryFee = this.orderProvider.deliveryFee;
       }
 
-      this.orderInfo.totalPrice = product.salePrice * product.count + this.orderInfo.deliveryFee;
+      this.orderInfo.totalPrice = (product.price - product.sale) * product.count + this.orderInfo.deliveryFee;
       this.orderInfo.orderedProducts.push(product);
       
     } else if (this.prevPage == "shoppingbasket"){

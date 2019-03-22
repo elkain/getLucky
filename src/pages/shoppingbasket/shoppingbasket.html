@@ -68,7 +68,8 @@
           <p> 합계 </p>
         </ion-col>
         <ion-col class="real-price">
-          <p><del>{{product.price * product.count}}</del> {{product.salePrice * product.count}} </p>
+          <p *ngIf="product.sale!=0"><del>{{product.price * product.count}}</del> {{product.salePrice * product.count}} </p>
+          <p *ngIf="product.sale==0">{{product.price * product.count}} </p>
         </ion-col>
       </ion-row>
     </ion-grid>

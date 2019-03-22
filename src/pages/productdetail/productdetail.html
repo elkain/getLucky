@@ -31,8 +31,11 @@
       <ion-item class="product-detail-name">
         {{product.productName}}
       </ion-item>
-      <ion-item class="product-detail-price">
-        {{product.price}} <del>{{product.salePrice}}</del>
+      <ion-item *ngIf="product.sale!=0"  class="product-detail-price">
+        {{product.salePrice}} <del>{{product.price}}</del>
+      </ion-item>
+      <ion-item *ngIf="product.sale==0"  class="product-detail-price">
+        {{product.price}}
       </ion-item>
       <ion-item class="product-detail-delivery">
         배송비 {{deliveryFee}}원 ({{deliveryFreeString}} 이상 무료)

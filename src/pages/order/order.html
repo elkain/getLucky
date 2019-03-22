@@ -275,7 +275,8 @@
       <img class="thumbnail-img" src = "{{product.imagePath}}">
       <p class="product-info-name"><b>상품명 : {{product.productName}}</b></p><p class="product-info-compo">구성/용량</p>
       <p class="product-info-count"><b>수량 : {{product.count}}</b></p>
-      <p class="product-info-price"><b>혜택가 : {{product.salePrice * product.count}}</b></p>
+      <p *ngIf="product.sale!=0" class="product-info-price"><b>혜택가 : {{product.salePrice * product.count}}</b></p>
+      <p *ngIf="product.sale==0" class="product-info-price"><b>판매가 : {{product.price * product.count}}</b></p>
     </ion-item>
   </ion-list>
   <!-- 상품 정보 끝 -->

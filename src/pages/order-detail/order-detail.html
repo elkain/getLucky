@@ -33,7 +33,8 @@
         <p class="product-info-name"><b>상품명 : {{product.productName}}</b></p>
         <p class="product-info-compo">구성/용량</p>
         <p class="product-info-count"><b>수량 : {{product.soldProductCount}}</b></p>
-        <p class="product-info-price"><b>혜택가 : {{product.salePrice}}</b></p>
+        <p *ngIf="product.soldProductSale!=0" class="product-info-price"><b>혜택가 : {{product.soldProductPrice}}</b></p>
+        <p *ngIf="product.soldProductSale==0" class="product-info-price"><b>판매가 : {{product.soldProductPrice}}</b></p>
       </ion-item>
       <ion-item class="order-status">
         <label class="order-status-label">{{orderInfo.orderStatus}}</label>

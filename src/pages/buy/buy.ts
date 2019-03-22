@@ -33,7 +33,7 @@ export class BuyPage {
     this.product = this.navParams.get("product");
     this.isMember = this.serverProvider.isMember;
     this.product.count = 1;
-    this.product.totalPrice = this.product.salePrice * this.product.count;
+    this.product.totalPrice = (this.product.price - this.product.sale) * this.product.count;
     this.deliveryFee = orderProvider.deliveryFee;
     this.deliveryFreeString = orderProvider.deliveryFreeString;
   }
@@ -77,7 +77,7 @@ export class BuyPage {
 
   increaseProductNum(){
     this.product.count++;
-    this.product.totalPrice = this.product.salePrice * this.product.count;
+    this.product.totalPrice = (this.product.price - this.product.sale) * this.product.count;
   }
 
   decreaseProductNum(){
@@ -85,6 +85,6 @@ export class BuyPage {
       this.product.count--;
     }
 
-    this.product.totalPrice = this.product.salePrice * this.product.count;
+    this.product.totalPrice = (this.product.price - this.product.sale) * this.product.count;
   }
 }

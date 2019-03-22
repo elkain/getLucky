@@ -25,7 +25,8 @@
       <label>{{product.productName}}</label>
     </ion-row>
     <ion-row class="buy-info-price">
-      <label>{{product.salePrice}}<del>{{product.price}}</del></label>
+      <label *ngIf="product.sale!=0">{{product.salePrice}}<del>{{product.price}}</del></label>
+      <label *ngIf="product.sale==0">{{product.price}}</label>
     </ion-row>
     <ion-row class="delivery-fee-info">
       <p>배송비 <span>{{deliveryFee}}원</span>(<span>{{deliveryFreeString}}</span> 이상 무료)</p>
