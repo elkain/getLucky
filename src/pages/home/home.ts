@@ -120,7 +120,7 @@ export class HomePage {
     this.productSortOptionSelected = this.productSortOptions[0];
 
     if(this.homeCategorySelected != this.homeCategories[0]){
-      this.headerHeight = "136px";
+      this.headerHeight = "98px";
       this.contentMargin = "38px";
       this.productsSort("판매인기순", this.showProducts);
     }else{
