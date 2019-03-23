@@ -143,9 +143,9 @@
         <div class="login-find-label"><p><b>연락처</b></p></div>
         <div class="login-find-phone-input">
           <div class="arrow-down-icon" [style.top]="arrowIconTop"></div>
-          <select [(ngModel)]="mobile1">
-            <option *ngFor="let mobileOptionList of mobileOptionLists">{{mobileOptionList}}</option>
-          </select>
+          <ion-select interface="popover" [(ngModel)]="mobile1">
+            <ion-option *ngFor="let mobileOptionList of mobileOptionLists">{{mobileOptionList}}</ion-option>
+          </ion-select>
           <span>
             <p>-</p>
           </span>

@@ -63,7 +63,7 @@ export class MypagePage {
   deliveryAddressMode = []; // "수정", "출력"
   deliveryAddressEnter = false;
   mobileOptionLists = [];
-  arrowIconTop = "231px";
+  arrowIconTop = "236px";
 
   orderInfos;
   homeParams;
@@ -130,7 +130,7 @@ export class MypagePage {
     
     this.findCategorySelected = this.findCategories[0];
     this.showBackbtn = false;
-    this.arrowIconTop = "183px";
+    this.arrowIconTop = "187px";
     this.findLoginInfoMethod = 'phone';
     this.deliveryAddressEnter = false;
 
@@ -151,9 +151,9 @@ export class MypagePage {
     this.findCategorySelected = this.findCategories[idx];
 
     if (this.findCategorySelected == this.findCategories[0]) {
-      this.arrowIconTop = "183px";
+      this.arrowIconTop = "187px";
     } else if (this.findCategorySelected == this.findCategories[1]) {
-      this.arrowIconTop = "231px"; 
+      this.arrowIconTop = "236px"; 
     }
   }
 
@@ -284,9 +284,9 @@ export class MypagePage {
     this.findCategorySelected = this.findCategories[idx];
     
     if (this.findCategorySelected == this.findCategories[0]) {
-      this.arrowIconTop = "183px";
+      this.arrowIconTop = "187px";
     } else if (this.findCategorySelected == this.findCategories[1]) {
-      this.arrowIconTop = "231px";
+      this.arrowIconTop = "236px";
     }
   }
 

@@ -52,9 +52,9 @@
       </div>
       <ion-input class="email-input" [(ngModel)]="email" type="text"></ion-input>
       <span><p>@</p></span>
-      <select class="email-input2" [(ngModel)]="emailOption">
-        <option *ngFor="let emailOptionList of emailOptionLists">{{emailOptionList}}</option>
-      </select>
+      <ion-select interface="popover" class="email-input2" [(ngModel)]="emailOption">
+        <ion-option *ngFor="let emailOptionList of emailOptionLists">{{emailOptionList}}</ion-option>
+      </ion-select>
     </ion-row>
     <!-- 휴대폰 입력 -->
     <ion-row class="signup-phone">
@@ -173,9 +173,9 @@
       <span>
         <p>@</p>
       </span>
-      <select class="email-input2" [(ngModel)]="emailOption">
-        <option *ngFor="let emailOptionList of emailOptionLists">{{emailOptionList}}</option>
-      </select>
+      <ion-select class="email-input2" [(ngModel)]="emailOption">
+        <ion-option *ngFor="let emailOptionList of emailOptionLists">{{emailOptionList}}</ion-option>
+      </ion-select>
     </ion-row>
     <!-- 휴대폰 입력 -->
     <ion-row class="signup-phone">

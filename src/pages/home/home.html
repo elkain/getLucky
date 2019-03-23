@@ -91,11 +91,12 @@
     </ion-scroll>
     <!-- recommand page end -->
     <ion-scroll scrollY="true" class="best-scroll" [style.height]="bestScrollHeight" *ngIf="homeCategorySelected==homeCategories[1] || homeCategorySelected==homeCategories[2]">
-        <div left class="best-sort-option">
-            <select [(ngModel)]="productSortOptionSelected" (change)="productsOptionChange()">
-                <option *ngFor="let productSortOption of productSortOptions">{{productSortOption}}</option>
-            </select>
-        </div>
+        <ion-item class="best-sort-option">
+            <ion-label></ion-label>
+            <ion-select interface="popover" [(ngModel)]="productSortOptionSelected" (change)="productsOptionChange()">
+                <ion-option *ngFor="let productSortOption of productSortOptions">{{productSortOption}}</ion-option>
+            </ion-select>
+        </ion-item>
 
         <ion-grid class="best-product-list" (swipe)="swipeSubcategory($event)">
             <ion-row *ngIf="showProducts.length == 0">

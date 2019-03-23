@@ -164,24 +164,40 @@ page-home {
             width: calc(100% - 16px); 
             height: 40px;
             margin: 0px 8px;
+            background: transparent;
 
-            select{
+            .item-inner{
+                padding:0;
+                border: none;
+            }
+
+            .select{
                 height: 40px;
-                width: 100px;
+                width: 124px;
+                padding:0;
+                margin: 4px 0 0;
                 border : none;
-                float:right;
-                -webkit-appearance:none; 
-                -moz-appearance:none;
+                display: flex;
+                align-items: center;
                 background: url('../../assets/icon/ios-arrow-down.png');
                 background-size:24px;
                 background-repeat:no-repeat;
                 background-position: 98% 9px;
 
-                option{
-                    height: 40px;
-                    width: 100px;
-                    background-color: color($colors,default);
-                    border : none;
+                .select-icon{
+                    display: none;
+                }
+
+                .select-text{
+                    width: 126px;
+                    padding-right: 26px;
+                    padding-bottom: 2px;
+                    text-align: right;
+                }
+
+                ion-option{
+                    width:100px !important;
+                    height: 200px !important;
                 }
             }
         }
@@ -297,4 +313,37 @@ page-home {
     }
     /* event 화면 종료 */
     $segment-button-md-text-color-activated:black;
+}
+
+.popover-md{
+    .popover-content{
+        width: 130px !important;
+        left:calc(100% - 138px) !important;
+        
+        .popover-viewport{
+            background-color:transparent;
+
+            .list .item .item-inner{
+                border:none;
+
+                .radio{
+                    margin: 0;
+
+                    .radio-icon{
+                        width: 0;
+                        height:0;
+                        border-width:0;
+                        border-radius: 0;
+
+                        .radio-inner{
+                            width: 0;
+                            height:0;
+                            border-width:0;
+                            border-radius: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

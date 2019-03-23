@@ -345,14 +345,13 @@ page-mypage {
 
             .login-find-input{
                 border:1px solid $border-color;
-                margin:2px 0;
             }
             
             /* 전화번호 입력 */
             .login-find-phone-input{
                 width:calc(100% - 100px);
 
-                select{
+                .select{
                     width: calc((100% - 26px)/3);
                     height: 100%;
                     float: left;
@@ -363,6 +362,25 @@ page-mypage {
                     padding-left: 8px;
                     border: 1px solid $border-color;
                     background-color: $white-background-color;
+
+                    padding: 0;
+                    display: flex;
+                    align-items: center;
+
+                    .select-icon{
+                        display: none;
+                    }
+
+                    .select-text{
+                        width: 126px;
+                        padding-left: 4px;
+                        padding-bottom: 2px;
+                        text-align: left;
+                    }
+
+                    .item-cover-md{
+                        display: none;
+                    }
                 }
 
                 .arrow-down-icon{
@@ -406,7 +424,15 @@ page-mypage {
             }
         }
 
-        .login-find-phone{
+        .login-find-id{
+            margin:2px 8px 0;
+        }   
+
+        .login-find-name{
+            margin:2px 8px;
+        }
+
+        .login-find-phone, .login-find-email{
             margin-bottom: 8px;
         }
     }

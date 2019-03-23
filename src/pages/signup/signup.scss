@@ -151,9 +151,27 @@ page-signup {
                 -webkit-appearance:none; 
                 -moz-appearance:none;
                 background: url('../../assets/icon/ios-arrow-down-white.png');
-                background-size:28px;
+                background-size:20px;
                 background-repeat:no-repeat;
-                background-position: 98% 2px;
+                background-position: 98% 6px;
+                padding: 0;
+                display: flex;
+                align-items: center;
+
+                .select-icon{
+                    display: none;
+                }
+
+                .select-text{
+                    width: 126px;
+                    padding-left: 4px;
+                    padding-bottom: 2px;
+                    text-align: left;
+                }
+
+                .item-cover-md{
+                    display: none;
+                }
             }
         }
 
@@ -166,6 +184,7 @@ page-signup {
                 width: calc(100% - 216px);
                 border: 1px solid $border-color;
                 margin-right:16px;
+                height: 32px;
 
                 .input{
                     display: block;
