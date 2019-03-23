@@ -205,12 +205,14 @@ export class OrderPage {
   }
 
   presentPopover() {
-    const popover = this.popoverCtrl.create(SelectPopoverPage, { addressLists: this.memberAddressLists}, { cssClass:'delivery-popover'});
+    const popover = this.popoverCtrl.create(SelectPopoverPage, { addressLists: this.memberAddressLists }, { cssClass: 'delivery-popover'});
     popover.onDidDismiss(idx => {
-      this.customInfo.receiverName = this.memberAddressLists[idx].receiver;
-      this.customInfo.receiverAddress = this.memberAddressLists[idx].address;
-      this.customInfo.ordererMobile = this.memberAddressLists[idx].mobile;
-    })
+      if(idx!=null){
+        this.customInfo.receiverName = this.memberAddressLists[idx].receiver;
+        this.customInfo.receiverAddress = this.memberAddressLists[idx].address;
+        this.customInfo.ordererMobile = this.memberAddressLists[idx].mobile;
+      }
+    });
     popover.present();
   }
 

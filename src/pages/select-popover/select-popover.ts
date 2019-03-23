@@ -49,7 +49,7 @@ export class SelectPopoverPage {
   }
 
   cancel(){
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(null);
   }
 
   confirm(){
