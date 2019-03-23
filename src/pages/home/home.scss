@@ -141,9 +141,10 @@ page-home {
 
             ion-segment-button.segment-button {
                 display: inline-block;
-                width: ((60/360)*100vw);
+                width: auto;
                 height: 40px;
                 font-size:1.2rem;
+                padding: 0 8px;
                 font-weight: bold;
             }
         }
