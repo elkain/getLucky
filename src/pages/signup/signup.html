@@ -7,7 +7,8 @@
 <ion-header no-shadow no-border>
 
   <ion-navbar>
-    <ion-title>회원가입</ion-title>
+    <ion-title *ngIf="isMember==false">회원가입</ion-title>
+    <ion-title *ngIf="isMember==true">회원정보수정</ion-title>
   </ion-navbar>
 
 </ion-header>

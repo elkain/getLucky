@@ -59,6 +59,7 @@ export class SignupPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignupPage');
+    this.isMember = this.serverProvider.isMember;
 
     if (this.isMember==true){
       this.memberData = this.memberProvider.memberData;
