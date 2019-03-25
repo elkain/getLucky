@@ -1,5 +1,5 @@
-import { Component, ViewChild} from '@angular/core';
-import { NavController, Slides, App, PopoverController, NavParams, Platform, Content} from 'ionic-angular';
+import { Component, ViewChild, NgZone } from '@angular/core';
+import { NavController, Slides, App, PopoverController, NavParams, Platform, Content } from 'ionic-angular';
 import { ProductdetailPage } from '../productdetail/productdetail';
 import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
@@ -18,6 +18,8 @@ export class HomePage {
   @ViewChild(Content) content: Content;
   imageURL:string = "./assets/slides/";
   productImageURL:string = "./assets/imgs/"
+
+  refreshorEnable:boolean;
 
   homeCategories = ["럭키추천", "베스트", "알뜰할인",  "이벤트"];
   homeCategorySelected;
@@ -44,10 +46,11 @@ export class HomePage {
   headerHeight = "98px";
   contentMargin = "0";
   offset = 0;
+  scrollAmount=0;
 
   slideImages: string[] = [this.imageURL + "slide1.jpg", this.imageURL + "slide2.jpg", this.imageURL + "slide3.jpg"];
 
-  constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams:NavParams,
+  constructor(public navCtrl: NavController, private app: App, public popoverCtrl: PopoverController, public navParams: NavParams, public zone: NgZone,
     public shoppingbasketProvider: ShoppingbasketProvider, public serverProvider:ServerProvider, private platform:Platform, public searchProvider:SearchProvider) {
     this.homeParams = navParams.data;
     this.offset = 0;
@@ -62,7 +65,19 @@ export class HomePage {
         console.log(err);
       });
     }
+    
+    this.refreshorEnable = true;
+    
     console.log(this.showProducts);
+  }
+
+  scrollHandler(event) {
+    //console.log(`ScrollEvent: ${event}`)
+    this.zone.run(() => {
+      // since scrollAmount is data-binded,
+      // the update needs to happen in zone
+      this.scrollAmount++;
+    })
   }
 
   ionViewDidEnter() {
@@ -279,6 +294,7 @@ export class HomePage {
   }
 
   swipeSubcategory(event){
+    
     if (this.homeParams.class == "category"){
 
       let categories = this.homeParams.category.subCategories;
@@ -371,7 +387,13 @@ export class HomePage {
         console.log(err);
       });
     }
-    event.disable = true;
+  }
+
+  doPulling(refresher) {
+    console.log('DOPULLING', refresher.progress);
+    if (refresher.progress<0.15){
+      refresher.cancel();
+    }
   }
 
   loadData(event) {

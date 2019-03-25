@@ -80,6 +80,9 @@ page-mypage {
     }
 
     // 전체 배경 색
+    .content{
+        background-color: $background-color;
+    }
     .scroll-content{
         background-color: $background-color;
     }

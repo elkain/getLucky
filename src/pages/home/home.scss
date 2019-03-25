@@ -2,6 +2,14 @@ page-home {
     // margin padding 모두 dp 로 추후 수정 필요
     //overflow-y: hidden;
 
+    .content{
+        height: 100%;
+
+        .scroll-content{
+            background-color: $background-color !important;
+        }
+    }
+    
     /* home navigation 화면 시작*/
     .home-nav-menu{
         width: 100%;
@@ -47,79 +55,74 @@ page-home {
     /* home navigation 화면 종료*/
 
     /* recommand 화면 시작 */
-    .home-scroll{
-        height: calc(100%);
-        width:  100%;
-        background-color: $background-color;
+    ::-webkit-scrollbar {
+        width: 0px;  /* remove scrollbar space */
+        background: transparent;  /* optional: just make scrollbar invisible */
+    }
+    
+    .home-slide{
+        height: calc((168/640)*100vh);                      
+        width: calc(100% - 16px);                           
+        margin: 0px 8px 8px 8px;    
 
-        ::-webkit-scrollbar {
-            width: 0px;  /* remove scrollbar space */
-            background: transparent;  /* optional: just make scrollbar invisible */
+        cursor:pointer;
+
+        .home-slide-child{
+            background-size:100% calc((168/640)*100vh);
+            background-repeat: no-repeat;
         }
-        
-        .home-slide{
-            height: calc((168/640)*100vh);                      
-            width: calc(100% - 16px);                           
-            margin: 0px 8px 8px 8px;    
 
-            cursor:pointer;
+        .button{
+            height: 64px;
+            width: 64px;
+            padding:0 20px;
+            font-size:$icon-size;
+        }
+    }
 
-            .home-slide-child{
-                background-size:100% calc((168/640)*100vh);
-                background-repeat: no-repeat;
-            }
+    .home-product-list{
+        padding: 0;
+        margin: 16px 8px 0px 8px;
+        width : calc(100% - 16px);
+        height: auto;
+
+        ion-row{
+            width: 100%;
+            height: calc((168/640)*100vh);
+            padding: 0;
+            margin-bottom: 8px;
 
             .button{
-                height: 64px;
-                width: 64px;
-                padding:0 20px;
-                font-size:$icon-size;
-            }
-        }
-
-        .home-product-list{
-            padding: 0;
-            margin: 16px 8px 0px 8px;
-            width : calc(100% - 16px);
-            height: 100%;
-
-            ion-row{
-                width: 100%;
-                height: calc((168/640)*100vh);
                 padding: 0;
-                margin-bottom: 8px;
+                margin: 0;
+                width:100%;
+                height: 100%;
+                box-shadow: none;
+                background-color: white;
 
-                .button{
-                    padding: 0;
-                    margin: 0;
-                    width:100%;
+                ion-col{
+                    padding:0;
                     height: 100%;
-                    box-shadow: none;
-                    background-color: white;
+                    color:$black-font-color;
 
-                    ion-col{
-                        padding:0;
-                        height: 100%;
-                        color:$black-font-color;
+                    h2, p{
+                        text-align: left;
 
-                        h2, p{
-                            text-align: left;
-
-                            del{
-                                font-size:$small-font-size;
-                            }
+                        del{
+                            font-size:$small-font-size;
                         }
                     }
+                }
 
-                    img{
-                        width: 100%;
-                        height: 100%;
-                        background-size: 100%;
-                    }
+                img{
+                    width: 100%;
+                    height: 100%;
+                    background-size: 100%;
                 }
             }
         }
     }
+    
     /* recommand 화면 종료 */
 
     /* best & sale 화면 시작 */
@@ -150,135 +153,128 @@ page-home {
         }
     }
 
-    .best-scroll{
-        height: 100%;
-        width: 100%;
-        margin: 0;
-        background-color: $background-color;
+    ::-webkit-scrollbar {
+        width: 0px;  /* remove scrollbar space */
+        background: transparent;  /* optional: just make scrollbar invisible */
+    }
 
-        ::-webkit-scrollbar {
-            width: 0px;  /* remove scrollbar space */
-            background: transparent;  /* optional: just make scrollbar invisible */
-        }
+    .best-sort-option{
+        width: calc(100% - 16px); 
+        height: 40px;
+        margin: 0px 8px;
+        background: $background-color;
 
-        .best-sort-option{
-            width: calc(100% - 16px); 
-            height: 40px;
-            margin: 0px 8px;
-            background: transparent;
-
-            .item-inner{
-                padding:0;
-                border: none;
-            }
-
-            .select{
-                height: 40px;
-                width: 124px;
-                padding:0;
-                margin: 4px 0 0;
-                border : none;
-                display: flex;
-                align-items: center;
-                background: url('../../assets/icon/ios-arrow-down.png');
-                background-size:24px;
-                background-repeat:no-repeat;
-                background-position: 98% 9px;
-
-                .select-icon{
-                    display: none;
-                }
-
-                .select-text{
-                    width: 126px;
-                    padding-right: 26px;
-                    padding-bottom: 2px;
-                    text-align: right;
-                }
-
-                ion-option{
-                    width:100px !important;
-                    height: 200px !important;
-                }
-            }
-        }
-
-        .best-product-list{
+        .item-inner{
             padding:0;
-            width: 100%;
+            border: none;
+        }
+
+        .select{
+            height: 40px;
+            width: 124px;
+            padding:0;
+            margin: 4px 0 0;
+            border : none;
+            display: flex;
+            align-items: center;
+            background: url('../../assets/icon/ios-arrow-down.png');
+            background-size:24px;
+            background-repeat:no-repeat;
+            background-position: 98% 9px;
+
+            .select-icon{
+                display: none;
+            }
+
+            .select-text{
+                width: 126px;
+                padding-right: 26px;
+                padding-bottom: 2px;
+                text-align: right;
+            }
+
+            ion-option{
+                width:100px !important;
+                height: 200px !important;
+            }
+        }
+    }
+
+    .best-product-list{
+        padding:0;
+        width: 100%;
+        height: 100%;
+
+        ion-row{
+            margin:0px 4px;
+            width: calc(100% - 8px);          
             height: 100%;
+        }
 
-            ion-row{
-                margin:0px 4px;
-                width: calc(100% - 8px);          
-                height: 100%;
+        ion-col{
+            padding:0;
+            margin-bottom: 16px;
+        }
+
+        .best-product-none{
+            width: calc(100% - 16px);
+            height: 238px;
+            margin:16px 8px 8px;
+            background-color:$white-background-color;
+            margin:0;
+
+            display: flex;
+            align-items: center;
+
+            p{
+                width: 100%;
+                text-align: center;
+                font-size: $large-font-size;
+                font-weight: bold;
+                color: $default-font-color;
             }
+        }
 
-            ion-col{
-                padding:0;
-                margin-bottom: 16px;
-            }
+        .best-product{
+            margin:0px 4px;
+            width: calc(100% - 8px);
+            height: calc((268/640)*100vh);  
+            display: block;        
+            float:left;
 
-            .best-product-none{
-                width: calc(100% - 16px);
-                height: 238px;
-                margin:16px 8px 8px;
-                background-color:$white-background-color;
+            .best-product-img{
                 margin:0;
+                padding:0;
+                width: 100%;
+                height:calc((168/640)*100vh);       
 
-                display: flex;
-                align-items: center;
-
-                p{
-                    width: 100%;
-                    text-align: center;
-                    font-size: $large-font-size;
-                    font-weight: bold;
-                    color: $default-font-color;
-                }
-            }
-
-            .best-product{
-                margin:0px 4px;
-                width: calc(100% - 8px);
-                height: calc((268/640)*100vh);  
-                display: block;        
-                float:left;
-
-                .best-product-img{
-                    margin:0;
-                    padding:0;
+                img{
                     width: 100%;
                     height:calc((168/640)*100vh);       
+                }
+            }
 
-                    img{
-                        width: 100%;
-                        height:calc((168/640)*100vh);       
-                    }
+            ion-card-content{
+                width: 100%;      
+                height: calc((100/640)*100vh);       
+                padding: 16px 8px;
+
+                ion-card-title{
+                    font-size: $title-font-size;
+                    padding: 0;
+                    margin:0;
                 }
 
-                ion-card-content{
-                    width: 100%;      
-                    height: calc((100/640)*100vh);       
-                    padding: 16px 8px;
-
-                    ion-card-title{
-                        font-size: $title-font-size;
-                        padding: 0;
-                        margin:0;
-                    }
-
-                    .best-cart{
-                        float: right;
-                        background-color: $white-background-color;
-                        box-shadow:none;
-                        color: $icon-color-title;
-                        font-size:$icon-size;
-                        padding: 0;
-                        position: absolute;
-                        right:30px;
-                        bottom:15px; 
-                    }
+                .best-cart{
+                    float: right;
+                    background-color: $white-background-color;
+                    box-shadow:none;
+                    color: $icon-color-title;
+                    font-size:$icon-size;
+                    padding: 0;
+                    position: absolute;
+                    right:30px;
+                    bottom:15px; 
                 }
             }
         }

@@ -72,6 +72,8 @@ export class MypagePage {
   headerSize = "50px";
   contentMargin = "0";
 
+  refreshorEnable: boolean;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public alertCtrl:AlertController, 
     public memberProvider:MemberProvider, public orderProvider:OrderProvider, public serverProvider:ServerProvider) {
 
@@ -87,6 +89,8 @@ export class MypagePage {
     this.deliveryAddressEnter = false;
     this.mobileOptionLists = this.serverProvider.mobileOptionLists;
 
+    this.refreshorEnable=false;
+
     //this.memberData = this.memberProvider.memberData;
     for(let i in this.memberData){
       for (let j in this.memberProvider.memberData){
@@ -100,6 +104,7 @@ export class MypagePage {
   }
 
   ionViewDidEnter() {
+    this.refreshorEnable = false;
     this.offset = 0;
     if (this.isMember == true){
       if (this.homeParams.class == "orderDetail") {
@@ -296,14 +301,17 @@ export class MypagePage {
 
   menuSelected(menu){
     if (menu == "회원정보수정") {
+      this.refreshorEnable = false;
       this.app.getRootNavs()[0].push(SignupPage, { class: "mypage" });
     }else{
       this.showPageType = menu;
       this.headerSize = "50px";
       this.contentMargin = "0";
+      this.refreshorEnable = false;
+
       if (this.showPageType == "배송지관리"){
         this.deliveryAddrs = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs));
-        
+
         for(let i in this.memberProvider.deliveryAddrs){
           this.deliveryAddressMode[i] ="출력";
         }
@@ -311,6 +319,7 @@ export class MypagePage {
         this.headerSize = "98px";
         this.contentMargin = "48px";
         this.orderInfos = this.orderProvider.orderInfos;
+        this.refreshorEnable = true;
       }
       this.showBackbtn = true;
     }
@@ -330,6 +339,7 @@ export class MypagePage {
     this.contentMargin = "0px";
     this.showBackbtn = false;
     this.deliveryAddressEnter = false;
+    this.refreshorEnable = false;
   }
 
   ionSelected(){
@@ -522,18 +532,33 @@ export class MypagePage {
 
   doRefresh(event) {
     console.log('Begin async operation');
-    this.offset = 0;
-    this.serverProvider.loadOrderInfo().then((res: any) => {
-      if (res == "success") {
-        this.orderInfos = this.orderProvider.orderInfos;
-        event.complete();
-      }
-      console.log(res);
-    }, (err) => {
-      console.log(err);
-    });
+    
+    if(this.showPageType=="주문내역"){
+      this.serverProvider.loadOrderInfo().then((res: any) => {
+        if (res == "success") {
+          this.orderInfos = this.orderProvider.orderInfos;
+          event.complete();
+        }
+        console.log(res);
+      }, (err) => {
+        console.log(err);
+      });
+    }else{
+      this.refreshorEnable = false;
+    }
+  }
 
-    event.disable = true;
+  doPulling(refresher) {
+    console.log('DOPULLING', refresher.progress);
+    if(this.showPageType=="주문내역"){
+      if (refresher.progress < 0.15) {
+        refresher.cancel();
+      }
+    }else{
+      this.refreshorEnable=false;
+      refresher.cancel();
+    }
+    
   }
 
   loadData(event){

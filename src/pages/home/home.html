@@ -52,77 +52,73 @@
     </div>
 </ion-header>
 
-<ion-content [style.margin-top]="contentMargin">
-    <!-- <ion-refresher style="height: 0;" pullMin = "200" slot="fixed" (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content></ion-refresher-content>
-    </ion-refresher> -->
+<ion-content [style.margin-top]="contentMargin" (ionScroll)="scrollHandler($event)">
+    <ion-refresher slot="fixed" [enabled]="refreshorEnable" (ionRefresh)="doRefresh($event)" (ionPull)="doPulling($event)">
+        <ion-refresher-content style="margin-top:30px" pullingIcon="none"></ion-refresher-content>
+    </ion-refresher>
 
     <!-- recommand page start -->
-    <ion-scroll scrollY="true" class="home-scroll" *ngIf="homeCategorySelected==homeCategories[0]" > 
-        <ion-slides pager="true" class="home-slide" >
-            <ion-slide class="home-slide-child" *ngFor="let image of slideImages" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
-                <button type="submit" float-left ion-button outline clear color="black" class="btnPrev" (click)="prev()">  
-                    <ion-icon name="ios-arrow-back"></ion-icon>
-                </button>
-                <button type="submit" float-right ion-button outline clear color="black" class="btnNext" (click)="next()">
-                    <ion-icon name="ios-arrow-forward"></ion-icon>
-                </button>
-            </ion-slide>
-        </ion-slides>
+    <ion-slides pager="true" class="home-slide" *ngIf="homeCategorySelected==homeCategories[0]">
+        <ion-slide class="home-slide-child" *ngFor="let image of slideImages" [style.backgroundImage]="'url('+image+')'" (click)="slideItemSelect()">
+            <button type="submit" float-left ion-button outline clear color="black" class="btnPrev" (click)="prev()">  
+                <ion-icon name="ios-arrow-back"></ion-icon>
+            </button>
+            <button type="submit" float-right ion-button outline clear color="black" class="btnNext" (click)="next()">
+                <ion-icon name="ios-arrow-forward"></ion-icon>
+            </button>
+        </ion-slide>
+    </ion-slides>
     
-        <ion-grid class="home-product-list" (swipe)="homeSwipeCategory($event)">
-            <ion-row *ngFor="let product of showProducts">
-                <button ion-button no-border (click)="itemSelected(product)">
-                    <ion-col col-6>
-                        <img src="{{product.imagePath}}">
-                    </ion-col>
-                    <ion-col col-6 *ngIf="product.sale!=0">
-                        <h2>{{product.productName}}</h2>
-                        <p><del>{{product.price}}</del></p>
-                        <p>{{product.salePrice}}</p>
-                    </ion-col>
-                    <ion-col col-6 *ngIf="product.sale==0">
-                        <h2>{{product.productName}}</h2>
-                        <p>{{product.price}}</p>
-                    </ion-col>
-                </button>
-            </ion-row>
-        </ion-grid>
-    </ion-scroll>
-    <!-- recommand page end -->
-    <ion-scroll scrollY="true" class="best-scroll" [style.height]="bestScrollHeight" *ngIf="homeCategorySelected==homeCategories[1] || homeCategorySelected==homeCategories[2]">
-        <ion-item class="best-sort-option">
-            <ion-label></ion-label>
-            <ion-select interface="popover" [(ngModel)]="productSortOptionSelected" (ionChange)="productsOptionChange()">
-                <ion-option *ngFor="let productSortOption of productSortOptions">{{productSortOption}}</ion-option>
-            </ion-select>
-        </ion-item>
-
-        <ion-grid class="best-product-list" (swipe)="swipeSubcategory($event)">
-            <ion-row *ngIf="showProducts.length == 0">
-                <ion-col class="best-product-none"><p>상품이 없습니다.</p></ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col col-6 *ngFor="let product of showProducts">
-                    <ion-card class="best-product">
-                        <button clear class="best-product-img" ion-button (click)="itemSelected(product)">
-                            <img src="{{product.imagePath}}" />
-                        </button>
-                        <ion-card-content>
-                            <ion-card-title>
-                                {{product.productName}}
-                            </ion-card-title>
-                            <p *ngIf="product.sale!=0"> {{product.salePrice}} <del> {{product.price}} </del> </p>
-                            <p *ngIf="product.sale==0"> {{product.price}} </p>
-                            <button (click)="addToShoppingBasket(product)" ion-button class="best-cart">
-                                <ion-icon name="ios-cart-outline"></ion-icon>
-                            </button>
-                        </ion-card-content>
-                    </ion-card>
+    <ion-grid class="home-product-list" (swipe)="homeSwipeCategory($event)" *ngIf="homeCategorySelected==homeCategories[0]">
+        <ion-row *ngFor="let product of showProducts">
+            <button ion-button no-border (click)="itemSelected(product)">
+                <ion-col col-6>
+                    <img src="{{product.imagePath}}">
                 </ion-col>
-            </ion-row>
-        </ion-grid>
-    </ion-scroll>
+                <ion-col col-6 *ngIf="product.sale!=0">
+                    <h2>{{product.productName}}</h2>
+                    <p><del>{{product.price}}</del></p>
+                    <p>{{product.salePrice}}</p>
+                </ion-col>
+                <ion-col col-6 *ngIf="product.sale==0">
+                    <h2>{{product.productName}}</h2>
+                    <p>{{product.price}}</p>
+                </ion-col>
+            </button>
+        </ion-row>
+    </ion-grid>
+    <!-- recommand page end -->
+    <ion-item class="best-sort-option" *ngIf="homeCategorySelected==homeCategories[1] || homeCategorySelected==homeCategories[2]">
+        <ion-label></ion-label>
+        <ion-select interface="popover" [(ngModel)]="productSortOptionSelected" (ionChange)="productsOptionChange()">
+            <ion-option *ngFor="let productSortOption of productSortOptions">{{productSortOption}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-grid class="best-product-list" (swipe)="swipeSubcategory($event)" *ngIf="homeCategorySelected==homeCategories[1] || homeCategorySelected==homeCategories[2]">
+        <ion-row *ngIf="showProducts.length == 0">
+            <ion-col class="best-product-none"><p>상품이 없습니다.</p></ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-6 *ngFor="let product of showProducts">
+                <ion-card class="best-product">
+                    <button clear class="best-product-img" ion-button (click)="itemSelected(product)">
+                        <img src="{{product.imagePath}}" />
+                    </button>
+                    <ion-card-content>
+                        <ion-card-title>
+                            {{product.productName}}
+                        </ion-card-title>
+                        <p *ngIf="product.sale!=0"> {{product.salePrice}} <del> {{product.price}} </del> </p>
+                        <p *ngIf="product.sale==0"> {{product.price}} </p>
+                        <button (click)="addToShoppingBasket(product)" ion-button class="best-cart">
+                            <ion-icon name="ios-cart-outline"></ion-icon>
+                        </button>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
     <!-- best page & sale page end -->
     
     <!-- event page start -->
