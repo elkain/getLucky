@@ -25,8 +25,8 @@
       <label>{{product.productName}}</label>
     </ion-row>
     <ion-row class="buy-info-price">
-      <label *ngIf="product.sale!=0">{{product.salePrice}}<del>{{product.price}}</del></label>
-      <label *ngIf="product.sale==0">{{product.price}}</label>
+      <label *ngIf="product.sale!=0">{{serverProvider.displayNumber(product.salePrice)}}<del>{{serverProvider.displayNumber(product.price)}}</del></label>
+      <label *ngIf="product.sale==0">{{serverProvider.displayNumber(product.price)}}</label>
     </ion-row>
     <ion-row class="delivery-fee-info">
       <p>배송비 <span>{{deliveryFee}}원</span>(<span>{{deliveryFreeString}}</span> 이상 무료)</p>
@@ -53,7 +53,7 @@
       </ion-col>
     </ion-row>
     <ion-row class="buy-total-price">
-      <p>총 상품 금액 : <span>{{product.totalPrice}}</span>원</p>
+      <p>총 상품 금액 : <span>{{serverProvider.displayNumber(product.totalPrice)}}</span>원</p>
     </ion-row>
     <ion-row class="buy-button-group">
       <ion-col class="buy-basket-btn">

@@ -275,8 +275,8 @@
       <img class="thumbnail-img" src = "{{product.imagePath}}">
       <p class="product-info-name"><b>상품명 : {{product.productName}}</b></p><p class="product-info-compo">구성/용량</p>
       <p class="product-info-count"><b>수량 : {{product.count}}</b></p>
-      <p *ngIf="product.sale!=0" class="product-info-price"><b>혜택가 : {{product.salePrice * product.count}}</b></p>
-      <p *ngIf="product.sale==0" class="product-info-price"><b>판매가 : {{product.price * product.count}}</b></p>
+      <p *ngIf="product.sale!=0" class="product-info-price"><b>혜택가 : {{serverProvider.displayNumber(product.salePrice * product.count)}}</b></p>
+      <p *ngIf="product.sale==0" class="product-info-price"><b>판매가 : {{serverProvider.displayNumber(product.price * product.count)}}</b></p>
     </ion-item>
   </ion-list>
   <!-- 상품 정보 끝 -->
@@ -293,21 +293,21 @@
     </ion-item>
     <ion-item class="payment-info-item" *ngIf="showPaymentInfo==true"> 
       <label class="payment-info-label">상품금액</label>
-      <p item-end class="product-price">{{orderInfo.orderPrice}}원</p>
+      <p item-end class="product-price">{{serverProvider.displayNumber(orderInfo.orderPrice)}}원</p>
     </ion-item>
     <ion-item class="payment-info-item" *ngIf="showPaymentInfo==true">
       <label class="payment-info-label">할인금액</label>
       <ion-icon item-end name="md-remove-circle"></ion-icon>
-      <p item-end class="product-price">{{orderInfo.sale}}원</p>
+      <p item-end class="product-price">{{serverProvider.displayNumber(orderInfo.sale)}}원</p>
     </ion-item>
     <ion-item class="payment-info-item" *ngIf="showPaymentInfo==true">
       <label class="payment-info-label">배송비</label>
       <ion-icon item-end name="md-add-circle"></ion-icon>
-      <p item-end class="product-price">{{orderInfo.deliveryFee}}원</p>
+      <p item-end class="product-price">{{serverProvider.displayNumber(orderInfo.deliveryFee)}}원</p>
     </ion-item>
     <ion-item class="payment-info-item-last" *ngIf="showPaymentInfo==true">
       <label class="payment-info-label">최종 결제금액</label>
-      <p item-end class="product-total-price">{{orderInfo.totalPrice}}원</p>
+      <p item-end class="product-total-price">{{serverProvider.displayNumber(orderInfo.totalPrice)}}원</p>
     </ion-item>
   </ion-list>
   <!-- 결재 정보 끝 -->

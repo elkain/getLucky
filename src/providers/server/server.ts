@@ -797,4 +797,19 @@ export class ServerProvider {
       });
     }); 
   }
+
+  displayNumber(number){
+    let temp = number;
+    let displayNum = number.toString();
+    let i = 0;
+    let j = 3;
+    while ((temp/1000) > 1){
+      i = i + j;
+      displayNum = displayNum.substr(0, displayNum.length - i) + ',' + displayNum.substr(-i);
+      j = j + 1;
+      temp /= 1000;
+    }
+
+    return displayNum;
+  }
 }
