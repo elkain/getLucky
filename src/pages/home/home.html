@@ -52,7 +52,7 @@
     </div>
 </ion-header>
 
-<ion-content [style.margin-top]="contentMargin" (ionScroll)="scrollHandler($event)">
+<ion-content [style.margin-top]="contentMargin" [style.height]="contentHeight" (ionScroll)="scrollHandler($event)">
     <ion-refresher slot="fixed" [enabled]="refreshorEnable" (ionRefresh)="doRefresh($event)" (ionPull)="doPulling($event)">
         <ion-refresher-content style="margin-top:30px" pullingIcon="none"></ion-refresher-content>
     </ion-refresher>
@@ -131,8 +131,8 @@
     </ion-scroll>
     <!-- event page end -->
 
-    <!--<ion-infinite-scroll enabled= 'false' threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll [enabled]="infiniteScrollEnable"  threshold="100px" (ionInfinite)="loadData($event)">
         <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
         </ion-infinite-scroll-content>
-    </ion-infinite-scroll>-->
+    </ion-infinite-scroll>
 </ion-content>

@@ -98,10 +98,10 @@ export class ServerProvider {
             if(offset > 0){
               let products = this.productRearrange(result.product);              
               for(let i = 0; i<products.length; i++){
-                this.products.push(products[i]);
+                this.homeProducts.push(products[i]);
               }
             }else{
-              this.products = this.productRearrange(result.product);
+              this.homeProducts = this.productRearrange(result.product);
             }
             resolve("success");
           }

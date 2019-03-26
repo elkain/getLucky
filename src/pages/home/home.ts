@@ -20,6 +20,7 @@ export class HomePage {
   productImageURL:string = "./assets/imgs/"
 
   refreshorEnable:boolean;
+  infiniteScrollEnable: boolean;
 
   homeCategories = ["럭키추천", "베스트", "알뜰할인",  "이벤트"];
   homeCategorySelected;
@@ -42,7 +43,7 @@ export class HomePage {
   showProducts;
 
   showProductPage:boolean;
-  bestScrollHeight = "calc(100% - 88px)";
+  contentHeight = "100%";
   headerHeight = "98px";
   contentMargin = "0";
   offset = 0;
@@ -59,6 +60,12 @@ export class HomePage {
         if (res == "success") {
           this.serverProvider.dataLoad = true;
           this.showProducts = this.serverProvider.homeProducts;
+          
+          if (this.showProducts != undefined || this.showProducts.length != undefined) {
+            this.infiniteScrollSetting(this.showProducts.length);
+          }else{
+            this.infiniteScrollEnable = false;
+          }
         }
         console.log(res);
       }, (err) => {
@@ -67,8 +74,7 @@ export class HomePage {
     }
     
     this.refreshorEnable = true;
-    
-    console.log(this.showProducts);
+    this.offset = 0;
   }
 
   scrollHandler(event) {
@@ -82,7 +88,7 @@ export class HomePage {
 
   ionViewDidEnter() {
     if (this.homeParams.class == "category"){
-      this.bestScrollHeight = "calc(100% - 38px)";
+      this.contentHeight = "calc(100% - 38px)";
       this.headerHeight = "98px";
       this.contentMargin = "38px";
       this.showProducts = this.serverProvider.categoryProducts;
@@ -90,6 +96,7 @@ export class HomePage {
       this.headerHeight = "98px";
       this.showProducts = this.serverProvider.searchProducts;
     }else{
+      this.contentHeight = "100%";
       this.showProducts = this.serverProvider.homeProducts;
     }
 
@@ -102,6 +109,14 @@ export class HomePage {
     this.productSortOptionSelected = this.productSortOptions[0];
     this.headerHeight = "98px";
     this.contentMargin = "0";
+    
+    if (this.showProducts != undefined || this.showProducts.length != undefined) {
+      this.infiniteScrollSetting(this.showProducts.length);
+    } else {
+      this.infiniteScrollEnable = false;
+    }
+
+    this.offset = 0;
   }
 
   ionViewDidLeave(){
@@ -144,18 +159,31 @@ export class HomePage {
       this.showProducts = this.serverProvider.homeProducts;
     }
 
-    if (this.homeCategorySelected == this.homeCategories[3] ){
+    if (this.homeCategorySelected == this.homeCategories[3] || this.homeCategorySelected == this.homeCategories[0] ){
       this.showProductPage=false;
       this.contentMargin = "0px";
       this.headerHeight = "98px";
-      //this.bestScrollHeight = "calc(100% - 48px)";
-      this.bestScrollHeight = "100%";
+      //this.contentHeight = "calc(100% - 48px)";
+      this.contentHeight = "100%";
     }else{
       this.showProductPage = true;
-      this.bestScrollHeight = "calc(100% - 38px)";
+      this.contentHeight = "calc(100% - 38px)";
     }
 
     this.showProducts = this.sortProductsByCategory(this.serverProvider.homeProducts, this.bestCategorySelected);
+
+    if (this.homeCategorySelected == this.homeCategories[3]) {
+      this.infiniteScrollEnable = false;
+      this.refreshorEnable = false;
+    } else if (this.showProducts != undefined || this.showProducts.length != undefined) {
+      this.infiniteScrollSetting(this.showProducts.length);
+      this.refreshorEnable = true;
+    } else{
+      this.infiniteScrollEnable = false;
+      this.refreshorEnable = true;
+    }
+    
+    this.offset = 0;
   }
 
   bestCategoryChange(Category) {
@@ -163,6 +191,12 @@ export class HomePage {
     this.bestCategorySelected = this.bestCategories[idx];
     this.showProducts = this.sortProductsByCategory(this.serverProvider.homeProducts, this.bestCategorySelected);
     this.productsSort(this.productSortOptionSelected, this.showProducts);
+
+    if (this.showProducts != undefined || this.showProducts.length != undefined) {
+      this.infiniteScrollSetting(this.showProducts.length);
+    } else {
+      this.infiniteScrollEnable = false;
+    }
   }
 
   saleCategoryChange(Category) {
@@ -170,6 +204,12 @@ export class HomePage {
     this.saleCategorySelected = this.saleCategories[idx];
     this.showProducts = this.sortProductsByCategory(this.serverProvider.homeProducts, this.saleCategorySelected);
     this.productsSort(this.productSortOptionSelected, this.showProducts);
+
+    if (this.showProducts != undefined || this.showProducts.length != undefined) {
+      this.infiniteScrollSetting(this.showProducts.length);
+    } else {
+      this.infiniteScrollEnable = false;
+    }
   }
 
   categoryChange(Category) {
@@ -177,6 +217,12 @@ export class HomePage {
     this.categorySelected = this.homeParams.category.subCategories[idx];
     this.showProducts = this.sortProductsByCategory(this.serverProvider.categoryProducts, this.categorySelected);
     this.productsSort(this.productSortOptionSelected, this.showProducts);
+
+    if (this.showProducts != undefined || this.showProducts.length != undefined) {
+      this.infiniteScrollSetting(this.showProducts.length);
+    } else {
+      this.infiniteScrollEnable = false;
+    }
   }
 
   sortProductsByCategory(products, category){
@@ -261,14 +307,12 @@ export class HomePage {
 
     if (this.homeParams.class == "search") {
       this.showProductPage = false;
-      this.bestScrollHeight = "calc(100%)";
     } else {
       this.showProductPage = true;
-      this.bestScrollHeight = "calc(100% - 88px)";
     }
 
     if(this.homeParams.class == "category"){
-      this.bestScrollHeight = "calc(100% - 38px)";
+      this.contentHeight = "calc(100% - 38px)";
       this.headerHeight = "98px";
       this.contentMargin = "38px";
       this.showProducts = this.sortProductsByCategory(this.serverProvider.categoryProducts, this.categorySelected);
@@ -276,6 +320,12 @@ export class HomePage {
       this.showProducts = this.serverProvider.searchProducts;
     }else{
       this.showProducts = this.serverProvider.homeProducts;
+    }
+
+    if (this.showProducts != undefined || this.showProducts.length != undefined) {
+      this.infiniteScrollSetting(this.showProducts.length);
+    } else {
+      this.infiniteScrollEnable = false;
     }
   }
   
@@ -354,14 +404,21 @@ export class HomePage {
           this.showProducts = this.serverProvider.categoryProducts;
           this.categoryChange(this.categorySelected);
           this.productsSort(this.productSortOptionSelected, this.showProducts);
+          event.complete();
+        }else{
+          event.cancel();
         }
-        event.complete();
       });
     } else if (this.homeParams.class == "search"){
       let searchItems = this.searchProvider.recentSearchItems;
       let searchWord = searchItems[searchItems.length - 1];
       this.serverProvider.searchItem(searchWord.searchWord).then((res: any) => {
-        event.complete();
+        if(res=="success"){
+          event.complete();
+        }else{
+          event.cancel();
+        }
+        
       }, (err) => {
         console.log(err);
 
@@ -381,6 +438,8 @@ export class HomePage {
           }
           
           event.complete();
+        }else{
+          event.cancel();
         }
         console.log(res);
       }, (err) => {
@@ -419,7 +478,7 @@ export class HomePage {
       });
     } else {
       this.serverProvider.getAllProductData(this.offset).then((res: any) => {
-        if (res == "success") {
+        if (res.status == "success") {
           this.showProducts = this.serverProvider.homeProducts;
           this.homeCategoryChange(this.homeCategorySelected);
           if (this.homeCategorySelected == "베스트") {
@@ -437,11 +496,13 @@ export class HomePage {
         console.log(err);
       });
     }
-    
-    if(this.offset <= 20){
-      event.enable(true);
+  }
+
+  infiniteScrollSetting(length){
+    if(length>=20){
+      this.infiniteScrollEnable = true;
     }else{
-      event.enable(false);
+      this.infiniteScrollEnable = false;
     }
   }
 }
