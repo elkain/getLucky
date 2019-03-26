@@ -126,7 +126,7 @@ export class ServerProvider {
         if (offset > 0 && result.product != undefined){
           let products = this.productRearrange(result.product);
           for (let i = 0; i < products.length; i++) {
-            this.products.push(products[i]);
+            this.categoryProducts.push(products[i]);
           }
           resolve("success");
         } else if(result.product == undefined){
