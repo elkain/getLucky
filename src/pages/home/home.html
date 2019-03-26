@@ -52,7 +52,7 @@
     </div>
 </ion-header>
 
-<ion-content [style.margin-top]="contentMargin" [style.height]="contentHeight" (ionScroll)="scrollHandler($event)">
+<ion-content [style.margin-top]="contentMargin" [style.height]="contentHeight">
     <ion-refresher slot="fixed" [enabled]="refreshorEnable" (ionRefresh)="doRefresh($event)" (ionPull)="doPulling($event)">
         <ion-refresher-content style="margin-top:30px" pullingIcon="none"></ion-refresher-content>
     </ion-refresher>

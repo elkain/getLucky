@@ -77,12 +77,12 @@ export class HomePage {
     this.offset = 0;
   }
 
-  scrollHandler(event) {
+  scrollHandler() {
     //console.log(`ScrollEvent: ${event}`)
     this.zone.run(() => {
       // since scrollAmount is data-binded,
       // the update needs to happen in zone
-      this.scrollAmount++;
+      this.content.scrollToTop(0);
     })
   }
 
@@ -142,6 +142,7 @@ export class HomePage {
   }
 
   homeCategoryChange(Category) {
+    this.scrollHandler();
     let idx = this.homeCategories.indexOf(Category);
     this.showProducts = this.serverProvider.homeProducts;
     this.homeCategorySelected = this.homeCategories[idx];
@@ -187,6 +188,7 @@ export class HomePage {
   }
 
   bestCategoryChange(Category) {
+    this.scrollHandler();
     let idx = this.bestCategories.indexOf(Category);
     this.bestCategorySelected = this.bestCategories[idx];
     this.showProducts = this.sortProductsByCategory(this.serverProvider.homeProducts, this.bestCategorySelected);
@@ -200,6 +202,7 @@ export class HomePage {
   }
 
   saleCategoryChange(Category) {
+    this.scrollHandler();
     let idx = this.saleCategories.indexOf(Category);
     this.saleCategorySelected = this.saleCategories[idx];
     this.showProducts = this.sortProductsByCategory(this.serverProvider.homeProducts, this.saleCategorySelected);
@@ -213,6 +216,7 @@ export class HomePage {
   }
 
   categoryChange(Category) {
+    this.scrollHandler();
     let idx = this.homeParams.category.subCategories.indexOf(Category);
     this.categorySelected = this.homeParams.category.subCategories[idx];
     this.showProducts = this.sortProductsByCategory(this.serverProvider.categoryProducts, this.categorySelected);
