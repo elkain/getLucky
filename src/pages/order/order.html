@@ -273,7 +273,7 @@
   <ion-list class="product-info-list" *ngIf="showProductInfo==true">
     <ion-item class="product-detail-item" *ngFor="let product of orderInfo.orderedProducts">
       <img class="thumbnail-img" src = "{{product.imagePath}}">
-      <p class="product-info-name"><b>상품명 : {{product.productName}}</b></p><p class="product-info-compo">구성/용량</p>
+      <p class="product-info-name"><b>상품명 : {{product.productName}}</b></p><p class="product-info-compo">{{product.productMeasureChr}}</p>
       <p class="product-info-count"><b>수량 : {{product.count}}</b></p>
       <p *ngIf="product.sale!=0" class="product-info-price"><b>혜택가 : {{serverProvider.displayNumber(product.salePrice * product.count)}}</b></p>
       <p *ngIf="product.sale==0" class="product-info-price"><b>판매가 : {{serverProvider.displayNumber(product.price * product.count)}}</b></p>

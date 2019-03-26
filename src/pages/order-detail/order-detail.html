@@ -31,7 +31,7 @@
       <ion-item class="product-detail-item" *ngFor="let product of orderInfo.orderedProducts">
         <img class="thumbnail-img" src="{{product.imagePath}}">
         <p class="product-info-name"><b>상품명 : {{product.productName}}</b></p>
-        <p class="product-info-compo">구성/용량</p>
+        <p class="product-info-compo">{{product.productMeasureChr}}</p>
         <p class="product-info-count"><b>수량 : {{product.soldProductCount}}</b></p>
         <p *ngIf="product.soldProductSale!=0" class="product-info-price"><b>혜택가 : {{serverProvider.displayNumber(product.soldProductPrice)}}</b></p>
         <p *ngIf="product.soldProductSale==0" class="product-info-price"><b>판매가 : {{serverProvider.displayNumber(product.soldProductPrice)}}</b></p>
