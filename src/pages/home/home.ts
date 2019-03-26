@@ -324,6 +324,7 @@ export class HomePage {
       this.showProducts = this.serverProvider.searchProducts;
     }else{
       this.showProducts = this.serverProvider.homeProducts;
+      this.contentHeight = "100%";
     }
 
     if (this.showProducts != undefined || this.showProducts.length != undefined) {
