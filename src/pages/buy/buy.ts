@@ -6,6 +6,7 @@ import { OrderPage } from '../order/order';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
 import { OrderProvider } from '../../providers/order/order';
 import { ServerProvider } from '../../providers/server/server';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the BuyPage page.
@@ -27,7 +28,7 @@ export class BuyPage {
   deliveryFreeString:string;
   orderInfo = { orderPrice: 0, sale: 0, deliveryFee: 0, totalPrice: 0, shoppingBasket: [] };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController, 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController, private storage:Storage,
      public shoppingbasketProvider: ShoppingbasketProvider, public orderProvider: OrderProvider, public serverProvider:ServerProvider) {
 
     this.product = this.navParams.get("product");
@@ -68,6 +69,7 @@ export class BuyPage {
         this.serverProvider.addShoppingbasket(this.product);
       } else {
         this.shoppingbasketProvider.addShoppingBasket(this.product);
+        this.storage.set("shoppingbasket", this.shoppingbasketProvider.shoppingBasket);
       }
     }
     

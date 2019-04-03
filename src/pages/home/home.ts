@@ -113,6 +113,12 @@ export class HomePage {
               alert.present();
             });
           })
+        }else{
+          this.storage.get('shoppingbasket').then((val)=>{
+            if(val!=null){
+              this.shoppingbasketProvider.shoppingBasket = val;
+            }
+          });
         }
       });
     }
@@ -331,6 +337,7 @@ export class HomePage {
         this.serverProvider.addShoppingbasket(product);
       }else{
         this.shoppingbasketProvider.addShoppingBasket(product);
+        this.storage.set("shoppingbasket", this.shoppingbasketProvider.shoppingBasket);
       }
     }
     

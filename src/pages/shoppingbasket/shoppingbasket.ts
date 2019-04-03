@@ -5,6 +5,7 @@ import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingb
 import { TabsPage } from '../tabs/tabs';
 import { ServerProvider } from '../../providers/server/server';
 import { OrderProvider } from '../../providers/order/order';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the ShoppingbasketPage page.
@@ -31,7 +32,7 @@ export class ShoppingbasketPage {
 
   //orderInfo = {orderPrice:0, sale:0, deliveryFee:0, totalPrice:0, shoppingBasket:[]};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, private alertCtrl:AlertController , 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, private alertCtrl: AlertController, private storage: Storage,
     public shoppingbasketProvider:ShoppingbasketProvider, public serverProvider:ServerProvider, public orderProvider:OrderProvider) {
 
     this.isMember = this.serverProvider.isMember;
@@ -169,6 +170,7 @@ export class ShoppingbasketPage {
     }else{
       this.itemNumber = this.shoppingbasketProvider.delShoppingBasket();
       this.calOrderPrice();
+      this.storage.set("shoppingbasket", this.shoppingbasketProvider.shoppingBasket);
     }
     
   }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController, AlertController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { SelectPopoverPage } from '../select-popover/select-popover';
 import { TabsPage } from '../tabs/tabs';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
@@ -73,7 +74,7 @@ export class OrderPage {
   memberAddressLists = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, private alertCtrl:AlertController, 
-    public shoppingbasketProvider:ShoppingbasketProvider, public orderProvider:OrderProvider, public memberProvider:MemberProvider,
+    public shoppingbasketProvider: ShoppingbasketProvider, public orderProvider: OrderProvider, public memberProvider: MemberProvider, private storage: Storage,
     public serverProvider:ServerProvider) {
 
     this.shopTitle = this.serverProvider.shopTitle;
@@ -238,6 +239,7 @@ export class OrderPage {
             //this.orderProvider.addOrderInfo(this.orderInfo);
             if (this.prevPage == "shoppingbasket") {
               this.shoppingbasketProvider.completeShopping();
+              this.storage.set("shoppingbasket", this.shoppingbasketProvider.shoppingBasket);
             }
           }
           
