@@ -511,7 +511,7 @@ export class HomePage {
 
   doPulling(refresher) {
     console.log('DOPULLING', refresher.progress);
-    if (refresher.progress<0.15){
+    if (refresher.progress<0.2){
       refresher.cancel();
     }
   }
@@ -521,6 +521,8 @@ export class HomePage {
     console.log('Begin async operation');
     if (this.homeParams.class == "category") {
       this.serverProvider.getCategoryProductData(this.homeParams.category, this.offset).then((res: any) => {
+        console.log(this.homeParams.category);
+        
         if (res == "success") {
           this.showProducts = this.serverProvider.categoryProducts;
           this.categoryChange(this.categorySelected);
