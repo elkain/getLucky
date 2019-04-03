@@ -5,6 +5,7 @@ import { MemberProvider } from '../member/member';
 import { ShoppingbasketProvider } from '../shoppingbasket/shoppingbasket';
 import { OrderProvider } from '../order/order';
 import { SearchProvider } from '../search/search';
+import { Storage } from '@ionic/storage';
 
 // ip 218.145.181.49 //
 /*
@@ -42,7 +43,7 @@ export class ServerProvider {
   deliveryMemoLists = ["부재시 경비실에 맡겨주세요", "오시기 전에 미리 연락주세요", "빨리 배송해주세요"];
 
   constructor(public http: Http, private memberProvider: MemberProvider, private shoppingbasketProvider:ShoppingbasketProvider,
-    public orderProvivder:OrderProvider, public searchProvider:SearchProvider) {
+    public orderProvivder: OrderProvider, public searchProvider: SearchProvider, private storage: Storage) {
     console.log('Hello ServerProvider Provider');
     this.isMember = false;
     this.bestCategories = [{ subCategoryName: "전체" }, { subCategoryName: "과일·견과", subCategoryCode: "103" }, { subCategoryName: "유제품", subCategoryCode: "201" }, { subCategoryName: "과자·빵", subCategoryCode: "202" }];

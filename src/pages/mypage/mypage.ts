@@ -7,6 +7,8 @@ import { TabsPage } from '../tabs/tabs';
 import { OrderPage } from '../order/order';
 import * as CryptoJS from 'crypto-js';
 import { ServerProvider } from '../../providers/server/server';
+import { Storage } from '@ionic/storage';
+
 /**
  * Generated class for the MypagePage page.
  *
@@ -75,7 +77,7 @@ export class MypagePage {
   refreshorEnable: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, public alertCtrl:AlertController, 
-    public memberProvider:MemberProvider, public orderProvider:OrderProvider, public serverProvider:ServerProvider) {
+    public memberProvider: MemberProvider, public orderProvider: OrderProvider, public serverProvider: ServerProvider, private storage: Storage) {
 
     this.homeParams = navParams.data;
     this.shopTitle = this.serverProvider.shopTitle;
@@ -241,7 +243,7 @@ export class MypagePage {
   }
 
   login(){
-
+    this.storage.set('autoLoginCheckbox', false);
     let password = CryptoJS.SHA256(this.trim(this.password) + "Markis").toString(CryptoJS.enc.Hex);
 
     if (this.idCheck() == false || this.pwdCheck() == false) {
@@ -267,8 +269,15 @@ export class MypagePage {
               }
             }
           }
+          // 자동 로그인
+          this.storage.set('autoLoginCheckbox', this.autoLoginCheckbox);
+          if (this.autoLoginCheckbox == true) {
+            this.storage.set('username', this.username);
+            this.storage.set('password', password);
+          }
         }
       },(err)=>{
+          this.storage.set('autoLoginCheckbox', false);
           let alert = this.alertCtrl.create({
             message: '아이디/비번이 틀립니다.',
             buttons: [{

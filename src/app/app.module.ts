@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { HomePage } from '../pages/home/home';
 import { CategoryPageModule } from '../pages/category/category.module';
@@ -54,7 +55,8 @@ import { SearchProvider } from '../providers/search/search';
       mode:'md',
       scrollPadding: false,
       scrollAssist: false
-    })
+    }),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
