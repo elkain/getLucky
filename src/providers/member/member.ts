@@ -20,4 +20,10 @@ export class MemberProvider {
     console.log('Hello MemberProvider Provider');
     
   }
+
+  logout(){
+    this.memberData = { UID: "", username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
+    this.deliveryAddrs = [];
+    this.memberOrderInfo = {};
+  }
 }

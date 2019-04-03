@@ -61,7 +61,7 @@ export class MypagePage {
 
   showPageType : string;
   showBackbtn: boolean;
-  mypageMenus = ["주문내역", "1:1 문의", "공지사항", "회원정보수정", "배송지관리"];
+  mypageMenus = ["주문내역", "1:1 문의", "공지사항", "회원정보수정", "배송지관리", "로그아웃"];
   deliveryAddressMode = []; // "수정", "출력"
   deliveryAddressEnter = false;
   mobileOptionLists = [];
@@ -309,7 +309,16 @@ export class MypagePage {
   }
 
   menuSelected(menu){
-    if (menu == "회원정보수정") {
+    if( menu == "로그아웃"){
+      this.isMember = false;
+      this.serverProvider.isMember = false;
+      this.memberProvider.logout();
+      this.autoLoginCheckbox = false;
+      this.storage.set('autoLoginCheckbox', this.autoLoginCheckbox);
+      this.storage.set('username', null);
+      this.storage.set('password', null);
+      window.location.reload();
+    }else if (menu == "회원정보수정") {
       this.refreshorEnable = false;
       this.app.getRootNavs()[0].push(SignupPage, { class: "mypage" });
     }else{
