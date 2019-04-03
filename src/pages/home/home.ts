@@ -511,7 +511,7 @@ export class HomePage {
 
   doPulling(refresher) {
     console.log('DOPULLING', refresher.progress);
-    if (refresher.progress<0.2){
+    if (refresher.progress<0.18){
       refresher.cancel();
     }
   }
