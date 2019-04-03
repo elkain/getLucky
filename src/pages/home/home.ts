@@ -413,6 +413,10 @@ export class HomePage {
         }else{
           event.cancel();
         }
+      }, (error)=>{
+        console.log(error);
+        
+        event.cancel();
       });
     } else if (this.homeParams.class == "search"){
       let searchItems = this.searchProvider.recentSearchItems;
@@ -426,7 +430,7 @@ export class HomePage {
         
       }, (err) => {
         console.log(err);
-
+        event.cancel();
       });
     } else{
       this.serverProvider.init().then((res: any) => {
@@ -449,6 +453,7 @@ export class HomePage {
         console.log(res);
       }, (err) => {
         console.log(err);
+        event.cancel();
       });
     }
   }
@@ -471,6 +476,9 @@ export class HomePage {
           this.productsSort(this.productSortOptionSelected, this.showProducts);
         }
         event.complete();
+      }, (err) => {
+        console.log(err);
+        event.complete();
       });
     } else if (this.homeParams.class == "search") {
       let searchItems = this.searchProvider.recentSearchItems;
@@ -479,7 +487,7 @@ export class HomePage {
         event.complete();
       }, (err) => {
         console.log(err);
-
+        event.complete();
       });
     } else {
       this.serverProvider.getAllProductData(this.offset).then((res: any) => {
@@ -499,6 +507,7 @@ export class HomePage {
         console.log(res);
       }, (err) => {
         console.log(err);
+        event.complete();
       });
     }
   }
