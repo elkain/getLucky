@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { ServerProvider } from '../../providers/server/server';
+import { ServerProvider } from '../../providers/server/server'; 
 import { SearchProvider } from '../../providers/search/search';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the SearchPage page.
@@ -25,16 +26,36 @@ export class SearchPage {
   searchTabs = ['최근검색어', '인기검색어'];
   products;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, private searchProvider:SearchProvider, public serverProvider:ServerProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, private searchProvider:SearchProvider, public serverProvider:ServerProvider,
+    public storage:Storage) {
     this.seacrhTabSelected = this.searchTabs[0];
     this.popularSearchItems = this.searchProvider.popularSearchItems;
-    this.recentSearchItems = this.searchProvider.recentSearchItems;
+
+    if(this.serverProvider.isMember==true){
+      this.recentSearchItems = this.searchProvider.recentSearchItems;
+    }else{
+      this.storage.get("recentSearchItems").then((val) => {
+        if (val != null) {
+          this.recentSearchItems = val;
+        }
+      });
+    }
+    
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.seacrhTabSelected = this.searchTabs[0];
     this.popularSearchItems = this.searchProvider.popularSearchItems;
-    this.recentSearchItems = this.searchProvider.recentSearchItems;
+
+    if (this.serverProvider.isMember == true) {
+      this.recentSearchItems = this.searchProvider.recentSearchItems;
+    } else {
+      this.storage.get("recentSearchItems").then((val) => {
+        if (val != null) {
+          this.recentSearchItems = val;
+        }
+      });
+    }
     console.log('ionViewDidLoad SearchPage');
   }
 
@@ -49,6 +70,8 @@ export class SearchPage {
       if(this.serverProvider.isMember != true){
         let searchInput = { searchWord: this.searchInput, searchID: 0 }
         this.searchProvider.recentSearchItems.push(searchInput);
+        this.recentSearchItems = this.searchProvider.recentSearchItems;
+        this.storage.set("recentSearchItems", this.recentSearchItems);
       }
       this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "search", homeSegmentCategory: 1, category: this.searchInput });
     }, (err)=>{
@@ -68,6 +91,7 @@ export class SearchPage {
       });
     }else{
       this.recentSearchItems.splice(index, 1);
+      this.storage.set("recentSearchItems", this.recentSearchItems);
     }
   }
 

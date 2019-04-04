@@ -265,6 +265,8 @@ export class ServerProvider {
           // 최근 검색 기록 로드
           if(result.recentSearch != undefined){
             this.searchProvider.recentSearchItems = result.recentSearch;
+          }else{
+            this.searchProvider.recentSearchItems = [];
           }
           resolve("success");
         }
