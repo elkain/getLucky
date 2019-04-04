@@ -19,7 +19,7 @@ export class HomePage {
   @ViewChild(Slides) slides: Slides;
   @ViewChild(Content) content: Content;
   imageURL:string = "./assets/slides/";
-  productImageURL:string = "./assets/imgs/"
+  productImageURL:string = "./assets/imgs/";
 
   refreshorEnable:boolean;
   infiniteScrollEnable: boolean;
