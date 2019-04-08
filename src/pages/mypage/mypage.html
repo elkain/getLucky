@@ -242,6 +242,10 @@
       <button (click)="addDeliveryAddr()" item-end ion-button clear>배송지 추가</button>
     </div>
 
+    <div class="order-history-none" *ngIf="deliveryAddrs[0] == undefined && deliveryAddressEnter==false">
+      <p>등록된 배송지가 없습니다.</p>
+    </div>
+
     <div class="delivery-add-des">
       <ion-item-divider class="delivery-des-list-head" *ngIf="deliveryAddressEnter==true">
         <ion-input type="text" [placeholder]="'배송지이름'" [(ngModel)]="enterMemberAddress.addressName"></ion-input>

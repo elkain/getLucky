@@ -328,10 +328,12 @@ export class MypagePage {
       this.refreshorEnable = false;
 
       if (this.showPageType == "배송지관리"){
-        this.deliveryAddrs = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs));
+        if (this.memberProvider.deliveryAddrs != undefined || this.memberProvider.deliveryAddrs != null){
+          this.deliveryAddrs = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs));
 
-        for(let i in this.memberProvider.deliveryAddrs){
-          this.deliveryAddressMode[i] ="출력";
+          for (let i in this.memberProvider.deliveryAddrs) {
+            this.deliveryAddressMode[i] = "출력";
+          }
         }
       }else if(menu == "주문내역"){
         this.headerSize = "98px";
