@@ -682,7 +682,7 @@ export class ServerProvider {
       
       let orderInfo = {
         type: "member", customInfo: customInfo, orderPrice: data[i].orderPrice, orderName: data[i].orderName, sale: data[i].totalSale, 
-        regDate: data[i].orderDate.date.substr(0, 19), orderID: data[i].orderID, deliveryFee: data[i].deliveryFee, count: data[i].orderCount, 
+        regDate: data[i].orderDate, orderID: data[i].orderID, deliveryFee: data[i].deliveryFee, count: data[i].orderCount, 
         totalPrice: data[i].totalPrice, paymentMethod: data[i].paymentMethod, paymentID:data[i].paymentID, orderStatus: data[i].orderStatus, deliveryTime: data[i].deliveryTime, 
         deliveryMemo: data[i].orderMemo, orderedProducts: [], 
       };

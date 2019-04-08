@@ -93,10 +93,18 @@ export class OrderPage {
       this.customInfo.ordererName = this.memberProvider.memberData.name;
       this.customInfo.ordererMobile = this.memberProvider.memberData.mobile;
       this.customInfo.ordererEmail = this.memberProvider.memberData.email;
-      this.memberAddressLists = this.memberProvider.deliveryAddrs;
-      this.customInfo.receiverName = this.memberAddressLists[0].receiver;
-      this.customInfo.receiverAddress = this.memberAddressLists[0].address;
-      this.customInfo.receiverMobile = this.memberAddressLists[0].mobile;
+      if (this.memberProvider.deliveryAddrs==undefined){
+        this.memberAddressLists = [];  
+        this.customInfo.receiverName = this.memberProvider.memberData.name;
+        this.customInfo.receiverAddress = this.memberProvider.memberData.address;
+        this.customInfo.receiverMobile = this.memberProvider.memberData.mobile;
+      }else{
+        this.memberAddressLists = this.memberProvider.deliveryAddrs;
+        this.customInfo.receiverName = this.memberAddressLists[0].receiver;
+        this.customInfo.receiverAddress = this.memberAddressLists[0].address;
+        this.customInfo.receiverMobile = this.memberAddressLists[0].mobile;
+      }
+      
       this.orderInfo.customInfo = this.customInfo;
     }else{
       this.orderInfo.type = "nonMember";

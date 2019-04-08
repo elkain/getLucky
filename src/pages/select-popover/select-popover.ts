@@ -23,13 +23,17 @@ export class SelectPopoverPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
 
     this.deliveryAddrs = this.navParams.get("addressLists");
-    this.deliveryAddrs[0].select = true;
-    this.deliveryAddrs[0].color = this.deliveryAddrSelectedColor;
-    this.deliveryAddrSelected = this.deliveryAddrs[0];
+    if (this.deliveryAddrs.length!=0){
+      this.deliveryAddrs[0].select = true;
+      this.deliveryAddrs[0].color = this.deliveryAddrSelectedColor;
+      this.deliveryAddrSelected = this.deliveryAddrs[0];
 
-    for (var i = 1; i < this.deliveryAddrs.length; i++) {
-      this.deliveryAddrs[i].select = false;
-      this.deliveryAddrs[i].color = this.deliveryAddrUnselectedColor;
+      for (var i = 1; i < this.deliveryAddrs.length; i++) {
+        this.deliveryAddrs[i].select = false;
+        this.deliveryAddrs[i].color = this.deliveryAddrUnselectedColor;
+      }
+    }else{
+      this.deliveryAddrs = [];
     }
   }
 
@@ -53,7 +57,11 @@ export class SelectPopoverPage {
   }
 
   confirm(){
-    let idx = this.deliveryAddrs.indexOf(this.deliveryAddrSelected);
-    this.viewCtrl.dismiss(idx);
+    if (this.deliveryAddrSelected!=undefined){
+      let idx = this.deliveryAddrs.indexOf(this.deliveryAddrSelected);
+      this.viewCtrl.dismiss(idx);
+    }else{
+      this.viewCtrl.dismiss(null);
+    }
   }
 }

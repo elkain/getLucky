@@ -178,7 +178,8 @@ export class SignupPage {
   signupCompBtn(){
     if ((this.idCheck() && this.pwdCheck() && this.nameCheck() && this.emailChek() && this.mobileInputCheck() && this.birthCheck()) != false) {
       this.enterMemberData();
-      
+      this.password = "";
+      this.passwordConfirm = "";
       this.serverProvider.signup(this.memberData).then((res:any)=>{
         if(res == "success"){
           this.memberProvider.memberData = this.memberData;
@@ -401,6 +402,7 @@ export class SignupPage {
     let currentPasssowrd = CryptoJS.SHA256(this.trim(this.currentPasssowrd) + "Markis").toString(CryptoJS.enc.Hex);
 
     console.log("this.password : " + this.password);
+    console.log("this.currentPasssowrd : " + this.currentPasssowrd);
     console.log("this.memberData.password : " + this.memberData.password);
     console.log("currentPasssowrd : " + currentPasssowrd);
 

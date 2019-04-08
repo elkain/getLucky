@@ -9,6 +9,13 @@
     <ion-row class="sel-pop-head">
       <div class="sel-pop-title"><p>배송지 선택</p></div>
     </ion-row>
+    <ion-row *ngIf="deliveryAddrs.length==0" class="sel-pop-radio-group">
+      <div class="sel-pop-button">
+        <div class="sel-pop-radio-label">
+          <p class="sel-pop-delivery-name">등록된 배송지가 없습니다</p>
+        </div>
+      </div>
+    </ion-row>
     <ion-row *ngFor="let deliveryAddr of deliveryAddrs" [style.background-color]="deliveryAddr.color" class="sel-pop-radio-group">
       <button class="sel-pop-button" (click)="selectDeliveryAddr(deliveryAddr)" ion-button clear>
         <div class="sel-pop-radio-icon">

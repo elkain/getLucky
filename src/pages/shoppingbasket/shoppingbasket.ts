@@ -47,16 +47,18 @@ export class ShoppingbasketPage {
     }
 
     this.checkedItemNumber = 0;
-    
     this.deliveryFee = orderProvider.deliveryFee;
-
     this.calOrderPrice();
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.isMember = this.serverProvider.isMember;
     this.shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
-    this.itemNumber = this.shoppingBasket.orderedProducts.length;
+    if (this.shoppingBasket.orderedProducts.length == undefined){
+      this.itemNumber = 0;  
+    }else{
+      this.itemNumber = this.shoppingBasket.orderedProducts.length;
+    }
     this.calOrderPrice();
     console.log('ionViewDidLoad ShoppingbasketPage');
   }

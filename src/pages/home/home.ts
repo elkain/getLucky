@@ -79,7 +79,7 @@ export class HomePage {
       });
 
       this.storage.get('autoLoginCheckbox').then((autoLoginCheck)=>{
-        console.log(autoLoginCheck);
+        console.log("autoLoginCheck: " + autoLoginCheck);
         if(autoLoginCheck == true){
           this.storage.get('username').then((val)=>{
             this.username = val;
@@ -517,7 +517,7 @@ export class HomePage {
   }
 
   loadData(event) {
-    this.offset += 20;
+    this.offset += 10;
     console.log('Begin async operation');
     if (this.homeParams.class == "category") {
       this.serverProvider.getCategoryProductData(this.homeParams.category, this.offset).then((res: any) => {

@@ -366,6 +366,8 @@ export class MypagePage {
     console.log("ionSelected on mypage");
     if (this.isMember==true){
       this.showPageType = "mypage";
+      this.headerSize = "50px";
+      this.contentMargin = "0px";
     }else{
       this.showPageType = "login";
     }
