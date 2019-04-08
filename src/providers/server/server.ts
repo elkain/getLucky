@@ -17,7 +17,8 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class ServerProvider {
 
-  serverAddr: string = "http://218.145.181.49/ionic/";
+  //serverAddr: string = "http://218.145.181.49/ionic/";
+  serverAddr: string = "http://218.145.181.49/ionic/mysql/";
   productImageURL: string = this.serverAddr +"images/";
   //productImageURL: string = "./assets/imgs/";
   shopTitle: string = "MARKET LUCKY";
