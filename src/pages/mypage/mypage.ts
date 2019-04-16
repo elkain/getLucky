@@ -471,6 +471,8 @@ export class MypagePage {
         console.log(res);
         this.deliveryAddrs = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs));
         this.deliveryAddressEnter = false;  
+        this.deliveryAddressMode[this.deliveryAddrs.length-1] = '출력';
+        this.enterMemberAddress = { memberUID:"", addressName: "", address: "", mobile: "", receiver:"" };
       },(err)=>{
         console.log(err);
       });
@@ -495,9 +497,11 @@ export class MypagePage {
   }
 
   DelDeliveryAddr(addr){
+    let index = this.deliveryAddrs.indexOf(addr);
     this.serverProvider.alterDeliveryAddr(addr, "del").then((res: any) => {
       console.log(res);
       this.deliveryAddrs = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs));
+      this.deliveryAddressMode[index] = "출력";
     }, (err) => {
       console.log(err);
     });
@@ -505,7 +509,7 @@ export class MypagePage {
 
   cancelModifyAddr(index){
     this.deliveryAddrs[index] = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs[index]));
-    this.deliveryAddressMode[index] = "출력";
+    this.deliveryAddressMode.splice(index,1);
   }
 
   compModifyAddr(index, addr){
