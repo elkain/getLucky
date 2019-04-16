@@ -18,8 +18,11 @@ import { Storage } from '@ionic/storage';
 export class ServerProvider {
 
   //serverAddr: string = "http://218.145.181.49/ionic/";
-  serverAddr: string = "http://218.145.181.49/ionic/mysql/";
-  productImageURL: string = this.serverAddr +"images/";
+  //serverAddr: string = "http://218.145.181.49/ionic/mysql/";
+  serverAddr: string = "http://49.247.131.13/ionic/mysql/";
+  //serverAddr: string = "http://172.30.1.50/ionic/mysql/";
+  //serverAddr: string = "http://192.168.56.101/ionic/mysql/";
+  productImageURL: string = "http://49.247.131.13/ionic/images/";
   //productImageURL: string = "./assets/imgs/";
   shopTitle: string = "MARKET LUCKY";
 
@@ -308,7 +311,11 @@ export class ServerProvider {
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("alter address success");
-          this.memberProvider.deliveryAddrs = result.address;
+          if(result.address == null){
+            this.memberProvider.deliveryAddrs = [];
+          }else{
+            this.memberProvider.deliveryAddrs = result.address;
+          }
           resolve("success");
         }
         else {
