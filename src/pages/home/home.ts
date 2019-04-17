@@ -1,8 +1,9 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone, Type } from '@angular/core';
 import { NavController, Slides, App, PopoverController, NavParams, Platform, Content, AlertController } from 'ionic-angular';
 import { Storage} from '@ionic/storage';
 import { ProductdetailPage } from '../productdetail/productdetail';
 import { ShoppingbasketPopoverPage } from '../shoppingbasket-popover/shoppingbasket-popover';
+import { NoticePopoverPage } from '../notice-popover/notice-popover';
 import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingbasket';
 import { ServerProvider } from '../../providers/server/server';
 import { SearchProvider } from '../../providers/search/search';
@@ -159,6 +160,7 @@ export class HomePage {
     this.productSortOptionSelected = this.productSortOptions[0];
     this.headerHeight = "98px";
     this.contentMargin = "0";
+    this.infiniteScrollEnable = false;
     
     if (this.showProducts != undefined || this.showProducts.length != undefined) {
       this.infiniteScrollSetting(this.showProducts.length);
@@ -571,5 +573,10 @@ export class HomePage {
     }else{
       this.infiniteScrollEnable = false;
     }
+  }
+
+  alertNotice(type){
+    let popover = this.popoverCtrl.create(NoticePopoverPage, { class: "home", type:type }, { cssClass: 'notice-popover' });
+    popover.present();
   }
 }

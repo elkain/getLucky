@@ -1,0 +1,15 @@
+page-notice-popover {
+    ion-title{
+        width:calc(100% - 27px);
+        display:block;
+        float:left;
+    }
+    button{
+        width:27px;
+        height:27px;
+        max-height:27px;
+        display:block;
+        float:left;
+        margin:0 !important;
+    }
+}

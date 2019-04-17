@@ -18,6 +18,7 @@ import { OrderCompletePageModule } from '../pages/order-complete/order-complete.
 import { OrderDetailPageModule } from '../pages/order-detail/order-detail.module';
 import { SignupCompletePageModule } from '../pages/signup-complete/signup-complete.module';
 import { ShoppingbasketPopoverPageModule } from '../pages/shoppingbasket-popover/shoppingbasket-popover.module';
+import { NoticePopoverPageModule } from '../pages/notice-popover/notice-popover.module';
 import { BuyPageModule } from '../pages/buy/buy.module';
 import { HttpModule } from '@angular/http';
 
@@ -49,6 +50,7 @@ import { SearchProvider } from '../providers/search/search';
     OrderDetailPageModule,
     SignupCompletePageModule,
     ShoppingbasketPopoverPageModule,
+    NoticePopoverPageModule,
     BuyPageModule,
     HttpModule,
     IonicModule.forRoot(MyApp,{

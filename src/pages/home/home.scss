@@ -121,7 +121,24 @@ page-home {
             }
         }
     }
-    
+
+    .company-info{
+        background-color:white;
+        height: auto;
+        padding:5px 16px;
+
+        p{
+            font-size:0.9em;
+            margin:0 0 4px 0;
+            color: gray;
+        }
+
+        p:first-child{
+            font-size:1.1em;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+    }
     /* recommand 화면 종료 */
 
     /* best & sale 화면 시작 */
@@ -309,6 +326,8 @@ page-home {
     }
     /* event 화면 종료 */
     $segment-button-md-text-color-activated:black;
+
+    
 }
 
 .popover-md{
@@ -341,5 +360,14 @@ page-home {
                 }
             }
         }
+    }
+}
+
+
+.notice-popover{
+    .popover-content{
+        width:80% !important;
+        height:60%;
+        left: 10% !important;
     }
 }
