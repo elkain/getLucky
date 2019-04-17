@@ -41,7 +41,6 @@ page-signup {
 
     .scroll-content{
         background-color: $background-color;
-        overflow: hidden;
     }
 
     .signup-grid{
@@ -303,6 +302,49 @@ page-signup {
 
             .male{
                 margin-right: 1px;
+            }
+        }
+
+        .signup-policy{
+            height: 32px;
+            min-height: 32px;
+            width:calc(100% - 80px);
+            padding: 0;
+
+            ion-checkbox{
+                .checkbox-checked{
+                    background-color: white;
+
+                    .checkbox-inner{
+                        border-color: black;
+                    }
+                }
+                .checkbox-icon{
+                    border-color: gray;
+                }
+
+                button{
+                    background-color: white;
+                    opacity: 0;
+                    border: none;
+                }
+            }
+
+            .item-inner{
+                border: none;
+
+                ion-label{
+                    font-size: $default-font-size;
+                }
+            }
+        }
+
+        .alert-notice-btn{
+            width: 80px;
+
+            p{
+                font-size: $default-font-size;
+                font-weight: 400;
             }
         }
     }

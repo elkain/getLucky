@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, PopoverController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { MemberProvider } from '../../providers/member/member';
+import { NoticePopoverPage } from '../notice-popover/notice-popover';
 import { OrderPage } from '../order/order';
 import * as CryptoJS from 'crypto-js';
 import { ServerProvider } from '../../providers/server/server';
@@ -47,9 +48,11 @@ export class SignupPage {
   mobileCheckNumberConfirm: number = undefined;
   memberData = { UID: "", username: "", password: "", name: "", email: "", mobile: "", address: "", birth: "", sex: "" };
   emailOptionLists = [];
+  checkServicePolicy = false;
+  checkPrivacyInfoPolicy = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, 
-    public memberProvider:MemberProvider, public serverProvider:ServerProvider) {
+    public memberProvider: MemberProvider, public serverProvider: ServerProvider, public popoverCtrl: PopoverController) {
     this.male = this.whiteColor;
     this.female = this.whiteColor;
     this.isMember = this.serverProvider.isMember;
@@ -176,7 +179,25 @@ export class SignupPage {
   }
 
   signupCompBtn(){
-    if ((this.idCheck() && this.pwdCheck() && this.nameCheck() && this.emailChek() && this.mobileInputCheck() && this.birthCheck()) != false) {
+    if(this.checkServicePolicy == false){
+      let alert = this.alertCtrl.create({
+        message: '이용약관에 동의해주세요',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    }else if (this.checkPrivacyInfoPolicy == false) {
+      let alert = this.alertCtrl.create({
+        message: '개인정보 처리 방침에 동의해주세요.',
+        buttons: [{
+          text: '확인',
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    }else if ((this.idCheck() && this.pwdCheck() && this.nameCheck() && this.emailChek() && this.mobileInputCheck() && this.birthCheck()) != false) {
       this.enterMemberData();
       this.password = "";
       this.passwordConfirm = "";
@@ -574,5 +595,10 @@ export class SignupPage {
 
       return false;
     }
+  }
+
+  alertNotice(type) {
+    let popover = this.popoverCtrl.create(NoticePopoverPage, { class: "home", type: type }, { cssClass: 'notice-popover' });
+    popover.present();
   }
 }

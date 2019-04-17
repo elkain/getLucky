@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgZone, Type } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { NavController, Slides, App, PopoverController, NavParams, Platform, Content, AlertController } from 'ionic-angular';
 import { Storage} from '@ionic/storage';
 import { ProductdetailPage } from '../productdetail/productdetail';

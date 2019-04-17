@@ -123,6 +123,22 @@
         <p>여자</p>
       </div>
     </ion-row>
+    <ion-row style="margin:0;">
+      <ion-item class="signup-policy">
+        <ion-label>이용약관 동의*</ion-label>
+        <ion-checkbox [(ngModel)]="checkServicePolicy"></ion-checkbox>
+      </ion-item>
+      <div class="alert-notice-btn" (click)="alertNotice('이용약관')"><p><u>내용보기</u></p></div>
+    </ion-row>
+    <ion-row>
+      <ion-item class="signup-policy">
+        <ion-label>개인정보 처리방침 동의*</ion-label>
+        <ion-checkbox [(ngModel)]="checkPrivacyInfoPolicy"></ion-checkbox>
+      </ion-item>
+      <div class="alert-notice-btn" (click)="alertNotice('개인정보 처리방침')">
+        <p><u>내용보기</u></p>
+      </div>
+    </ion-row>
   </ion-grid>
   <!-- 가입하기 버튼 -->
   <button class="signup-submit" *ngIf="isMember==false" (click)="signupCompBtn()" clear full ion-button>가입하기</button>
