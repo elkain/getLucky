@@ -19,10 +19,11 @@ export class ServerProvider {
 
   //serverAddr: string = "http://218.145.181.49/ionic/";
   //serverAddr: string = "http://218.145.181.49/ionic/mysql/";
-  serverAddr: string = "http://49.247.131.13/ionic/mysql/";
+  //serverAddr: string = "http://49.247.131.13/ionic/mysql/";
   //serverAddr: string = "http://172.30.1.50/ionic/mysql/";
-  //serverAddr: string = "http://192.168.56.101/ionic/mysql/";
-  productImageURL: string = "http://49.247.131.13/ionic/images/";
+  serverAddr: string = "http://192.168.56.101/ionic/mysql/";
+  //productImageURL: string = "http://49.247.131.13/ionic/images/";
+  productImageURL: string = this.serverAddr+"images/";
   //productImageURL: string = "./assets/imgs/";
   shopTitle: string = "MARKET LUCKY";
 
@@ -32,6 +33,8 @@ export class ServerProvider {
   dataLoad = false;
   productAllCategories;
 
+  homeCategories = new Array();
+  homeSubcategories = new Array();
   bestCategories = new Array();
   saleCategories = new Array();
   deliveryPlaceInfos = [];
@@ -50,8 +53,7 @@ export class ServerProvider {
     public orderProvivder: OrderProvider, public searchProvider: SearchProvider, private storage: Storage) {
     console.log('Hello ServerProvider Provider');
     this.isMember = false;
-    this.bestCategories = [{ subCategoryName: "전체" }, { subCategoryName: "과일·견과", subCategoryCode: "103" }, { subCategoryName: "유제품", subCategoryCode: "201" }, { subCategoryName: "과자·빵", subCategoryCode: "202" }];
-    this.saleCategories = [{ subCategoryName: "전체" }, { subCategoryName: "과일·견과", subCategoryCode: "103" }, { subCategoryName: "유제품", subCategoryCode: "201" }, { subCategoryName: "과자·빵", subCategoryCode: "202" }];
+    
   }
 
   init(){
@@ -60,10 +62,23 @@ export class ServerProvider {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
-          if (result.product == null) {
-            this.homeProducts = [];
+
+          if (result.displayShopCategory != undefined && result.displayShopCategory != null){
+            this.homeCategories = result.displayShopCategory;
           } else {
-            this.homeProducts = this.productRearrange(result.product);
+            console.log("load displayShop Category error");
+          }
+
+          if (result.displayShop != undefined && result.displayShop != null) {
+            this.homeSubcategories = result.displayShop;
+          } else {
+            console.log("load displayShop error");
+          }
+
+          if (result.product != null) {
+            this.homeProducts = result.product;
+          } else {
+            this.homeProducts = [];
           }
           console.log("product load Success");
           
@@ -89,7 +104,29 @@ export class ServerProvider {
     });    
   }
 
-  getAllProductData(offset = 0){
+  refreshProductsData(type, categoryCode){
+    let body = { type, categoryCode };
+    return new Promise((resolve, reject) => {
+      this.http.post(this.serverAddr + "product/refreshProductsData.php", body).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if(result.status == "success"){
+          if (result.product != undefined && result.product != null){
+            this.homeProducts = result.product;
+            resolve("success");
+          }else{
+            this.homeProducts = [];
+            reject("no Item");
+          }
+        }
+      }, err => {
+        console.log(err);
+        reject(err);
+      });
+    }); 
+  }
+
+  /*getAllProductData(offset = 0){
     //상품 정보를 가져옴
     return new Promise((resolve, reject) => {
       this.http.post(this.serverAddr + "product/loadAllProduct.php", offset).subscribe(data => {
@@ -101,12 +138,12 @@ export class ServerProvider {
             resolve("noItem");
           }else{
             if(offset > 0){
-              let products = this.productRearrange(result.product);              
+              let products = result.product;              
               for(let i = 0; i<products.length; i++){
                 this.homeProducts.push(products[i]);
               }
             }else{
-              this.homeProducts = this.productRearrange(result.product);
+              this.homeProducts = result.product;
             }
             resolve("success");
           }
@@ -119,7 +156,7 @@ export class ServerProvider {
         console.log(err);
       });
     });    
-  }
+  }*/
 
   getCategoryProductData(categoryCode, offset = 0){
     //특정 카테고리 상품 정보를 가져옴
@@ -129,7 +166,7 @@ export class ServerProvider {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (offset > 0 && result.product != undefined){
-          let products = this.productRearrange(result.product);
+          let products = result.product;
           for (let i = 0; i < products.length; i++) {
             this.categoryProducts.push(products[i]);
           }
@@ -138,7 +175,7 @@ export class ServerProvider {
           this.categoryProducts = [];
           resolve("noItem");
         }else{
-          this.categoryProducts = this.productRearrange(result.product);
+          this.categoryProducts = result.product;
           resolve("success");
         }
       }, err => {
@@ -636,7 +673,7 @@ export class ServerProvider {
     return categoryDatas;
   }
 
-  productRearrange(data){
+  /*productRearrange(data){
 
     //let path = "http://218.145.181.49/ionic/images/";
     //let path = "./assets/imgs/";
@@ -653,7 +690,7 @@ export class ServerProvider {
       }
       
     }
-    /*for(let i = 0; i<data['product'].length; i++){
+    for(let i = 0; i<data['product'].length; i++){
       while (j < data['imagePath'].length && data['product'][i].productCode == data['imagePath'][j].productCode){
         data['imagePath'][j].imagePath = path + data['imagePath'][j].imagePath;
         imagePaths.push(JSON.parse(JSON.stringify(data['imagePath'][j])));
@@ -664,10 +701,10 @@ export class ServerProvider {
       product['imagePath'] = imagePaths;
       products.push(JSON.parse(JSON.stringify(product)));
       imagePaths.length = 0;
-    }*/
+    }
 
     return data;
-  }
+  }*/
 
   orderInfoRearrange(data) {
     let orderInfos = [];
@@ -700,7 +737,7 @@ export class ServerProvider {
   }
 
   updateShoppingbasket(result){
-    let products = this.productRearrange(result.shoppingbasket);
+    let products = result.shoppingbasket;
     let shoppingBasket = this.shoppingbasketProvider.shoppingBasket;
     shoppingBasket.orderedProducts = products;
     shoppingBasket.checkedProducts = [];
@@ -756,7 +793,7 @@ export class ServerProvider {
             }
 
             if (result['product'] != undefined) {
-              this.searchProducts = this.productRearrange(result.product);
+              this.searchProducts = result.product;
             } else {
               this.searchProducts = [];
               resolve("noItem");
@@ -764,7 +801,7 @@ export class ServerProvider {
             resolve("success");
           }else{
             if (result['product'] != undefined) {
-              let searchProduct = this.productRearrange(result.product);
+              let searchProduct = result.product;
               for (let i = 0; i < searchProduct.length; i++){
                 this.searchProducts.push(searchProduct[i]);
               }

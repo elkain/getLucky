@@ -25,15 +25,17 @@ export class HomePage {
   refreshorEnable:boolean;
   infiniteScrollEnable: boolean;
 
-  homeCategories = ["럭키추천", "베스트", "알뜰할인",  "이벤트"];
+  homeCategories = [
+    { displayName: "럭키추천", displayCode: 2 },
+    { displayName: "베스트", displayCode: 3 },
+    { displayName: "알뜰할인", displayCode: 4 },
+    { displayName: "이벤트", displayCode: 5 }
+  ];
+  homeSubcategories;
   homeCategorySelected;
 
-  bestCategories;
-  bestCategorySelected;
-
-  saleCategories;
+  homeSubCategorySelected;
   saleCategorySelected;
-
   categorySelected;
 
   productSortOptions = ["판매인기순","높은가격순", "낮은가격순"];
@@ -62,12 +64,15 @@ export class HomePage {
     public memberProvider: MemberProvider ,private storage:Storage, public alertCtrl:AlertController) {
     this.homeParams = navParams.data;
     this.offset = 0;
+    
     if(this.serverProvider.dataLoad == false){
       this.serverProvider.init().then((res: any) => {
         if (res == "success") {
           this.serverProvider.dataLoad = true;
           this.showProducts = this.serverProvider.homeProducts;
-          
+          this.homeCategories = this.serverProvider.homeCategories;
+          this.homeSubcategories = this.serverProvider.homeSubcategories;
+          this.homeCategorySelected = this.homeCategories[0];
           if (this.showProducts != undefined || this.showProducts.length != undefined) {
             this.infiniteScrollSetting(this.showProducts.length);
           }else{
@@ -82,7 +87,7 @@ export class HomePage {
       this.storage.get('autoLoginCheckbox').then((autoLoginCheck)=>{
         console.log("autoLoginCheck: " + autoLoginCheck);
         if(autoLoginCheck == true){
-          this.storage.get('username').then((val)=>{
+          /*this.storage.get('username').then((val)=>{
             this.username = val;
 
             this.storage.get('password').then((val) => {
@@ -113,7 +118,7 @@ export class HomePage {
               });
               alert.present();
             });
-          })
+          });*/
         }else{
           this.storage.get('shoppingbasket').then((val)=>{
             if(val!=null){
@@ -152,11 +157,7 @@ export class HomePage {
     }
 
     this.homeCategorySelected = this.homeCategories[0];
-    this.bestCategories = this.serverProvider.bestCategories;
-    this.saleCategories = this.serverProvider.saleCategories;
     
-    this.bestCategorySelected = this.bestCategories[0];
-    this.saleCategorySelected = this.saleCategories[0];
     this.productSortOptionSelected = this.productSortOptions[0];
     this.headerHeight = "98px";
     this.contentMargin = "0";
@@ -198,8 +199,7 @@ export class HomePage {
     let idx = this.homeCategories.indexOf(Category);
     this.showProducts = this.serverProvider.homeProducts;
     this.homeCategorySelected = this.homeCategories[idx];
-    this.bestCategorySelected = this.bestCategories[0];
-    this.saleCategorySelected = this.saleCategories[0];
+    this.homeSubCategorySelected = '전체';
     this.productSortOptionSelected = this.productSortOptions[0];
 
     if(this.homeCategorySelected != this.homeCategories[0]){
@@ -223,8 +223,6 @@ export class HomePage {
       this.contentHeight = "calc(100% - 38px)";
     }
 
-    this.showProducts = this.sortProductsByCategory(this.serverProvider.homeProducts, this.bestCategorySelected);
-
     if (this.homeCategorySelected == this.homeCategories[3]) {
       this.infiniteScrollEnable = false;
       this.refreshorEnable = false;
@@ -239,25 +237,27 @@ export class HomePage {
     this.offset = 0;
   }
 
-  bestCategoryChange(Category) {
+  homeSubCategoryChange(Category) {
     this.scrollHandler();
-    let idx = this.bestCategories.indexOf(Category);
-    this.bestCategorySelected = this.bestCategories[idx];
-    this.showProducts = this.sortProductsByCategory(this.serverProvider.homeProducts, this.bestCategorySelected);
-    this.productsSort(this.productSortOptionSelected, this.showProducts);
-
-    if (this.showProducts != undefined || this.showProducts.length != undefined) {
-      this.infiniteScrollSetting(this.showProducts.length);
+    if (Category == '전체') {
+      this.homeSubCategorySelected = "전체";
     } else {
-      this.infiniteScrollEnable = false;
+      let idx = this.homeSubcategories.indexOf(Category);
+      this.homeSubCategorySelected = this.homeSubcategories[idx];
+      this.productsSort(this.productSortOptionSelected, this.showProducts);
+
+      if (this.showProducts != undefined || this.showProducts.length != undefined) {
+        this.infiniteScrollSetting(this.showProducts.length);
+      } else {
+        this.infiniteScrollEnable = false;
+      }
     }
   }
 
-  saleCategoryChange(Category) {
+  /*saleCategoryChange(Category) {
     this.scrollHandler();
     let idx = this.saleCategories.indexOf(Category);
     this.saleCategorySelected = this.saleCategories[idx];
-    this.showProducts = this.sortProductsByCategory(this.serverProvider.homeProducts, this.saleCategorySelected);
     this.productsSort(this.productSortOptionSelected, this.showProducts);
 
     if (this.showProducts != undefined || this.showProducts.length != undefined) {
@@ -265,19 +265,22 @@ export class HomePage {
     } else {
       this.infiniteScrollEnable = false;
     }
-  }
+  }*/
 
   categoryChange(Category) {
     this.scrollHandler();
-    let idx = this.homeParams.category.subCategories.indexOf(Category);
-    this.categorySelected = this.homeParams.category.subCategories[idx];
-    this.showProducts = this.sortProductsByCategory(this.serverProvider.categoryProducts, this.categorySelected);
-    this.productsSort(this.productSortOptionSelected, this.showProducts);
+    if(Category == '전체'){
+      this.categorySelected = "전체";
+    }else{
+      let idx = this.homeParams.category.subCategories.indexOf(Category);
+      this.categorySelected = this.homeParams.category.subCategories[idx];
+      this.productsSort(this.productSortOptionSelected, this.showProducts);
 
-    if (this.showProducts != undefined || this.showProducts.length != undefined) {
-      this.infiniteScrollSetting(this.showProducts.length);
-    } else {
-      this.infiniteScrollEnable = false;
+      if (this.showProducts != undefined || this.showProducts.length != undefined) {
+        this.infiniteScrollSetting(this.showProducts.length);
+      } else {
+        this.infiniteScrollEnable = false;
+      }
     }
   }
 
@@ -359,7 +362,7 @@ export class HomePage {
       this.contentMargin = "0";
     }
 
-    this.bestCategorySelected = this.bestCategories[0];
+    this.homeSubCategorySelected = '전체';
     this.productSortOptionSelected = this.productSortOptions[0];
 
     if (this.homeParams.class == "search") {
@@ -372,7 +375,6 @@ export class HomePage {
       this.contentHeight = "calc(100% - 38px)";
       this.headerHeight = "98px";
       this.contentMargin = "38px";
-      this.showProducts = this.sortProductsByCategory(this.serverProvider.categoryProducts, this.categorySelected);
     } else if (this.homeParams.class == "search"){
       this.showProducts = this.serverProvider.searchProducts;
     }else{
@@ -402,7 +404,6 @@ export class HomePage {
   }
 
   swipeSubcategory(event){
-    
     if (this.homeParams.class == "category"){
 
       let categories = this.homeParams.category.subCategories;
@@ -418,43 +419,43 @@ export class HomePage {
         } 
       }
     }
-    else if(this.homeCategorySelected == this.homeCategories[1]){
-      let idx = this.bestCategories.indexOf(this.bestCategorySelected);
+    else if (this.homeCategorySelected == this.homeCategories[1] || this.homeCategorySelected == this.homeCategories[2]){
+      let idx = this.homeSubcategories.indexOf(this.homeSubCategorySelected);
 
       if (event.direction == 4) { // DIRECTION_RIGHT =4 
+        while (idx >= 1 && this.homeSubcategories[idx - 1].displayCategoryCode != this.homeCategorySelected.displayCategoryCode) {
+          idx--;
+        }
         if (idx >= 1) {
-          this.bestCategoryChange(this.bestCategories[idx - 1]);
-        } else {
-          this.homeCategoryChange(this.homeCategories[0]);
+          this.homeSubCategoryChange(this.homeSubcategories[idx - 1]);
+        } else if (this.homeSubCategorySelected == '전체'){
+          if (this.homeCategorySelected == this.homeCategories[1]) {
+            this.homeCategoryChange(this.homeCategories[0]);
+          } else if (this.homeCategorySelected == this.homeCategories[2]) {
+            this.homeCategoryChange(this.homeCategories[1]);
+          }
+        }else {
+          this.homeSubCategoryChange('전체');
         }
       } else if (event.direction == 2) { // DRIECTION_LEFT = 2
-        if (idx < this.bestCategories.length - 1) {
-          this.bestCategoryChange(this.bestCategories[idx + 1]);
-        } else {
-          this.homeCategoryChange(this.homeCategories[2]);
+        while (idx < this.homeSubcategories.length - 1 && this.homeSubcategories[idx + 1].displayCategoryCode != this.homeCategorySelected.displayCategoryCode) {
+          idx++;
         }
-      }
-    }else if (this.homeCategorySelected == this.homeCategories[2]) {
-      let idx = this.saleCategories.indexOf(this.saleCategorySelected);
-
-      if (event.direction == 4) { // DIRECTION_RIGHT =4 
-        if (idx >= 1) {
-          this.saleCategoryChange(this.saleCategories[idx - 1]);
+        if (idx < this.homeSubcategories.length - 1) {
+          this.homeSubCategoryChange(this.homeSubcategories[idx + 1]);
         } else {
-          this.homeCategoryChange(this.homeCategories[1]);
-        }
-      } else if (event.direction == 2) { // DRIECTION_LEFT = 2
-        if (idx < this.saleCategories.length - 1) {
-          this.saleCategoryChange(this.saleCategories[idx + 1]);
-        } else {
-          this.homeCategoryChange(this.homeCategories[3]);
+          if (this.homeCategorySelected == this.homeCategories[1]){
+            this.homeCategoryChange(this.homeCategories[2]);
+          } else if (this.homeCategorySelected == this.homeCategories[2]){
+            this.homeCategoryChange(this.homeCategories[3]);
+          }
         }
       }
     }
   }
 
   doRefresh(event) {
-    this.offset = 0;
+    //this.offset = 0;
     console.log('Begin async operation');
     if (this.homeParams.class == "category"){
       this.serverProvider.getCategoryProductData(this.homeParams.category).then((res:any)=>{
@@ -480,31 +481,20 @@ export class HomePage {
         }else{
           event.cancel();
         }
-        
       }, (err) => {
         console.log(err);
         event.cancel();
       });
     } else{
-      this.serverProvider.init().then((res: any) => {
-        if (res == "success") {
+      this.serverProvider.refreshProductsData("home", null).then((res:any)=>{
+        if(res=="success"){
           this.showProducts = this.serverProvider.homeProducts;
-          this.homeCategoryChange(this.homeCategorySelected);
-          if(this.homeCategorySelected == "베스트"){
-            console.log(this.bestCategorySelected);
-            this.sortProductsByCategory(this.showProducts, this.bestCategorySelected);
-            this.productsSort(this.productSortOptionSelected, this.showProducts);
-          }else if(this.homeCategorySelected == "알뜰할인"){
-            this.sortProductsByCategory(this.showProducts, this.saleCategorySelected);
-            this.productsSort(this.productSortOptionSelected, this.showProducts);
-          }
-          
+          this.productsSort(this.productSortOptionSelected, this.showProducts);
           event.complete();
         }else{
           event.cancel();
         }
-        console.log(res);
-      }, (err) => {
+      }, (err)=>{
         console.log(err);
         event.cancel();
       });
@@ -518,7 +508,7 @@ export class HomePage {
     }
   }
 
-  loadData(event) {
+  /*loadData(event) {
     this.offset += 10;
     console.log('Begin async operation');
     if (this.homeParams.class == "category") {
@@ -545,28 +535,9 @@ export class HomePage {
         event.complete();
       });
     } else {
-      this.serverProvider.getAllProductData(this.offset).then((res: any) => {
-        if (res.status == "success") {
-          this.showProducts = this.serverProvider.homeProducts;
-          this.homeCategoryChange(this.homeCategorySelected);
-          if (this.homeCategorySelected == "베스트") {
-            console.log(this.bestCategorySelected);
-            this.sortProductsByCategory(this.showProducts, this.bestCategorySelected);
-            this.productsSort(this.productSortOptionSelected, this.showProducts);
-          } else if (this.homeCategorySelected == "알뜰할인") {
-            this.sortProductsByCategory(this.showProducts, this.saleCategorySelected);
-            this.productsSort(this.productSortOptionSelected, this.showProducts);
-          }
-        }
-        event.complete();
-        console.log(res);
-      }, (err) => {
-        console.log(err);
-        event.complete();
-      });
+      
     }
-  }
-
+  }*/
   infiniteScrollSetting(length){
     if(length>=20){
       this.infiniteScrollEnable = true;
