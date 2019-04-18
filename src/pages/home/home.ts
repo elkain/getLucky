@@ -486,7 +486,7 @@ export class HomePage {
         event.cancel();
       });
     } else{
-      this.serverProvider.refreshProductsData("home", null).then((res:any)=>{
+      this.serverProvider.refreshHomeProductsData().then((res:any)=>{
         if(res=="success"){
           this.showProducts = this.serverProvider.homeProducts;
           this.productsSort(this.productSortOptionSelected, this.showProducts);

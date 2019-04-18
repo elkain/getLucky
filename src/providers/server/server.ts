@@ -104,10 +104,9 @@ export class ServerProvider {
     });    
   }
 
-  refreshProductsData(type, categoryCode){
-    let body = { type, categoryCode };
+  refreshHomeProductsData(){
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "product/refreshProductsData.php", body).subscribe(data => {
+      this.http.get(this.serverAddr + "product/refreshHomeProductsData.php").subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if(result.status == "success"){
