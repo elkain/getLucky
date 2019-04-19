@@ -157,20 +157,14 @@ export class ServerProvider {
     });    
   }*/
 
-  getCategoryProductData(categoryCode, offset = 0){
+  getCategoryProductData(categoryCode){
     //특정 카테고리 상품 정보를 가져옴
-    let body = {categoryCode, offset}
+    let body = {categoryCode}
     return new Promise((resolve, reject) => {
       this.http.post(this.serverAddr + "product/loadCategoryProduct.php", body).subscribe(data => {
         console.log(data);
         let result = JSON.parse(data["_body"]);
-        if (offset > 0 && result.product != undefined){
-          let products = result.product;
-          for (let i = 0; i < products.length; i++) {
-            this.categoryProducts.push(products[i]);
-          }
-          resolve("success");
-        } else if(result.product == undefined){
+        if(result.product == undefined){
           this.categoryProducts = [];
           resolve("noItem");
         }else{
@@ -181,6 +175,34 @@ export class ServerProvider {
         console.log(err);
       });
     }); 
+  }
+
+  getMoreCategoryProductData(categoryCode, offset) {
+    //특정 카테고리 상품 정보를 좀더 가져옴
+    let body = { categoryCode, offset }
+    return new Promise((resolve, reject) => {
+      this.http.post(this.serverAddr + "product/loadMoreCategoryProduct.php", body).subscribe(data => {
+        console.log(data);
+        let result = JSON.parse(data["_body"]);
+        if (result.product != undefined && result.product != null) {
+          let products = result.product;
+          for (let i = 0; i < products.length; i++) {
+            this.categoryProducts.push(products[i]);
+          }
+
+          if (products.length < 20) {
+            resolve("loadEnd");
+          } else {
+            resolve("success");
+          }
+        } else {
+          this.categoryProducts = [];
+          resolve("noItem");
+        } 
+      }, err => {
+        console.log(err);
+      });
+    });
   }
 
   loadCategory(){
@@ -804,8 +826,15 @@ export class ServerProvider {
               for (let i = 0; i < searchProduct.length; i++){
                 this.searchProducts.push(searchProduct[i]);
               }
+
+              if(result.product.length<20){
+                resolve("loadEnd");  
+              }else{
+                resolve("success");
+              }
+            }else{
+              resolve("noItem");
             }
-            resolve("success");
           }
         }
         else {
