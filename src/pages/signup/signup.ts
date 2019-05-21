@@ -4,7 +4,6 @@ import { TabsPage } from '../tabs/tabs';
 import { MemberProvider } from '../../providers/member/member';
 import { NoticePopoverPage } from '../notice-popover/notice-popover';
 import { OrderPage } from '../order/order';
-import * as CryptoJS from 'crypto-js';
 import { ServerProvider } from '../../providers/server/server';
 
 /**
@@ -26,7 +25,7 @@ export class SignupPage {
 
   isMember: boolean = false;
   password: string;
-  currentPasssowrd: string;
+  currentPasssoword: string;
   passwordConfirm: string;
   email: string;
   emailOption: string;
@@ -222,7 +221,7 @@ export class SignupPage {
   presentAlert() {
     if ((this.modifyPwdCheck() && this.nameCheck() && this.emailChek() && this.modifyMobileNumber() && this.birthCheck()) != false){
       this.enterMemberData();
-      this.serverProvider.modify(this.memberData).then((res:any)=>{
+      this.serverProvider.modify(this.memberData, this.currentPasssoword).then((res:any)=>{
         if(res == "success"){
           let alert = this.alertCtrl.create({
             message: '회원정보가 수정되었습니다.',
@@ -236,8 +235,29 @@ export class SignupPage {
           });
           alert.present();  
         }
-      }, (err)=>{
-        console.log("fail to modify");
+      }, (err) => {
+        if(err == 'failed'){
+          let alert = this.alertCtrl.create({
+            message: '아이디/비번이 틀립니다.',
+            buttons: [{
+              text: '확인',
+            }],
+            cssClass: 'alert-modify-member'
+          });
+          alert.present();
+        }else{
+          let alert = this.alertCtrl.create({
+            message: '세션이 만료되었습니다.',
+            buttons: [{
+              text: '확인',
+              handler: ()=>{
+                this.navCtrl.setRoot(TabsPage, { class: "signup", tabIndex: 0 });
+              }
+            }],
+            cssClass: 'alert-modify-member'
+          });
+          alert.present();
+        }
       });
     }
   }
@@ -255,7 +275,7 @@ export class SignupPage {
     let birth = this.birthYear + "-" + this.birthMonth + "-" + this.birthDay;
 
     if(this.password != undefined){
-      this.memberData.password = CryptoJS.SHA256(this.trim(this.password) + "Markis").toString(CryptoJS.enc.Hex);
+      this.memberData.password = this.trim(this.password);
       console.log(this.memberData.password);
     }
     
@@ -393,7 +413,7 @@ export class SignupPage {
   }
 
   modifyPwdCheck(){
-    if (this.currentPasssowrd == undefined) {
+    if (this.currentPasssoword == undefined) {
       let alert = this.alertCtrl.create({
         message: '현재 비밀번호를 입력하세요.',
         buttons: [{
@@ -406,7 +426,7 @@ export class SignupPage {
       return false;
     }
 
-    if (this.currentPasssowrd.length < 6) {
+    if (this.currentPasssoword.length < 6) {
 
       let alert = this.alertCtrl.create({
         message: '비밀번호는 6글자 이상입력하세요.',
@@ -420,14 +440,7 @@ export class SignupPage {
       return false;
     }
 
-    let currentPasssowrd = CryptoJS.SHA256(this.trim(this.currentPasssowrd) + "Markis").toString(CryptoJS.enc.Hex);
-
-    console.log("this.password : " + this.password);
-    console.log("this.currentPasssowrd : " + this.currentPasssowrd);
-    console.log("this.memberData.password : " + this.memberData.password);
-    console.log("currentPasssowrd : " + currentPasssowrd);
-
-    if (this.memberData.password != currentPasssowrd) {
+    /*if (this.memberData.password != currentPasssoword) {
       let alert = this.alertCtrl.create({
         message: '현재 비밀번호가 틀렸습니다.',
         buttons: [{
@@ -438,7 +451,7 @@ export class SignupPage {
       alert.present();
 
       return false;
-    }
+    }*/
     
     if(this.password == undefined){
       return true;
