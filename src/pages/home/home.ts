@@ -8,6 +8,7 @@ import { ShoppingbasketProvider } from '../../providers/shoppingbasket/shoppingb
 import { ServerProvider } from '../../providers/server/server';
 import { SearchProvider } from '../../providers/search/search';
 import { MemberProvider } from '../../providers/member/member';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-home',
@@ -180,6 +181,7 @@ export class HomePage {
   }
 
   itemSelected(item){
+    this.refreshToken();
     this.app.getRootNavs()[0].push(ProductdetailPage, {class:"home", product:item});
   }
 
@@ -188,6 +190,7 @@ export class HomePage {
   }
 
   homeCategoryChange(Category) {
+    this.refreshToken();
     this.scrollHandler();
     let idx = this.homeCategories.indexOf(Category);
     this.showProducts = this.serverProvider.homeProducts;
@@ -226,6 +229,7 @@ export class HomePage {
   }
 
   homeSubCategoryChange(Category) {
+    this.refreshToken();
     this.scrollHandler();
     if (Category == '전체') {
       this.homeSubCategorySelected = "전체";
@@ -256,6 +260,7 @@ export class HomePage {
   }*/
 
   categoryChange(Category) {
+    this.refreshToken();
     this.scrollHandler();
     let idx = this.homeParams.category.subCategories.indexOf(Category);
     this.categorySelected = this.homeParams.category.subCategories[idx];
@@ -295,6 +300,7 @@ export class HomePage {
   }*/
   
   productsOptionChange(){
+    this.refreshToken();
     if(this.showProducts.length >1){
       this.productsSort(this.productSortOptionSelected, this.showProducts);
     }
@@ -359,6 +365,7 @@ export class HomePage {
   }
 
   ionSelected() {
+    this.refreshToken();
     if (this.homeParams.homeSegmentCategory == 1) {
       this.homeCategorySelected = this.homeCategories[1];
       this.categorySelected=this.homeParams.subCategory;
@@ -577,5 +584,31 @@ export class HomePage {
   alertNotice(type){
     let popover = this.popoverCtrl.create(NoticePopoverPage, { class: "home", type:type }, { cssClass: 'notice-popover' });
     popover.present();
+  }
+
+  refreshToken() {
+    this.serverProvider.validateAccessToken().then((res) => {
+      if (res == 'success') {
+        return true;
+      } else {
+        return false;
+      }
+    }, err => {
+      console.log(err);
+
+      let alert = this.alertCtrl.create({
+        message: '세션이 만료되었습니다.',
+        buttons: [{
+          text: '확인',
+          handler: () => {
+            this.navCtrl.setRoot(TabsPage, { class: "home", tabIndex: 0 });
+          }
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    });
+
+    return false;
   }
 }

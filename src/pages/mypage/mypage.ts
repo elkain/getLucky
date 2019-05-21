@@ -149,6 +149,7 @@ export class MypagePage {
   }
 
   moveToSignup(){
+    this.refreshToken();
     this.app.getRootNavs()[0].push(SignupPage, {class:"mypage", prevPage:this.prevPage});
   }
 
@@ -282,6 +283,7 @@ export class MypagePage {
   }
 
   changeIdPwdFind(type){
+    this.refreshToken();
     this.showPageType="find";
     let idx = this.findCategories.indexOf(type);
     this.findCategorySelected = this.findCategories[idx];
@@ -298,6 +300,7 @@ export class MypagePage {
   }
 
   menuSelected(menu){
+    this.refreshToken();
     if( menu == "로그아웃"){
       this.isMember = false;
       this.serverProvider.isMember = false;
@@ -335,14 +338,17 @@ export class MypagePage {
   }
 
   moveToHome() {
+    this.refreshToken();
     this.navCtrl.parent.select(0);
   }
 
   goToShoppingBasket(){
+    this.refreshToken();
     this.navCtrl.parent.select(4);
   }
 
   back() {
+    this.refreshToken();
     this.showPageType = "mypage";
     this.headerSize = "50px";
     this.contentMargin = "0px";
@@ -352,6 +358,7 @@ export class MypagePage {
   }
 
   ionSelected(){
+    this.refreshToken();
     console.log("ionSelected on mypage");
     if (this.isMember==true){
       this.showPageType = "mypage";
@@ -374,6 +381,7 @@ export class MypagePage {
   }
 
   goToOrder() {
+    this.refreshToken();
     this.app.getRootNavs()[0].setRoot(OrderPage, { class: this.prevPage}).then(()=>{
       this.prevPage = undefined;
     });
@@ -587,6 +595,32 @@ export class MypagePage {
     }, (err) => {
       console.log(err);
     });
+  }
+
+  refreshToken() {
+    this.serverProvider.validateAccessToken().then((res) => {
+      if (res == 'success') {
+        return true;
+      } else {
+        return false;
+      }
+    }, err => {
+      console.log(err);
+
+      let alert = this.alertCtrl.create({
+        message: '세션이 만료되었습니다.',
+        buttons: [{
+          text: '확인',
+          handler: () => {
+            this.navCtrl.setRoot(TabsPage, { class: "mypage", tabIndex: 0 });
+          }
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    });
+
+    return false;
   }
 }
 
