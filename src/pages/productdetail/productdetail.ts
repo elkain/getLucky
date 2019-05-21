@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, AlertController} from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs'
 import { BuyPage } from '../buy/buy';
 import { OrderProvider } from '../../providers/order/order';
+import { ServerProvider } from '../../providers/server/server';
 
 /**
  * Generated class for the ProductdetailPage page.
@@ -24,30 +25,34 @@ export class ProductdetailPage {
   deliveryFee:number;
   deliveryFreeString:string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public orderProvider:OrderProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public orderProvider:OrderProvider, 
+    public serverProvider:ServerProvider, public alertCtrl:AlertController) {
     this.product = this.navParams.get("product");
     this.deliveryFee = this.orderProvider.deliveryFee;
     this.deliveryFreeString = this.orderProvider.deliveryFreeString;
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductdetailPage');
-
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter ProductdetailPage');
   }
 
   back(){
+    this.refreshToken();
     this.navCtrl.pop();
   }
 
   moveToHome(){
+    this.refreshToken();
     this.navCtrl.setRoot(TabsPage, {class:undefined});
   }
 
   goToShoppingBasket() {
+    this.refreshToken();
     this.navCtrl.setRoot(TabsPage, { tabIndex: 4 });
   }
 
   goToBuy(){
+    this.refreshToken();
     this.navCtrl.push(BuyPage, { class: "productdetail", product:this.product});
   }
 
@@ -64,5 +69,31 @@ export class ProductdetailPage {
     }
 
     return displayNum;
+  }
+
+  refreshToken(){
+    this.serverProvider.validateAccessToken().then((res)=>{
+      if(res == 'success'){
+        return true;
+      }else{
+        return false;
+      }
+    }, err =>{
+      console.log(err);
+      
+      let alert = this.alertCtrl.create({
+        message:'세션이 만료되었습니다.',
+        buttons:[{
+          text: '확인',
+          handler: () => {
+            this.navCtrl.setRoot(TabsPage, { class: "productdetail", tabIndex: 0 });
+          }
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    });
+
+    return false;
   }
 }

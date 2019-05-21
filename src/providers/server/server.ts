@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, AlertController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { MemberProvider } from '../member/member';
 import { ShoppingbasketProvider } from '../shoppingbasket/shoppingbasket';
@@ -51,10 +51,9 @@ export class ServerProvider {
   deliveryMemoLists = ["부재시 경비실에 맡겨주세요", "오시기 전에 미리 연락주세요", "빨리 배송해주세요"];
 
   constructor(public http: Http, private memberProvider: MemberProvider, private shoppingbasketProvider:ShoppingbasketProvider,
-    public orderProvivder: OrderProvider, public searchProvider: SearchProvider, private storage: Storage) {
+    public orderProvivder: OrderProvider, public searchProvider: SearchProvider, private storage: Storage, public alertCtrl:AlertController) {
     console.log('Hello ServerProvider Provider');
     this.isMember = false;
-    
   }
 
   init(){
@@ -280,7 +279,7 @@ export class ServerProvider {
           if (result.status == "success") {
             this.storage.set('auth', result.auth);
             this.memberProvider.memberData = memberData;
-            console.log("signup Success");
+            
             resolve("success");
           } else if (result.status == 'expired' || result.status == 'not exist') {
             this.isMember == false;
@@ -310,7 +309,6 @@ export class ServerProvider {
           // refresh access Key
           this.storage.set('auth', result.auth);
           // 회원정보 로드
-          this.isMember = true;
           this.memberProvider.memberData.username = memberID;
           this.memberProvider.memberData.password = password;
           this.memberProvider.memberData.birth = result.memberBirth;
@@ -488,10 +486,10 @@ export class ServerProvider {
     });
   }
 
-  orderProducts(orderInfo, prevPage){
+  orderProducts(orderInfo, prevPage, isMember){
     let addr = "";
     let body;
-    if (this.isMember == true){
+    if (isMember == true){
       let memberUID = this.memberProvider.memberData.UID;
       body = { memberUID, orderInfo };
       if (prevPage == "shoppingbasket") {
@@ -511,7 +509,7 @@ export class ServerProvider {
         if (result.status == "success") {
           console.log("order Success");
           this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfo);
-          if (this.isMember == true && prevPage == "shoppingbasket"){
+          if (isMember == true && prevPage == "shoppingbasket"){
             // 장바구니 정보 로드
             if (result.shoppingbasket.length != 0) {
               this.updateShoppingbasket(result);
@@ -524,14 +522,14 @@ export class ServerProvider {
           resolve("success");
         } else if(result.status == "invalid"){
           console.log("order Invalid");
-          if (this.isMember == true && prevPage == "shoppingbasket") {
+          if (isMember == true && prevPage == "shoppingbasket") {
             // 장바구니 정보 로드
             if (result.shoppingbasket.length != 0) {
               this.updateShoppingbasket(result);
             } else {
               this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
             }
-          } else if (this.isMember == false){
+          } else if (isMember == false){
             this.shoppingbasketProvider.completeShopping();
           }
           resolve("invalid");
@@ -907,21 +905,23 @@ export class ServerProvider {
     return new Promise((resolve, reject) => {
       this.storage.get('auth').then((val) => {
         let body = { auth: val };
+        console.log(val);
+        
         this.http.post(this.serverAddr + "auth/auth.php", body).subscribe(data => {
           console.log(data);
           let result = JSON.parse(data["_body"]);
           if (result.status == "success") {
             this.storage.set('auth', result.auth);
-            console.log("signup Success");
+            this.isMember = true;
             resolve("success");
           } else if (result.status == 'expired') {
             this.isMember == false;
             this.storage.remove('auth');
+            this.memberProvider.logout();
             reject('expired')
-          }
-          else {
+          } else {
             this.storage.remove('auth');
-            reject('not exist')
+            resolve('not exist')
           } 
         }, err => {
           console.log(err);
