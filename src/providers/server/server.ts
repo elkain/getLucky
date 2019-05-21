@@ -30,6 +30,7 @@ export class ServerProvider {
   username: string;
   password: string;
   isMember: boolean;
+    
   dataLoad = false;
   productAllCategories;
 
@@ -234,10 +235,13 @@ export class ServerProvider {
         console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
+          this.storage.set('auth',result.auth);
+          // set a key/value
           console.log("signup Success");
           resolve("success");
         }
         else {
+          // set a key/value
           console.log("Fail signup");
           reject("fail");
         }
@@ -266,22 +270,29 @@ export class ServerProvider {
     });    
   }
 
-  modify(memberData){
+  modify(memberData, currentPassword){
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "member/modify.php", memberData).subscribe(data => {
-        console.log(data);
-        let result = JSON.parse(data["_body"]);
-        if (result.status == "success") {
-          console.log("signup Success");
-          this.memberProvider.memberData = memberData;
-          resolve("success");
-        }
-        else {
-          console.log("Fail signup");
-          reject("fail");
-        }
-      }, err => {
-        console.log(err);
+      this.storage.get('auth').then((val) => {
+        let body = { memberData: memberData, currentPassword: currentPassword, auth: val };
+        this.http.post(this.serverAddr + "member/modify.php", body).subscribe(data => {
+          console.log(data);
+          let result = JSON.parse(data["_body"]);
+          if (result.status == "success") {
+            this.storage.set('auth', result.auth);
+            this.memberProvider.memberData = memberData;
+            console.log("signup Success");
+            resolve("success");
+          } else if (result.status == 'expired' || result.status == 'not exist') {
+            this.isMember == false;
+            this.storage.remove('auth');
+            reject('expired')
+          } else {
+            console.log("dismatch ID and password");
+            reject("failed");
+          }
+        }, err => {
+          console.log(err);
+        });
       });
     });   
   }
@@ -295,7 +306,9 @@ export class ServerProvider {
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("login success");
-          
+
+          // refresh access Key
+          this.storage.set('auth', result.auth);
           // 회원정보 로드
           this.isMember = true;
           this.memberProvider.memberData.username = memberID;
@@ -306,7 +319,6 @@ export class ServerProvider {
           this.memberProvider.memberData.email = result.email;
           this.memberProvider.memberData.sex = result.memberSex;
           this.memberProvider.memberData.UID = result.memberUID;
-
           this.memberProvider.deliveryAddrs = result.address;
 
           // 장바구니 정보 로드
@@ -333,10 +345,12 @@ export class ServerProvider {
           resolve("success");
         }
         else {
+          this.storage.remove('auth');
           console.log("dismatch ID and password");
           reject("failed");
         }
       }, err => {
+        this.storage.remove('auth');
         console.log(err);
       });
     });    
@@ -887,5 +901,32 @@ export class ServerProvider {
     }
 
     return displayNum;
+  }
+
+  validateAccessToken(){
+    return new Promise((resolve, reject) => {
+      this.storage.get('auth').then((val) => {
+        let body = { auth: val };
+        this.http.post(this.serverAddr + "auth/auth.php", body).subscribe(data => {
+          console.log(data);
+          let result = JSON.parse(data["_body"]);
+          if (result.status == "success") {
+            this.storage.set('auth', result.auth);
+            console.log("signup Success");
+            resolve("success");
+          } else if (result.status == 'expired') {
+            this.isMember == false;
+            this.storage.remove('auth');
+            reject('expired')
+          }
+          else {
+            this.storage.remove('auth');
+            reject('not exist')
+          } 
+        }, err => {
+          console.log(err);
+        });
+      });
+    });   
   }
 }
