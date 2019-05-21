@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Tabs, NavController, NavParams } from 'ionic-angular';
+import { Tabs, NavController, NavParams, AlertController } from 'ionic-angular';
 import { CategoryPage } from '../category/category';
 import { SearchPage } from '../search/search';
 import { MypagePage } from '../mypage/mypage';
@@ -34,7 +34,7 @@ export class TabsPage {
 
   childParam= {category:{}, homeSegmentCategory:0, class:"TasPage", subCategory:"" , orderedNumber:""};
 
-  constructor(public navCtrl: NavController, public navParams:NavParams, private serverProvider:ServerProvider) {
+  constructor(public navCtrl: NavController, public navParams:NavParams, private serverProvider:ServerProvider, public alertCtrl:AlertController) {
     this.tabParams = navParams.get("tabIndex");
     this.childParam.category = navParams.get("category");
     this.childParam.subCategory = navParams.get("subCategory");
@@ -44,6 +44,7 @@ export class TabsPage {
   }
 
   public onTabsChange() {
+    this.refreshToken();
     this.selectedTab = this.tabRef.getSelected().index;
 
     if (this.selectedTab == 2 || this.selectedTab == 4 || this.selectedTab == 3){
@@ -66,6 +67,7 @@ export class TabsPage {
   }
 
   back() {
+    this.refreshToken();
     if(this.childParam.class == "mypage"){
       this.childParam.class = "orderDetail";
       this.tabRef.select(3);
@@ -78,5 +80,31 @@ export class TabsPage {
 
   goToShoppingBasket(){
     this.tabRef.select(4);
+  }
+
+  refreshToken() {
+    this.serverProvider.validateAccessToken().then((res) => {
+      if (res == 'success') {
+        return true;
+      } else {
+        return false;
+      }
+    }, err => {
+      console.log(err);
+
+      let alert = this.alertCtrl.create({
+        message: '세션이 만료되었습니다.',
+        buttons: [{
+          text: '확인',
+          handler: () => {
+            this.tabRef.select(0);
+          }
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    });
+
+    return false;
   }
 }
