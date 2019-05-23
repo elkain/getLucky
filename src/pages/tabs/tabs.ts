@@ -44,7 +44,6 @@ export class TabsPage {
   }
 
   public onTabsChange() {
-    this.refreshToken();
     this.selectedTab = this.tabRef.getSelected().index;
 
     if (this.selectedTab == 2 || this.selectedTab == 4 || this.selectedTab == 3){
@@ -60,6 +59,7 @@ export class TabsPage {
   }
   
   moveToHome(){
+    //this.refreshToken();
     if(this.selectedTab==0){
       this.childParam.homeSegmentCategory = 0; 
     }
@@ -79,6 +79,7 @@ export class TabsPage {
   }
 
   goToShoppingBasket(){
+    this.refreshToken();
     this.tabRef.select(4);
   }
 

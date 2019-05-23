@@ -199,7 +199,7 @@ export class HomePage {
     this.productSortOptionSelected = this.productSortOptions[0];
 
     if(this.homeCategorySelected != this.homeCategories[0]){
-      this.headerHeight = "98px";
+            this.headerHeight = "98px";
       this.contentMargin = "38px";
       this.productsSort("판매인기순", this.showProducts);
     }else{
@@ -300,7 +300,6 @@ export class HomePage {
   }*/
   
   productsOptionChange(){
-    this.refreshToken();
     if(this.showProducts.length >1){
       this.productsSort(this.productSortOptionSelected, this.showProducts);
     }
@@ -365,7 +364,6 @@ export class HomePage {
   }
 
   ionSelected() {
-    this.refreshToken();
     if (this.homeParams.homeSegmentCategory == 1) {
       this.homeCategorySelected = this.homeCategories[1];
       this.categorySelected=this.homeParams.subCategory;

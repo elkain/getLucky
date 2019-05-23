@@ -300,7 +300,7 @@ export class MypagePage {
   }
 
   menuSelected(menu){
-    this.refreshToken();
+    
     if( menu == "로그아웃"){
       this.isMember = false;
       this.serverProvider.isMember = false;
@@ -311,9 +311,11 @@ export class MypagePage {
       this.storage.set('password', null);
       window.location.reload();
     }else if (menu == "회원정보수정") {
+      this.refreshToken();
       this.refreshorEnable = false;
       this.app.getRootNavs()[0].push(SignupPage, { class: "mypage" });
     }else{
+      this.refreshToken();
       this.showPageType = menu;
       this.headerSize = "50px";
       this.contentMargin = "0";
@@ -358,7 +360,6 @@ export class MypagePage {
   }
 
   ionSelected(){
-    this.refreshToken();
     console.log("ionSelected on mypage");
     if (this.isMember==true){
       this.showPageType = "mypage";
@@ -612,7 +613,7 @@ export class MypagePage {
         buttons: [{
           text: '확인',
           handler: () => {
-            this.navCtrl.setRoot(TabsPage, { class: "mypage", tabIndex: 0 });
+            this.navCtrl.parent.select(0);
           }
         }],
         cssClass: 'alert-modify-member'

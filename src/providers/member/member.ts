@@ -1,7 +1,6 @@
 //import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-
 /*
   Generated class for the MemberProvider provider.
 

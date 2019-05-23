@@ -230,7 +230,6 @@ export class OrderPage {
   }
 
   confirmOrder(){
-
     if(this.isMember == true){
       this.enterMemberOrderInfo();
     } else{
@@ -241,16 +240,15 @@ export class OrderPage {
     if (this.nameCheck(this.customInfo.ordererName) && this.mobileCheck(this.customInfo.ordererMobile) && this.emailCheck(this.customInfo.ordererEmail) && 
     this.nameCheck(this.customInfo.receiverName) && this.addrCheck(this.customInfo.receiverAddress) && this.mobileCheck(this.customInfo.receiverMobile) && this.paymentMethodCheck(this.orderInfo.paymentMethod) == true) {
       
-      this.serverProvider.orderProducts(this.orderInfo, this.prevPage).then((res:any)=>{
+      this.serverProvider.orderProducts(this.orderInfo, this.prevPage, this.isMember).then((res:any)=>{
         if(res == "success"){
-          if(this.isMember != true){
-            //this.orderProvider.addOrderInfo(this.orderInfo);
-            if (this.prevPage == "shoppingbasket") {
-              this.shoppingbasketProvider.completeShopping();
-              this.storage.set("shoppingbasket", this.shoppingbasketProvider.shoppingBasket);
-            }
+          this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
+        }else if (res == 'not exist'){
+          if (this.prevPage == "shoppingbasket") {
+            this.shoppingbasketProvider.completeShopping();
+            this.storage.set("shoppingbasket", this.shoppingbasketProvider.shoppingBasket);
           }
-          
+
           this.navCtrl.setRoot(TabsPage, { tabIndex: 5 });
         }else if(res=="invalid"){
           let alert = this.alertCtrl.create({
