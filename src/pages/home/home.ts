@@ -65,8 +65,9 @@ export class HomePage {
     public memberProvider: MemberProvider ,private storage:Storage, public alertCtrl:AlertController) {
     this.homeParams = navParams.data;
     this.offset = 0;
-    
+
     if(this.serverProvider.dataLoad == false){
+      this.storage.remove('auth');
       this.serverProvider.init().then((res: any) => {
         if (res == "success") {
           this.serverProvider.dataLoad = true;
@@ -78,50 +79,6 @@ export class HomePage {
         console.log(res);
       }, (err) => {
         console.log(err);
-      });
-
-      this.storage.get('autoLoginCheckbox').then((autoLoginCheck)=>{
-        console.log("autoLoginCheck: " + autoLoginCheck);
-        if(autoLoginCheck == true){
-          /*this.storage.get('username').then((val)=>{
-            this.username = val;
-
-            this.storage.get('password').then((val) => {
-              this.password = val;
-              this.serverProvider.login(this.username, this.password).then((res: any) => {
-                console.log(res);
-
-                if (res == "success") {
-                  this.serverProvider.isMember = true;
-
-                  for (let i in this.memberProvider.memberData) {
-                    for (let j in this.memberProvider.memberData) {
-                      if (i == j) {
-                        this.memberProvider.memberData[i] = this.memberProvider.memberData[j];
-                      }
-                    }
-                  }
-                }
-              });
-            }, (err) => {
-              this.storage.set('autoLoginCheckbox', false);
-              let alert = this.alertCtrl.create({
-                message: '자동로그인 실패',
-                buttons: [{
-                  text: '확인',
-                }],
-                cssClass: 'alert-modify-member'
-              });
-              alert.present();
-            });
-          });*/
-        }else{
-          this.storage.get('shoppingbasket').then((val)=>{
-            if(val!=null){
-              this.shoppingbasketProvider.shoppingBasket = val;
-            }
-          });
-        }
       });
     }
     
