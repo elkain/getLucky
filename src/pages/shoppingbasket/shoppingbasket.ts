@@ -64,6 +64,7 @@ export class ShoppingbasketPage {
   }
 
   goToHome(){
+    this.refreshToken();
     this.navCtrl.parent.select(0);
   }
 

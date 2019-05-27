@@ -226,6 +226,7 @@ export class OrderPage {
   }
 
    moveToHome() {
+    this.refreshToken();
     this.navCtrl.setRoot(TabsPage, {class:undefined});
   }
 
@@ -272,7 +273,6 @@ export class OrderPage {
   }
 
   selectedPaymentMethod(method){
-
     if(method == 'cash'){
       this.orderInfo.paymentMethod = '현장결제';
     }else if(method == "card"){
@@ -505,5 +505,31 @@ export class OrderPage {
     }
 
     return true;
+  }
+
+  refreshToken() {
+    this.serverProvider.validateAccessToken().then((res) => {
+      if (res == 'success') {
+        return true;
+      } else {
+        return false;
+      }
+    }, err => {
+      console.log(err);
+
+      let alert = this.alertCtrl.create({
+        message: '세션이 만료되었습니다.',
+        buttons: [{
+          text: '확인',
+          handler: () => {
+            this.navCtrl.setRoot(TabsPage, { class: "home", tabIndex: 0 });
+          }
+        }],
+        cssClass: 'alert-modify-member'
+      });
+      alert.present();
+    });
+
+    return false;
   }
 }

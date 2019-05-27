@@ -44,6 +44,7 @@ export class BuyPage {
   }
 
   moveToHome() {
+    this.refreshToken();
     this.navCtrl.setRoot(TabsPage, { class: undefined });
   }
 
