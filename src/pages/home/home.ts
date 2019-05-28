@@ -156,7 +156,7 @@ export class HomePage {
     this.productSortOptionSelected = this.productSortOptions[0];
 
     if(this.homeCategorySelected != this.homeCategories[0]){
-            this.headerHeight = "98px";
+      this.headerHeight = "98px";
       this.contentMargin = "38px";
       this.productsSort("판매인기순", this.showProducts);
     }else{
@@ -287,7 +287,26 @@ export class HomePage {
 
     if (flag != true){
       if (this.serverProvider.isMember == true) {
-        this.serverProvider.addShoppingbasket(product);
+        this.serverProvider.addShoppingbasket(product).then((res) => {
+          console.log('add shopping basket ' + res);
+
+        }, (err) => {
+          console.log(err);
+
+          if (err == 'expired') {
+            let alert = this.alertCtrl.create({
+              message: '세션이 만료되었습니다.',
+              buttons: [{
+                text: '확인',
+                handler: () => {
+                  this.homeCategoryChange(this.homeCategories[0]);
+                }
+              }],
+              cssClass: 'alert-modify-member'
+            });
+            alert.present();
+          }
+        });
       }else{
         this.shoppingbasketProvider.addShoppingBasket(product);
         this.storage.set("shoppingbasket", this.shoppingbasketProvider.shoppingBasket);

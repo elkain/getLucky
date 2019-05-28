@@ -69,7 +69,26 @@ export class BuyPage {
 
     if (flag != true) {
       if (this.isMember == true) {
-        this.serverProvider.addShoppingbasket(this.product);
+        this.serverProvider.addShoppingbasket(this.product).then((res)=>{
+          console.log('add shopping basket ' + res);
+          
+        },(err)=>{
+          console.log(err);
+          
+          if(err == 'expired'){
+            let alert = this.alertCtrl.create({
+              message: '세션이 만료되었습니다.',
+              buttons: [{
+                text: '확인',
+                handler: () => {
+                  this.navCtrl.setRoot(TabsPage, { class: undefined });
+                }
+              }],
+              cssClass: 'alert-modify-member'
+            });
+            alert.present();
+          }
+        });
       } else {
         this.shoppingbasketProvider.addShoppingBasket(this.product);
         this.storage.set("shoppingbasket", this.shoppingbasketProvider.shoppingBasket);
@@ -108,7 +127,7 @@ export class BuyPage {
         buttons: [{
           text: '확인',
           handler: () => {
-            this.app.getRootNavs()[0].push(TabsPage, { class: "home", tabIndex: 0 });
+            this.navCtrl.setRoot(TabsPage, { class: undefined });
           }
         }],
         cssClass: 'alert-modify-member'

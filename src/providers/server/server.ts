@@ -159,20 +159,27 @@ export class ServerProvider {
 
   getCategoryProductData(categoryCode){
     //특정 카테고리 상품 정보를 가져옴
-    let body = {categoryCode}
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "product/loadCategoryProduct.php", body).subscribe(data => {
-        console.log(data);
-        let result = JSON.parse(data["_body"]);
-        if(result.product == undefined){
-          this.categoryProducts = [];
-          resolve("noItem");
-        }else{
-          this.categoryProducts = result.product;
-          resolve("success");
-        }
-      }, err => {
-        console.log(err);
+      this.storage.get('auth').then((val)=>{
+        let body = { categoryCode, auth: val };
+        this.http.post(this.serverAddr + "product/loadCategoryProduct.php", body).subscribe(data => {
+          console.log(data);
+          let result = JSON.parse(data["_body"]);
+          if (result.product == undefined) {
+            this.categoryProducts = [];
+            this.storage.set('auth', result.auth.auth);
+            resolve("noItem");
+          } else if(result.auth == 'expired'){
+            this.storage.remove('auth');
+            reject("expired");
+          }else {
+            this.storage.set('auth', result.auth.auth);
+            this.categoryProducts = result.product;
+            resolve("success");
+          }
+        }, err => {
+          console.log(err);
+        });
       });
     }); 
   }
@@ -309,6 +316,7 @@ export class ServerProvider {
           // refresh access Key
           this.storage.set('auth', result.auth);
           // 회원정보 로드
+          this.isMember = true;
           this.memberProvider.memberData.username = memberID;
           this.memberProvider.memberData.password = password;
           this.memberProvider.memberData.birth = result.memberBirth;
@@ -399,27 +407,33 @@ export class ServerProvider {
   }
 
   addShoppingbasket(product){
-    let body = {memberUID : this.memberProvider.memberData.UID, productCode:product.productCode, priceID:product.priceID, productStockID:product.productStockID};
+    return new Promise((resolve, reject)=>{
+      this.storage.get('auth').then((val) => {
+        let body = { auth: val, productCode: product.productCode, priceID: product.priceID, productStockID: product.productStockID };
+        this.http.post(this.serverAddr + "member/addShoppingbasket.php", body).subscribe(data => {
+          let result = JSON.parse(data["_body"]);
+          
+          if (result.status == "success") {
+            this.storage.set('auth', result.auth);
 
-    this.http.post(this.serverAddr + "member/addShoppingbasket.php", body).subscribe(data => {
-      console.log(data);
-      let result = JSON.parse(data["_body"]);
-      if (result.status == "success") {
-        if (result.shoppingbasket.length != 0) {
-          this.updateShoppingbasket(result);
-        }else{
-          this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
-          this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
-          this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
-        }
-        
-        console.log("add shoppingbasket success");
-      }
-      else {
-        console.log("add shoppingbasket failed");
-      }
-    }, err => {
-      console.log(err);
+            if (result.shoppingbasket.length != 0) {
+              this.updateShoppingbasket(result);
+            } else {
+              this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+              this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
+              this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
+            }
+            console.log("add shoppingbasket success");
+            resolve('success');
+          } else {
+            this.storage.remove('auth');
+            reject('expired');
+            console.log("add shoppingbasket failed");
+          }
+        }, err => {
+          console.log(err);
+        });
+      }); 
     });
   }
 
@@ -429,31 +443,34 @@ export class ServerProvider {
     for(let i = 0; i<product.length; i++){
       delProducts.push({ productCode: product[i].productCode, priceID: product[i].priceID, productStockID: product[i].productStockID });
     }
-
-    let body = {memberUID: this.memberProvider.memberData.UID, products:delProducts};
-
+    
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "member/delShoppingbasket.php", body).subscribe(data => {
-        console.log(data);
-        let result = JSON.parse(data["_body"]);
-        if (result.status == "success") {
-          console.log("del shoppingbasket success");
-          // 장바구니 정보 로드
-          if (result.shoppingbasket.length != 0) {
-            this.updateShoppingbasket(result);
-          } else {
-            this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
-            this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
-            this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
+      this.storage.get('auth').then((val) => {
+        let body = { auth: val, products: delProducts };
+        this.http.post(this.serverAddr + "member/delShoppingbasket.php", body).subscribe(data => {
+          console.log(data);
+          let result = JSON.parse(data["_body"]);
+          if (result.status == "success") {
+            console.log("del shoppingbasket success");
+            this.storage.set('auth', result.auth);
+            // 장바구니 정보 로드
+            if (result.shoppingbasket.length != 0) {
+              this.updateShoppingbasket(result);
+            } else {
+              this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+              this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
+              this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
+            }
+            resolve("success");
           }
-          resolve("success");
-        }
-        else {
-          console.log("del shoppingbasket failed");
-          reject("failed");
-        }
-      }, err => {
-        console.log(err);
+          else {
+            console.log("del shoppingbasket failed");
+            this.storage.remove('auth');
+            reject('expired');
+          }
+        }, err => {
+          console.log(err);
+        });
       });
     });
   }
@@ -777,7 +794,7 @@ export class ServerProvider {
 
     for (let i = 0; i < shoppingBasket.orderedProducts.length; i++) {
       shoppingBasket.checkedProducts.push(true);
-      shoppingBasket.orderedProducts[i].count = 1;
+      shoppingBasket.orderedProducts[i]['count'] = 1;
     }
     shoppingBasket.checkedAllProducts = true;
   }

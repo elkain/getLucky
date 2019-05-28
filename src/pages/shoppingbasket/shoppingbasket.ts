@@ -70,6 +70,7 @@ export class ShoppingbasketPage {
 
   goToOrder(){
     if (this.checkedItemNumber>0){
+      this.refreshToken();
       if (this.isMember == true) {
         this.app.getRootNavs()[0].push(OrderPage, { class: "shoppingbasket" });
       } else {
@@ -165,10 +166,37 @@ export class ShoppingbasketPage {
       }
 
       this.serverProvider.delShoppingbasket(delProducts).then((res:any)=>{
-        this.itemNumber = this.shoppingBasket.orderedProducts.length;  
-        this.calOrderPrice();
+        if(res == 'success'){
+          this.itemNumber = this.shoppingBasket.orderedProducts.length;
+          this.calOrderPrice();
+        }else{
+          let alert = this.alertCtrl.create({
+            message: '오류: 관리자에게 문의하세요',
+            buttons: [{
+              text: '확인',
+              handler: () => {
+                this.navCtrl.parent.select(0);
+              }
+            }],
+            cssClass: 'alert-modify-member'
+          });
+          alert.present();
+        }
       }, (err)=>{
         console.log("err");
+        if (err == 'expired') {
+          let alert = this.alertCtrl.create({
+            message: '세션이 만료되었습니다.',
+            buttons: [{
+              text: '확인',
+              handler: () => {
+                this.navCtrl.parent.select(0);
+              }
+            }],
+            cssClass: 'alert-modify-member'
+          });
+          alert.present();
+        }
       });
     }else{
       this.itemNumber = this.shoppingbasketProvider.delShoppingBasket();
@@ -193,7 +221,7 @@ export class ShoppingbasketPage {
         buttons: [{
           text: '확인',
           handler: () => {
-            this.navCtrl.setRoot(TabsPage, { class: "home", tabIndex: 0 });
+            this.navCtrl.parent.select(0);
           }
         }],
         cssClass: 'alert-modify-member'
