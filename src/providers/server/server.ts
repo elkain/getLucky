@@ -291,7 +291,7 @@ export class ServerProvider {
             
             resolve("success");
           } else if (result.status == 'expired' || result.status == 'not exist') {
-            this.isMember == false;
+            this.isMember = false;
             this.memberProvider.logout();
             this.storage.remove('auth');
             reject('expired')
@@ -430,7 +430,7 @@ export class ServerProvider {
             resolve('success');
           } else {
             this.storage.remove('auth');
-            this.isMember == false;
+            this.isMember = false;
             this.memberProvider.logout();
             reject('expired');
             console.log("add shoppingbasket failed");
@@ -471,7 +471,7 @@ export class ServerProvider {
           else {
             console.log("del shoppingbasket failed");
             this.storage.remove('auth');
-            this.isMember == false;
+            this.isMember = false;
             this.memberProvider.logout();
             reject('expired');
           }
@@ -874,7 +874,7 @@ export class ServerProvider {
               }
             }
           } else if (result.status == "expired"){
-            this.isMember == false;
+            this.isMember = false;
             this.memberProvider.logout();
             this.storage.remove('auth');
             reject('expired');
@@ -890,30 +890,37 @@ export class ServerProvider {
   }
 
   undisplayRecentSearchItem(searchID){
-    let memberUID = this.memberProvider.memberData.UID;
-    let body = {memberUID, searchID}
     return new Promise((resolve, reject) => {
-      let addr = "search/undisplayRecentSearchItem.php";
-      this.http.post(this.serverAddr + addr, body).subscribe(data => {
-        console.log(data);
-        let result = JSON.parse(data["_body"]);
-        if (result.status == "success") {
-          console.log(" Success");
-          // 최근 검색 기록 로드
-          if (result.recentSearch != undefined) {
-            this.searchProvider.recentSearchItems = result.recentSearch;
-          } else {
-            this.searchProvider.recentSearchItems = [];
+      this.storage.get('auth').then((val)=>{
+        let body = { auth:val, searchID };
+        let addr = "search/undisplayRecentSearchItem.php";
+        this.http.post(this.serverAddr + addr, body).subscribe(data => {
+          console.log(data);
+          let result = JSON.parse(data["_body"]);
+          if (result.status == "success") {
+            console.log(" Success");
+            this.storage.set('auth', result.auth);
+            // 최근 검색 기록 로드
+            if (result.recentSearch != undefined) {
+              this.searchProvider.recentSearchItems = result.recentSearch;
+            } else {
+              this.searchProvider.recentSearchItems = [];
+            }
+            resolve("success");
+          } else if(result.status =='expired'){
+            this.isMember = false;
+            this.memberProvider.logout();
+            this.storage.remove('auth');
+            reject('expired');
+          } else{
+            console.log("Fail cancelOrder");
+            reject("fail");
           }
-          resolve("success");
-        } else {
-          console.log("Fail cancelOrder");
-          reject("fail");
-        }
-      }, err => {
-        console.log(err);
-      });
-    }); 
+        }, err => {
+          console.log(err);
+        });
+      }); 
+    });
   }
 
   displayNumber(number){
@@ -945,7 +952,7 @@ export class ServerProvider {
             this.isMember = true;
             resolve("success");
           } else if (result.status == 'expired') {
-            this.isMember == false;
+            this.isMember = false;
             this.storage.remove('auth');
             this.memberProvider.logout();
             reject('expired')
