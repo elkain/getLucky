@@ -387,24 +387,32 @@ export class ServerProvider {
   alterDeliveryAddr(deliveryAddrs, type){
     deliveryAddrs['type']=type;
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "member/alterDeliverAddr.php", deliveryAddrs).subscribe(data => {
-        console.log(data);
-        let result = JSON.parse(data["_body"]);
-        if (result.status == "success") {
-          console.log("alter address success");
-          if(result.address == null){
-            this.memberProvider.deliveryAddrs = [];
-          }else{
-            this.memberProvider.deliveryAddrs = result.address;
+      this.storage.get('auth').then((val)=>{
+        let body = {auth:val, deliveryAddrs};
+        this.http.post(this.serverAddr + "member/alterDeliverAddr.php", body).subscribe(data => {
+          console.log(data);
+          let result = JSON.parse(data["_body"]);
+          if (result.status == "success") {
+            console.log("alter address success");
+            this.storage.set('auth', result.auth);
+            if (result.address == null) {
+              this.memberProvider.deliveryAddrs = [];
+            } else {
+              this.memberProvider.deliveryAddrs = result.address;
+            }
+            resolve("success");
+          } else if (result.status == 'expired') {
+            this.isMember = false;
+            this.memberProvider.logout();
+            this.storage.remove('auth');
+            reject('expired')
+          } else {
+            console.log("alter address failed");
+            reject("failed");
           }
-          resolve("success");
-        }
-        else {
-          console.log("alter address failed");
-          reject("failed");
-        }
-      }, err => {
-        console.log(err);
+        }, err => {
+          console.log(err);
+        });
       });
     });
   }
@@ -585,7 +593,7 @@ export class ServerProvider {
           if (result.status == "success") {
             console.log(" Success");
             this.storage.set('auth', result.auth);
-            
+
             if (offset > 0) {
               if (result.orderInfos.length != 0) {
                 let orderInfos = this.orderInfoRearrange(result.orderInfos);

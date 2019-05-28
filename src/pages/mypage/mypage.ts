@@ -485,6 +485,19 @@ export class MypagePage {
         this.enterMemberAddress = { memberUID:"", addressName: "", address: "", mobile: "", receiver:"" };
       },(err)=>{
         console.log(err);
+        if (err == 'expired') {
+          let alert = this.alertCtrl.create({
+            message: '세션이 만료되었습니다.',
+            buttons: [{
+              text: '확인',
+              handler: () => {
+                this.navCtrl.parent.select(0);
+              }
+            }],
+            cssClass: 'alert-modify-member'
+          });
+          alert.present();
+        }
       });
     }else{
       let alert = this.alertCtrl.create({
@@ -514,6 +527,19 @@ export class MypagePage {
       this.deliveryAddressMode[index] = "출력";
     }, (err) => {
       console.log(err);
+      if(err == 'expired'){
+        let alert = this.alertCtrl.create({
+          message: '세션이 만료되었습니다.',
+          buttons: [{
+            text: '확인',
+            handler: () => {
+              this.navCtrl.parent.select(0);
+            }
+          }],
+          cssClass: 'alert-modify-member'
+        });
+        alert.present();
+      }
     });
   }
 
@@ -529,7 +555,20 @@ export class MypagePage {
         this.deliveryAddressMode[index] = "출력";
         this.deliveryAddrs = JSON.parse(JSON.stringify(this.memberProvider.deliveryAddrs));
       }, (err) => {
-          console.log(err);
+        console.log(err); 
+        if (err == 'expired') {
+          let alert = this.alertCtrl.create({
+            message: '세션이 만료되었습니다.',
+            buttons: [{
+              text: '확인',
+              handler: () => {
+                this.navCtrl.parent.select(0);
+              }
+            }],
+            cssClass: 'alert-modify-member'
+          });
+          alert.present();
+        }
       });
       
     }else{
