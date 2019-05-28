@@ -26,8 +26,8 @@
 </ion-header>
 
 <ion-content  [style.margin-top]="contentMargin">
-  <ion-refresher [enabled]="refreshorEnable" ((ionPull)="doPulling($event)" slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="none"></ion-refresher-content>
+  <ion-refresher [enabled]="refreshorEnable" (ionPull)="doPulling($event)" slot="fixed" (ionRefresh)="doRefresh($event)" >
+    <ion-refresher-content style="margin-top:30px" pullingIcon="none"></ion-refresher-content>
   </ion-refresher>
   <!-- 로그인 페이지 시작 -->
   <div *ngIf="showPageType=='login'">

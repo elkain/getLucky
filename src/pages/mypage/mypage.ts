@@ -584,10 +584,26 @@ export class MypagePage {
         if (res == "success") {
           this.orderInfos = this.orderProvider.orderInfos;
           event.complete();
+        }else{
+          event.cancel();
         }
         console.log(res);
       }, (err) => {
         console.log(err);
+        event.cancel();
+        if(err == 'expired'){
+          let alert = this.alertCtrl.create({
+            message: '세션이 만료되었습니다.',
+            buttons: [{
+              text: '확인',
+              handler: () => {
+                this.navCtrl.parent.select(0);
+              }
+            }],
+            cssClass: 'alert-modify-member'
+          });
+          alert.present();
+        }
       });
     }else{
       this.refreshorEnable = false;
@@ -597,7 +613,7 @@ export class MypagePage {
   doPulling(refresher) {
     console.log('DOPULLING', refresher.progress);
     if(this.showPageType=="주문내역"){
-      if (refresher.progress < 0.15) {
+      if (refresher.progress < 0.22) {
         refresher.cancel();
       }
     }else{
@@ -617,6 +633,19 @@ export class MypagePage {
       console.log(res);
     }, (err) => {
       console.log(err);
+      if (err == 'expired') {
+        let alert = this.alertCtrl.create({
+          message: '세션이 만료되었습니다.',
+          buttons: [{
+            text: '확인',
+            handler: () => {
+              this.navCtrl.parent.select(0);
+            }
+          }],
+          cssClass: 'alert-modify-member'
+        });
+        alert.present();
+      }
     });
   }
 

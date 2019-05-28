@@ -575,37 +575,47 @@ export class ServerProvider {
   }
 
   loadOrderInfo(offset = 0){
-    let memberUID = this.memberProvider.memberData.UID;
-    let body = { offset, memberUID}
+    //let memberUID = this.memberProvider.memberData.UID;
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "member/order/loadOrderInfo.php", body).subscribe(data => {
-        console.log(data);
-        let result = JSON.parse(data["_body"]);
-        if (result.status == "success") {
-          console.log(" Success");
-          if(offset > 0){
-            if (result.orderInfos.length != 0) {
-              let orderInfos = this.orderInfoRearrange(result.orderInfos);
-              for(let i = 0; i<orderInfos.length; i++){
-                this.orderProvivder.orderInfos.push(orderInfos[i]);
+      this.storage.get('auth').then((val)=>{
+        let body = { offset, auth:val };
+        this.http.post(this.serverAddr + "member/order/loadOrderInfo.php", body).subscribe(data => {
+          console.log(data);
+          let result = JSON.parse(data["_body"]);
+          if (result.status == "success") {
+            console.log(" Success");
+            this.storage.set('auth', result.auth);
+            
+            if (offset > 0) {
+              if (result.orderInfos.length != 0) {
+                let orderInfos = this.orderInfoRearrange(result.orderInfos);
+                for (let i = 0; i < orderInfos.length; i++) {
+                  this.orderProvivder.orderInfos.push(orderInfos[i]);
+                }
+              }
+            } else {
+              this.orderProvivder.orderInfos = [];
+              if (result.orderInfos.length != 0) {
+                this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
               }
             }
-          }else{
-            this.orderProvivder.orderInfos = [];
-            if (result.orderInfos.length != 0) {
-              this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
-            }
+            resolve("success");
+          } else if (result.status == "expired") {
+            console.log("session expired");
+            this.storage.remove('auth');
+            this.isMember = false;
+            this.memberProvider.logout();
+            reject("expired");
           }
-          resolve("success");
-        }
-        else {
-          console.log("Fail load order detail");
-          reject("fail");
-        }
-      }, err => {
-        console.log(err);
-      });
-    }); 
+          else {
+            console.log("Fail load order detail");
+            reject("fail");
+          }
+        }, err => {
+          console.log(err);
+        });
+      }); 
+    });
   }
 
   loadOrderDetail(orderID, name){
