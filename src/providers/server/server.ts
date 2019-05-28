@@ -214,7 +214,7 @@ export class ServerProvider {
     });
   }
 
-  loadCategory(){
+  /*loadCategory(){
     return new Promise((resolve, reject) => {
       this.http.get(this.serverAddr + "category/loadCategory.php").subscribe(data => {
         console.log(data);
@@ -235,7 +235,7 @@ export class ServerProvider {
         console.log(err);
       });
     });    
-  }
+  }*/
 
   signup(memberData){
     return new Promise((resolve, reject)=>{
@@ -482,7 +482,7 @@ export class ServerProvider {
     });
   }
 
-  loadShoppingbasket(){
+  /*loadShoppingbasket(){
     let memberUID = this.memberProvider.memberData.UID;
     return new Promise((resolve, reject) => {
       this.http.post(this.serverAddr + "member/loadShoppingbasket.php", memberUID).subscribe(data => {
@@ -508,64 +508,70 @@ export class ServerProvider {
         console.log(err);
       });
     });
-  }
+  }*/
 
   orderProducts(orderInfo, prevPage, isMember){
-    let addr = "";
-    let body;
-    if (isMember == true){
-      let memberUID = this.memberProvider.memberData.UID;
-      body = { memberUID, orderInfo };
-      if (prevPage == "shoppingbasket") {
-        addr = "member/order/orderProductsShoppingbasket.php";
-      }else{
-        addr = "member/order/orderProducts.php";
-      }
-    }else {
-      body = { orderInfo };
-      addr = "nonMember/order/orderProducts.php";
-    }
-    
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + addr, body).subscribe(data => {
-        console.log(data);
-        let result = JSON.parse(data["_body"]);
-        if (result.status == "success") {
-          console.log("order Success");
-          this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfo);
-          if (isMember == true && prevPage == "shoppingbasket"){
-            // 장바구니 정보 로드
-            if (result.shoppingbasket.length != 0) {
-              this.updateShoppingbasket(result);
-            } else {
-              this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
-              this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
-              this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
-            }
+      this.storage.get('auth').then((val)=>{
+        let addr = "";
+        let body = { auth: val, orderInfo };
+        if (isMember == true) {
+          if (prevPage == "shoppingbasket") {
+            addr = "member/order/orderProductsShoppingbasket.php";
+          } else {
+            addr = "member/order/orderProducts.php";
           }
-          resolve("success");
-        } else if(result.status == "invalid"){
-          console.log("order Invalid");
-          if (isMember == true && prevPage == "shoppingbasket") {
-            // 장바구니 정보 로드
-            if (result.shoppingbasket.length != 0) {
-              this.updateShoppingbasket(result);
-            } else {
-              this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+        } else {
+          addr = "nonMember/order/orderProducts.php";
+        }
+        this.http.post(this.serverAddr + addr, body).subscribe(data => {
+          console.log(data);
+          let result = JSON.parse(data["_body"]);
+          if (result.status == "success") {
+            console.log("order Success");
+            if(this.isMember == true){
+              this.storage.set('auth', result.auth);
             }
-          } else if (isMember == false){
-            this.shoppingbasketProvider.completeShopping();
+            this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfo);
+            if (isMember == true && prevPage == "shoppingbasket") {
+              // 장바구니 정보 로드
+              if (result.shoppingbasket.length != 0) {
+                this.updateShoppingbasket(result);
+              } else {
+                this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+                this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
+                this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
+              }
+            }
+            resolve("success");
+          } else if (result.status == "invalid") {
+            console.log("order Invalid");
+            if (isMember == true && prevPage == "shoppingbasket") {
+              // 장바구니 정보 로드
+              if (result.shoppingbasket.length != 0) {
+                this.updateShoppingbasket(result);
+              } else {
+                this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+              }
+            } else if (isMember == false) {
+              this.shoppingbasketProvider.completeShopping();
+            }
+            resolve("invalid");
+          } else if (result.status == "expired") {
+            console.log("session expired");
+            this.storage.remove('auth');
+            this.isMember = false;
+            this.memberProvider.logout();
+            reject("expired");
+          } else {
+            console.log("Fail order");
+            reject("fail");
           }
-          resolve("invalid");
-        }
-        else {
-          console.log("Fail order");
-          reject("fail");
-        }
-      }, err => {
-        console.log(err);
-      });
-    }); 
+        }, err => {
+          console.log(err);
+        });
+      }); 
+    });
   }
 
   loadOrderInfo(offset = 0){

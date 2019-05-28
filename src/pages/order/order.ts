@@ -268,6 +268,19 @@ export class OrderPage {
         
       },(err)=>{
         console.log(err);
+        if(err == 'expired'){
+          let alert = this.alertCtrl.create({
+            message: '세션이 만료되었습니다.',
+            buttons: [{
+              text: '확인',
+              handler: () => {
+                this.navCtrl.setRoot(TabsPage, { class: "home", tabIndex: 0 });
+              }
+            }],
+            cssClass: 'alert-modify-member'
+          });
+          alert.present();
+        }
       });
     }
   }
@@ -443,9 +456,10 @@ export class OrderPage {
       return false;
     }
 
-    let pattern = /^(010|011|016|017|018|019)-[0-9]{3,4}-[0-9]{4}$/;
+    let pattern1 = /^(010|011|016|017|018|019)-[0-9]{3,4}-[0-9]{4}$/;
+    let pattern2 = /^(010|011|016|017|018|019)[0-9]{3,4}[0-9]{4}$/;
   
-    if (pattern.test(mobile) == false) {
+    if (pattern1.test(mobile) == false && pattern2.test(mobile) == false) {
       let alert = this.alertCtrl.create({
         message: '적합한 휴대폰 번호가 아닙니다.',
         buttons: [{
