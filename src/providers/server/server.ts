@@ -170,6 +170,8 @@ export class ServerProvider {
             this.storage.set('auth', result.auth.auth);
             resolve("noItem");
           } else if(result.auth == 'expired'){
+            this.isMember = false;
+            this.memberProvider.logout();
             this.storage.remove('auth');
             reject("expired");
           }else {
@@ -290,6 +292,7 @@ export class ServerProvider {
             resolve("success");
           } else if (result.status == 'expired' || result.status == 'not exist') {
             this.isMember == false;
+            this.memberProvider.logout();
             this.storage.remove('auth');
             reject('expired')
           } else {
@@ -427,6 +430,8 @@ export class ServerProvider {
             resolve('success');
           } else {
             this.storage.remove('auth');
+            this.isMember == false;
+            this.memberProvider.logout();
             reject('expired');
             console.log("add shoppingbasket failed");
           }
@@ -466,6 +471,8 @@ export class ServerProvider {
           else {
             console.log("del shoppingbasket failed");
             this.storage.remove('auth');
+            this.isMember == false;
+            this.memberProvider.logout();
             reject('expired');
           }
         }, err => {
@@ -814,64 +821,70 @@ export class ServerProvider {
   }*/
 
   searchItem(searchWord, offset = 0) {
-    let memberUID:string;
     let body : Object;
     let addr : string;
     if(this.isMember == true){
       addr = "member/search.php";
-      memberUID = this.memberProvider.memberData.UID;
-      body = { memberUID, searchWord, offset };
     }else{
       addr = "nonMember/search.php";
-      body = { searchWord, offset };
     }
-
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + addr, body).subscribe(data => {
-        console.log(data);
-        let result = JSON.parse(data["_body"]);
-        if (result.status == "success") {
-          console.log(" Success");
-          if(offset == 0){
-            // 최근 검색 기록 로드
-            if (this.isMember == true) {
-              if (result.recentSearch != undefined) {
-                this.searchProvider.recentSearchItems = result.recentSearch;
+      this.storage.get('auth').then((val)=>{
+        body = { auth: val, searchWord, offset };
+
+        this.http.post(this.serverAddr + addr, body).subscribe(data => {
+          console.log(data);
+
+          let result = JSON.parse(data["_body"]);
+          if (result.status == "success") {
+            console.log(" Success");
+            this.storage.set('auth', result.auth);
+
+            if (offset == 0) {
+              // 최근 검색 기록 로드
+              if (this.isMember == true) {
+                if (result.recentSearch != undefined) {
+                  this.searchProvider.recentSearchItems = result.recentSearch;
+                } else {
+                  this.searchProvider.recentSearchItems = [];
+                }
+              }
+
+              if (result['product'] != undefined) {
+                this.searchProducts = result.product;
               } else {
-                this.searchProvider.recentSearchItems = [];
+                this.searchProducts = [];
+                resolve("noItem");
               }
-            }
-
-            if (result['product'] != undefined) {
-              this.searchProducts = result.product;
+              resolve("success");
             } else {
-              this.searchProducts = [];
-              resolve("noItem");
-            }
-            resolve("success");
-          }else{
-            if (result['product'] != undefined) {
-              let searchProduct = result.product;
-              for (let i = 0; i < searchProduct.length; i++){
-                this.searchProducts.push(searchProduct[i]);
-              }
+              if (result['product'] != undefined) {
+                let searchProduct = result.product;
+                for (let i = 0; i < searchProduct.length; i++) {
+                  this.searchProducts.push(searchProduct[i]);
+                }
 
-              if(result.product.length<20){
-                resolve("loadEnd");  
-              }else{
-                resolve("success");
+                if (result.product.length < 20) {
+                  resolve("loadEnd");
+                } else {
+                  resolve("success");
+                }
+              } else {
+                resolve("noItem");
               }
-            }else{
-              resolve("noItem");
             }
+          } else if (result.status == "expired"){
+            this.isMember == false;
+            this.memberProvider.logout();
+            this.storage.remove('auth');
+            reject('expired');
+          }else{
+            console.log("Fail cancelOrder");
+            reject("fail");
           }
-        }
-        else {
-          console.log("Fail cancelOrder");
-          reject("fail");
-        }
-      }, err => {
-        console.log(err);
+        }, err => {
+          console.log(err);
+        });
       });
     });
   }

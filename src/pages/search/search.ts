@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { ServerProvider } from '../../providers/server/server'; 
 import { SearchProvider } from '../../providers/search/search';
@@ -27,7 +27,7 @@ export class SearchPage {
   products;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private app:App, private searchProvider:SearchProvider, public serverProvider:ServerProvider,
-    public storage:Storage) {
+    public storage:Storage, public alertCtrl:AlertController) {
     this.seacrhTabSelected = this.searchTabs[0];
     this.popularSearchItems = this.searchProvider.popularSearchItems;
 
@@ -76,6 +76,20 @@ export class SearchPage {
       this.app.getRootNavs()[0].setRoot(TabsPage, { tabIndex: 0, class: "search", homeSegmentCategory: 1, category: this.searchInput });
     }, (err)=>{
       console.log(err);
+
+      if(err == 'expired'){
+        let alert = this.alertCtrl.create({
+          message: '세션이 만료되었습니다.',
+          buttons: [{
+            text: '확인',
+            handler: () => {
+              this.navCtrl.parent.select(0);
+            }
+          }],
+          cssClass: 'alert-modify-member'
+        });
+        alert.present();
+      }
       
     });
   }
