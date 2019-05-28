@@ -609,56 +609,69 @@ export class ServerProvider {
   }
 
   loadOrderDetail(orderID, name){
-    let body:any;
-    let path:string;
-    if (name == null){
-      body = orderID
-      path = "member/order/loadOrderProductDetail.php";
-    }else{
-      body = { orderID, name }
-      path = "nonMember/order/loadOrderProductDetail.php";
-    }
-    
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + path, body).subscribe(data => {
-        console.log(data);
-        let result = JSON.parse(data["_body"]);
-        if (result.status == "success") {
-          console.log(" Success");
-          if(result.orderedProducts != undefined){
-            let orderInfos;
-            if(name != null){
-              this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfo);
+      this.storage.get('auth').then((val)=>{
+        let body: any;
+        let path: string;
+        if (name == null) {
+          body = {orderID, auth:val};
+          path = "member/order/loadOrderProductDetail.php";
+        } else {
+          body = { orderID, name, auth:val };
+          path = "nonMember/order/loadOrderProductDetail.php";
+        }
+      
+        this.http.post(this.serverAddr + path, body).subscribe(data => {
+          console.log(data);
+          let result = JSON.parse(data["_body"]);
+          if (result.status == "success") {
+            console.log(result);
+            if(name == null){
+              this.storage.set('auth', result.auth);
             }
 
-            orderInfos = this.orderProvivder.orderInfos;
-            
-            for (let i = 0; i < orderInfos.length; i++) {
-              if (orderInfos[i].orderID == orderID) {
-                //let path = "http://218.145.181.49/ionic/images/";
-                //let path = "./assets/imgs/";
-                let path = this.productImageURL;
+            if (result.orderedProducts != undefined) {
+              let orderInfos;
+              if (name != null) {
+                this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfo);
+              }
 
-                orderInfos[i].orderedProducts = result['orderedProducts'];
+              orderInfos = this.orderProvivder.orderInfos;
 
-                for (let j = 0; j < orderInfos[i].orderedProducts.length; j++) {
-                  orderInfos[i].orderedProducts[j].imagePath = path + orderInfos[i].orderedProducts[j].imagePath;
+              for (let i = 0; i < orderInfos.length; i++) {
+                if (orderInfos[i].orderID == orderID) {
+                  //let path = "http://218.145.181.49/ionic/images/";
+                  //let path = "./assets/imgs/";
+                  let path = this.productImageURL;
+
+                  orderInfos[i].orderedProducts = result['orderedProducts'];
+
+                  for (let j = 0; j < orderInfos[i].orderedProducts.length; j++) {
+                    orderInfos[i].orderedProducts[j].imagePath = path + orderInfos[i].orderedProducts[j].imagePath;
+                  }
                 }
               }
+              resolve("success");
+            } else {
+              resolve("noItem");
             }
-            resolve("success");
-          }else{
-            resolve("noItem");
+          } else if(result.status == 'expired') {
+            console.log("session expired");
+            this.storage.remove('auth');
+            this.isMember = false;
+            this.memberProvider.logout();
+            reject("expired");
           }
-        }
-        else {
-          console.log("Fail load order detail");
-          reject("fail");
-        }
-      }, err => {
-        console.log(err);
-      });
-    }); 
+          else {
+            console.log("Fail load order detail");
+            reject("fail");
+          }
+        }, err => {
+          console.log(err);
+          reject(err);
+        });
+      }); 
+    });
   }
 
   cancelOrder(orderInfo){

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { OrderProvider } from '../../providers/order/order';
 import { ServerProvider } from '../../providers/server/server';
 
@@ -20,7 +20,7 @@ export class OrderCompletePage {
   orderCompInfo = {orderID:"", ordererName: "", receiverName:"", address:"", mobile:"", paymentMethod:"", paymentCharge:0};
   bankStatus = "(입금대기중)";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public orderProvider : OrderProvider, public serverProvider:ServerProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public orderProvider : OrderProvider, public serverProvider:ServerProvider, public alertCtrl:AlertController) {
 
     let orderInfo = this.orderProvider.orderInfos[this.orderProvider.orderInfos.length - 1];
     this.orderCompInfo.orderID = orderInfo.orderID;
@@ -43,13 +43,19 @@ export class OrderCompletePage {
   }
 
   goToOrderDetail(){
-    this.serverProvider.loadOrderDetail(this.orderCompInfo.orderID, null).then((res: any) => {
+    let name:string;
+    if(this.serverProvider.isMember == true){
+      name = null;
+    }else{
+      name = this.orderCompInfo.ordererName;
+    }
+    
+    this.serverProvider.loadOrderDetail(this.orderCompInfo.orderID, name).then((res: any) => {
       if (res == "success") {
         this.navCtrl.parent.select(6);
       }
     }, (err) => {
       console.log(err);
-
     });
     
   }
