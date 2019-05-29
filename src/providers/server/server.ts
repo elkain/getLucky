@@ -693,40 +693,58 @@ export class ServerProvider {
   }
 
   cancelOrder(orderInfo){
-    return new Promise((resolve, reject) => {
 
-      let addr = "";
-      if (this.isMember == true) {
-        orderInfo['memberUID'] = this.memberProvider.memberData.UID;
-        addr = "member/order/cancelOrder.php";
-      } else {
-        addr = "nonMember/order/cancelOrder.php";
-      }
-      
-      this.http.post(this.serverAddr + addr, orderInfo).subscribe(data => {
-        console.log(data);
-        let result = JSON.parse(data["_body"]);
-        if (result.status == "success") {
-          console.log(" Success");
-          if (result.orderInfos != undefined) {
-            this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
-          } else {
-            this.orderProvivder.orderInfos = [];
+    let addr = "";
+    if (this.isMember == true) {
+      addr = "member/order/cancelOrder.php";
+    } else {
+      addr = "nonMember/order/cancelOrder.php";
+    }
+
+    return new Promise((resolve, reject) => {
+      this.storage.get('auth').then((val)=>{
+        let body ={auth:val, orderInfo};
+
+        this.http.post(this.serverAddr + addr, body).subscribe(data => {
+          console.log(data);
+          let result = JSON.parse(data["_body"]);
+          if (result.status == "success") {
+            console.log(" Success");
+            if(this.isMember == true){
+              this.storage.set('auth', result.auth);
+            }
+            if (result.orderInfos != undefined) {
+              this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
+            } else {
+              this.orderProvivder.orderInfos = [];
+            }
+            resolve("success");
+          } else if (result.status == "invalid") {
+            if (this.isMember == true) {
+              this.storage.set('auth', result.auth);
+            }
+            resolve("invalid");
+          } else if (result.status == "processing") {
+            if (this.isMember == true) {
+              this.storage.set('auth', result.auth);
+            }
+            resolve("processing");
+          } else if (result.status == 'expired') {
+            console.log("session expired");
+            this.storage.remove('auth');
+            this.isMember = false;
+            this.memberProvider.logout();
+            reject("expired");
           }
-          resolve("success");
-        }else if(result.status == "invalid"){
-          resolve("invalid");
-        } else if (result.status == "processing"){
-          resolve("processing");
-        }
-        else{
-          console.log("Fail cancelOrder");
-          reject("fail");
-        }
-      }, err => {
-        console.log(err);
-      });
-    }); 
+          else {
+            console.log("Fail cancelOrder");
+            reject("fail");
+          }
+        }, err => {
+          console.log(err);
+        });
+      }); 
+    });
   }
 
   categoryRearrange(data){
