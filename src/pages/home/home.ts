@@ -67,7 +67,6 @@ export class HomePage {
     this.offset = 0;
 
     if(this.serverProvider.dataLoad == false){
-      this.storage.remove('auth');
       this.serverProvider.init().then((res: any) => {
         if (res == "success") {
           this.serverProvider.dataLoad = true;
@@ -80,6 +79,24 @@ export class HomePage {
       }, (err) => {
         console.log(err);
       });
+
+      this.storage.get('autoLogin').then((val)=>{
+        if(val == true){
+          this.serverProvider.autoLogin(val).then((res)=>{
+            if(res == 'dismatch'){
+              console.log('dismatch of server and client auto login configure');
+              
+            }else{
+              console.log('auto Login Success');
+            }
+          },(err)=>{
+            console.log(err);
+            
+          });
+        }else{
+          this.storage.remove('auth');
+        }
+      })
     }
     
     this.refreshorEnable = true;

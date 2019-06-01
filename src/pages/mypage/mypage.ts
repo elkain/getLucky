@@ -246,7 +246,8 @@ export class MypagePage {
     if (this.idCheck() == false || this.pwdCheck() == false) {
       
     } else {
-      this.serverProvider.login(this.username, this.password).then((res: any) => {
+      this.storage.set('autoLogin', this.autoLoginCheckbox);
+      this.serverProvider.login(this.username, this.password, this.autoLoginCheckbox).then((res: any) => {
         console.log(res);
 
         if(res == "success"){
@@ -305,8 +306,7 @@ export class MypagePage {
       this.isMember = false;
       this.serverProvider.isMember = false;
       this.memberProvider.logout();
-      this.autoLoginCheckbox = false;
-      this.storage.set('autoLoginCheckbox', this.autoLoginCheckbox);
+      this.storage.set('autoLogin', false);
       this.storage.set('username', null);
       this.storage.set('password', null);
       window.location.reload();

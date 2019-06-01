@@ -306,65 +306,130 @@ export class ServerProvider {
     });   
   }
 
-  login(memberID, password){
-    let body = {memberID, password};
-
+  autoLogin(autoLogin) {
     return new Promise((resolve, reject) => {
-      this.http.post(this.serverAddr + "member/login.php", body).subscribe(data => {
-        console.log(data);
-        let result = JSON.parse(data["_body"]);
-        if (result.status == "success") {
-          console.log("login success");
+      this.storage.get('auth').then((val) => {
+        let body = { autoLogin, auth: val };
+        this.http.post(this.serverAddr + "member/autoLogin.php", body).subscribe(data => {
+          console.log(data);
+          let result = JSON.parse(data["_body"]);
+          if (result.status == "success") {
+            console.log("login success");
 
-          // refresh access Key
-          this.storage.set('auth', result.auth);
-          // 회원정보 로드
-          this.isMember = true;
-          this.memberProvider.memberData.username = memberID;
-          this.memberProvider.memberData.password = password;
-          this.memberProvider.memberData.birth = result.memberBirth;
-          this.memberProvider.memberData.name = result.memberName;
-          this.memberProvider.memberData.mobile = result.mobile;
-          this.memberProvider.memberData.email = result.email;
-          this.memberProvider.memberData.sex = result.memberSex;
-          this.memberProvider.memberData.UID = result.memberUID;
-          this.memberProvider.deliveryAddrs = result.address;
+            // refresh access Key
+            this.storage.set('auth', result.auth);
+            this.storage.set('autoLogin', true);
+            // 회원정보 로드
+            this.isMember = true;
+            this.memberProvider.memberData.birth = result.memberBirth;
+            this.memberProvider.memberData.name = result.memberName;
+            this.memberProvider.memberData.mobile = result.mobile;
+            this.memberProvider.memberData.email = result.email;
+            this.memberProvider.memberData.sex = result.memberSex;
+            this.memberProvider.deliveryAddrs = result.address;
 
-          // 장바구니 정보 로드
-          if(result.shoppingbasket.length != 0){
-            this.updateShoppingbasket(result);
-          }else{
-            this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
-            this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
-            this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
+            // 장바구니 정보 로드
+            if (result.shoppingbasket.length != 0) {
+              this.updateShoppingbasket(result);
+            } else {
+              this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+              this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
+              this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
+            }
+
+            // 주문 정보 로드
+            this.orderProvivder.orderInfos = [];
+            if (result.orderInfos.length != 0) {
+              this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
+            }
+
+            // 최근 검색 기록 로드
+            if (result.recentSearch != undefined) {
+              this.searchProvider.recentSearchItems = result.recentSearch;
+            } else {
+              this.searchProvider.recentSearchItems = [];
+            }
+            resolve("success");
+          }else if(result.status == 'mismatch'){
+            this.isMember = false;
+            this.storage.set('autoLogin', false);
+            this.memberProvider.logout();
+            reject('missmatch');
           }
-
-          // 주문 정보 로드
-          this.orderProvivder.orderInfos = [];
-          if(result.orderInfos.length != 0){
-            this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
+          else {
+            this.storage.remove('auth');
+            this.storage.set('autoLogin', false);
+            this.memberProvider.logout();
+            reject("failed");
           }
-
-          // 최근 검색 기록 로드
-          if(result.recentSearch != undefined){
-            this.searchProvider.recentSearchItems = result.recentSearch;
-          }else{
-            this.searchProvider.recentSearchItems = [];
-          }
-          resolve("success");
-        }
-        else {
+        }, err => {
+          this.memberProvider.logout();
+          this.storage.set('autoLogin', false);
           this.storage.remove('auth');
-          console.log("dismatch ID and password");
-          reject("failed");
-        }
-      }, err => {
-        this.storage.remove('auth');
-        console.log(err);
+          console.log(err);
+        });
       });
-    });    
+    });
   }
 
+  login(memberID, password, autoLogin){
+    return new Promise((resolve, reject) => {
+      this.storage.get('auth').then((val)=>{
+        let body = { memberID, password, autoLogin};
+        this.http.post(this.serverAddr + "member/login.php", body).subscribe(data => {
+          console.log(data);
+          let result = JSON.parse(data["_body"]);
+          if (result.status == "success") {
+            console.log("login success");
+
+            // refresh access Key
+            this.storage.set('auth', result.auth);
+            // 회원정보 로드
+            this.isMember = true;
+            this.memberProvider.memberData.birth = result.memberBirth;
+            this.memberProvider.memberData.name = result.memberName;
+            this.memberProvider.memberData.mobile = result.mobile;
+            this.memberProvider.memberData.email = result.email;
+            this.memberProvider.memberData.sex = result.memberSex;
+            this.memberProvider.deliveryAddrs = result.address;
+
+            // 장바구니 정보 로드
+            if (result.shoppingbasket.length != 0) {
+              this.updateShoppingbasket(result);
+            } else {
+              this.shoppingbasketProvider.shoppingBasket.orderedProducts = [];
+              this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
+              this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
+            }
+
+            // 주문 정보 로드
+            this.orderProvivder.orderInfos = [];
+            if (result.orderInfos.length != 0) {
+              this.orderProvivder.orderInfos = this.orderInfoRearrange(result.orderInfos);
+            }
+
+            // 최근 검색 기록 로드
+            if (result.recentSearch != undefined) {
+              this.searchProvider.recentSearchItems = result.recentSearch;
+            } else {
+              this.searchProvider.recentSearchItems = [];
+            }
+            resolve("success");
+          }
+          else {
+            this.storage.remove('auth');
+            this.isMember = false;
+            console.log("dismatch ID and password");
+            reject("failed");
+          }
+        }, err => {
+          this.storage.remove('auth');
+          console.log(err);
+        });
+      });    
+    });
+  }
+  
   findMemberData(findMemberData){
     return new Promise((resolve, reject) => {
       this.http.post(this.serverAddr + "member/findMemberData.php", findMemberData).subscribe(data => {
