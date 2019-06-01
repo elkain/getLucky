@@ -236,7 +236,6 @@ export class OrderPage {
     } else{
       this.enterNonMemberOrderInfo();
     }
-    console.log(this.orderInfo);
     
     if (this.nameCheck(this.customInfo.ordererName) && this.mobileCheck(this.customInfo.ordererMobile) && this.emailCheck(this.customInfo.ordererEmail) && 
     this.nameCheck(this.customInfo.receiverName) && this.addrCheck(this.customInfo.receiverAddress) && this.mobileCheck(this.customInfo.receiverMobile) && this.paymentMethodCheck(this.orderInfo.paymentMethod) == true) {
@@ -325,7 +324,6 @@ export class OrderPage {
       }
 
       let address1 = this.trim(this.address1);
-      console.log(address1);
       
       if (address1 == "" || address1 == undefined) {
         this.customInfo.receiverAddress = undefined;
@@ -358,7 +356,7 @@ export class OrderPage {
     }
 
     let address1 = this.trim(this.address1);
-    console.log(address1);
+    
     if(address1 == "" || address1 == undefined){
       this.customInfo.receiverAddress = undefined;
     }else{
@@ -478,8 +476,6 @@ export class OrderPage {
   emailCheck(email){
     email = this.trim(email);
 
-    console.log("email : " + email);
-    
     if (email == "" || email == undefined) {
       return true;
     }
@@ -503,7 +499,6 @@ export class OrderPage {
   }
 
   paymentMethodCheck(paymentMethod){
-    console.log(paymentMethod);
     
     if (!(paymentMethod == "현장결제" || paymentMethod == "카드결제" || paymentMethod == "무통장입금")){
       let alert = this.alertCtrl.create({

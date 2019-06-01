@@ -276,7 +276,6 @@ export class SignupPage {
 
     if(this.password != undefined){
       this.memberData.password = this.trim(this.password);
-      console.log(this.memberData.password);
     }
     
     this.memberData.email = email;

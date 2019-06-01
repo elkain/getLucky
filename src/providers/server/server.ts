@@ -59,10 +59,8 @@ export class ServerProvider {
   init(){
     return new Promise((resolve, reject) => {
       this.http.get(this.serverAddr + "init.php").subscribe(data => {
-        console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
-
           if (result.displayShopCategory != undefined && result.displayShopCategory != null){
             this.homeCategories = result.displayShopCategory;
           } else {
@@ -107,7 +105,6 @@ export class ServerProvider {
   refreshHomeProductsData(){
     return new Promise((resolve, reject) => {
       this.http.get(this.serverAddr + "product/refreshHomeProductsData.php").subscribe(data => {
-        console.log(data);
         let result = JSON.parse(data["_body"]);
         if(result.status == "success"){
           if (result.product != undefined && result.product != null){
@@ -129,7 +126,6 @@ export class ServerProvider {
     //상품 정보를 가져옴
     return new Promise((resolve, reject) => {
       this.http.post(this.serverAddr + "product/loadAllProduct.php", offset).subscribe(data => {
-        console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success" && result != undefined) {
           console.log("product load Success");
@@ -163,7 +159,7 @@ export class ServerProvider {
       this.storage.get('auth').then((val)=>{
         let body = { categoryCode, auth: val };
         this.http.post(this.serverAddr + "product/loadCategoryProduct.php", body).subscribe(data => {
-          console.log(data);
+          
           let result = JSON.parse(data["_body"]);
           if (result.product == undefined) {
             this.categoryProducts = [];
@@ -191,7 +187,7 @@ export class ServerProvider {
     let body = { categoryCode, offset }
     return new Promise((resolve, reject) => {
       this.http.post(this.serverAddr + "product/loadMoreCategoryProduct.php", body).subscribe(data => {
-        console.log(data);
+        
         let result = JSON.parse(data["_body"]);
         if (result.product != undefined && result.product != null) {
           let products = result.product;
@@ -217,7 +213,6 @@ export class ServerProvider {
   /*loadCategory(){
     return new Promise((resolve, reject) => {
       this.http.get(this.serverAddr + "category/loadCategory.php").subscribe(data => {
-        console.log(data);
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           console.log("categoryload Success");
@@ -240,12 +235,12 @@ export class ServerProvider {
   signup(memberData){
     return new Promise((resolve, reject)=>{
       this.http.post(this.serverAddr + "signup/signup.php", memberData).subscribe(data => {
-        console.log(data);
+        
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
           this.storage.set('auth',result.auth);
           // set a key/value
-          console.log("signup Success");
+          //console.log("signup Success");
           resolve("success");
         }
         else {
@@ -262,14 +257,14 @@ export class ServerProvider {
   checkIDDuplication(memberID){
     return new Promise((resolve, reject) => {
       this.http.post(this.serverAddr + "signup/checkIDDuplication.php", memberID).subscribe(data => {
-        console.log(data);
+        
         let result = JSON.parse(data["_body"]);
         if (result.status == "none") {
-          console.log("ID doesn't exist");
+          //console.log("ID doesn't exist");
           resolve("none");
         }
         else {
-          console.log("ID is exist");
+          //console.log("ID is exist");
           reject("exist");
         }
       }, err => {
@@ -283,7 +278,7 @@ export class ServerProvider {
       this.storage.get('auth').then((val) => {
         let body = { memberData: memberData, currentPassword: currentPassword, auth: val };
         this.http.post(this.serverAddr + "member/modify.php", body).subscribe(data => {
-          console.log(data);
+          
           let result = JSON.parse(data["_body"]);
           if (result.status == "success") {
             this.storage.set('auth', result.auth);
@@ -296,7 +291,7 @@ export class ServerProvider {
             this.storage.remove('auth');
             reject('expired')
           } else {
-            console.log("dismatch ID and password");
+            //console.log("dismatch ID and password");
             reject("failed");
           }
         }, err => {
@@ -311,10 +306,10 @@ export class ServerProvider {
       this.storage.get('auth').then((val) => {
         let body = { autoLogin, auth: val };
         this.http.post(this.serverAddr + "member/autoLogin.php", body).subscribe(data => {
-          console.log(data);
+          
           let result = JSON.parse(data["_body"]);
           if (result.status == "success") {
-            console.log("login success");
+            //console.log("login success");
 
             // refresh access Key
             this.storage.set('auth', result.auth);
@@ -377,10 +372,10 @@ export class ServerProvider {
       this.storage.get('auth').then((val)=>{
         let body = { memberID, password, autoLogin};
         this.http.post(this.serverAddr + "member/login.php", body).subscribe(data => {
-          console.log(data);
+          
           let result = JSON.parse(data["_body"]);
           if (result.status == "success") {
-            console.log("login success");
+            //console.log("login success");
 
             // refresh access Key
             this.storage.set('auth', result.auth);
@@ -433,14 +428,14 @@ export class ServerProvider {
   findMemberData(findMemberData){
     return new Promise((resolve, reject) => {
       this.http.post(this.serverAddr + "member/findMemberData.php", findMemberData).subscribe(data => {
-        console.log(data);
+        
         let result = JSON.parse(data["_body"]);
         if (result.status == "success") {
-          console.log("find success");
+          //console.log("find success");
           resolve(result);
         }
         else {
-          console.log("find access failed");
+          //console.log("find access failed");
           reject("failed");
         }
       }, err => {
@@ -455,10 +450,10 @@ export class ServerProvider {
       this.storage.get('auth').then((val)=>{
         let body = {auth:val, deliveryAddrs};
         this.http.post(this.serverAddr + "member/alterDeliverAddr.php", body).subscribe(data => {
-          console.log(data);
+          
           let result = JSON.parse(data["_body"]);
           if (result.status == "success") {
-            console.log("alter address success");
+            //console.log("alter address success");
             this.storage.set('auth', result.auth);
             if (result.address == null) {
               this.memberProvider.deliveryAddrs = [];
@@ -499,7 +494,7 @@ export class ServerProvider {
               this.shoppingbasketProvider.shoppingBasket.checkedProducts = [];
               this.shoppingbasketProvider.shoppingBasket.checkedAllProducts = false;
             }
-            console.log("add shoppingbasket success");
+            //console.log("add shoppingbasket success");
             resolve('success');
           } else {
             this.storage.remove('auth');
@@ -526,10 +521,10 @@ export class ServerProvider {
       this.storage.get('auth').then((val) => {
         let body = { auth: val, products: delProducts };
         this.http.post(this.serverAddr + "member/delShoppingbasket.php", body).subscribe(data => {
-          console.log(data);
+          
           let result = JSON.parse(data["_body"]);
           if (result.status == "success") {
-            console.log("del shoppingbasket success");
+            //console.log("del shoppingbasket success");
             this.storage.set('auth', result.auth);
             // 장바구니 정보 로드
             if (result.shoppingbasket.length != 0) {
@@ -598,10 +593,10 @@ export class ServerProvider {
           addr = "nonMember/order/orderProducts.php";
         }
         this.http.post(this.serverAddr + addr, body).subscribe(data => {
-          console.log(data);
+          
           let result = JSON.parse(data["_body"]);
           if (result.status == "success") {
-            console.log("order Success");
+            //console.log("order Success");
             if(this.isMember == true){
               this.storage.set('auth', result.auth);
             }
@@ -653,10 +648,10 @@ export class ServerProvider {
       this.storage.get('auth').then((val)=>{
         let body = { offset, auth:val };
         this.http.post(this.serverAddr + "member/order/loadOrderInfo.php", body).subscribe(data => {
-          console.log(data);
+          
           let result = JSON.parse(data["_body"]);
           if (result.status == "success") {
-            console.log(" Success");
+            //console.log(" Success");
             this.storage.set('auth', result.auth);
 
             if (offset > 0) {
@@ -705,10 +700,10 @@ export class ServerProvider {
         }
       
         this.http.post(this.serverAddr + path, body).subscribe(data => {
-          console.log(data);
+          
           let result = JSON.parse(data["_body"]);
           if (result.status == "success") {
-            console.log(result);
+            
             if(name == null){
               this.storage.set('auth', result.auth);
             }
@@ -771,10 +766,10 @@ export class ServerProvider {
         let body ={auth:val, orderInfo};
 
         this.http.post(this.serverAddr + addr, body).subscribe(data => {
-          console.log(data);
+          
           let result = JSON.parse(data["_body"]);
           if (result.status == "success") {
-            console.log(" Success");
+            //console.log(" Success");
             if(this.isMember == true){
               this.storage.set('auth', result.auth);
             }
@@ -953,11 +948,10 @@ export class ServerProvider {
         body = { auth: val, searchWord, offset };
 
         this.http.post(this.serverAddr + addr, body).subscribe(data => {
-          console.log(data);
 
           let result = JSON.parse(data["_body"]);
           if (result.status == "success") {
-            console.log(" Success");
+            //console.log(" Success");
             this.storage.set('auth', result.auth);
 
             if (offset == 0) {
@@ -1015,10 +1009,9 @@ export class ServerProvider {
         let body = { auth:val, searchID };
         let addr = "search/undisplayRecentSearchItem.php";
         this.http.post(this.serverAddr + addr, body).subscribe(data => {
-          console.log(data);
           let result = JSON.parse(data["_body"]);
           if (result.status == "success") {
-            console.log(" Success");
+            //console.log(" Success");
             this.storage.set('auth', result.auth);
             // 최근 검색 기록 로드
             if (result.recentSearch != undefined) {
@@ -1062,10 +1055,7 @@ export class ServerProvider {
     return new Promise((resolve, reject) => {
       this.storage.get('auth').then((val) => {
         let body = { auth: val };
-        console.log(val);
-        
         this.http.post(this.serverAddr + "auth/auth.php", body).subscribe(data => {
-          console.log(data);
           let result = JSON.parse(data["_body"]);
           if (result.status == "success") {
             this.storage.set('auth', result.auth);

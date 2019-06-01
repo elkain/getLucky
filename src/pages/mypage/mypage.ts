@@ -402,14 +402,6 @@ export class MypagePage {
 
   confirmInfoFind(){
     let mobile = this.mobile1 + "-" + this.mobile2 + "-" + this.mobile3;
-
-    console.log(this.username);
-    console.log(this.name);
-    console.log(this.email);
-    console.log(mobile);
-    console.log(this.findLoginInfoMethod);
-    console.log(this.findCategorySelected);
-
     this.findMemberData.name = this.name;
     this.findMemberData.username = this.username;
     this.findMemberData.email = this.email;
@@ -433,7 +425,7 @@ export class MypagePage {
           });
           alert.present();
         } else if (this.findMemberData.type == "비밀번호 찾기") {
-          console.log(result.password);
+          //console.log(result.password);
           let alert = this.alertCtrl.create({
             message: '새로 설정된 비밀번호는 ' + result.password + ' 입니다.',
             buttons: [{
